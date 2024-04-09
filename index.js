@@ -27,7 +27,6 @@ app.use(cookieParser());
 //routes
 app.use(route);
 
-
 portFinder.getPort(function (err, port) {
     try {
         if (err) throw err
