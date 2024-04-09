@@ -58,6 +58,7 @@ app.get("/store",(req, res) => {
     res.render("store", { message: "Not Found" });
   });
 //put this at last because any route not found then execute this
+
 app.use("*",(req, res) => {
-  res.render("test", { message: "Not Found" });
+  res.render("", { message: "Not Found" });
 });

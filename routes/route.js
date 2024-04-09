@@ -12,6 +12,7 @@ router.get('/login',(req,res)=>{
 })
 router.post('/login',userLogin);
 
+
 router.get('/home',passport.authenticate("jwt",{session:false}),(req,res)=>{
   res.render('home');
 })
