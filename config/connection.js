@@ -1,8 +1,8 @@
 require('dotenv').config();
-const mysql = require('mysql');
+const mysql = require('mysql2/promise');
 const logger = require('../logs.js');
 
-var connection = mysql.createConnection({
+var connection = mysql.createPool({
     port: process.env.DB_PORT,
     host: process.env.DB_HOST,
     user: process.env.DB_USERNAME,
