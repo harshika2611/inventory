@@ -8,7 +8,7 @@ const cookieParser = require('cookie-parser');
 const logger = require('./logs.js');
 
 const route = require('./routes/route.js');
-
+app.use("/",express.static("./node_modules/bootstrap/dist/"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: true
@@ -20,7 +20,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 //ejs file render we need to set path of located files
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
-
+app.get('/',(req, res) => {
+    res.render('test');
+})
 
 app.use(cookieParser());
 
