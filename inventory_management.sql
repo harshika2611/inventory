@@ -169,15 +169,17 @@ CREATE TABLE `order_master` (
   `customer_id` int NOT NULL,
   `type` int NOT NULL,
   `amount` int NOT NULL,
-  `shipping_address` varchar(45) DEFAULT NULL,
+  `shipping_address` varchar(100) DEFAULT NULL,
   `payment_status` int DEFAULT NULL,
   `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `fk_order_master_2_idx` (`customer_id`),
   KEY `fk_order_master_1_idx` (`type`),
+  KEY `fk_order_master_3_idx` (`payment_status`),
   CONSTRAINT `fk_order_master_1` FOREIGN KEY (`type`) REFERENCES `option_master` (`id`),
-  CONSTRAINT `fk_order_master_2` FOREIGN KEY (`customer_id`) REFERENCES `customer_master` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+  CONSTRAINT `fk_order_master_2` FOREIGN KEY (`customer_id`) REFERENCES `customer_master` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `fk_order_master_3` FOREIGN KEY (`payment_status`) REFERENCES `option_master` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -435,4 +437,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-04-09 10:02:06
+-- Dump completed on 2024-04-09 11:18:26
