@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Log in</title>
+  <link rel="stylesheet" href="/src/css/style.css">
+</head>
+<body>
+ <div class="main">
+  <h2>Login Form</h2>
+  <form method="post">
+    <label for="email">Email</label>
+    <input type="email" name="email" id="email" class="form-control" required>
+    <label for="password">Password</label>
+    <input type="password" name="password" id="password" class="form-control" required>
+    <div class="main_err">
+      <div><a href="http://localhost:8000/forgot">Forgot password</a></div>
+      <%if(locals.error){%>
+        <div class="main_err" style="color: red;">
+          <%=error%>
+        </div>
+        <%}%>
+    </div>
+   
+    <button type="submit">Login</button>
+  </form>
+ </div>
+</body>
+
+</html>

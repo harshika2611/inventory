@@ -3,11 +3,13 @@ const express = require("express");
 const path = require("path");
 const portFinder = require("portfinder");
 const app = express();
-const bodyParser = require("body-parser");
-const cookieParser = require("cookie-parser");
-const logger = require("./logs.js");
 
-const route = require("./routes/route.js");
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+const logger = require('./logs.js');
+const route = require('./routes/route.js');
+var passport = require('passport');
+const {auth}=require('./middleware/auth.js')
 
 app.use(bodyParser.json());
 app.use(
@@ -16,10 +18,22 @@ app.use(
   })
 );
 
+app.use(passport.initialize());
+auth(passport);
+
+// app.use(passport.session());
+// require('./config/passport')(passport);
+app.use(express.json());
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+
 //middleware
 app.use(express.static(path.join(__dirname, "public")));
 app.use("/css", express.static("./node_modules/bootstrap/dist/css"));
 app.use("/js", express.static("./node_modules/bootstrap/dist/js"));
+
 
 //ejs file render we need to set path of located files
 app.set("views", path.join(__dirname, "views"));
