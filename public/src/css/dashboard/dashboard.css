@@ -1,0 +1,94 @@
+:root {
+  --fontfamily: sans-serif;
+  --fontsize: 20px;
+  --headerbackground: #ffffff;
+  --sectionbackground: #f0f1f3;
+  --white: #ffffff;
+  --navlistbackgroundcolor: rgb(226, 226, 226);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0 !important;
+}
+
+.dashboardSection {
+  max-width: 1500px;
+  background-color: var(--sectionbackground);
+}
+
+.dashboardSectionContainer {
+  width: 1400px;
+  height: 100%;
+  display: flex;
+  gap: 10px;
+}
+
+.sidebar {
+  width: 280px;
+  height: 700px;
+  background-color: var(--white);
+  padding: 20px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  position: absolute;
+  z-index: 10;
+}
+
+.navigation {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.navigation li {
+  padding: 10px;
+  cursor: pointer;
+  background-color: var(--navlistbackgroundcolor);
+  border-radius: 8px;
+}
+
+.navigation li:hover {
+  background-color: rgb(250, 250, 250);
+  color: #6da6f5;
+}
+
+.sublistArrow {
+  display: flex;
+  justify-content: space-between;
+}
+.dashboardContent {
+  width: 1200px;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  width: 1200px;
+  display: flex;
+  justify-content: flex-end;
+  background-color: var(--headerbackground);
+  padding: 20px;
+  border-radius: 0 0 10px 10px;
+}
+
+.username {
+  cursor: pointer;
+}
+
+.usernametoggle {
+  background-color: var(--headerbackground);
+  padding: 20px;
+}
+
+.contentContainer {
+  padding: 20px;
+}
