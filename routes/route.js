@@ -1,5 +1,5 @@
-require('dotenv').config();
-const express = require('express');
+require("dotenv").config();
+const express = require("express");
 const router = express.Router();
 const {userLogin}=require('../controller/loginController');
 const { auth } = require('../middleware/auth');
@@ -20,4 +20,8 @@ router.get('/forgot',(req,res)=>{
   res.render('forgot');
 })
 
+const getsales = require("../controller/sales_module/sales_data");
+const insert_order = require('../controller/sales_module/insert_order');
+router.get("/salesorder", getsales);
+router.post('/insert',insert_order);
 module.exports = router;
