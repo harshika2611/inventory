@@ -12,7 +12,7 @@ var connection = mysql.createPool({
 });
 
 
-connection.connect((err) => {
+connection.getConnection((err) => {
     if (!err) {
         logger.info("connected..");
     } else {
