@@ -10,13 +10,15 @@
   <style>
     .form-popup {
       display: none;
-      position: fixed;
+      position: absolute;
       bottom: 0;
       top: 50px;
       border: 3px solid #f1f1f1;
       z-index: 9;
       width: 500px;
       right: 490px;
+      background-color: white;
+      /* height: 1120px; */
     }
 
     /* Add styles to the form container */
@@ -24,6 +26,7 @@
       max-width: 300px;
       padding: 10px;
       background-color: white;
+      /* height: 1000px; */
     }
 
     .form-control {
@@ -58,7 +61,10 @@
   </style>
 </head>
 
-<body>
+<body class="body2" >
+  <div id="childbody">
+
+  
   <header>
     <form class="form-inline my-2 my-lg-0">
       <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
@@ -116,11 +122,19 @@
       </div>
     </section>
   </main>
-  <%- include('../form/form')%>
+</div>
+  <%- include('../form/customer')%>
 </body>
 <script>
   function openForm() {
     document.getElementById("myForm").style.display = "block";
+    document.getElementById("childbody").style =`
+-webkit-filter: blur(2px);
+-moz-filter: blur(2px);
+-o-filter: blur(2px);
+-ms-filter: blur(2px);
+filter: blur(2px); `   
+
   }
 
   function closeForm() {
