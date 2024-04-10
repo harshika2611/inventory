@@ -4,11 +4,6 @@ require("dotenv").config();
 const jwt = require("jsonwebtoken");
 
 const { SECRET_KEY } = process.env;
-
-const getLogin=async(req,res)=>[
-  res.render('login')
-]
-
 const userLogin=async(req,res)=>{
   try {
     const user=await userLoginService(req.body);
@@ -36,7 +31,7 @@ const userLogin=async(req,res)=>{
           .cookie("token",token,{
             httpOnly:true
           })
-          .redirect(`http://localhost:8000/home`)
+          .redirect(`/home`)
         }else{
           const error="invalid password"
           res.render("login",{error})
@@ -51,4 +46,4 @@ const userLogin=async(req,res)=>{
     res.status(500).json({ message: "can`t fetch user controller" })
   }
 }
-module.exports={userLogin,getLogin}
+module.exports={userLogin}

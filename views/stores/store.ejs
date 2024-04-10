@@ -8,6 +8,24 @@
   <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
   <script src="/js/bootstrap.js"></script>
   <style>
+    .form-popup {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      top: 50px;
+      border: 3px solid #f1f1f1;
+      z-index: 9;
+      width: 500px;
+      right: 490px;
+    }
+
+    /* Add styles to the form container */
+    .form-container {
+      max-width: 300px;
+      padding: 10px;
+      background-color: white;
+    }
+
     .form-control {
       width: 700px;
       display: flex;
@@ -24,7 +42,7 @@
     }
 
     .row {
-      margin-top: 100px;
+      margin-top: 50px;
       margin-left: 100px;
     }
 
@@ -33,7 +51,8 @@
       margin-left: 110px;
       display: flex;
     }
-    #btn{
+
+    #btn {
       margin-left: 620px;
     }
   </style>
@@ -51,7 +70,7 @@
       <div class="container">
         <div class="row1">
           <h4>Stores</h4>
-          <button type="button" id="btn" class="btn btn-primary">Add</button>
+          <button type="button" id="btn" class="btn btn-primary" onclick="openForm()">Add</button>
         </div>
       </div>
     </section>
@@ -97,6 +116,16 @@
       </div>
     </section>
   </main>
+  <%- include('../form/form')%>
 </body>
+<script>
+  function openForm() {
+    document.getElementById("myForm").style.display = "block";
+  }
+
+  function closeForm() {
+    document.getElementById("myForm").style.display = "none";
+  }
+</script>
 
 </html>
