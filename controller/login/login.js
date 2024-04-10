@@ -4,14 +4,11 @@ require("dotenv").config();
 const jwt = require("jsonwebtoken");
 
 const { SECRET_KEY } = process.env;
-<<<<<<< HEAD:controller/loginController.js
-=======
 
 const getLogin=async(req,res)=>[
   res.render('login/login')
 ]
 
->>>>>>> 6c03b51345e006ec04055d79d4e604df6eeabcb5:controller/login/login.js
 const userLogin=async(req,res)=>{
   try {
     const user=await userLoginService(req.body);
@@ -61,8 +58,4 @@ const userLogin=async(req,res)=>{
     res.status(500).json({ message: "can`t fetch user controller" })
   }
 }
-<<<<<<< HEAD:controller/loginController.js
-module.exports={userLogin}
-=======
 module.exports={userLogin,getLogin,logsService,logUnsuccessService}
->>>>>>> 6c03b51345e006ec04055d79d4e604df6eeabcb5:controller/login/login.js
