@@ -23,8 +23,25 @@ router.get('/manager', listManagers);
 
 router.post('/forgot', forgotpass);
 
-router.get("/salesorder", getsales);
-router.post('/insert', insert_order);
-router.get('/store', stores);
+
+//sales Module
+
+const getsales = require("../controller/salesModule/salesData");
+router.get("/salesorder",getsales);
+
+const insertOrder = require('../controller/salesModule/addOrder');
+router.post('/insertSalesOrder',insertOrder);
+
+const insertProduct = require('../controller/salesModule/addProducts');
+router.post('/insertProduct', insertProduct);
+
+const getProducts = require('../controller/salesModule/getProducts');
+router.get('/getProducts', getProducts);
+
+const getCustomers = require('../controller/salesModule/getCustomers');
+router.get('/getCustomers', getCustomers);
+
+const updateOrder = require('../controller/salesModule/updateOrders');
+router.post('/updateOrder', updateOrder);
 
 module.exports = router;

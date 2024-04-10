@@ -2,11 +2,12 @@ const connection = require("../../config/connection");
 const logger = require("../../logs");
 const selectQuery = require('../../service/selectQuery');
 
-async function getsales(req, res) {
+async function getProducts(req, res) {
+  try{
   let order = req.query.order;
   let orderby = req.query.orderby;
 
-  const [rows, fields] = await selectQuery('order_master',orderby,order);
+  const [rows, fields] = await selectQuery('product_master',orderby,order);
 
   const header = [];
   fields.forEach((ele) => {
@@ -14,4 +15,9 @@ async function getsales(req, res) {
   });
   res.json({ rows, header });
 }
-module.exports = getsales;
+catch(err){
+  logger.logError(err);
+  
+}
+}
+module.exports = getProducts;

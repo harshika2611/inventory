@@ -20,4 +20,3 @@ connection.getConnection((err) => {
 
 module.exports = connection;
 
-require('dotenv').config();
