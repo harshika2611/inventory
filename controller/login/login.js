@@ -4,8 +4,8 @@ const {
 	logUnsuccessService,
 } = require('../../service/login/login');
 const md5 = require('md5');
-require('dotenv').config();
 const jwt = require('jsonwebtoken');
+const logger = require('../../logs');
 
 const { SECRET_KEY } = process.env;
 
@@ -14,7 +14,7 @@ const getLogin = async (req, res) => [res.render('login/login')];
 const userLogin = async (req, res) => {
 	try {
 		const user = await userLoginService(req.body);
-		console.log(user);
+
 		if (user.length > 0 && user[0].status == 1) {
 			const password = md5(user[0].salt + req.body.password);
 			if (user[0].role_id == 4) {
@@ -31,7 +31,6 @@ const userLogin = async (req, res) => {
 						})
 						.redirect(`/home`);
 				} else {
-					console.log(user, 'needddd');
 					const id = user[0].id;
 					const log = await logUnsuccessService(id);
 					const error = 'invalid password';
@@ -59,7 +58,7 @@ const userLogin = async (req, res) => {
 			res.render('login/login', { error });
 		}
 	} catch (error) {
-		console.error('error', error);
+		logger.logError('error', error);
 		res.status(500).json({ message: 'can`t fetch user controller' });
 	}
 };
