@@ -28,7 +28,7 @@ CREATE TABLE `customer_master` (
   `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -37,6 +37,7 @@ CREATE TABLE `customer_master` (
 
 LOCK TABLES `customer_master` WRITE;
 /*!40000 ALTER TABLE `customer_master` DISABLE KEYS */;
+INSERT INTO `customer_master` VALUES (1,'Raj','2024-04-09 14:40:40',NULL);
 /*!40000 ALTER TABLE `customer_master` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -137,7 +138,7 @@ CREATE TABLE `order_details` (
   `order_id` int NOT NULL,
   `product_id` int NOT NULL,
   `order_type` int NOT NULL,
-  `stock` int NOT NULL,
+  `quantity` int NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_order_details_1_idx` (`order_id`),
   KEY `fk_order_details_2_idx` (`product_id`),
@@ -180,7 +181,7 @@ CREATE TABLE `order_master` (
   CONSTRAINT `fk_order_master_1` FOREIGN KEY (`type`) REFERENCES `option_master` (`id`),
   CONSTRAINT `fk_order_master_2` FOREIGN KEY (`customer_id`) REFERENCES `customer_master` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `fk_order_master_3` FOREIGN KEY (`payment_status`) REFERENCES `option_master` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -189,6 +190,7 @@ CREATE TABLE `order_master` (
 
 LOCK TABLES `order_master` WRITE;
 /*!40000 ALTER TABLE `order_master` DISABLE KEYS */;
+INSERT INTO `order_master` VALUES (1,1,8,100,'adadad',11,'2024-04-09 14:41:28',NULL);
 /*!40000 ALTER TABLE `order_master` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -260,7 +262,8 @@ CREATE TABLE `purchase_details` (
   `id` int NOT NULL AUTO_INCREMENT,
   `purchase_id` int NOT NULL,
   `product_id` int NOT NULL,
-  `stock` int NOT NULL,
+  `unit_price` int NOT NULL,
+  `quantity` int NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_purchase_details_1_idx` (`purchase_id`),
   KEY `fk_purchase_details_2_idx` (`product_id`),
@@ -437,4 +440,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-04-09 11:18:26
+-- Dump completed on 2024-04-10 11:08:54

@@ -1,5 +1,5 @@
 require("dotenv").config();
-const mysql = require("mysql2/promise");
+const mysql = require("mysql2/promise.js");
 const logger = require("../logs.js");
 
 const connection = mysql.createPool({
@@ -11,7 +11,6 @@ const connection = mysql.createPool({
   multipleStatements: true,
 });
 
-
 connection.getConnection((err) => {
   if (!err) {
     logger.info("connected..");
@@ -21,3 +20,5 @@ connection.getConnection((err) => {
 });
 
 module.exports = connection;
+
+require("dotenv").config();
