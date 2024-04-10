@@ -1,37 +1,25 @@
 require("dotenv").config();
 const express = require("express");
 const router = express.Router();
-const {userLogin,getLogin}=require('../controller/loginController');
+const {userLogin,getLogin}=require('../controller/login/login');
+const {getHome}=require('../controller/home/homeController')
 const { auth } = require('../middleware/auth');
-var passport = require('passport');
+const {getForgot,forgotpass}=require('../controller/login/forgot')
+const getsales = require("../controller/sales_module/sales_data");
+const insert_order = require('../controller/sales_module/insert_order');
+const passport = require('passport');
 router.use(passport.initialize());
 auth(passport);
 
-router.get('/login',getLogin);
-router.post('/login',userLogin);
+router.get('/',getLogin);
+router.post('/',userLogin);
 
-router.get('/home',passport.authenticate("jwt",{session:false}),(req,res)=>{
-  res.render('home');
-})
+router.get('/home',passport.authenticate("jwt",{session:false}),getHome);
 
-router.get('/forgot',(req,res)=>{
-  res.render('forgot');
-})
+router.get('/forgot',getForgot);
 
-router.get('/home',passport.authenticate("jwt",{session:false}),(req,res)=>{
-  res.render('home');
-})
+router.post('/forgot',forgotpass);
 
-router.get('/forgot',(req,res)=>{
-  res.render('forgot');
-})
-
-
-
-
-
-const getsales = require("../controller/sales_module/sales_data");
-const insert_order = require('../controller/sales_module/insert_order');
 router.get("/salesorder", getsales);
 router.post('/insert',insert_order);
 

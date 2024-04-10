@@ -16,6 +16,11 @@
       <input type="text" name="new_pass" class="new_pass" id="new_pass" required>
       <label for="confirm_pass">Confirm Password</label>
       <input type="password" name="confirm_pass" class="confirm_pass" id="confirm_pass" required>
+      <%if(locals.error_forgot){%>
+        <div class="main_err" style="color: red;">
+          <%=error_forgot%>
+        </div>
+        <%}%>
       <button type="submit">Generate</button>
     </form>
   </div>
