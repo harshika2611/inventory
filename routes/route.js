@@ -7,6 +7,7 @@ const { getForgot, forgotpass } = require('../controller/login/forgot');
 const { listManagers } = require('../controller/manager/manager');
 const getsales = require('../controller/sales_module/sales_data');
 const insert_order = require('../controller/sales_module/insert_order');
+const {stores} = require('../controller/stores/store.js');
 const passport = require('passport');
 router.use(passport.initialize());
 auth(passport);
@@ -23,6 +24,7 @@ router.get('/manager', listManagers);
 router.post('/forgot', forgotpass);
 
 router.get("/salesorder", getsales);
-router.post('/insert',insert_order);
+router.post('/insert', insert_order);
+router.get('/store', stores);
 
 module.exports = router;
