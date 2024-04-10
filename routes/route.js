@@ -4,11 +4,7 @@ const { userLogin, getLogin } = require('../controller/login/login');
 const { getHome } = require('../controller/home/homeController');
 const { auth } = require('../middleware/auth');
 const { getForgot, forgotpass } = require('../controller/login/forgot');
-
-const { listManagers,updateManager } = require('../controller/manager/manager');
-const getsales = require('../controller/sales_module/sales_data');
-const insert_order = require('../controller/sales_module/insert_order');
-
+const { listManagers } = require('../controller/manager/manager');
 
 const { stores } = require('../controller/stores/store.js');
 
