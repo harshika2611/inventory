@@ -7,9 +7,9 @@ const getForgot=async(req,res)=>{
 const forgotpass=async(req,res)=>{
   try {
     const user=await forgotpassService(req.body);
-    console.log(user);
+   
     if(user>0){
-      console.log(req.body.new_pass,req.body.confirm_pass,"newpass");
+     
       if(req.body.new_pass==req.body.confirm_pass){
         res.redirect(`/`);
       
@@ -22,7 +22,8 @@ const forgotpass=async(req,res)=>{
       res.render("forgot",{error_forgot});
      }
   } catch (error) {
-    
+    logger.logError('error', error);
+		res.status(500).json({ message: 'can`t fetch user controller' });
   }
 }
 module.exports={getForgot,forgotpass};
