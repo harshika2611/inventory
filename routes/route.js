@@ -9,6 +9,7 @@ const { listManagers } = require('../controller/manager/manager');
 const { stores } = require('../controller/stores/store.js');
 
 const passport = require('passport');
+const { getreport } = require('../controller/report/report');
 router.use(passport.initialize());
 auth(passport);
 
@@ -53,6 +54,8 @@ router.get('/getCustomers', getCustomersSales);
 
 const updateOrder = require('../controller/salesModule/updateOrders');
 router.post('/updateOrder', updateOrder);
+
+router.get('/report', getreport);
 
 router.get('/manageCustomers', getCustomers);
 router.post('/insertCustomer', insertCustomer);
