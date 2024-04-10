@@ -22,8 +22,6 @@ app.use(
 app.use(passport.initialize());
 auth(passport);
 
-// app.use(passport.session());
-// require('./config/passport')(passport);
 app.use(express.json());
 
 app.use(bodyParser.urlencoded({ extended: false }));
