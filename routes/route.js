@@ -7,6 +7,7 @@ const { getForgot, forgotpass } = require('../controller/login/forgot');
 const { listManagers } = require('../controller/manager/manager');
 
 const { stores } = require('../controller/stores/store.js');
+
 const passport = require('passport');
 router.use(passport.initialize());
 auth(passport);
@@ -24,7 +25,12 @@ router.get('/home', passport.authenticate('jwt', { session: false }), getHome);
 
 router.get('/forgot', getForgot);
 
-router.get('/manager', listManagers);
+
+router.get('/getmanager', listManagers);
+
+router.get('/updatemanager', updateManager);
+
+
 
 router.post('/forgot', forgotpass);
 

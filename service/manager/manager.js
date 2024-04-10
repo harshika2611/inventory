@@ -9,4 +9,14 @@ const listManagersService = async () => {
 		throw error;
 	}
 };
-module.exports = { listManagersService };
+
+const updateManagerService = async () => {
+	try {
+		
+	} catch (error) {
+		logger.logError(`Error`, error);
+		throw error;
+	}
+};
+
+module.exports = { listManagersService, updateManagerService };
