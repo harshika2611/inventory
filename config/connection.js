@@ -11,12 +11,13 @@ const connection = mysql.createPool({
   multipleStatements: true,
 });
 
+
 connection.getConnection((err) => {
-  if (!err) {
-    logger.info("connected..");
-  } else {
-    logger.logError("Error In Database Connection: " + err);
-  }
+    if (!err) {
+        logger.info("connected..");
+    } else {
+        logger.logError("Error In Database Connection: " + err);
+    }
 });
 
 module.exports = connection;
