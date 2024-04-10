@@ -31,7 +31,7 @@ const userLogin=async(req,res)=>{
           .cookie("token",token,{
             httpOnly:true
           })
-          .redirect(`http://localhost:8000/home`)
+          .redirect(`/home`)
         }else{
           const error="invalid password"
           res.render("login",{error})
