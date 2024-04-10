@@ -12,13 +12,12 @@ const connection = mysql.createPool({
 });
 
 connection.getConnection((err) => {
-  if (!err) {
-    logger.info("connected..");
-  } else {
-    logger.logError("Error In Database Connection: " + err);
-  }
+    if (!err) {
+        logger.info("connected..");
+    } else {
+        logger.logError("Error In Database Connection: " + err);
+    }
 });
 
 module.exports = connection;
 
-require("dotenv").config();
