@@ -6,5 +6,8 @@
 	"prettier.semi": true,
 	"prettier.useTabs": true,
 	"prettier.tabWidth": 2,
-	"prettier.singleQuote": true
+	"prettier.singleQuote": true,
+	"[html]": {
+		"editor.defaultFormatter": "vscode.html-language-features"
+	}
 }

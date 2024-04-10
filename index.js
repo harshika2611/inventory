@@ -9,7 +9,8 @@ const cookieParser = require('cookie-parser');
 const logger = require('./logs.js');
 const route = require('./routes/route.js');
 var passport = require('passport');
-const { auth } = require('./middleware/auth.js');
+const {auth}=require('./middleware/auth.js');
+const { render } = require("ejs");
 
 app.use(bodyParser.json());
 app.use(
@@ -21,8 +22,6 @@ app.use(
 app.use(passport.initialize());
 auth(passport);
 
-// app.use(passport.session());
-// require('./config/passport')(passport);
 app.use(express.json());
 
 app.use(bodyParser.urlencoded({ extended: false }));
