@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+<<<<<<< HEAD:views/forgot.ejs
+  <h2>Forgot password</h2>
+=======
+  <div class="main">
+    <h2>Forgot password</h2>
+    <form method="post">
+      <label for="email">Email</label>
+      <input type="email" name="email" placeholder="xyz@gmail.com" id="email"  required>  
+      <label for="new_pass">New Password</label>
+      <input type="text" name="new_pass" class="new_pass" id="new_pass" required>
+      <label for="confirm_pass">Confirm Password</label>
+      <input type="password" name="confirm_pass" class="confirm_pass" id="confirm_pass" required>
+      <%if(locals.error_forgot){%>
+        <div class="main_err" style="color: red;">
+          <%=error_forgot%>
+        </div>
+        <%}%>
+      <button type="submit">Generate</button>
+    </form>
+  </div>
+>>>>>>> 6c03b51345e006ec04055d79d4e604df6eeabcb5:views/login/forgot.ejs
+</body>
+</html>
