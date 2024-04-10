@@ -167,6 +167,7 @@ DROP TABLE IF EXISTS `order_master`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `order_master` (
   `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) NOT NULL,
   `customer_id` int NOT NULL,
   `type` int NOT NULL,
   `amount` int NOT NULL,
@@ -190,7 +191,7 @@ CREATE TABLE `order_master` (
 
 LOCK TABLES `order_master` WRITE;
 /*!40000 ALTER TABLE `order_master` DISABLE KEYS */;
-INSERT INTO `order_master` VALUES (1,1,8,100,'adadad',11,'2024-04-09 14:41:28',NULL);
+INSERT INTO `order_master` VALUES (1,'',1,8,100,'adadad',11,'2024-04-09 14:41:28',NULL);
 /*!40000 ALTER TABLE `order_master` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -203,6 +204,7 @@ DROP TABLE IF EXISTS `product_master`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `product_master` (
   `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) NOT NULL,
   `sku_id` int NOT NULL,
   `category_id` int NOT NULL,
   `cost` int DEFAULT NULL,
@@ -290,6 +292,7 @@ DROP TABLE IF EXISTS `purchase_order`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `purchase_order` (
   `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) NOT NULL,
   `supplier_id` int NOT NULL,
   `amount` int NOT NULL,
   `payment_status` int NOT NULL,
@@ -345,6 +348,7 @@ DROP TABLE IF EXISTS `storage_space_master`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `storage_space_master` (
   `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) NOT NULL,
   `storage_type` int NOT NULL,
   `location_id` int NOT NULL,
   `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
@@ -440,4 +444,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-04-10 11:08:54
+-- Dump completed on 2024-04-10 18:03:41
