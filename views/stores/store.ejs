@@ -7,13 +7,13 @@
   <title>Store</title>
   <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
   <script src="/js/bootstrap.js"></script>
+  <link rel="stylesheet" href="src/css/dashboard/dashboard.css" />
   <style>
     .form-popup {
       display: none;
       position: absolute;
       bottom: 0;
       top: 50px;
-      border: 3px solid #f1f1f1;
       z-index: 9;
       width: 500px;
       right: 490px;
@@ -29,22 +29,16 @@
       /* height: 1000px; */
     }
 
-    .form-control {
+    .form2 {
       width: 700px;
       display: flex;
     }
 
-    .form-inline {
+    .form1 {
       display: flex;
       margin-left: 200px;
     }
-
-    body {
-      margin: 10px;
-      padding: 10px;
-    }
-
-    .row {
+    .row2 {
       margin-top: 50px;
       margin-left: 100px;
     }
@@ -61,13 +55,12 @@
   </style>
 </head>
 
-<body class="body2">
+<body>
+  <%- include('../components/navigation')%>
   <div id="childbody">
-
-
     <header>
-      <form class="form-inline my-2 my-lg-0">
-        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+      <form class="form-inline form1 my-2 my-lg-0">
+        <input class="form-control form2 mr-sm-2" type="search" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
       </form>
     </header>
@@ -82,7 +75,7 @@
       </section>
       <section>
         <div class="container">
-          <div class="row">
+          <div class="row row2">
             <div class="col-sm">
               Ahmedabad
             </div>
@@ -95,7 +88,7 @@
           </div>
         </div>
         <div class="container">
-          <div class="row">
+          <div class="row row2">
             <div class="col-sm">
               Rajkot
             </div>
@@ -108,7 +101,7 @@
           </div>
         </div>
         <div class="container">
-          <div class="row">
+          <div class="row row2">
             <div class="col-sm">
               Surat
             </div>
@@ -123,7 +116,7 @@
       </section>
     </main>
   </div>
-  <%- include('../form/manager')%>
+  <%- include('../form/storeForm')%>
 </body>
 <script>
   function openForm() {
