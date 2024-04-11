@@ -9,4 +9,26 @@ const listManagersService = async () => {
 		throw error;
 	}
 };
-module.exports = { listManagersService };
+
+const updateManagerService = async () => {
+	try {
+	} catch (error) {
+		logger.logError(`Error`, error);
+		throw error;
+	}
+};
+
+const insertManagerService = async () => {
+	try {
+		const sql2=`insert into users ()`
+	} catch (error) {
+		logger.logError(`Error`, error);
+		throw error;
+	}
+};
+
+module.exports = {
+	listManagersService,
+	updateManagerService,
+	insertManagerService,
+};

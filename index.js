@@ -10,7 +10,7 @@ const logger = require('./logs.js');
 const route = require('./routes/route.js');
 var passport = require('passport');
 const { auth } = require('./middleware/auth.js');
-const { render } = require("ejs");
+const { render } = require('ejs');
 
 app.use(bodyParser.json());
 app.use(
@@ -56,7 +56,6 @@ app.get('/store', (req, res) => {
 });
 //put this at last because any route not found then execute this
 
-app.use("*", (req, res) => {
-	// res.render("", { message: "Not Found" });
-	res.send("Not Found");
+app.use((req, res) => {
+	res.render({ message: 'Not Found' });
 });

@@ -15,7 +15,7 @@ const userLogin = async (req, res) => {
 	try {
 		const user = await userLoginService(req.body);
 
-		if (user.length > 0 && user[0].status == 1) {
+		if (user.length > 0 && user[0].status == 6) {
 			const password = md5(user[0].salt + req.body.password);
 			if (user[0].role_id == 4) {
 				if (password == user[0].password) {
