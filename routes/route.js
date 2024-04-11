@@ -5,13 +5,7 @@ const { getHome } = require('../controller/home/homeController')
 const { auth } = require('../middleware/auth');
 const { getForgot, forgotpass } = require('../controller/login/forgot');
 const { listManagers } = require('../controller/manager/manager');
-const getsales = require('../controller/sales_module/sales_data');
-const insert_order = require('../controller/sales_module/insert_order');
-<<<<<<< HEAD
 const {stores} = require('../controller/stores/store.js');
-=======
-const { stores } = require('../controller/stores/store.js');
->>>>>>> 20e583cc2516841fa41ef5688d1def406ec76137
 const passport = require('passport');
 router.use(passport.initialize());
 auth(passport);
@@ -34,11 +28,7 @@ router.post('/forgot', forgotpass);
 
 const getsales = require("../controller/salesModule/salesData");
 router.get("/salesorder", getsales);
-<<<<<<< HEAD
-router.post('/insert', insert_order);
 router.get('/store', stores);
-=======
->>>>>>> 20e583cc2516841fa41ef5688d1def406ec76137
 
 const insertOrder = require('../controller/salesModule/addOrder');
 router.post('/insertSalesOrder', insertOrder);
@@ -49,8 +39,8 @@ router.post('/insertProduct', insertProduct);
 const getProducts = require('../controller/salesModule/getProducts');
 router.get('/getProducts', getProducts);
 
-const getCustomers = require('../controller/salesModule/getCustomers');
-router.get('/getCustomers', getCustomers);
+const getCustomersSales = require('../controller/salesModule/getCustomers');
+router.get('/getCustomers', getCustomersSales);
 
 const updateOrder = require('../controller/salesModule/updateOrders');
 router.post('/updateOrder', updateOrder);
