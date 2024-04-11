@@ -61,79 +61,79 @@
   </style>
 </head>
 
-<body class="body2" >
+<body class="body2">
   <div id="childbody">
 
-  
-  <header>
-    <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-    </form>
-  </header>
-  <main>
-    <section>
-      <div class="container">
-        <div class="row1">
-          <h4>Stores</h4>
-          <button type="button" id="btn" class="btn btn-primary" onclick="openForm()">Add</button>
-        </div>
-      </div>
-    </section>
-    <section>
-      <div class="container">
-        <div class="row">
-          <div class="col-sm">
-            Ahmedabad
-          </div>
-          <div class="col-sm">
-            361001
-          </div>
-          <div class="col-sm">
-            <button type="button" class="btn btn-outline-primary">Edit</button>
+
+    <header>
+      <form class="form-inline my-2 my-lg-0">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      </form>
+    </header>
+    <main>
+      <section>
+        <div class="container">
+          <div class="row1">
+            <h4>Stores</h4>
+            <button type="button" id="btn" class="btn btn-primary" onclick="openForm()">Add</button>
           </div>
         </div>
-      </div>
-      <div class="container">
-        <div class="row">
-          <div class="col-sm">
-            Rajkot
-          </div>
-          <div class="col-sm">
-            361002
-          </div>
-          <div class="col-sm">
-            <button type="button" class="btn btn-outline-primary">Edit</button>
-          </div>
-        </div>
-      </div>
-      <div class="container">
-        <div class="row">
-          <div class="col-sm">
-            Surat
-          </div>
-          <div class="col-sm">
-            361003
-          </div>
-          <div class="col-sm">
-            <button type="button" class="btn btn-outline-primary">Edit</button>
+      </section>
+      <section>
+        <div class="container">
+          <div class="row">
+            <div class="col-sm">
+              Ahmedabad
+            </div>
+            <div class="col-sm">
+              361001
+            </div>
+            <div class="col-sm">
+              <button type="button" class="btn btn-outline-primary">Edit</button>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
-  </main>
-</div>
-  <%- include('../form/customer')%>
+        <div class="container">
+          <div class="row">
+            <div class="col-sm">
+              Rajkot
+            </div>
+            <div class="col-sm">
+              361002
+            </div>
+            <div class="col-sm">
+              <button type="button" class="btn btn-outline-primary">Edit</button>
+            </div>
+          </div>
+        </div>
+        <div class="container">
+          <div class="row">
+            <div class="col-sm">
+              Surat
+            </div>
+            <div class="col-sm">
+              361003
+            </div>
+            <div class="col-sm">
+              <button type="button" class="btn btn-outline-primary">Edit</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+  <%- include('../form/manager')%>
 </body>
 <script>
   function openForm() {
     document.getElementById("myForm").style.display = "block";
-    document.getElementById("childbody").style =`
+    document.getElementById("childbody").style = `
 -webkit-filter: blur(2px);
 -moz-filter: blur(2px);
 -o-filter: blur(2px);
 -ms-filter: blur(2px);
-filter: blur(2px); `   
+filter: blur(2px); `
 
   }
 
