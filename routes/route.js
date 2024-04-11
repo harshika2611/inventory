@@ -11,9 +11,21 @@ const {
 const { getHome } = require('../controller/home/homeController');
 const { auth } = require('../middleware/auth');
 const { getForgot, forgotPass } = require('../controller/login/forgot');
+const {
+	insertStore,
+	getStore,
+	updateStore,
+} = require('../controller/stores/store.js');
 
 //----Dashboard
 const dashboard = require('../controller/dashboard/dashboard.js');
+
+//----Dashboard
+
+router.get('/dashboard', dashboard);
+//-------------
+//manage manager
+
 //------------
 const {
 	addManager,
@@ -26,6 +38,8 @@ const {
 
 const passport = require('passport');
 const { getreport } = require('../controller/report/report');
+//report
+router.get('/report', getreport);
 router.use(passport.initialize());
 auth(passport);
 //----Manage Customers
