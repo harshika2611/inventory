@@ -21,8 +21,10 @@ async function insertCustomer(req, res) {
 async function getCustomers(req, res) {
 	try {
 		const customersDetails = await getCustomersQuery();
-
-		return res.status(200).json({ data: customersDetails });
+		return res.render('manageCustomers/manageCustomers', {
+			customersDetails: customersDetails
+		});
+		// return res.status(200).json({ data: customersDetails });
 	} catch (error) {
 		return res.status(404).json({ message: "Can't get customers" });
 	}
@@ -58,7 +60,7 @@ async function deleteCustomer(req, res) {
 
 async function filterCustomer(req, res) {
 	try {
-	} catch (error) {}
+	} catch (error) { }
 }
 module.exports = {
 	insertCustomer,
