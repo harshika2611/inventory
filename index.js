@@ -51,11 +51,7 @@ portFinder.getPort(function (err, port) {
 		logger.logError('Error In Server Listen: ' + err);
 	}
 });
-app.get('/store', (req, res) => {
-	res.render('store', { message: 'Not Found' });
-});
-//put this at last because any route not found then execute this
 
 app.use((req, res) => {
-	res.render({ message: 'Not Found' });
+	res.send({ message: 'Not Found' });
 });
