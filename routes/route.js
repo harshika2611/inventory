@@ -9,9 +9,9 @@ const { getForgot, forgotpass } = require('../controller/login/forgot');
 const dashboard = require('../controller/dashboard/dashboard.js');
 //------------
 const {
-  listManagers,
-  updateManager,
-  insertManager,
+	listManagers,
+	updateManager,
+	insertManager,
 } = require('../controller/manager/manager');
 const { stores } = require('../controller/stores/store.js');
 const passport = require('passport');
@@ -21,17 +21,21 @@ auth(passport);
 
 //----Manage Customers
 const {
-  insertCustomer,
-  updateCustomer,
-  getCustomers,
-  deleteCustomer,
-  filterCustomer,
+	insertCustomer,
+	updateCustomer,
+	getCustomers,
+	deleteCustomer,
+	filterCustomer,
 } = require('../controller/manageCustomers/manageCustomers.js');
 //----
 
 router.get('/', getLogin);
 router.post('/', userLogin);
-router.get('/home', passport.authenticate('jwt', { session: false }), getHome);
+router.get(
+	'/home',
+	passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+	getHome
+);
 router.get('/forgot', getForgot);
 router.post('/forgot', forgotpass);
 
@@ -64,8 +68,8 @@ const updateOrder = require('../controller/salesModule/updateOrders');
 router.post('/updateOrder', updateOrder);
 
 router.get('/sales', (req, res) => {
-  res.render('salesModule/sales',)
-})
+	res.render('salesModule/sales');
+});
 
 //---------Manage Customers
 router.get('/manageCustomers', getCustomers);
@@ -76,5 +80,40 @@ router.post('/filterCustomer', filterCustomer);
 
 // ---------Store
 router.get('/store', stores);
+
+// ------------------- Manage Purchases ---------------------- //
+
+const {
+	fetchCombos,
+	showPurchases,
+	createPurchase,
+	fetchSuppliers,
+} = require('../controller/purchase');
+
+router.get(
+	'/api/combos/:name',
+	passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+	fetchCombos
+);
+
+router.get(
+	'/api/purchase/suppliers',
+	passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+	fetchSuppliers
+);
+
+router.post(
+	'/api/purchase/purchase',
+	passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+	createPurchase
+);
+
+router.get(
+	'/purchase',
+	passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+	showPurchases
+);
+
+// ------------------- Manage Purchases ---------------------- //
 
 module.exports = router;

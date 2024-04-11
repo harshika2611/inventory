@@ -59,7 +59,7 @@ CREATE TABLE `logs` (
   KEY `fk_logs_2_idx` (`type_id`),
   CONSTRAINT `fk_logs_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
   CONSTRAINT `fk_logs_2` FOREIGN KEY (`type_id`) REFERENCES `option_master` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -68,6 +68,7 @@ CREATE TABLE `logs` (
 
 LOCK TABLES `logs` WRITE;
 /*!40000 ALTER TABLE `logs` DISABLE KEYS */;
+INSERT INTO `logs` VALUES (1,1,13,NULL,'2024-04-11 10:21:07'),(2,1,12,NULL,'2024-04-11 10:23:55'),(3,1,13,NULL,'2024-04-11 10:59:15'),(4,1,12,NULL,'2024-04-11 14:44:44'),(5,1,12,NULL,'2024-04-11 18:05:49');
 /*!40000 ALTER TABLE `logs` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -113,7 +114,7 @@ CREATE TABLE `option_master` (
   PRIMARY KEY (`id`),
   KEY `fk_option_master_1_idx` (`select_id`),
   CONSTRAINT `fk_option_master_1` FOREIGN KEY (`select_id`) REFERENCES `select_master` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -122,7 +123,7 @@ CREATE TABLE `option_master` (
 
 LOCK TABLES `option_master` WRITE;
 /*!40000 ALTER TABLE `option_master` DISABLE KEYS */;
-INSERT INTO `option_master` VALUES (4,1,'admin'),(5,1,'manager'),(6,2,'active'),(7,2,'inactive.'),(8,3,'not_returned'),(9,3,'returned'),(10,4,'pending'),(11,4,'paid'),(12,5,'successful_logged_in'),(13,5,'unsuccessful_logged_in');
+INSERT INTO `option_master` VALUES (4,1,'admin'),(5,1,'manager'),(6,2,'active'),(7,2,'inactive.'),(8,3,'not_returned'),(9,3,'returned'),(10,4,'pending'),(11,4,'paid'),(12,5,'successful_logged_in'),(13,5,'unsuccessful_logged_in'),(14,6,'GC731'),(15,7,'Stationary');
 /*!40000 ALTER TABLE `option_master` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -173,6 +174,7 @@ CREATE TABLE `order_master` (
   `amount` int NOT NULL,
   `shipping_address` varchar(100) DEFAULT NULL,
   `payment_status` int DEFAULT NULL,
+  `date` date DEFAULT NULL,
   `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
@@ -191,7 +193,7 @@ CREATE TABLE `order_master` (
 
 LOCK TABLES `order_master` WRITE;
 /*!40000 ALTER TABLE `order_master` DISABLE KEYS */;
-INSERT INTO `order_master` VALUES (1,'',1,8,100,'adadad',11,'2024-04-09 14:41:28',NULL);
+INSERT INTO `order_master` VALUES (1,'',1,8,100,'adadad',11,NULL,'2024-04-09 14:41:28',NULL);
 /*!40000 ALTER TABLE `order_master` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -214,7 +216,7 @@ CREATE TABLE `product_master` (
   KEY `fk_product_master_3_idx` (`category_id`),
   CONSTRAINT `fk_product_master_1` FOREIGN KEY (`sku_id`) REFERENCES `option_master` (`id`),
   CONSTRAINT `fk_product_master_3` FOREIGN KEY (`category_id`) REFERENCES `option_master` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -223,6 +225,7 @@ CREATE TABLE `product_master` (
 
 LOCK TABLES `product_master` WRITE;
 /*!40000 ALTER TABLE `product_master` DISABLE KEYS */;
+INSERT INTO `product_master` VALUES (1,'Apsara Platinium Pencil Set Of 24',14,15,NULL,NULL);
 /*!40000 ALTER TABLE `product_master` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -296,6 +299,7 @@ CREATE TABLE `purchase_order` (
   `supplier_id` int NOT NULL,
   `amount` int NOT NULL,
   `payment_status` int NOT NULL,
+  `date` date DEFAULT NULL,
   `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
@@ -303,7 +307,7 @@ CREATE TABLE `purchase_order` (
   KEY `fk_purchase_order_2_idx` (`payment_status`),
   CONSTRAINT `fk_purchase_order_1` FOREIGN KEY (`supplier_id`) REFERENCES `supplier_master` (`id`),
   CONSTRAINT `fk_purchase_order_2` FOREIGN KEY (`payment_status`) REFERENCES `option_master` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -312,6 +316,7 @@ CREATE TABLE `purchase_order` (
 
 LOCK TABLES `purchase_order` WRITE;
 /*!40000 ALTER TABLE `purchase_order` DISABLE KEYS */;
+INSERT INTO `purchase_order` VALUES (1,'Pens',1,500,10,NULL,'2024-04-11 17:41:52',NULL),(2,'Pens',1,500,10,NULL,'2024-04-11 17:54:15',NULL);
 /*!40000 ALTER TABLE `purchase_order` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -379,11 +384,12 @@ DROP TABLE IF EXISTS `supplier_master`;
 CREATE TABLE `supplier_master` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL,
+  `company_name` varchar(45) NOT NULL,
   `GST` varchar(45) DEFAULT NULL,
   `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -392,6 +398,7 @@ CREATE TABLE `supplier_master` (
 
 LOCK TABLES `supplier_master` WRITE;
 /*!40000 ALTER TABLE `supplier_master` DISABLE KEYS */;
+INSERT INTO `supplier_master` VALUES (1,'Bharat Makwana','Apsara','36DBOPA9199A1ZF','2024-04-11 16:46:12',NULL);
 /*!40000 ALTER TABLE `supplier_master` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -431,7 +438,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,4,'admin',NULL,'admin@gmail.com','2000-03-01',' 762ea51a9b079dc361bcac904ccb867b','1447',NULL,NULL,6,'2024-04-08 16:34:58',NULL);
+INSERT INTO `users` VALUES (1,4,'admin',NULL,'admin@gmail.com','2000-03-01','0cfea142240c44cb25f6f25b56abcfa0','3251',NULL,NULL,6,'2024-04-08 16:34:58','2024-04-11 10:23:48');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -444,4 +451,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-04-10 18:03:41
+-- Dump completed on 2024-04-11 18:46:52
