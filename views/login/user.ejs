@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="/src/css/login/style.css">
+</head>
+
+<body>
+
+  <div class="main">
+    <h2>Validate Email</h2>
+    <form method="post" id="myForm">
+      <label for="email"></label>
+      <input type="email" name="email" id="email">
+      <%if(locals.error){%>
+        <div class="main_err" style="color: red;">
+          <%=error%>
+        </div>
+        <%}%>
+          <button type="submit">Generate Link</button>
+
+    </form>
+
+    <div class="main-2">
+      <%if(locals.otp){%>
+        <h2>Kindly go through this link</h2>
+        <a href="http://localhost:8000/activelink/<%=otp%>">http://localhost:8000/activelink/<%=otp%></a>
+        <%}%>
+    </div>
+  </div>
+</body>
+
+</html>

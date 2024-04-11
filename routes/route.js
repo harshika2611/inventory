@@ -1,14 +1,22 @@
 const express = require('express');
 const router = express.Router();
-const { userLogin, getLogin } = require('../controller/login/login');
+const {
+	userLogout,
+	checkUser,
+	getUserName,
+	userLogin,
+	getLogin,
+	getLink,
+} = require('../controller/login/login');
 const { getHome } = require('../controller/home/homeController');
 const { auth } = require('../middleware/auth');
-const { getForgot, forgotpass } = require('../controller/login/forgot');
+const { getForgot, forgotPass } = require('../controller/login/forgot');
 
 //----Dashboard
 const dashboard = require('../controller/dashboard/dashboard.js');
 //------------
 const {
+	addManager,
 	listManagers,
 	updateManager,
 	insertManager,
@@ -20,7 +28,6 @@ const passport = require('passport');
 const { getreport } = require('../controller/report/report');
 router.use(passport.initialize());
 auth(passport);
-
 //----Manage Customers
 const {
 	insertCustomer,
@@ -29,13 +36,9 @@ const {
 	deleteCustomer,
 	filterCustomer,
 } = require('../controller/manageCustomers/manageCustomers.js');
+const { checkLogin } = require('../middleware/auth.js');
 
-const {
-  insertStore,
-  getStore,
-  updateStore
-} = require('../controller/stores/store.js')
-
+//login module
 router.get('/', getLogin);
 router.post('/', userLogin);
 router.get(
@@ -43,18 +46,19 @@ router.get(
 	passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
 	getHome
 );
+router.get('/user', getUserName);
+router.post('/user', checkUser);
+router.get('/activelink/:link', getLink);
 router.get('/forgot', getForgot);
-router.post('/forgot', forgotpass);
+router.post('/forgot', forgotPass);
+router.get(
+	'/logout',
+	passport.authenticate('jwt', { session: false }),
+	userLogout
+);
 
-//report
-router.get('/report', getreport);
-
-//----Dashboard
-
-router.get('/dashboard', dashboard);
-//-------------
-//manage manager
-
+//manager module
+router.get('/addmanager', addManager);
 router.get('/insertmanager', insertManager);
 router.get('/getmanager', listManagers);
 router.get('/updatemanager', updateManager);
