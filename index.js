@@ -10,7 +10,7 @@ const logger = require('./logs.js');
 const route = require('./routes/route.js');
 var passport = require('passport');
 const { auth } = require('./middleware/auth.js');
-const { render } = require("ejs");
+const { render } = require('ejs');
 
 app.use(bodyParser.json());
 app.use(
@@ -51,12 +51,7 @@ portFinder.getPort(function (err, port) {
 		logger.logError('Error In Server Listen: ' + err);
 	}
 });
-app.get('/store', (req, res) => {
-	res.render('store', { message: 'Not Found' });
-});
-//put this at last because any route not found then execute this
 
-app.use("*", (req, res) => {
-	// res.render("", { message: "Not Found" });
-	res.send("Not Found");
+app.use((req, res) => {
+	res.send({ message: 'Not Found' });
 });

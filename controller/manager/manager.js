@@ -1,4 +1,4 @@
-const { listManagersService,updateManagerService } = require('../../service/manager/manager');
+const { listManagersService,updateManagerService,insertManagerService } = require('../../service/manager/manager');
 
 const listManagers = async (req, res) => {
 	try {
@@ -16,10 +16,19 @@ const updateManager = async (req, res) => {
 		const result1 = await updateManagerService();
 
 	} catch (error) {
-		
+		logger.logError('error', error);
+		res.status(500).json({ message: 'can`t fetch user controller' });
+	}
+}
+
+const insertManager = async (req, res) => {
+	try {
+		const result2 = await insertManagerService();
+	} catch (error) {
+		logger.logError('error', error);
+		res.status(500).json({ message: 'can`t fetch user controller' });
 	}
 }
 
 
-
-module.exports = { listManagers,updateManager };
+module.exports = { listManagers,updateManager,insertManager };
