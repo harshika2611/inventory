@@ -10,18 +10,33 @@
 <body class="body">
   <div class="row form-popup" id="myForm">
     <div class="col-md-12 " data-bs-spy="scroll">
-      <form action="" method="">
+      <form action="/insertStore" method="post">
         <div class="container">
           <h1>Store Details</h1>
           <fieldset>
             <div class="form-floating mb-3">
-              <input name="storagetype" type="text" class="form-control" id="floatingInput" placeholder="name@example.com">
-              <label for="floatingInput">Storage Type </label>
+              <input name="storageName" type="text" class="form-control" id="floatingInput"
+                placeholder="name@example.com">
+              <label for="floatingInput">Name </label>
             </div>
 
-            <div class="form-floating mb-3">
-              <input name="location" type="text" class="form-control" id="floatingInput" placeholder="name@example.com">
-              <label for="floatingInput">Location </label>
+            <label for="floatingSelect">Storage Type </label>
+            <div class="form-floating">
+              <select name="storeType">
+                <option value="14">Warehouses</option>
+                <option value="15">Stores</option>
+                <option value="16">Distribution Centers</option>
+              </select>
+            </div>
+
+            <label for="floatingSelect">Location </label>
+            <div class="form-floating">
+              <select name="location">
+                <option value="17">Ahmedabad</option>
+                <option value="18">Surat</option>
+                <option value="19">Gandhinagar</option>
+                <option value="20">Rajkot</option>
+              </select>
             </div>
           </fieldset>
           <button type="submit" class="btn btn-outline-primary" onclick="closeForm()">Submit</button>

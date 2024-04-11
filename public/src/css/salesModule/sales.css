@@ -1,0 +1,33 @@
+.container {
+  margin: 33px 28px 47px 245px;
+  width: auto;
+}
+.allfilters {
+  justify-content: end;
+  display: flex;
+}
+.filter {
+  margin-left: 1%;
+}
+.grid {
+  margin-top: 5%;
+}
+.gridComponent{
+  display: none;
+}
+#insertForm{
+  width: 70%;
+}
+#customer {
+  width: 15%;
+  margin: 0 2%;
+}
+.insertFields {
+  margin-bottom: 2%;
+}
+.insertLabels {
+  margin-bottom: 1%;
+}
+#insertSubmit{
+  width: 100%;
+}

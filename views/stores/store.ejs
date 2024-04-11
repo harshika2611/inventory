@@ -8,12 +8,14 @@
   <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
   <script src="/js/bootstrap.js"></script>
   <link rel="stylesheet" href="src/css/dashboard/dashboard.css" />
+  <link rel="stylesheet" href="src/css/dashboard/allpage.css" />
   <style>
     .form-popup {
       display: none;
       position: absolute;
       bottom: 0;
       top: 50px;
+      border: 3px solid #f1f1f1;
       z-index: 9;
       width: 500px;
       right: 490px;
@@ -29,17 +31,27 @@
       /* height: 1000px; */
     }
 
-    .form2 {
+    .form-control {
       width: 700px;
       display: flex;
     }
 
-    .form1 {
+    .form-inline {
       display: flex;
       margin-left: 200px;
     }
-    .row2 {
+
+    body {
+      margin: 10px;
+      padding: 10px;
+    }
+
+    .row {
       margin-top: 50px;
+    }
+
+    .row2 {
+      margin-top: 26px;
       margin-left: 100px;
     }
 
@@ -57,66 +69,44 @@
 
 <body>
   <%- include('../components/navigation')%>
-  <div id="childbody">
-    <header>
-      <form class="form-inline form1 my-2 my-lg-0">
-        <input class="form-control form2 mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-      </form>
-    </header>
-    <main>
-      <section>
-        <div class="container">
-          <div class="row1">
-            <h4>Stores</h4>
-            <button type="button" id="btn" class="btn btn-primary" onclick="openForm()">Add</button>
-          </div>
-        </div>
-      </section>
-      <section>
-        <div class="container">
-          <div class="row row2">
-            <div class="col-sm">
-              Ahmedabad
+    <div class="div-second">
+      <div id="childbody">
+        <header>
+          <form class="form-inline form1 my-2 my-lg-0">
+            <input class="form-control form2 mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+          </form>
+        </header>
+        <main>
+          <section>
+            <div class="container">
+              <div class="row1">
+                <h4>Stores</h4>
+                <button type="button" id="btn" class="btn btn-primary" onclick="openForm()">Add</button>
+              </div>
             </div>
-            <div class="col-sm">
-              361001
-            </div>
-            <div class="col-sm">
-              <button type="button" class="btn btn-outline-primary">Edit</button>
-            </div>
-          </div>
-        </div>
-        <div class="container">
-          <div class="row row2">
-            <div class="col-sm">
-              Rajkot
-            </div>
-            <div class="col-sm">
-              361002
-            </div>
-            <div class="col-sm">
-              <button type="button" class="btn btn-outline-primary">Edit</button>
-            </div>
-          </div>
-        </div>
-        <div class="container">
-          <div class="row row2">
-            <div class="col-sm">
-              Surat
-            </div>
-            <div class="col-sm">
-              361003
-            </div>
-            <div class="col-sm">
-              <button type="button" class="btn btn-outline-primary">Edit</button>
-            </div>
-          </div>
-        </div>
-      </section>
-    </main>
-  </div>
-  <%- include('../form/storeForm')%>
+          </section>
+          <section>
+            <%storeDetails.map((e)=>{%>
+              <div class="container">
+                <div class="row row2">
+                  <div class="col-sm">
+                    <%=e.name%>
+                  </div>
+                  <div class="col-sm">
+                    <%=e.value%>
+                  </div>
+                  <div class="col-sm">
+                    <button type="button" class="btn btn-outline-primary">Edit</button>
+                  </div>
+                </div>
+              </div>
+              <%})%>
+          </section>
+        </main>
+      </div>
+    </div>
+    <%- include('../form/storeForm')%>
 </body>
 <script>
   function openForm() {
