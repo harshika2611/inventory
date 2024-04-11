@@ -5,9 +5,9 @@ const { getHome } = require('../controller/home/homeController');
 const { auth } = require('../middleware/auth');
 const { getForgot, forgotpass } = require('../controller/login/forgot');
 const {
-  listManagers,
-  updateManager,
-  insertManager
+	listManagers,
+	updateManager,
+	insertManager,
 } = require('../controller/manager/manager');
 const { stores } = require('../controller/stores/store.js');
 const passport = require('passport');
@@ -16,13 +16,12 @@ router.use(passport.initialize());
 auth(passport);
 
 const {
-  insertCustomer,
-  updateCustomer,
-  getCustomers,
-  deleteCustomer,
-  filterCustomer,
+	insertCustomer,
+	updateCustomer,
+	getCustomers,
+	deleteCustomer,
+	filterCustomer,
 } = require('../controller/manageCustomers/manageCustomers.js');
-
 
 router.get('/', getLogin);
 router.post('/', userLogin);
@@ -30,6 +29,8 @@ router.get('/home', passport.authenticate('jwt', { session: false }), getHome);
 router.get('/forgot', getForgot);
 router.post('/forgot', forgotpass);
 
+//report
+router.get('/report', getreport);
 
 //manage manager
 
@@ -64,6 +65,6 @@ router.post('/deleteCustomer/:id', deleteCustomer);
 router.post('/filterCustomer', filterCustomer);
 
 // ---------Store
-router.get('/store', stores)
+router.get('/store', stores);
 
 module.exports = router;
