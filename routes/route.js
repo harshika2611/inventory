@@ -4,36 +4,40 @@ const { userLogin, getLogin } = require('../controller/login/login');
 const { getHome } = require('../controller/home/homeController');
 const { auth } = require('../middleware/auth');
 const { getForgot, forgotpass } = require('../controller/login/forgot');
-const { listManagers } = require('../controller/manager/manager');
-
+const {
+  listManagers,
+  updateManager,
+  insertManager
+} = require('../controller/manager/manager');
+// const getsales = require('../controller/sales_module/sales_data');
+// const insert_order = require('../controller/sales_module/insert_order');
 const { stores } = require('../controller/stores/store.js');
-
 const passport = require('passport');
 const { getreport } = require('../controller/report/report');
 router.use(passport.initialize());
 auth(passport);
 
 const {
-	insertCustomer,
-	updateCustomer,
-	getCustomers,
-	deleteCustomer,
-	filterCustomer,
+  insertCustomer,
+  updateCustomer,
+  getCustomers,
+  deleteCustomer,
+  filterCustomer,
 } = require('../controller/manageCustomers/manageCustomers.js');
 
-//---------Manage Customers
+
+router.get('/', getLogin);
+router.post('/', userLogin);
 router.get('/home', passport.authenticate('jwt', { session: false }), getHome);
-
 router.get('/forgot', getForgot);
-
-
-router.get('/getmanager', listManagers);
-
-router.get('/updatemanager', updateManager);
-
-
-
 router.post('/forgot', forgotpass);
+
+
+//manage manager
+
+router.get('/insertmanager', insertManager);
+router.get('/getmanager', listManagers);
+router.get('/updatemanager', updateManager);
 
 //sales Module
 
@@ -55,8 +59,7 @@ router.get('/getCustomers', getCustomersSales);
 const updateOrder = require('../controller/salesModule/updateOrders');
 router.post('/updateOrder', updateOrder);
 
-router.get('/report', getreport);
-
+//---------Manage Customers
 router.get('/manageCustomers', getCustomers);
 router.post('/insertCustomer', insertCustomer);
 router.post('/updateCustomer', updateCustomer);
