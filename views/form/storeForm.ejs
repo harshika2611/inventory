@@ -1,0 +1,51 @@
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Store</title>
+  <link rel="stylesheet" href="src/css/form.css">
+</head>
+
+<body class="body">
+  <div class="row form-popup" id="myForm">
+    <div class="col-md-12 " data-bs-spy="scroll">
+      <form action="/insertStore" method="post">
+        <div class="container">
+          <h1>Store Details</h1>
+          <fieldset>
+            <div class="form-floating mb-3">
+              <input name="storageName" type="text" class="form-control" id="floatingInput"
+                placeholder="name@example.com">
+              <label for="floatingInput">Name </label>
+            </div>
+
+            <label for="floatingSelect">Storage Type </label>
+            <div class="form-floating">
+              <select name="storeType">
+                <option value="14">Warehouses</option>
+                <option value="15">Stores</option>
+                <option value="16">Distribution Centers</option>
+              </select>
+            </div>
+
+            <label for="floatingSelect">Location </label>
+            <div class="form-floating">
+              <select name="location">
+                <option value="17">Ahmedabad</option>
+                <option value="18">Surat</option>
+                <option value="19">Gandhinagar</option>
+                <option value="20">Rajkot</option>
+              </select>
+            </div>
+          </fieldset>
+          <button type="submit" class="btn btn-outline-primary" onclick="closeForm()">Submit</button>
+          <button type="reset" class="btn btn-outline-danger">Reset</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+</body>
+
+</html>

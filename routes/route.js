@@ -13,7 +13,9 @@ const {
   updateManager,
   insertManager,
 } = require('../controller/manager/manager');
-const { stores } = require('../controller/stores/store.js');
+// const getsales = require('../controller/sales_module/sales_data');
+// const insert_order = require('../controller/sales_module/insert_order');
+
 const passport = require('passport');
 const { getreport } = require('../controller/report/report');
 router.use(passport.initialize());
@@ -27,7 +29,12 @@ const {
   deleteCustomer,
   filterCustomer,
 } = require('../controller/manageCustomers/manageCustomers.js');
-//----
+
+const {
+  insertStore,
+  getStore,
+  updateStore
+} = require('../controller/stores/store.js')
 
 router.get('/', getLogin);
 router.post('/', userLogin);
@@ -75,6 +82,8 @@ router.post('/deleteCustomer/:id', deleteCustomer);
 router.post('/filterCustomer', filterCustomer);
 
 // ---------Store
-router.get('/store', stores);
+router.get('/store', getStore);
+router.post('api/store/insertStore', insertStore);
+router.post('api/store/updateStore', updateStore);
 
 module.exports = router;
