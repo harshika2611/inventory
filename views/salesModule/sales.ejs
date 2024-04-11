@@ -7,64 +7,53 @@
     <link rel="stylesheet" href="src/css/dashboard/dashboard.css" />
     <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
     <script src="/js/bootstrap.js"></script>
-    <!-- <link rel="stylesheet" href="src/css/dashboard/allpage.css"> -->
-    <style>
-      .container {
-        margin: 33px 28px 47px 245px;
-        width: auto;
-      }
-      .allfilters {
-        justify-content: end;
-        display: flex;
-      }
-      .filter {
-        margin-left: 1%;
-      }
-      .grid {
-        margin-top: 5%;
-      }
-    </style>
+    <link rel="stylesheet" href="src/css/salesModule/sales.css">
   </head>
   <body>
     <%- include('../components/navigation')%>
-
     <div class="container">
-      <div class="allfilters">
-        <a class="btn btn-outline-dark filter">New +</a>
-        <select
-          onchange="fetching()"
-          name="orderby"
-          class="btn btn-secondary dropdown-toggle filter"
-          id="orderby"
-        >
-          <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-            <option value="" selected hidden>Select</option>
-            <option value="id">ID</option>
-            <option value="name">Name</option>
-            <option value="created_at">Date</option>
-            <option value="amount">Amount</option>
-          </div>
-        </select>
+      <div class="gridComponent">
+        <div class="allfilters">
+          <a class="btn btn-outline-dark filter">New +</a>
+          <select
+            onchange="fetching()"
+            name="orderby"
+            class="btn btn-secondary dropdown-toggle filter"
+            id="orderby"
+          >
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+              <option value="" selected hidden>Select</option>
+              <option value="id">ID</option>
+              <option value="name">Name</option>
+              <option value="created_at">Date</option>
+              <option value="amount">Amount</option>
+            </div>
+          </select>
 
-        <select
-        onchange="fetching()"
-          name="order"
-          class="btn btn-secondary dropdown-toggle filter"
-          id="order"
-        >
-          <div class="dropdown-menu"  aria-labelledby="dropdownMenuLink">
-            <option value="asc" selected>Ascending</option>
-            <option value="desc">Descending</option>
-          </div>
-        </select>
+          <select
+            onchange="fetching()"
+            name="order"
+            class="btn btn-secondary dropdown-toggle filter"
+            id="order"
+          >
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+              <option value="asc" selected>Ascending</option>
+              <option value="desc">Descending</option>
+            </div>
+          </select>
+        </div>
+        <div class="table grid">
+          <table class="table table-hover">
+            <thead class="table-light" id="thead"></thead>
+            <tbody id="tbody"></tbody>
+          </table>
+        </div>
       </div>
-      <div class="table grid">
-        <table class="table table-hover">
-          <thead class="table-light" id="thead"></thead>
-          <tbody id="tbody"></tbody>
-        </table>
+      <div class="insertForm">
+        <%- include('form')%>
       </div>
     </div>
     <script src="js/salesModule/fetchGrid.js"></script>
+    <script src="js/salesModule/insertFormApi.js"></script>
   </body>
 </html>
