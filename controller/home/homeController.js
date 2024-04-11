@@ -1,4 +1,4 @@
-const getHome=async(req,res)=>{
-  res.render('home');
-}
-module.exports={getHome};
+const getHome = async (req, res) => {
+	res.render('home');
+};
+module.exports = { getHome };

@@ -1,7 +1,7 @@
 const { Strategy, ExtractJwt } = require('passport-jwt');
 const connection = require('../config/connection');
 const { SECRET_KEY } = process.env;
-
+const logger = require('../logs');
 const cookieExtractor = function (req) {
 	if (req && req.cookies) {
 		var token = req.cookies?.token;
@@ -17,21 +17,30 @@ const auth = (passport) => {
 		new Strategy(options, async (payload, done) => {
 			try {
 				const [result] = await connection.execute(
-					'select * from users where email=?',
-					[payload.email]
+					'select * from users where id=?',
+					[payload.id]
 				);
 				if (result.length > 0) {
 					return done(null, {
-						email: result[0].email,
+						id: result[0].id,
 					});
 				}
 				return done(null, false);
 			} catch (error) {
-				logger.logError('error', error);
-				res.status(500).json({ message: 'can`t fetch result' });
+				logger.logError(error);
 			}
 		})
 	);
 };
 
-module.exports = { auth };
+const checkLogin = (req, res) => {
+	try {
+		const token = req.cookies?.token;
+		if (token) {
+			passport.authenticate('jwt', { session: false });
+			res.redirect('/home');
+		}
+	} catch (error) {}
+};
+
+module.exports = { auth, checkLogin };

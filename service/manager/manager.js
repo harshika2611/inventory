@@ -20,7 +20,18 @@ const updateManagerService = async () => {
 
 const insertManagerService = async () => {
 	try {
-		const sql2=`insert into users ()`
+	
+		const sql2 = `insert into users (fname,lname,email,dob,password,salt,unique_code,status)
+		values (?,?,?,?,?,?,?,?,?)`;
+		const [ans1] = await connection.execute(sql2, [
+			body.fname,
+			body.lname,
+			body.email,
+			body.dob,
+			password,
+			body.status,
+		]);
+		console.log(ans1);
 	} catch (error) {
 		logger.logError(`Error`, error);
 		throw error;
