@@ -1,0 +1,65 @@
+<form name="insertSalesData" id="insertSalesData">
+  <table id="insertForm">
+    <tr>
+      <td><input type="text" name="orderid" hidden id="orderid" /></td>
+    </tr>
+    <tr>
+      <td>
+        <label for="customer" class="insertLabels">Customer : </label>
+
+        <select name="customer" class="insertFields" id="customer"></select>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label for="amount" class="insertLabels">Amount : </label>
+
+        <input
+          type="text"
+          class="form-control insertFields"
+          name="amount"
+          id="amount"
+        />
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label for="shippingAddress" class="insertLabels">Shipping Address : </label>
+
+        <textarea
+          class="form-control insertFields"
+          name="shippingAddress"
+          id="shippingAddress"
+        ></textarea>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label for="paymentStatus" class="insertLabels">Payment Status : </label>
+
+        <input
+          type="text"
+          class="form-control insertFields"
+          name="paymentStatus"
+          id="paymentStatus"
+        />
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label for="date" class="insertLabels">Date : </label>
+        <input
+          type="text"
+          class="form-control insertFields"
+          name="date"
+          id="date"
+        />
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a class="btn btn-outline-success" onclick="insertOrder()" id="insertSubmit">ADD Products</a>
+      </td>
+    </tr>
+  </table>
+</form>
