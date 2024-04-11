@@ -65,4 +65,8 @@ router.post('/insertCustomer', insertCustomer);
 router.post('/updateCustomer', updateCustomer);
 router.post('/deleteCustomer/:id', deleteCustomer);
 router.post('/filterCustomer', filterCustomer);
+
+// ---------Store
+router.get('/store', stores)
+
 module.exports = router;
