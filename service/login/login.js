@@ -4,7 +4,7 @@ const { logError } = require('../../logs');
 
 const userLoginService = async (body) => {
 	try {
-		const sql0 = `select id,email,password,salt,created_at,status,role_id from users where email=?`;
+		const sql0 = `select id,email,password,created_at,status,role_id from users where email=?`;
 		const [result] = await connection.execute(sql0, [body.email]);
 
 		return result;
@@ -42,7 +42,6 @@ const checkUserService = async (body) => {
 	try {
 		const sql4 = `select email from users where email=?`;
 		const [result4] = await connection.execute(sql4, [body.email]);
-	
 		return result4;
 	} catch (error) {
 		logger.logError(`Error`, error);
@@ -71,7 +70,18 @@ const expireService = async (link) => {
 	}
 };
 
+
+const registerService = async () => {
+	try {
+		const sql7=``
+	} catch (error) {
+		
+	}
+}
+
+
 module.exports = {
+	registerService,
 	expireService,
 	userService,
 	checkUserService,
