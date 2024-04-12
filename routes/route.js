@@ -21,7 +21,6 @@ router.get("/dashboard", dashboard);
 //-------------
 //manage manager
 
-//------------
 const {
   addManager,
   listManagers,
@@ -51,6 +50,13 @@ const {
   deleteStore,
 } = require('../controller/stores/store.js');
 
+const { getState, getCity } = require('../controller/commonFunctions/commonFunctions.js');
+
+//----getCity and getState
+router.get('/api/getState', getState);
+router.post('/api/getCity', getCity);
+
+//-----
 router.get("/", getLogin);
 router.post("/", userLogin);
 router.get(
