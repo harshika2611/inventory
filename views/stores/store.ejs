@@ -15,12 +15,9 @@
       position: absolute;
       bottom: 0;
       top: 50px;
-      border: 3px solid #f1f1f1;
       z-index: 9;
       width: 500px;
       right: 490px;
-      background-color: white;
-      /* height: 1120px; */
     }
 
     /* Add styles to the form container */
@@ -39,15 +36,6 @@
     .form-inline {
       display: flex;
       margin-left: 200px;
-    }
-
-    body {
-      margin: 10px;
-      padding: 10px;
-    }
-
-    .row {
-      margin-top: 50px;
     }
 
     .row2 {
@@ -97,7 +85,9 @@
                     <%=e.value%>
                   </div>
                   <div class="col-sm">
-                    <button type="button" class="btn btn-outline-primary">Edit</button>
+                    <button type="button" class="btn btn-outline-primary" onclick="">Edit</button>
+                    <button type="button" class="btn btn-outline-danger"
+                      onclick="deleteStore(`<%=e.name%>`)">Delete</button>
                   </div>
                 </div>
               </div>
@@ -117,11 +107,17 @@
 -o-filter: blur(2px);
 -ms-filter: blur(2px);
 filter: blur(2px); `
-
   }
-
   function closeForm() {
     document.getElementById("myForm").style.display = "none";
+    document.getElementById("childbody").style = "none";
+  }
+  async function deleteStore(name) {
+    let storeDelete = await fetch(`/deleteStore/${name}`, { method: "post", headers: { "Content-Type": "application/json", } })
+    let response = await storeDelete.json()
+    if (response.message == 'Store Deleted') {
+      window.location.href = '/store'
+    }
   }
 </script>
 
