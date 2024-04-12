@@ -7,15 +7,10 @@ const {
   userLogin,
   getLogin,
   getLink,
-} = require("../controller/login/login");
-const { getHome } = require("../controller/home/homeController");
-const { auth } = require("../middleware/auth");
-const { getForgot, forgotPass } = require("../controller/login/forgot");
-// const {
-//   insertStore,
-//   getStore,
-//   updateStore,
-// } = require("../controller/stores/store.js");
+} = require('../controller/login/login');
+const { getHome } = require('../controller/home/homeController');
+const { auth } = require('../middleware/auth');
+const { getForgot, forgotPass } = require('../controller/login/forgot');
 
 //----Dashboard
 const dashboard = require("../controller/dashboard/dashboard.js");
@@ -53,7 +48,8 @@ const {
   insertStore,
   getStore,
   updateStore,
-} = require("../controller/stores/store.js");
+  deleteStore,
+} = require('../controller/stores/store.js');
 
 router.get("/", getLogin);
 router.post("/", userLogin);
@@ -114,16 +110,17 @@ router.get("/sales", (req, res) => {
 
 
 //---------Manage Customers
-router.get("/manageCustomers", getCustomers);
-router.post("/insertCustomer", insertCustomer);
-router.post("/updateCustomer", updateCustomer);
-router.post("/deleteCustomer/:id", deleteCustomer);
-router.post("/filterCustomer", filterCustomer);
+router.get('/manageCustomers', getCustomers);
+router.post('/insertCustomer', insertCustomer);
+router.post('/updateCustomer', updateCustomer);
+router.post('/deleteCustomer/:name', deleteCustomer);
+router.post('/filterCustomer', filterCustomer);
 
 // ---------Store
-router.get("/store", getStore);
-router.post("api/store/insertStore", insertStore);
-router.post("api/store/updateStore", updateStore);
+router.get('/store', getStore);
+router.post('/insertStore', insertStore);
+router.post('/updateStore', updateStore);
+router.post('/deleteStore/:name', deleteStore);
 
 // ------------------- Manage Purchases ---------------------- //
 
