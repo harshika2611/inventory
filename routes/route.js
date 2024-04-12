@@ -88,29 +88,30 @@ router.get("/insertmanager", insertManager);
 router.get("/getmanager", listManagers);
 router.get("/updatemanager", updateManager);
 
-//sales Module
+//----------------------------sales Module-------------------------------------------------
 
-const getorders = require("../controller/salesModule/salesData");
-router.get("/salesorder", getorders);
+const {
+  insertSalesOrder,
+  insertSalesProduct,
+  getSalesCustomer,
+  getsalesOrder,
+  updateSalesOrder,
+  getSalesProducts,
+} = require("../controller/salesModule/salesControllers.js");
 
-const insertOrder = require("../controller/salesModule/addOrder");
-router.post("/insertSalesOrder", insertOrder);
-
-const insertProduct = require("../controller/salesModule/addProducts");
-router.post("/insertProduct", insertProduct);
-
-const getProducts = require("../controller/salesModule/getProducts");
-router.get("/getProducts", getProducts);
-
-const getCustomersSales = require("../controller/salesModule/getCustomers");
-router.get("/getCustomers", getCustomersSales);
-
-const updateOrder = require("../controller/salesModule/updateOrders");
-router.post("/updateOrder", updateOrder);
+router.get("/salesorder", getsalesOrder);
+router.post("/insertSalesOrder", insertSalesOrder);
+router.post("/insertProduct", insertSalesProduct);
+router.get("/getProducts", getSalesProducts);
+router.get("/getCustomers", getSalesCustomer);
+router.post("/updateOrder", updateSalesOrder);
 
 router.get("/sales", (req, res) => {
   res.render("salesModule/sales");
 });
+//------------------------------------------------------
+
+
 
 //---------Manage Customers
 router.get("/manageCustomers", getCustomers);
