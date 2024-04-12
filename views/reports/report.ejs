@@ -13,11 +13,7 @@
       }
     </style>
   </head>
-<<<<<<< Updated upstream
-  <body style="background-color: #eeeeee" onload="fetchData()">
-=======
   <body style="background-color: #eeeeee">
->>>>>>> Stashed changes
     <%- include("../components/navigation")%>
     <div class="div-second">
       <div class="d-flex justify-content-center">
@@ -102,16 +98,6 @@
             <table class="table">
               <thead>
                 <tr>
-<<<<<<< Updated upstream
-                  <th scope="col">Order</th>
-                  <th scope="col">Name</th>
-                  <th scope="col">Amount</th>
-                  <th scope="col">Shipping Address</th>
-                  <th scope="col">Payment Status</th>
-                </tr>
-              </thead>
-              <tbody id="alldata"></tbody>
-=======
                   <th scope="col">Product</th>
                   <th scope="col">Product ID</th>
                   <th scope="col">Category</th>
@@ -162,44 +148,10 @@
                   <td>2.3%</td>
                 </tr>
               </tbody>
->>>>>>> Stashed changes
             </table>
           </div>
         </div>
       </section>
     </div>
-<<<<<<< Updated upstream
-    <script>
-      let alldatatable = document.getElementById("alldata");
-      fetchData = async () => {
-        let api = await fetch("api/salesreport/allreport");
-        let { rows, header } = await api.json();
-        let letestdata = [];
-        let count = 0;
-        for (let e of rows) {
-          console.log(e);
-          if (count == 5) {
-            break;
-          }
-          letestdata.push(e);
-          count++;
-        }
-        console.log(letestdata);
-        alldatatable.innerHTML = letestdata
-          .map(
-            (e) =>
-              `<tr>
-            <td>${e.order_name}</td>
-            <td>${e.firstname}</td>
-            <td>${e.amount}</td>
-            <td>${e.shipping_address}</td>
-            <td>${e.payment_status}</td>
-            </tr>`
-          )
-          .join("");
-      };
-    </script>
-=======
->>>>>>> Stashed changes
   </body>
 </html>

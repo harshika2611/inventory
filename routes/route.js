@@ -64,6 +64,7 @@ const {
   deleteCustomer,
   filterCustomer,
 } = require("../controller/manageCustomers/manageCustomers.js");
+
 const {
   insertStore,
   getStore,
@@ -111,6 +112,7 @@ const {
   getsalesOrder,
   updateSalesOrder,
   getSalesProducts,
+  getSalesCategory
 } = require("../controller/salesModule/salesControllers.js");
 
 router.get("/salesorder", getsalesOrder);
@@ -174,7 +176,7 @@ router.get(
 
 //---------------------Profile Module---------------------
 
-const {viewProfile,editProfile} = require('../controller/profile/profile.js')
+const { viewProfile, editProfile } = require('../controller/profile/profile.js')
 router.get("/profile", viewProfile);
 router.get("/profileEdit", editProfile);
 
