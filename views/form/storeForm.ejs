@@ -11,12 +11,13 @@
   <div class="row form-popup" id="myForm">
     <div class="col-md-12 " data-bs-spy="scroll">
       <form action="/insertStore" method="post">
+        <h6 onclick="closeForm()" class="text-danger" style="margin-left: 390px; margin-top: 5px; cursor: pointer;">Close</h6>
         <div class="container">
           <h1>Store Details</h1>
           <fieldset>
             <div class="form-floating mb-3">
               <input name="storageName" type="text" class="form-control" id="floatingInput"
-                placeholder="name@example.com">
+                placeholder="name@example.com" required>
               <label for="floatingInput">Name </label>
             </div>
 
@@ -39,7 +40,7 @@
               </select>
             </div>
           </fieldset>
-          <button type="submit" class="btn btn-outline-primary" onclick="closeForm()">Submit</button>
+          <button type="submit" class="btn btn-outline-primary">Submit</button>
           <button type="reset" class="btn btn-outline-danger">Reset</button>
         </div>
       </form>

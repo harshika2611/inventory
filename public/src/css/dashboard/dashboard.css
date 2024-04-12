@@ -1,28 +1,35 @@
 .nav-costom1 {
 	width: 210px;
 }
+
 .nav-costom2 {
 	height: 70px;
 	width: 1155px;
 }
+
 #navdiv1 {
 	background-color: red;
 	margin: 0px auto;
 	position: relative;
 	width: 1400px;
 }
+
 .main-div {
 	position: absolute;
 }
+
 .width-100 {
 	width: 100%;
 }
+
 .div-h {
 	min-height: 800px !important;
 }
+
 .bgColor {
 	background-color: #31384f;
 }
+
 img {
 	color: white;
 }
