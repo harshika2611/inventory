@@ -11,6 +11,11 @@ const {
 const { getHome } = require("../controller/home/homeController");
 const { auth } = require("../middleware/auth");
 const { getForgot, forgotPass } = require("../controller/login/forgot");
+// const {
+//   insertStore,
+//   getStore,
+//   updateStore,
+// } = require("../controller/stores/store.js");
 
 //----Dashboard
 const dashboard = require("../controller/dashboard/dashboard.js");
