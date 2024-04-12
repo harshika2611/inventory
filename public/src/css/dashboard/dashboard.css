@@ -10,8 +10,6 @@
 	margin: 0px auto;
 	position: relative;
 	width: 1400px;
-	top: 0;
-	left: 0;
 }
 .main-div {
 	position: absolute;
@@ -27,7 +25,4 @@
 }
 img {
 	color: white;
-}
-body{
-	position: absolute;
 }
