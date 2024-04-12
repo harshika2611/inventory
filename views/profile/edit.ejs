@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile View</title>
+  <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
+  <script src="/js/bootstrap.js"></script>
+  <link rel="stylesheet" href="src/css/dashboard/allpage.css" />
+  <link rel="stylesheet" href="src/css/dashboardCustom.css">
+  <link rel="stylesheet" href="src/css/profile/profileStyle.css">
+</head>
+
+<body>
+  <%- include("../components/navigation")%>
+    <div class="container div-second">
+      <div class="main-container">
+        <div class="profile-details">
+          <form class="row g-3">
+            <div class="container">
+              <img class="currentProfileImage" src="icons/profile.png" alt="">
+              <img src="/icons/edit.svg" alt="" width="50" height="50">
+            </div>
+            <div class="col-md-6">
+              <label for="inputEmail4" class="form-label">First Name</label>
+              <input type="text" class="form-control" id="inputEmail4">
+            </div>
+            <div class="col-md-6">
+              <label for="inputPassword4" class="form-label">Last Name</label>
+              <input type="text" class="form-control" id="inputPassword4">
+            </div>
+            <div class="col-12">
+              <label for="inputDateOfBirth" class="form-label">Date of Birth</label>
+              <input type="date" class="form-control" id="inputDateOfBirth" placeholder="1234 Main St">
+            </div>
+            <div class="col-12">
+              <label for="inputEmail" class="form-label">Email</label>
+              <input type="text" class="form-control" id="inputAddress2">
+            </div>
+            <div class="edit-btn-container">
+              <button type="submit" class="edit-profile-btn">Save</button>
+            </div>
+          </form>
+        </div>  
+      </div>      
+    </div>
+</body>
+
+</html>

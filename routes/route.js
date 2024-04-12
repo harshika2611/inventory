@@ -138,6 +138,7 @@ router.post("/insertStore", insertStore);
 router.post("/updateStore", updateStore);
 router.post("/deleteStore/:name", deleteStore);
 
+
 // ------------------- Manage Purchases ---------------------- //
 
 const {
@@ -170,6 +171,12 @@ router.get(
   passport.authenticate("jwt", { session: false, failureRedirect: "/" }),
   showPurchases
 );
+
+//---------------------Profile Module---------------------
+
+const {viewProfile,editProfile} = require('../controller/profile/profile.js')
+router.get("/profile", viewProfile);
+router.get("/profileEdit", editProfile);
 
 // ------------------- Manage Purchases ---------------------- //
 
