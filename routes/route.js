@@ -3,7 +3,7 @@ const router = express.Router();
 const { userLogin, getLogin } = require('../controller/login/login');
 const { getHome } = require('../controller/home/homeController');
 const { auth } = require('../middleware/auth');
-const { getForgot, forgotpass } = require('../controller/login/forgot');
+const { getForgot, forgotPass } = require('../controller/login/forgot');
 const {
   listManagers,
   updateManager,
@@ -25,12 +25,17 @@ const {
   filterCustomer,
 } = require('../controller/manageCustomers/manageCustomers.js');
 
+const {
+	insertStore,
+	getStore,
+	updateStore,
+} = require('../controller/stores/store.js');
 
 router.get('/', getLogin);
 router.post('/', userLogin);
 router.get('/home', passport.authenticate('jwt', { session: false }), getHome);
 router.get('/forgot', getForgot);
-router.post('/forgot', forgotpass);
+router.post('/forgot', forgotPass);
 
 
 //manage manager
