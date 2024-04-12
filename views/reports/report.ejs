@@ -13,7 +13,11 @@
       }
     </style>
   </head>
+<<<<<<< HEAD
   <body style="background-color: #eeeeee">
+=======
+  <body style="background-color: #eeeeee" onload="fetchData()">
+>>>>>>> bea2eb0d8861f9d1b727c7f5cc1c34e97dbe8e92
     <%- include("../components/navigation")%>
     <div class="div-second">
       <div class="d-flex justify-content-center">
@@ -98,60 +102,48 @@
             <table class="table">
               <thead>
                 <tr>
-                  <th scope="col">Product</th>
-                  <th scope="col">Product ID</th>
-                  <th scope="col">Category</th>
-                  <th scope="col">Remaining Quantity</th>
-                  <th scope="col">Turn Over</th>
-                  <th scope="col">Increase By</th>
+                  <th scope="col">Order</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Amount</th>
+                  <th scope="col">Shipping Address</th>
+                  <th scope="col">Payment Status</th>
                 </tr>
               </thead>
-              <tbody>
-                <tr>
-                  <th scope="row">Tomato</th>
-                  <td>23567</td>
-                  <td>Vegetable</td>
-                  <td>225 kg</td>
-                  <td>₹17,000</td>
-                  <td>2.3%</td>
-                </tr>
-                <tr>
-                  <th scope="row">Tomato</th>
-                  <td>23567</td>
-                  <td>Vegetable</td>
-                  <td>225 kg</td>
-                  <td>₹17,000</td>
-                  <td>2.3%</td>
-                </tr>
-                <tr>
-                  <th scope="row">Tomato</th>
-                  <td>23567</td>
-                  <td>Vegetable</td>
-                  <td>225 kg</td>
-                  <td>₹17,000</td>
-                  <td>2.3%</td>
-                </tr>
-                <tr>
-                  <th scope="row">Tomato</th>
-                  <td>23567</td>
-                  <td>Vegetable</td>
-                  <td>225 kg</td>
-                  <td>₹17,000</td>
-                  <td>2.3%</td>
-                </tr>
-                <tr>
-                  <th scope="row">Tomato</th>
-                  <td>23567</td>
-                  <td>Vegetable</td>
-                  <td>225 kg</td>
-                  <td>₹17,000</td>
-                  <td>2.3%</td>
-                </tr>
-              </tbody>
+              <tbody id="alldata"></tbody>
             </table>
           </div>
         </div>
       </section>
     </div>
+    <script>
+      let alldatatable = document.getElementById("alldata");
+      fetchData = async () => {
+        let api = await fetch("api/salesreport/allreport");
+        let { rows, header } = await api.json();
+        let letestdata = [];
+        let count = 0;
+        for (let e of rows) {
+          console.log(e);
+          if (count == 5) {
+            break;
+          }
+          letestdata.push(e);
+          count++;
+        }
+        console.log(letestdata);
+        alldatatable.innerHTML = letestdata
+          .map(
+            (e) =>
+              `<tr>
+            <td>${e.order_name}</td>
+            <td>${e.firstname}</td>
+            <td>${e.amount}</td>
+            <td>${e.shipping_address}</td>
+            <td>${e.payment_status}</td>
+            </tr>`
+          )
+          .join("");
+      };
+    </script>
   </body>
 </html>
