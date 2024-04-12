@@ -1,6 +1,6 @@
 .div-second {
-	left: 250px;
-	top: 100px;
+	margin-left: 200px;
+	margin-top: 70px;
 	z-index: 2;
 	position: absolute;
 }
