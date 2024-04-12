@@ -1,4 +1,4 @@
-<form name="insertSalesData" id="insertSalesData">
+<form name="insertSalesData" id="insertSalesData" onsubmit="return false">
   <table id="insertForm">
     <tr>
       <td><input type="text" name="orderid" hidden id="orderid" /></td>
@@ -6,8 +6,15 @@
     <tr>
       <td>
         <label for="customer" class="insertLabels">Customer : </label>
+        <select name="customer" class=" btn btn-secondary dropdown-toggle" id="customer"></select>
+        
+        <a class="btn btn-outline-dark">New +</a>
 
-        <select name="customer" class="insertFields" id="customer"></select>
+        <label for="orderType" class="insertLabels ms-5" id="orderType">Type : </label>
+        <select name="orderType" class=" btn btn-secondary dropdown-toggle" id="orderType">
+          <option value="8">Sales</option>
+          <option value="9">Return</option>
+        </select>
       </td>
     </tr>
     <tr>
@@ -35,14 +42,12 @@
     </tr>
     <tr>
       <td>
-        <label for="paymentStatus" class="insertLabels">Payment Status : </label>
-
-        <input
-          type="text"
-          class="form-control insertFields"
-          name="paymentStatus"
-          id="paymentStatus"
-        />
+        <label  class="insertLabels">Payment Status : </label>
+        <input type="radio" class="form-check-input" value="10" checked name="paymentStatus" id="unpaid"> 
+        <label for="unpaid">Unpaid</label>
+        <input type="radio" class="form-check-input" value="11" name="paymentStatus" id="paid">
+        <label for="paid">Paid</label>
+        </select>
       </td>
     </tr>
     <tr>

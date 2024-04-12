@@ -16,7 +16,7 @@ async function getCombos(name) {
     `,
 			[name]
 		);
-		return results;
+		return [results];
 	} catch (error) {
 		logError(error);
 		return [];

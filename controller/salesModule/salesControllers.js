@@ -5,15 +5,16 @@ const {
   insertProduct,
   updateOrder,
 } = require("../../service/salesModule/salesService");
-const selectQuery = require("../../service/selectQuery");
+const {selectQuery,selectWhere} = require("../../service/selectQuery");
+const {getCombos} = require('../../service/helper');
 
 async function insertSalesOrder(req, res) {
   let input = [
-    req.body.customer_id,
-    req.body.type,
+    req.body.customer,
+    req.body.orderType,
     req.body.amount,
-    `${req.body.addr}`,
-    req.body.payment_status,
+    `${req.body.shippingAddress}`,
+    req.body.paymentStatus,
   ];
   try {
     let [rows, fields] = await insertOrder(input);
@@ -30,7 +31,7 @@ async function insertSalesProduct(req, res) {
   try {
     let input = [
       req.body.orderid,
-      req.body.productid,
+      req.body.product,
       req.body.ordertype,
       req.body.quantity,
     ];
@@ -95,14 +96,24 @@ async function updateSalesOrder(req, res) {
 }
 async function getSalesProducts(req, res) {
   try {
-    let order = req.query.order;
-    let orderby = req.query.orderby;
-    let [rows, fields] = await selectQuery("product_master", orderby, order);
+    
+    let [rows, fields] = await selectWhere("product_master", 'category_id',`${req.query.category_id}` );
     let header = [];
     fields.forEach((ele) => {
       header.push(ele.name);
     });
     res.json({ rows, header });
+  } catch (err) {
+    logger.logError(err);
+  }
+}
+
+async function getSalesCategory(req, res) {
+
+  try {
+    let [rows] = await getCombos('category');
+    res.json({ rows });
+    logger.info(rows)
   } catch (err) {
     logger.logError(err);
   }
@@ -115,4 +126,5 @@ module.exports = {
   getsalesOrder,
   updateSalesOrder,
   getSalesProducts,
+  getSalesCategory
 };

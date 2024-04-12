@@ -8,10 +8,11 @@
     <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
     <script src="/js/bootstrap.js"></script>
     <link rel="stylesheet" href="src/css/salesModule/sales.css">
+    <link rel="stylesheet" href="src/css/dashboard/allpage.css">
   </head>
   <body>
     <%- include('../components/navigation')%>
-    <div class="container">
+    <div class="container div-second">
       <div class="gridComponent">
         <div class="allfilters">
           <a class="btn btn-outline-dark filter">New +</a>
@@ -51,6 +52,9 @@
       </div>
       <div class="insertForm">
         <%- include('form')%>
+      </div>
+      <div class="productForm">
+        <%- include('productForm')%>
       </div>
     </div>
     <script src="js/salesModule/fetchGrid.js"></script>
