@@ -1,27 +1,5 @@
-const connection = require('../config/connection');
-const logError = require('../logs.js').logError;
-
-async function getCombos(name) {
-	try {
-		const [results] = await connection.execute(
-			`
-        SELECT
-            s.id, o.id as opt_id, value
-        FROM
-            select_master AS s
-                INNER JOIN
-            option_master AS o ON s.id = o.select_id
-        WHERE
-            s.value LIKE ?
-    `,
-			[name]
-		);
-		return results;
-	} catch (error) {
-		logError(error);
-		return [];
-	}
-}
+const connection = require('../../config/connection');
+const logError = require('../../logs.js').logError;
 
 async function getAllSuppliers() {
 	try {
@@ -36,14 +14,24 @@ async function getAllSuppliers() {
 async function createPurchaseOrder(data) {
 	try {
 		const [results] = await connection.execute(
-			'INSERT INTO purchase_order (supplier_id, amount, payment_status) VALUES (?, ?, ?)',
-			[data.supplier_id, data.amount, data.payment_status]
+			'INSERT INTO purchase_order (name, supplier_id, amount, payment_status) VALUES (?, ?, ?, ?)',
+			[data.name, data.supplier_id, data.amount, data.payment_status]
 		);
 		return results;
 	} catch (error) {
 		logError(error);
 		return [];
 	}
+
+	// {
+	// 	"fieldCount": 0,
+	// 	"affectedRows": 1,
+	// 	"insertId": 2,
+	// 	"info": "",
+	// 	"serverStatus": 2,
+	// 	"warningStatus": 0,
+	// 	"changedRows": 0
+	// }
 }
 
 async function updatePurchaseOrder(data) {
@@ -106,7 +94,6 @@ async function deleteProductFromPurchaseOrder(id) {
 
 module.exports = {
 	getAllSuppliers,
-	getCombos,
 	createPurchaseOrder,
 	updatePurchaseOrder,
 	addProductInPurchaseOrder,

@@ -35,11 +35,10 @@ function loginValidation() {
 		password: document.getElementById('password').value,
 	};
 	let validateResult = checkValidation(data, validation.login);
-	console.log(validateResult);
+
 
 	if (validateResult.status == 'error') {
 		let field = document.getElementById(validateResult.field);
-		console.log(validateResult.field);
 		let a = document.createElement('div');
 		a.setAttribute('id', 'error');
 		a.textContent = validateResult.message;
