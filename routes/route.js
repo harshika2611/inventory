@@ -32,7 +32,7 @@ const {
 // const insert_order = require('../controller/sales_module/insert_order');
 const { stores } = require("../controller/stores/store.js");
 const passport = require("passport");
-const { getreport } = require("../controller/report/report");
+const { getReport, getAllreport } = require("../controller/report/report");
 router.use(passport.initialize());
 auth(passport);
 
@@ -64,7 +64,8 @@ router.get("/activelink/:link", getLink);
 router.get("/forgot", getForgot);
 
 //report
-router.get("/report", getreport);
+router.get("/report", getReport);
+router.get("/api/salesreport/allreport", getAllreport);
 
 //----Dashboard
 
@@ -106,8 +107,6 @@ router.get("/sales", (req, res) => {
   res.render("salesModule/sales");
 });
 //------------------------------------------------------
-
-
 
 //---------Manage Customers
 router.get('/manageCustomers', getCustomers);
