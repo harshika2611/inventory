@@ -16,4 +16,11 @@ async function selectQuery(table,orderby,order){
   
 
 }
-module.exports = selectQuery;
+
+async function selectWhere(name,col,value){
+  let sql = `select * from ${name} where ${col}=${value}`;
+  // let input = [name,col,value]
+	return await connection.execute(sql);
+}
+
+module.exports = {selectQuery,selectWhere};

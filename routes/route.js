@@ -92,15 +92,16 @@ const {
   getsalesOrder,
   updateSalesOrder,
   getSalesProducts,
+  getSalesCategory
 } = require("../controller/salesModule/salesControllers.js");
 
 router.get("/salesorder", getsalesOrder);
 router.post("/insertSalesOrder", insertSalesOrder);
-router.post("/insertProduct", insertSalesProduct);
-router.get("/getProducts", getSalesProducts);
+router.post("/insertSalesProduct", insertSalesProduct);
+router.get("/getSalesProducts", getSalesProducts);
 router.get("/getCustomers", getSalesCustomer);
 router.post("/updateOrder", updateSalesOrder);
-
+router.get("/getSalesCategories",getSalesCategory);
 router.get("/sales", (req, res) => {
   res.render("salesModule/sales");
 });
