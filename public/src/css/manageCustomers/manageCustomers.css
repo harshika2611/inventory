@@ -12,12 +12,32 @@ a {
   text-decoration: none;
 }
 
+#myForm{
+  display: none;
+  position: absolute;
+  top: 70%;
+  left: 30%;
+}
+
 .managecustomer-section {
-  max-width: 1200px;
+  max-width: 1300px;
   background-color: var(--managecustomersection);
 }
 
 .managecustomer-container {
+  width: 1200px;
   padding: 20px;
   margin: 0 auto;
+}
+
+.managecustomer-container__button{
+  display: flex;
+  gap: 20px;
+}
+
+.addnewcustomerbutton,.customerfilterbutton{
+  padding: 10px;
+  background-color: gray;
+  cursor: pointer;
+  border-radius: 10px;
 }
