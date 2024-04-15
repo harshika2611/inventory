@@ -4,9 +4,10 @@ const {
   insertOrder,
   insertProduct,
   updateOrder,
+  productList,
 } = require("../../service/salesModule/salesService");
-const {selectQuery,selectWhere} = require("../../service/selectQuery");
-const {getCombos} = require('../../service/helper');
+const { selectQuery, selectWhere } = require("../../service/selectQuery");
+const { getCombos } = require("../../service/helper");
 
 async function insertSalesOrder(req, res) {
   let input = [
@@ -15,6 +16,7 @@ async function insertSalesOrder(req, res) {
     req.body.amount,
     `${req.body.shippingAddress}`,
     req.body.paymentStatus,
+    req.body.date,
   ];
   try {
     let [rows, fields] = await insertOrder(input);
@@ -63,7 +65,9 @@ async function getsalesOrder(req, res) {
   try {
     let order = req.query.order;
     let orderby = req.query.orderby;
-    const [rows, fields] = await selectOrders(orderby, order);
+    let col = req.query.col;
+    let value = req.query.colValue;
+    const [rows, fields] = await selectOrders(orderby, order, col, value);
 
     const header = [];
     fields.forEach((ele) => {
@@ -96,8 +100,11 @@ async function updateSalesOrder(req, res) {
 }
 async function getSalesProducts(req, res) {
   try {
-    
-    let [rows, fields] = await selectWhere("product_master", 'category_id',`${req.query.category_id}` );
+    let [rows, fields] = await selectWhere(
+      "product_master",
+      "category_id",
+      `${req.query.category_id}`
+    );
     let header = [];
     fields.forEach((ele) => {
       header.push(ele.name);
@@ -109,16 +116,31 @@ async function getSalesProducts(req, res) {
 }
 
 async function getSalesCategory(req, res) {
-
   try {
-    let [rows] = await getCombos('category');
+    let rows = await getCombos("%productCategory%");
     res.json({ rows });
-    logger.info(rows)
+    logger.info(rows);
   } catch (err) {
     logger.logError(err);
   }
 }
 
+async function productGrid(req, res) {
+  try {
+    let input = [req.query.orderId];
+    let [rows, fields] = await productList(input);
+    let header = [];
+    fields.forEach((ele) => {
+      header.push(ele.name);
+    });
+    res.json({ rows, header });
+  } catch (err) {
+    logger.logError(err);
+    logger.logError("not found");
+  }
+}
+
+async function fetchOneOrder(req, res) {}
 module.exports = {
   insertSalesOrder,
   insertSalesProduct,
@@ -126,5 +148,7 @@ module.exports = {
   getsalesOrder,
   updateSalesOrder,
   getSalesProducts,
-  getSalesCategory
+  getSalesCategory,
+  productGrid,
+  fetchOneOrder,
 };

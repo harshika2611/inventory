@@ -13,9 +13,9 @@
   <body>
     <%- include('../components/navigation')%>
     <div class="container div-second">
-      <div class="gridComponent">
+      <div class="gridComponent" id="gridComponent">
         <div class="allfilters">
-          <a class="btn btn-outline-dark filter">New +</a>
+          <a class="btn btn-outline-dark filter" onclick="displayForm()">New +</a>
           <select
             onchange="fetching()"
             name="orderby"
@@ -43,17 +43,20 @@
             </div>
           </select>
         </div>
-        <div class="table grid">
+        <div class="grid">
           <table class="table table-hover">
             <thead class="table-light" id="thead"></thead>
+            
             <tbody id="tbody"></tbody>
           </table>
         </div>
       </div>
-      <div class="insertForm"><%- include('form')%></div>
-      <div class="productForm"><%- include('productForm')%></div>
+      <div  id="insertFormDiv"><%- include('form')%></div>
+      <div  id="productFormDiv"><%- include('productForm')%></div>
     </div>
     <script src="js/salesModule/fetchGrid.js"></script>
     <script src="js/salesModule/insertFormApi.js"></script>
+    <script src="js/salesModule/manageDisplay.js"></script>
+    <script src="js/salesModule/updateOrder.js"></script>
   </body>
 </html>

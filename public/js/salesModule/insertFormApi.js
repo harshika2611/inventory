@@ -1,5 +1,6 @@
 async function insertOrder() {
   let form = document.getElementById("insertSalesData");
+  console.log(new FormData(form));
   const response = await fetch(`/insertSalesOrder`, {
     method: "POST",
     body: new URLSearchParams(new FormData(form)),
@@ -7,9 +8,10 @@ async function insertOrder() {
   const result = await response.json();
   if (result != "not found") {
     console.log(result.rows.insertId);
-    document.getElementById('productOrderId').value = `${result.rows.insertId}`
-    document.getElementById('productOrderType').value = document.getElementById('orderType').value
+    document.getElementById("productOrderId").value = `${result.rows.insertId}`;
+    document.getElementById("productOrderType").value = document.getElementById("orderType").value;
     //ordertype valule found undefine
+    displayProductForm();
     form.style.display = "none";
     getCategories();
   }
@@ -21,7 +23,7 @@ async function generateCombo() {
 
   let str = '<option value="" selected hidden>Select</option>';
   result.rows.forEach((data) => {
-    str += `<option value="${data.id}">${data.name}</option>`;
+    str += `<option value="${data.id}">${data.firstname}</option>`;
   });
   document.getElementById("customer").innerHTML = str;
 }
@@ -50,11 +52,12 @@ async function getProducts() {
 
 async function addProduct() {
   let form = document.getElementById("productForm");
-  console.log((form));
+  console.log(form);
   let response = await fetch("/insertSalesProduct", {
     method: "POST",
     body: new URLSearchParams(new FormData(form)),
   });
   let result = await response.json();
   console.log(result);
+  productGrid();
 }

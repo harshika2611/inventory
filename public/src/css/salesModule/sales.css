@@ -12,11 +12,11 @@
 .grid {
   margin-top: 5%;
 }
-.gridComponent{
+#insertFormDiv{
   display: none;
 }
-#insertForm{
-  width: 70%;
+#productFormDiv{
+  display: none;
 }
 #customer {
   width: 15%;
@@ -30,4 +30,11 @@
 }
 #insertSubmit{
   width: 100%;
+}
+#tbody{
+  overflow-y: scroll;
+}
+.grid{
+  height: 100dvh;
+  overflow: scroll;
 }
