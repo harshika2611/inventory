@@ -7,8 +7,8 @@
     <link rel="stylesheet" href="src/css/dashboard/dashboard.css" />
     <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
     <script src="/js/bootstrap.js"></script>
-    <link rel="stylesheet" href="src/css/salesModule/sales.css">
-    <link rel="stylesheet" href="src/css/dashboard/allpage.css">
+    <link rel="stylesheet" href="src/css/salesModule/sales.css" />
+    <link rel="stylesheet" href="src/css/allpage.css" />
   </head>
   <body>
     <%- include('../components/navigation')%>
@@ -50,12 +50,8 @@
           </table>
         </div>
       </div>
-      <div class="insertForm">
-        <%- include('form')%>
-      </div>
-      <div class="productForm">
-        <%- include('productForm')%>
-      </div>
+      <div class="insertForm"><%- include('form')%></div>
+      <div class="productForm"><%- include('productForm')%></div>
     </div>
     <script src="js/salesModule/fetchGrid.js"></script>
     <script src="js/salesModule/insertFormApi.js"></script>
