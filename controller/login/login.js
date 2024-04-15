@@ -39,11 +39,7 @@ const userLogin = async (req, res) => {
 						});
 						const id = user[0].id;
 						// const logs = await logsService(id);
-						return res
-							.cookie('token', token, {
-								httpOnly: true,
-							})
-							.redirect(`/dashboard`);
+						return res.cookie('token', token).redirect(`/dashboard`);
 					} else {
 						// const id = user[0].id;
 						//const log = await logUnsuccessService(id);
@@ -57,11 +53,7 @@ const userLogin = async (req, res) => {
 						const token = jwt.sign({ id: userId, roleId: roleId }, SECRET_KEY, {
 							expiresIn: '2h',
 						});
-						return res
-							.cookie('token', token, {
-								httpOnly: true,
-							})
-							.redirect(`/home`);
+						return res.cookie('token', token).redirect(`/home`);
 					} else {
 						// const id = user[0].id;
 						// const log = await logUnsuccessService(id);

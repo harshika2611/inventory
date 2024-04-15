@@ -8,21 +8,11 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const logger = require('./logs.js');
 const route = require('./routes/route.js');
-var passport = require('passport');
+const passport = require('passport');
 const { auth } = require('./middleware/auth.js');
-const { render } = require('ejs');
-
-app.use(bodyParser.json());
-app.use(
-	bodyParser.urlencoded({
-		extended: true,
-	})
-);
 
 app.use(passport.initialize());
 auth(passport);
-
-app.use(express.json());
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
