@@ -33,3 +33,7 @@
 img {
 	color: white;
 }
+
+.user-img {
+	cursor: pointer;
+}

@@ -1,4 +1,4 @@
-// const profileViewService = require('../../service/profile/viewProfile');
+// const profileViewService = require('../../service/profile');
 
 const logger = require("../../logs");
 
