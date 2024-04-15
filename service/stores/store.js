@@ -1,11 +1,13 @@
 const { name } = require('ejs');
 const connection = require('../../config/connection.js');
 const logger = require('../../logs.js');
+const { getCityStateId } = require('../commonFunctions/commonFunctions.js');
 
 async function insertStoreQuery(body) {
   try {
     const insertStore = `INSERT INTO storage_space_master (name,storage_type,location_id) VALUES(?,?,?);`
-    const [result] = await connection.execute(insertStore, [body.storageName, body.storeType, body.location]);
+    const cityStateId = await getCityStateId(body.state, body.city);
+    const [result] = await connection.execute(insertStore, [body.storageName, body.storeType, cityStateId[0].city_id]);
     // console.log(result);
   } catch (error) {
     logger.logError("Insert Store: " + error);
@@ -14,8 +16,7 @@ async function insertStoreQuery(body) {
 
 async function getStoreQuery() {
   try {
-    const getStores = `SELECT * FROM storage_space_master inner join option_master on storage_space_master.storage_type = option_master.id;`
-
+    const getStores = `SELECT * FROM storage_space_master inner join option_master on storage_space_master.storage_type = option_master.id inner join city_master on city_master.city_id=storage_space_master.location_id`
     const [result] = await connection.execute(getStores);
     // console.log(result)
     return result; //return array
@@ -25,27 +26,12 @@ async function getStoreQuery() {
   }
 }
 
-async function checkStoreExistQuery(name) {
-  try {
-    const checkStore = `SELECT * FROM storage_space_master WHERE name=?;`
-    const [result] = await connection.execute(checkStore, [name]);
-    return result;
-  } catch (error) {
-    logger.logError("Check store: " + error);
-  }
-}
-
 async function updateStoreQuery(name, body) {
   try {
-    const storeArray = checkStoreExistQuery(name);
-    if (storeArray.length === 1) {
-      return false;
-    } else {
-      const updateStore = `UPDATE storage_space_master SET name=? storage_type = ?, location_id=? WHERE name=?;`
-      const [result] = connection.execute(updateStore, [body.storagename, body.storagetype, body.location]);
-      // console.log(result, "result");
-      return true;
-    }
+    const updateStore = `UPDATE storage_space_master SET name=?, storage_type = ?, location_id=? WHERE name=?;`
+    const cityStateId = await getCityStateId(body.state, body.city);
+    const [result] = connection.execute(updateStore,[body.storageName, body.storeType, cityStateId[0].city_id]);
+    return true;
   } catch (error) {
     logger.logError("Update Store: " + error);
   }

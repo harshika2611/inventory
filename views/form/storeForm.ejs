@@ -5,42 +5,46 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Store</title>
   <link rel="stylesheet" href="src/css/form.css">
+  <script src="js/store/store.js"></script>
 </head>
 
 <body class="body">
   <div class="row form-popup" id="myForm">
     <div class="col-md-12 " data-bs-spy="scroll">
-      <form action="/insertStore" method="post">
-        <h6 onclick="closeForm()" class="text-danger" style="margin-left: 390px; margin-top: 5px; cursor: pointer;">Close</h6>
+      <form action="/insertStore" method="post" id="customerForm" name="customerForm">
+        <h6 onclick="closeForm()" class="text-danger" style="margin-left: 390px; margin-top: 5px; cursor: pointer;">
+          Close</h6>
         <div class="container">
-          <h1>Store Details</h1>
+          <h1>Storage Details</h1>
           <fieldset>
             <div class="form-floating mb-3">
-              <input name="storageName" type="text" class="form-control" id="floatingInput"
-                placeholder="name@example.com" required>
-              <label for="floatingInput">Name </label>
+                <input name="storageName" type="text" class="form-control" id="floatingInput"
+                  placeholder="name@example.com" required>
+                <label for="floatingInput">Place Name</label>
             </div>
 
             <label for="floatingSelect">Storage Type </label>
             <div class="form-floating">
               <select name="storeType">
-                <option value="14">Warehouses</option>
-                <option value="15">Stores</option>
-                <option value="16">Distribution Centers</option>
+                <option value="16">Warehouses</option>
+                <option value="17">Stores</option>
+                <option value="18">Distribution Centers</option>
               </select>
             </div>
 
-            <label for="floatingSelect">Location </label>
-            <div class="form-floating">
-              <select name="location">
-                <option value="17">Ahmedabad</option>
-                <option value="18">Surat</option>
-                <option value="19">Gandhinagar</option>
-                <option value="20">Rajkot</option>
+            <div class="form-floating customerform__errordiv">
+              <select name="state" class="form-select" id="stateSelectCombo" aria-label="Floating label select example"
+                onchange="getCity(this)">
+              </select>
+            </div>
+
+            <div class="form-floating customerform__errordiv">
+              <select name="city" class="form-select" id="citySelectCombo" aria-label="Floating label select example">
               </select>
             </div>
           </fieldset>
-          <button type="submit" class="btn btn-outline-primary">Submit</button>
+          <button type="submit" class="btn btn-outline-primary" id="insertStore">Submit</button>
+          <button class="btn btn-outline-primary" id="updateStore" onclick="updateForm()">Edit</button>
           <button type="reset" class="btn btn-outline-danger">Reset</button>
         </div>
       </form>
@@ -48,5 +52,6 @@
   </div>
 
 </body>
+
 
 </html>
