@@ -1,10 +1,10 @@
-const connection = require('../config/connection');
-const logError = require('../logs.js').logError;
+const connection = require("../config/connection");
+const logError = require("../logs.js").logError;
 
 async function getCombos(name) {
-	try {
-		const [results] = await connection.execute(
-			`
+  try {
+    const [results] = await connection.execute(
+      `
         SELECT
             s.id, o.id as opt_id, o.value
         FROM
@@ -14,13 +14,13 @@ async function getCombos(name) {
         WHERE
             s.key LIKE ?
     `,
-			[name]
-		);
-		return results;
-	} catch (error) {
-		logError(error);
-		return [];
-	}
+      [name]
+    );
+    return results;
+  } catch (error) {
+    logError(error);
+    return [];
+  }
 }
 
 module.exports = { getCombos };
