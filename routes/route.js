@@ -9,13 +9,22 @@ const {
   userLogin,
   getLogin,
   getLink,
-} = require("../controller/login/login");
-const { getHome } = require("../controller/home/homeController");
-const { auth } = require("../middleware/auth");
-const { getForgot } = require("../controller/login/forgot");
-const { forgotPassService } = require("../service/login/forgot.js");
-const passport = require("passport");
-const { getReport, getAllreport } = require("../controller/report/report");
+} = require('../controller/login/login');
+const { getHome } = require('../controller/home/homeController');
+const { auth } = require('../middleware/auth');
+const { getForgot } = require('../controller/login/forgot');
+const { forgotPassService } = require('../service/login/forgot.js');
+const passport = require('passport');
+const {
+  getsallesReport,
+  getApiproductreport,
+  getApicategoryreport,
+  getReportallProducts,
+} = require('../controller/report/sallesReport.js');
+const {
+  getpurchaseReport,
+  getApiproductPurchasereport,
+} = require('../controller/report/purchaseReport.js');
 router.use(passport.initialize());
 auth(passport);
 router.get("/", getLogin);
@@ -45,19 +54,19 @@ const {
   listManagers,
   updateManager,
   insertManager,
-} = require("../controller/manager/manager");
-router.get("/getmanager", getManager);
-router.post("/getmanager", manageManager);
-router.get("/addmanager", addManager);
-router.get("/insertmanager", insertManager);
-router.get("/getmanager", listManagers);
-router.get("/updatemanager", updateManager);
+} = require('../controller/manager/manager');
+router.get('/getmanager', getManager);
+router.post('/getmanager', manageManager);
+router.get('/addmanager', addManager);
+router.get('/insertmanager', insertManager);
+router.get('/getmanager', listManagers);
+router.get('/updatemanager', updateManager);
 
 //----getCity and getState
 const {
   getState,
   getCity,
-} = require("../controller/commonFunctions/commonFunctions.js");
+} = require('../controller/commonFunctions/commonFunctions.js');
 
 router.get("/api/getState", getState);
 router.post("/api/getCity", getCity);
@@ -76,12 +85,18 @@ router.get("/activelink/:link", getLink);
 router.get("/forgot", getForgot);
 
 //report
-router.get("/report", getReport);
-router.get("/api/salesreport/allreport", getAllreport);
+
+router.get('/sallesReport', getsallesReport);
+router.get('/sallesReportallProducts', getReportallProducts);
+router.get('/api/sallesreport/allproduct', getApiproductreport);
+router.get('/api/sallesreport/allcategory', getApicategoryreport);
+
+router.get('/purchaseReport', getpurchaseReport);
+router.get('/api/purchasereport/allproduct', getApiproductPurchasereport);
 
 //----Dashboard
-const dashboard = require("../controller/dashboard/dashboard.js");
-router.get("/dashboard", dashboard);
+const dashboard = require('../controller/dashboard/dashboard.js');
+router.get('/dashboard', dashboard);
 //-------------
 
 //----------------------------sales Module-------------------------
@@ -116,15 +131,19 @@ const {
   insertCustomer,
   updateCustomer,
   getCustomers,
+  getParticularCustomer,
   deleteCustomer,
   filterCustomer,
 } = require("../controller/manageCustomers/manageCustomers.js");
 
-router.get("/manageCustomers", getCustomers);
-router.post("/api/insertCustomer", insertCustomer);
-router.post("/api/updateCustomer", updateCustomer);
-router.post("/deleteCustomer/:name", deleteCustomer);
-router.post("/filterCustomer", filterCustomer);
+const manageCustomerValidation = require('../controller/manageCustomers/manageCustomerValidation.js');
+
+router.get('/manageCustomers', getCustomers);
+router.get('/api/getCustomers', getParticularCustomer);
+router.post('/api/insertCustomer', manageCustomerValidation, insertCustomer);
+router.post('/api/updateCustomer', updateCustomer);
+router.post('/deleteCustomer/:name', deleteCustomer);
+router.post('/filterCustomer', filterCustomer);
 
 // ---------Store
 const {
@@ -132,11 +151,11 @@ const {
   getStore,
   updateStore,
   deleteStore,
-} = require("../controller/stores/store.js");
-router.get("/store", getStore);
-router.post("/insertStore", insertStore);
-router.post("/updateStore", updateStore);
-router.post("/deleteStore/:name", deleteStore);
+} = require('../controller/stores/store.js');
+router.get('/store', getStore);
+router.post('/insertStore', insertStore);
+router.post('/updateStore', updateStore);
+router.post('/deleteStore/:name', deleteStore);
 
 // ------------------- Manage Purchases ---------------------- //
 
@@ -171,15 +190,15 @@ router.get(
   showPurchases
 );
 
+// ------------------- Manage Purchases ---------------------- //
+
 //---------------------Profile Module---------------------
 
 const {
   viewProfile,
   editProfile,
-} = require("../controller/profile/profile.js");
-router.get("/profile", viewProfile);
-router.get("/profileEdit", editProfile);
-
-// ------------------- Manage Purchases ---------------------- //
+} = require('../controller/profile/profile.js');
+router.get('/profile', viewProfile);
+router.get('/profileEdit', editProfile);
 
 module.exports = router;

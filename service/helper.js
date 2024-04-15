@@ -16,7 +16,6 @@ async function getCombos(name) {
     `,
 			[name]
 		);
-		console.log(results);
 		return results;
 	} catch (error) {
 		logError(error);

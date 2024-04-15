@@ -1,19 +1,5 @@
-function formData(formName) {
+function manageCustomerFormValidation(customerFormData) {
 
-  const form = document.forms[formName];
-
-  const formData = new FormData(form);
-
-  let formDataObject = {};
-
-  for (let [key, value] of formData.entries()) {
-    formDataObject[key] = value;
-  }
-  return formDataObject;
-}
-
-function manageCustomerFormValidation() {
-  const customerFormData = formData('customerForm');  //parameter as formname
   let customerFormErrorObject = {};
 
   for (let key in customerFormData) {
@@ -114,48 +100,5 @@ function manageCustomerFormValidation() {
         break;
     }
   }
-
-  if (Object.keys(customerFormErrorObject).length === 0) {
-    return true;
-  } else {
-    // show error and return false
-    errorShow(customerFormErrorObject);
-    return false;
-  }
-}
-
-
-//----common function
-function errorShow(errorObject) {
-  const allSpan = document.querySelectorAll(".errorspan");
-
-  allSpan.forEach((element) => {
-    element.remove();
-  });
-
-  for (let key in errorObject) {
-    console.log(key + " " + errorObject[key]);
-    const targetElement = document.querySelector(`[name="${key}"]`);
-    if (targetElement) {
-      const errorSpan = targetElement.nextElementSibling;
-
-      if (errorSpan && errorSpan.classList.contains("errorspan")) {
-        errorSpan.textContent = errorObject[key];
-      } else {
-        //errorspan not exist
-        const createSpan = document.createElement("span");
-        createSpan.textContent = errorObject[key];
-        createSpan.setAttribute("class", "errorspan");
-        createSpan.style.color = "red";
-        targetElement.insertAdjacentElement("afterend", createSpan);
-      }
-    }
-  }
-
-  // const allSpans = document.querySelectorAll(".errorspan");
-  // allSpans.forEach(span => {
-  //   if (!errorObject.hasOwnProperty(span.previousElementSibling.name)) {
-  //     span.remove(); // Remove only if the corresponding input has no error
-  //   }
-  // });
+  return customerFormErrorObject;
 }
