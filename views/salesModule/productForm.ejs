@@ -1,29 +1,52 @@
 <form name="productForm" id="productForm" onsubmit="return false">
   <table class="productFormTable">
-    <tr><td>
-      <input type="text" name="orderid" id="productOrderId">
-      <input type="text" name="ordertype" id="productOrderType">
-      
-    </td>
+    <tr>
+      <td>
+       <input type="text" name="orderid" id="productOrderId" hidden />
+        <input type="text" name="ordertype" id="productOrderType" hidden />
+      </td>
       <td>
         <label for="category">Category : </label>
-        <select name="category" id="category" onchange="getProducts()" class="productField me-5 btn btn-secondary dropdown-toggle">
+        <select
+          name="category"
+          id="category"
+          onchange="getProducts()"
+          class="productField me-5 btn btn-secondary dropdown-toggle"
+        >
           <option value="" selected hidden>Select Category</option>
         </select>
       </td>
       <td>
         <label for="product">Products : </label>
-        <select name="product" id="product" class="productField me-5 btn btn-secondary dropdown-toggle">
+        <select
+          name="product"
+          id="product"
+          class="productField me-5 btn btn-secondary dropdown-toggle"
+        >
           <option value="" selected hidden>Select category first</option>
         </select>
       </td>
       <td>
         <!-- <label for="quanity">Quantity : </label> -->
-        <input type="number" id="quantity" placeholder="Quantity....." class="productField me-5 form-control" name="quantity">
+        <input
+          type="number"
+          name="quantity"
+          id="quantity"
+          placeholder="Quantity....."
+          class="productField me-5 form-control"
+        />
       </td>
       <td>
-        <a class="productField me-5 btn btn-outline-success" onclick="addProduct()">ADD</a>
+        <a
+          class="productField me-5 btn btn-outline-success"
+          onclick="addProduct()"
+          >ADD</a
+        >
       </td>
     </tr>
+  </table>
+  <table id="productList" class="table table-hover">
+    <thead id="productListHead" class="table-light"></thead>
+    <tbody id="productListBody"></tbody>
   </table>
 </form>

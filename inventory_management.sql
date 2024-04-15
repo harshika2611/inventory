@@ -307,10 +307,10 @@ CREATE TABLE `sales_order` (
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  KEY `fk_order_master_2_idx` (`customer_id`),
-  KEY `fk_order_master_1_idx` (`type`),
-  CONSTRAINT `fk_order_master_1` FOREIGN KEY (`type`) REFERENCES `option_master` (`id`),
-  CONSTRAINT `fk_order_master_2` FOREIGN KEY (`customer_id`) REFERENCES `customer_master` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+  KEY `fk_sales_order_2_idx` (`customer_id`),
+  KEY `fk_sales_order_1_idx` (`type`),
+  CONSTRAINT `fk_sales_order_1` FOREIGN KEY (`type`) REFERENCES `option_master` (`id`),
+  CONSTRAINT `fk_sales_order_2` FOREIGN KEY (`customer_id`) REFERENCES `customer_master` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -338,12 +338,12 @@ CREATE TABLE `sales_products` (
   `order_type` int NOT NULL,
   `quantity` int NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `fk_order_details_1_idx` (`order_id`),
-  KEY `fk_order_details_2_idx` (`product_id`),
-  KEY `fk_order_details_3_idx` (`order_type`),
-  CONSTRAINT `fk_order_details_1` FOREIGN KEY (`order_id`) REFERENCES `sales_order` (`id`),
-  CONSTRAINT `fk_order_details_2` FOREIGN KEY (`product_id`) REFERENCES `product_master` (`id`),
-  CONSTRAINT `fk_order_details_3` FOREIGN KEY (`order_type`) REFERENCES `option_master` (`id`)
+  KEY `fk_sales_products_1_idx` (`order_id`),
+  KEY `fk_sales_products_2_idx` (`product_id`),
+  KEY `fk_sales_products_3_idx` (`order_type`),
+  CONSTRAINT `fk_sales_products_1` FOREIGN KEY (`order_id`) REFERENCES `sales_order` (`id`),
+  CONSTRAINT `fk_sales_products_2` FOREIGN KEY (`product_id`) REFERENCES `product_master` (`id`),
+  CONSTRAINT `fk_sales_products_3` FOREIGN KEY (`order_type`) REFERENCES `option_master` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
