@@ -9,7 +9,6 @@ async function insertCustomer(req, res) {
 	try {
 		/**if this will send from frontend js then form data
 		 * either post request then key value pair key is name in form */
-
 		const customerDetails = req.body;
 		await insertCustomerQuery(customerDetails);
 		return res.status(200).json({ message: 'Customer Inserted' });

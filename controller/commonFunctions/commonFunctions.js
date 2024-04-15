@@ -4,11 +4,8 @@ const { getStateQuery, getCityQuery } = require('../../service/commonFunctions/c
 async function getState(req, res) {
   try {
     const stateArray = await getStateQuery();
-    // return res.status(200).json({ stateArray: stateArray });
-    // logger.info(Array.isArray(stateArray));
-    console.log(stateArray);
     if (stateArray.length === 0) {
-      return res.status(500).json({ message: "Something Went Wrong" });
+      return res.status(404).json({ message: "Something Went Wrong" });
     } else {
       return res.status(200).json({ stateArray: stateArray });
     }
@@ -19,12 +16,15 @@ async function getState(req, res) {
 }
 
 
-function getCity(req, res) {
+async function getCity(req, res) {
   try {
     const stateName = req.body;
-    logger.info("State Name " + stateName);
-    const cityArray = getCityQuery(stateName);
-    return res.status(200).json({ cityArray: cityArray });
+    const cityArray = await getCityQuery(stateName.state);
+    if (cityArray.length === 0) {
+      return res.status(404).json({ message: "Something  Went Wrong" });
+    } else {
+      return res.status(200).json({ cityArray: cityArray });
+    }
   } catch (error) {
     return res.status(500).json({ message: "Something Went Wrong" });
   }
