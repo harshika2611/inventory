@@ -12,16 +12,17 @@
   <body>
     <%- include('../components/navigation.ejs') %>
     <div class="div-second">
-      <div>
+      <div class="d-flex mb-5 justify-content-end">
         <button
           type="button"
-          class="btn btn-outline-dark float-end me-5"
-          onclick="generateForm()"
+          class="btn btn-outline-dark"
+          onclick="generateForm1()"
         >
           + New
         </button>
       </div>
-      <div id="root"></div>
+      <div id="root">
+      </div>
     </div>
   </body>
   <script src="/js/purchase/index.js"></script>
