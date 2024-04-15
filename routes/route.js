@@ -192,6 +192,10 @@ router.get(
 
 // ------------------- Manage Purchases ---------------------- //
 
+//---------------------Products Module---------------------
+const { productListing } = require('../controller/products/productListing.js');
+router.get('/products', productListing);
+
 //---------------------Profile Module---------------------
 
 const {
