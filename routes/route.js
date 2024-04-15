@@ -15,7 +15,16 @@ const { auth } = require('../middleware/auth');
 const { getForgot } = require('../controller/login/forgot');
 const { forgotPassService } = require('../service/login/forgot.js');
 const passport = require('passport');
-const { getReport, getAllreport } = require('../controller/report/report');
+const {
+	getsallesReport,
+	getApiproductreport,
+	getApicategoryreport,
+	getReportallProducts,
+} = require('../controller/report/sallesReport.js');
+const {
+	getpurchaseReport,
+	getApiproductPurchasereport,
+} = require('../controller/report/purchaseReport.js');
 router.use(passport.initialize());
 auth(passport);
 router.get('/', getLogin);
@@ -76,8 +85,14 @@ router.get('/activelink/:link', getLink);
 router.get('/forgot', getForgot);
 
 //report
-router.get('/report', getReport);
-router.get('/api/salesreport/allreport', getAllreport);
+
+router.get('/sallesReport', getsallesReport);
+router.get('/sallesReportallProducts', getReportallProducts);
+router.get('/api/sallesreport/allproduct', getApiproductreport);
+router.get('/api/sallesreport/allcategory', getApicategoryreport);
+
+router.get('/purchaseReport', getpurchaseReport);
+router.get('/api/purchasereport/allproduct', getApiproductPurchasereport);
 
 //----Dashboard
 const dashboard = require('../controller/dashboard/dashboard.js');
