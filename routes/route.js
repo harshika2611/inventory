@@ -3,12 +3,12 @@ const router = express.Router();
 
 //login module
 const {
-	userLogout,
-	checkUser,
-	getUserName,
-	userLogin,
-	getLogin,
-	getLink,
+  userLogout,
+  checkUser,
+  getUserName,
+  userLogin,
+  getLogin,
+  getLink,
 } = require('../controller/login/login');
 const { getHome } = require('../controller/home/homeController');
 const { auth } = require('../middleware/auth');
@@ -21,9 +21,9 @@ auth(passport);
 router.get('/', getLogin);
 router.post('/', userLogin);
 router.get(
-	'/home',
-	passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
-	getHome
+  '/home',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  getHome
 );
 router.get('/user', getUserName);
 router.post('/user', checkUser);
@@ -31,62 +31,45 @@ router.get('/activelink/:link', getLink);
 router.get('/forgot', getForgot);
 router.post('/forgot', forgotPassService);
 router.get(
-	'/logout',
-	passport.authenticate('jwt', { session: false }),
-	userLogout
+  '/logout',
+  passport.authenticate('jwt', { session: false }),
+  userLogout
 );
 
-//----Dashboard
-const dashboard = require('../controller/dashboard/dashboard.js');
-router.get('/dashboard', dashboard);
 
-//manager module
+//manage manager
 
-//manager module
 const {
-	manageManager,
-	getManager,
-	addManager,
-	listManagers,
-	updateManager,
-	insertManager,
+  manageManager,
+  getManager,
+  addManager,
+  listManagers,
+  updateManager,
+  insertManager,
 } = require('../controller/manager/manager');
 router.get('/getmanager', getManager);
-router.post('/getmanager',manageManager)
+router.post('/getmanager', manageManager)
 router.get('/addmanager', addManager);
 router.get('/insertmanager', insertManager);
 router.get('/getmanager', listManagers);
 router.get('/updatemanager', updateManager);
-const {
-	insertCustomer,
-	updateCustomer,
-	getCustomers,
-	deleteCustomer,
-	filterCustomer,
-} = require('../controller/manageCustomers/manageCustomers.js');
-const {
-  insertStore,
-  getStore,
-  updateStore,
-  deleteStore,
-} = require("../controller/stores/store.js");
 
+//----getCity and getState
 const {
   getState,
   getCity,
 } = require("../controller/commonFunctions/commonFunctions.js");
 
-//----getCity and getState
-router.get("/api/getState", getState);
-router.post("/api/getCity", getCity);
+router.get('/api/getState', getState);
+router.post('/api/getCity', getCity);
 
 //-----
 router.get('/', getLogin);
 router.post('/', userLogin);
 router.get(
-	'/home',
-	passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
-	getHome
+  '/home',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  getHome
 );
 router.get('/user', getUserName);
 router.post('/user', checkUser);
@@ -98,8 +81,8 @@ router.get('/report', getReport);
 router.get('/api/salesreport/allreport', getAllreport);
 
 //----Dashboard
-
-// router.get("/dashboard", dashboard);
+const dashboard = require('../controller/dashboard/dashboard.js');
+router.get("/dashboard", dashboard);
 //-------------
 
 //----------------------------sales Module-------------------------------------------------
@@ -127,13 +110,27 @@ router.get("/sales", (req, res) => {
 //------------------------------------------------------
 
 //---------Manage Customers
-router.get("/manageCustomers", getCustomers);
-router.post("/insertCustomer", insertCustomer);
-router.post("/updateCustomer", updateCustomer);
-router.post("/deleteCustomer/:name", deleteCustomer);
-router.post("/filterCustomer", filterCustomer);
+const {
+  insertCustomer,
+  updateCustomer,
+  getCustomers,
+  deleteCustomer,
+  filterCustomer,
+} = require("../controller/manageCustomers/manageCustomers.js");
+
+router.get('/manageCustomers', getCustomers);
+router.post('/api/insertCustomer', insertCustomer);
+router.post('/api/updateCustomer', updateCustomer);
+router.post('/deleteCustomer/:name', deleteCustomer);
+router.post('/filterCustomer', filterCustomer);
 
 // ---------Store
+const {
+  insertStore,
+  getStore,
+  updateStore,
+  deleteStore,
+} = require("../controller/stores/store.js");
 router.get("/store", getStore);
 router.post("/insertStore", insertStore);
 router.post("/updateStore", updateStore);
@@ -142,34 +139,34 @@ router.post("/deleteStore/:name", deleteStore);
 // ------------------- Manage Purchases ---------------------- //
 
 const {
-	fetchCombos,
-	showPurchases,
-	createPurchase,
-	fetchSuppliers,
+  fetchCombos,
+  showPurchases,
+  createPurchase,
+  fetchSuppliers,
 } = require('../controller/purchase');
 
 router.get(
-	'/api/combos/:name',
-	passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
-	fetchCombos
+  '/api/combos/:name',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  fetchCombos
 );
 
 router.get(
-	'/api/purchase/suppliers',
-	passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
-	fetchSuppliers
+  '/api/purchase/suppliers',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  fetchSuppliers
 );
 
 router.post(
-	'/api/purchase/purchase',
-	passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
-	createPurchase
+  '/api/purchase/purchase',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  createPurchase
 );
 
 router.get(
-	'/purchase',
-	passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
-	showPurchases
+  '/purchase',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  showPurchases
 );
 
 //---------------------Profile Module---------------------

@@ -1,13 +1,20 @@
 const connection = require('../../config/connection.js');
 const logger = require('../../logs.js');
+const { getCityStateId } = require('../commonFunctions/commonFunctions.js');
 
 async function insertCustomerQuery(body) {
-  try {
-    const insertCustomer = `INSERT INTO customer_master VALUES(?,?,?,?,?,?,?,?,?);`
+  // return new Promise((resolve, reject) => {
 
-    const [result] = await connection.execute(insertCustomer, [body.fname, body.lname, body.email, body.phonenumber, body.email, body.address, body.zipcode, body.cityId, body.stateId]);
+  // });
+  try {
+    const insertCustomer = `INSERT INTO customer_maste(firstname,lastname,email,phonenumber,address,zipcode,city_id,state_id) VALUES(?,?,?,?,?,?,?,?);`
+
+    const cityStateId = await getCityStateId(body.state, body.city);  //array contain object
+
+    const [result] = await connection.execute(insertCustomer, [body.firstname, body.lastname, body.email, body.phonenumber, body.address, body.zipcode, cityStateId[0].city_id, cityStateId[0].state_id]);
   } catch (error) {
     logger.logError("Insert Customer: " + error);
+    throw error;
   }
 }
 

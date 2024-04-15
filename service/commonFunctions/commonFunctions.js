@@ -18,7 +18,8 @@ async function getStateQuery() {
     return result;
   } catch (error) {
     logger.logError("Get State: " + error);
-    return [];
+    throw error;
+    // return [];
   }
 }
 
@@ -29,11 +30,28 @@ async function getCityQuery(stateName) {
     LEFT JOIN state_master as s ON c.state_id=s.state_id 
     WHERE state_name=?`;
 
-    const [result] = connection.execute(getStateQuery, [stateName]);
+    const [result] = await connection.execute(getStateQuery, [stateName]);
     return result;
   } catch (error) {
     logger.logError("Get City: " + error);
+    throw error;
+    // return [];
   }
 }
 
-module.exports = { getStateQuery, getCityQuery }
+async function getCityStateId(stateName, cityName) {
+  try {
+    const getCityStateIdQuery = `SELECT s.state_id as state_id,c.city_id as city_id         FROM state_master as s
+    LEFT JOIN city_master as c ON s.state_id = c.state_id
+    WHERE s.state_name=? AND c.city_name=?`;
+
+    const [result] = await connection.execute(getCityStateIdQuery, [stateName, cityName]);
+    return result;
+  } catch (error) {
+    logger.logError("Get State and City Id: " + error);
+    throw error;  //rethrow
+    // return [];
+  }
+}
+
+module.exports = { getStateQuery, getCityQuery, getCityStateId }
