@@ -2,89 +2,49 @@ async function addNewCustomer() {
   const customerForm = document.getElementById("myForm");
   customerForm.style.display = "block";
 
-  const response = await fetch('/api/getState', {
-    method: 'GET'
-  });
-
-  try {
-    if (!response.ok) {
-      throw new Error("Can't get state");
-    }
-
-    if (response.status === 200) {
-      const stateObject = await response.json();
-      const stateArray = stateObject.stateArray;
-
-      const stateSelectCombo = document.getElementById("stateSelectCombo");
-
-      const optionCreate = document.createElement("option");
-      optionCreate.innerHTML = "Select State";
-      stateSelectCombo.appendChild(optionCreate);
-
-      for (let element of stateArray) {
-        const option = document.createElement("option");
-        option.innerHTML = `${element.state_name}`;
-        option.setAttribute("id", `state${element.state_id}`);
-        option.setAttribute("value", `${element.state_name}`);
-        stateSelectCombo.appendChild(option);
-      }
-    }
-  } catch (error) {
-    console.log(error);
-
-    if (response.status === 404) {
-      console.log("StateArray is empty");
-    }
-    if (response.status === 500) {
-      console.log("Something went wrong");
-    }
-  }
+  getAllState("stateSelectCombo");  //second parameter those state we need to selected 
 }
 
-async function getCity(stateSelectCombo) {
-  const stateSelectComboId = stateSelectCombo.id;
-  const stateName = document.getElementById(`${stateSelectComboId}`).value;
 
-  const response = await fetch('/api/getCity', {
-    method: 'POST',
-    body: JSON.stringify({ state: `${stateName}` }),
-    headers: {
-      "Content-Type": "application/json"
-    }
-  });
+async function submitCustomerDetails() {
+  const customerFormData = formData('customerForm');  //parameter as formname
 
-  try {
-    if (!response.ok) {
-      throw new Error("Can't get city");
-    }
+  const customerDetailsValidation = manageCustomerFormValidation(customerFormData);
+  // const customerDetailsValidation = true;
 
-    if (response.status === 200) {
-      const cityObject = await response.json();
-      const cityArray = cityObject.cityArray;
-
-      const citySelectCombo = document.getElementById("citySelectCombo");
-
-      citySelectCombo.innerHTML = "";
-
-      const defaultOption = document.createElement("option");
-      defaultOption.innerHTML = "Select City";
-      citySelectCombo.appendChild(defaultOption);
-
-      for (let element of cityArray) {
-        const optionCreate = document.createElement("option");
-        optionCreate.innerHTML = `${element.city_name}`;
-        optionCreate.setAttribute("id", `city${element.city_id}`);
-        optionCreate.setAttribute("value", `${element.city_name}`);
-        citySelectCombo.appendChild(optionCreate);
+  if (Object.keys(customerDetailsValidation).length > 0) {
+    //----client side validation error
+    errorShow(customerDetailsValidation);
+  } else {
+    //----backend
+    const response = await fetch('/api/insertCustomer', {
+      method: 'POST',
+      body: JSON.stringify(customerFormData),
+      headers: {
+        "Content-Type": "application/json"
       }
-    }
-  } catch (error) {
-    if (response.status === 404) {
-      console.log(response.message);
-    }
+    });
 
-    if (response.status === 500) {
-      console.log(response.message);
+    try {
+      if (!response.ok) {
+        throw new Error("Error In Backend Validation Manage Customer");
+      }
+
+      if (response.status === 200) {
+        const responseMessage = await response.json();
+        console.log(response.status);
+        console.log(responseMessage.message);
+        window.location.replace(window.location.protocol + "//" +
+          window.location.host + `/manageCustomers`)
+      }
+    } catch (error) {
+      console.log(error);
+
+      if (response.status === 400) {
+        const errorObject = await response.json();
+        console.log(errorObject);
+        errorShow(errorObject);
+      }
     }
   }
 }
@@ -93,11 +53,38 @@ function closeForm() {
   document.getElementById("myForm").style.display = "none";
 }
 
-// function addNewCustomer() {
-//   const customerForm = document.getElementById("myForm");
-//   customerForm.style.display = "block";
-// }
+//---------update customer details
+async function openUpdateCustomerForm(customer) {
+  document.getElementById("myForm").style.display = "block";
+  const customerId = customer.id;
+  const response = await fetch(`/api/getCustomers/?customerId=${customerId}`, {
+    method: 'GET'
+  });
+  const customerDetails = await response.json();
 
-function customerFilter() {
+  try {
+    if (!response.ok) {
+      throw new Error("Error In Get Customer Details");
+    }
+
+    if (response.status === 200) {
+      console.log(customerDetails);
+      getAllState("stateSelectCombo", customerDetails[0].state);
+      const stateSelectCombo = { id: "stateSelectCombo" }
+      getCity(stateSelectCombo, customerDetails[0].state, customerDetails[0].city);
+
+    }
+  } catch (error) {
+    if (response.status === 404) {
+      console.log(customerDetails.message);
+    }
+
+    if (response.status === 500) {
+      console.log(customerDetails.message);
+    }
+  }
+}
+
+async function updateCustomerDetails(customer) {
 
 }

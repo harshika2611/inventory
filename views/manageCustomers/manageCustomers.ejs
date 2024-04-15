@@ -1,26 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Manage Customers</title>
-    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
-    <script src="/js/bootstrap.js"></script>
-    <link rel="stylesheet" href="src/css/allpage.css" />
-    <link rel="stylesheet" href="src/css/manageCustomers/manageCustomers.css" />
-    <script src="js/manageCustomers/manageCustomers.js"></script>
-  </head>
 
-  <body>
-    <%- include('../components/navigation')%>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Manage Customers</title>
+  <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
+  <script src="/js/bootstrap.js"></script>
+  <link rel="stylesheet" href="src/css/allpage.css" />
+  <link rel="stylesheet" href="src/css/manageCustomers/manageCustomers.css" />
+  <script src="js/manageCustomers/manageCustomers.js"></script>
+  <script src="js/commonFunction/commonFunction.js"></script>
+  <script src="js/manageCustomers/manageCustomerFormValidation.js"></script>
+</head>
+
+<body>
+  <%- include('../components/navigation')%>
     <section class="div-second managecustomer-section">
       <div class="managecustomer-container">
         <div class="managecustomer-container__button">
           <p class="addnewcustomerbutton" onclick="addNewCustomer()">Add New</p>
           <p class="customerfilterbutton" onclick="customerFilter()">Filter</p>
         </div>
+
+        <table class="managecustomer__table">
+          <thead>
+            <%if(typeof customersDetails !=="undefined" ){%>
+              <%for(let key in customersDetails[0]){%>
+                <th>
+                  <%= key%>
+                </th>
+                <%}%>
+                  <th>Action</th>
+          </thead>
+          <tbody>
+            <%for(let element of customersDetails){%>
+              <tr>
+                <%for(let key in element){%>
+                  <td>
+                    <%= element[key]%>
+                  </td>
+                  <%}%>
+                    <td id="<%= element.CustomerId%>" class="managecustomer__actionbutton"
+                      onclick="openUpdateCustomerForm(this)">
+                      <img src="src/assets/manageCustomer/edit.svg" width="20" height="20">
+                    </td>
+                    <td id="<%= element.CustomerId%>" class="managecustomer__actionbutton"
+                      onclick="deleteCustomerDetails(this)">
+                      <img src="src/assets/manageCustomer/delete.svg" width="25" height="25">
+                    </td>
+              </tr>
+              <%}%>
+                <%}%>
+          </tbody>
+        </table>
       </div>
       <%- include('../form/customerForm')%>
     </section>
-  </body>
+</body>
+
 </html>

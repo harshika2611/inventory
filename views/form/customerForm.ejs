@@ -5,14 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Customer</title>
   <link rel="stylesheet" href="src/css/form.css">
-  <script src="js/manageCustomers/manageCustomerFormValidation.js"></script>
 </head>
 
 <body class="body">
   <div class="row form-popup" id="myForm">
     <div class="col-md-12 " data-bs-spy="scroll">
-      <form action="/api/insertCustomer" method="POST" id="customerForm" name="customerForm"
-        onsubmit="return manageCustomerFormValidation()">
+      <form id="customerForm" name="customerForm">
         <div class="container">
           <h1>Customer Details</h1>
           <p onclick="closeForm()">close</p>
@@ -55,6 +53,7 @@
             <div class="form-floating customerform__errordiv">
               <select name="state" class="form-select" id="stateSelectCombo" aria-label="Floating label select example"
                 onchange="getCity(this)">
+
               </select>
             </div>
 
@@ -64,7 +63,7 @@
             </div>
 
           </fieldset>
-          <input type="submit" class="btn btn-outline-primary" value="Submit">
+          <p class="btn btn-outline-primary" onclick="submitCustomerDetails()">Submit</p>
           <input type=" reset" class="btn btn-outline-danger" value="Reset">
         </div>
       </form>
