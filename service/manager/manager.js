@@ -20,7 +20,6 @@ const updateManagerService = async () => {
 
 const insertManagerService = async () => {
 	try {
-	
 		const sql2 = `insert into users (fname,lname,email,dob,password,salt,unique_code,status)
 		values (?,?,?,?,?,?,?,?,?)`;
 		const [ans1] = await connection.execute(sql2, [
