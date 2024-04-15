@@ -148,11 +148,11 @@ const {
   getStore,
   updateStore,
   deleteStore,
-} = require('../controller/stores/store.js');
-router.get('/store', getStore);
-router.post('/insertStore', insertStore);
-router.post('/updateStore', updateStore);
-router.post('/deleteStore/:name', deleteStore);
+} = require("../controller/stores/store.js");
+router.get("/store", getStore);
+router.post("/insertStore", insertStore);
+router.post("/updateStore/:name", updateStore);
+router.post("/deleteStore/:name", deleteStore);
 
 // ------------------- Manage Purchases ---------------------- //
 

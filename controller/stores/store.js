@@ -1,3 +1,4 @@
+const { checkLogin } = require('../../middleware/auth');
 const {
 	insertStoreQuery,
 	getStoreQuery,
@@ -8,13 +9,8 @@ const {
 
 async function insertStore(req, res) {
 	try {
-		/**if this will send from frontend js then form data
-		 * either post request then key value pair key is name in form */
-
 		const storeDetails = req.body;
-		// console.log(storeDetails);
 		await insertStoreQuery(storeDetails);
-		// return res.status(200).json({ message: 'Store Inserted' });
 		res.redirect("/store");
 	} catch (error) {
 		return res.status(500).json({ message: 'Unable to insert' });
@@ -33,17 +29,9 @@ async function getStore(req, res) {
 
 async function updateStore(req, res) {
 	try {
-		const storeDetails = req.body;
-		const updateStoreStatus = await updateStoreQuery(
-			'name',
-			storeDetails
-		);
-
-		if (updateStoreStatus) {
-			return res.status(200).json({ message: 'Store Updated' });
-		} else {
-			return res.status(404).json({ message: 'Something went wrong' });
-		}
+		const name = req.params.name;
+		await updateStoreQuery([name], req.body);
+		return res.status(200).json({ message: 'Store Updated' });
 	} catch (error) {
 		return res.status(500).json({ message: 'Unable to update' });
 	}
