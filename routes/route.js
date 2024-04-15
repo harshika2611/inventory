@@ -1,70 +1,69 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-
-// const {
-//   insertStore,
-//   getStore,
-//   updateStore,
-// } = require('../controller/stores/store.js');
 
 //login module
 const {
-  userLogout,
-  checkUser,
-  getUserName,
-  userLogin,
-  getLogin,
-  getLink,
-} = require("../controller/login/login");
-const { getHome } = require("../controller/home/homeController");
-const { auth } = require("../middleware/auth");
-const { getForgot } = require("../controller/login/forgot");
-const { forgotPassService } = require("../service/login/forgot.js");
-const passport = require("passport");
-const { getReport, getAllreport } = require("../controller/report/report");
+	userLogout,
+	checkUser,
+	getUserName,
+	userLogin,
+	getLogin,
+	getLink,
+} = require('../controller/login/login');
+const { getHome } = require('../controller/home/homeController');
+const { auth } = require('../middleware/auth');
+const { getForgot } = require('../controller/login/forgot');
+const { forgotPassService } = require('../service/login/forgot.js');
+const passport = require('passport');
+const { getReport, getAllreport } = require('../controller/report/report');
 router.use(passport.initialize());
 auth(passport);
-router.get("/", getLogin);
-router.post("/", userLogin);
+router.get('/', getLogin);
+router.post('/', userLogin);
 router.get(
-  "/home",
-  passport.authenticate("jwt", { session: false, failureRedirect: "/" }),
-  getHome
+	'/home',
+	passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+	getHome
 );
-router.get("/user", getUserName);
-router.post("/user", checkUser);
-router.get("/activelink/:link", getLink);
-router.get("/forgot", getForgot);
-router.post("/forgot", forgotPassService);
+router.get('/user', getUserName);
+router.post('/user', checkUser);
+router.get('/activelink/:link', getLink);
+router.get('/forgot', getForgot);
+router.post('/forgot', forgotPassService);
 router.get(
-  "/logout",
-  passport.authenticate("jwt", { session: false }),
-  userLogout
+	'/logout',
+	passport.authenticate('jwt', { session: false }),
+	userLogout
 );
 
 //----Dashboard
-const dashboard = require("../controller/dashboard/dashboard.js");
-router.get("/dashboard", dashboard);
+const dashboard = require('../controller/dashboard/dashboard.js');
+router.get('/dashboard', dashboard);
+
+//manager module
 
 //manager module
 const {
-  addManager,
-  listManagers,
-  updateManager,
-  insertManager,
-} = require("../controller/manager/manager");
-router.get("/addmanager", addManager);
-router.get("/insertmanager", insertManager);
-router.get("/getmanager", listManagers);
-router.get("/updatemanager", updateManager);
+	manageManager,
+	getManager,
+	addManager,
+	listManagers,
+	updateManager,
+	insertManager,
+} = require('../controller/manager/manager');
+router.get('/getmanager', getManager);
+router.post('/getmanager',manageManager)
+router.get('/addmanager', addManager);
+router.get('/insertmanager', insertManager);
+router.get('/getmanager', listManagers);
+router.get('/updatemanager', updateManager);
 const {
-  insertCustomer,
-  updateCustomer,
-  getCustomers,
-  deleteCustomer,
-  filterCustomer,
-} = require("../controller/manageCustomers/manageCustomers.js");
-
+	insertCustomer,
+	updateCustomer,
+	getCustomers,
+	deleteCustomer,
+	filterCustomer,
+} = require('../controller/manageCustomers/manageCustomers.js');
 const {
   insertStore,
   getStore,
@@ -82,21 +81,21 @@ router.get("/api/getState", getState);
 router.post("/api/getCity", getCity);
 
 //-----
-router.get("/", getLogin);
-router.post("/", userLogin);
+router.get('/', getLogin);
+router.post('/', userLogin);
 router.get(
-  "/home",
-  passport.authenticate("jwt", { session: false, failureRedirect: "/" }),
-  getHome
+	'/home',
+	passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+	getHome
 );
-router.get("/user", getUserName);
-router.post("/user", checkUser);
-router.get("/activelink/:link", getLink);
-router.get("/forgot", getForgot);
+router.get('/user', getUserName);
+router.post('/user', checkUser);
+router.get('/activelink/:link', getLink);
+router.get('/forgot', getForgot);
 
 //report
-router.get("/report", getReport);
-router.get("/api/salesreport/allreport", getAllreport);
+router.get('/report', getReport);
+router.get('/api/salesreport/allreport', getAllreport);
 
 //----Dashboard
 
@@ -144,34 +143,34 @@ router.post("/deleteStore/:name", deleteStore);
 // ------------------- Manage Purchases ---------------------- //
 
 const {
-  fetchCombos,
-  showPurchases,
-  createPurchase,
-  fetchSuppliers,
-} = require("../controller/purchase");
+	fetchCombos,
+	showPurchases,
+	createPurchase,
+	fetchSuppliers,
+} = require('../controller/purchase');
 
 router.get(
-  "/api/combos/:name",
-  passport.authenticate("jwt", { session: false, failureRedirect: "/" }),
-  fetchCombos
+	'/api/combos/:name',
+	passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+	fetchCombos
 );
 
 router.get(
-  "/api/purchase/suppliers",
-  passport.authenticate("jwt", { session: false, failureRedirect: "/" }),
-  fetchSuppliers
+	'/api/purchase/suppliers',
+	passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+	fetchSuppliers
 );
 
 router.post(
-  "/api/purchase/purchase",
-  passport.authenticate("jwt", { session: false, failureRedirect: "/" }),
-  createPurchase
+	'/api/purchase/purchase',
+	passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+	createPurchase
 );
 
 router.get(
-  "/purchase",
-  passport.authenticate("jwt", { session: false, failureRedirect: "/" }),
-  showPurchases
+	'/purchase',
+	passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+	showPurchases
 );
 
 //---------------------Profile Module---------------------

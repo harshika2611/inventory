@@ -4,17 +4,18 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Manager</title>
-  <link rel="stylesheet" href="src/css/form.css">
+  <link rel="stylesheet" href="/src/css/form.css">
 </head>
 
 <body class="body">
   <div class="row form-popup" id="myForm">
     <div class="col-md-12 " data-bs-spy="scroll">
-      <form action="" method="">
+      <form method="" id="form">
+        <h6 onclick="closeForm()" class="text-danger" style="margin-left: 390px; margin-top: 5px; cursor: pointer;">
+          Close</h6>
         <div class="container">
           <h1>Manager Details</h1>
           <fieldset>
-
             <div class="form-floating mb-3">
               <input name="fname" type="text" class="form-control" id="floatingInput" placeholder="name@example.com">
               <label for="floatingInput">First Name </label>
@@ -31,12 +32,14 @@
             </div>
 
             <div class="form-floating mb-3">
-              <input name="phonenumber" type="text" class="form-control" id="floatingInput" placeholder="name@example.com">
+              <input name="phonenumber" type="text" class="form-control" id="floatingInput"
+                placeholder="name@example.com">
               <label for="floatingInput">Phone Number </label>
             </div>
 
             <div class="form-floating">
-              <textarea name="address" class="form-control" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
+              <textarea name="address" class="form-control" placeholder="Leave a comment here"
+                id="floatingTextarea"></textarea>
               <label for="floatingTextarea">Address</label>
             </div>
 
@@ -61,7 +64,7 @@
             </div>
 
           </fieldset>
-          <button type="submit" class="btn btn-outline-primary" onclick="closeForm()">Submit</button>
+          <button type="button" class="btn btn-outline-primary" onclick="submitbtn()">Submit</button>
           <button type="reset" class="btn btn-outline-danger">Reset</button>
         </div>
       </form>
@@ -69,5 +72,42 @@
   </div>
 
 </body>
+<script>
+  async function submitbtn() {
+    try {
+      const form = document.getElementById('form');
+      const formData = new FormData(form);
+      const serialData = {};
+
+      for (const [key, value] of formData.entries()) {
+        if (serialData[key] != undefined) {
+          serialData[key] += ',' + value;
+        } else {
+          serialData[key] = value;
+        }
+      }
+      const data = JSON.stringify(serialData);
+      const response = await fetch(`/getmanager`, {
+        method: 'post',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: data,
+
+      });
+      console.log(data);
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      if (response.status == 201) {
+        alert('You are successfully registerd');
+        window.location = `/`;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+</script>
 
 </html>
