@@ -4,68 +4,55 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Manager</title>
-  <link rel="stylesheet" href="/src/css/form.css">
+  <link rel="stylesheet" href="src/css/form.css">
 </head>
 
 <body class="body">
   <div class="row form-popup" id="myForm">
     <div class="col-md-12 " data-bs-spy="scroll">
-      <form method="" id="form">
+      <form method="post" id="form">
         <h6 onclick="closeForm()" class="text-danger" style="margin-left: 390px; margin-top: 5px; cursor: pointer;">
           Close</h6>
         <div class="container">
           <h1>Manager Details</h1>
           <fieldset>
             <div class="form-floating mb-3">
-              <input name="fname" type="text" class="form-control" id="floatingInput" placeholder="name@example.com">
+              <input name="firstname" type="text" class="form-control" id="floatingInput" placeholder="name@example.com"
+                required>
               <label for="floatingInput">First Name </label>
             </div>
 
             <div class="form-floating mb-3">
-              <input name="lname" type="text" class="form-control" id="floatingInput" placeholder="name@example.com">
+              <input name="lastname" type="text" class="form-control" id="floatingInput" placeholder="name@example.com"
+                required>
               <label for="floatingInput">Last Name </label>
             </div>
 
             <div class="form-floating mb-3">
-              <input name="email" type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+              <input name="email" type="email" class="form-control" id="floatingInput" placeholder="name@example.com"
+                required>
               <label for="floatingInput">Email address</label>
             </div>
+            <!-- 
+              <div class="form-floating mb-3">
+                <input name="phonenumber" type="text" class="form-control" id="floatingInput"
+                  placeholder="name@example.com" required>
+                <label for="floatingInput">Phone Number </label>
+              </div> -->
 
             <div class="form-floating mb-3">
-              <input name="phonenumber" type="text" class="form-control" id="floatingInput"
-                placeholder="name@example.com">
-              <label for="floatingInput">Phone Number </label>
+              <input name="dob" type="text" class="form-control" id="floatingInput" placeholder="YYYY-MM-DD">
+              <label for="floatingInput">Date of Birth</label>
             </div>
-
-            <div class="form-floating">
-              <textarea name="address" class="form-control" placeholder="Leave a comment here"
-                id="floatingTextarea"></textarea>
-              <label for="floatingTextarea">Address</label>
-            </div>
-
-            <div class="form-floating mb-3">
-              <input name="zipcode" type="text" class="form-control" id="floatingInput" placeholder="name@example.com">
-              <label for="floatingInput">Zipcode </label>
-            </div>
-
-            <div class="form-floating mb-3">
-              <input name="city" type="text" class="form-control" id="floatingInput" placeholder="name@example.com">
-              <label for="floatingInput">City </label>
-            </div>
-
-            <div class="form-floating">
-              <select name="state" class="form-select" id="floatingSelect" aria-label="Floating label select example">
-                <option value="gujarat">Gujarat</option>
-                <option value="up">UP</option>
-                <option value="mp">MP</option>
-                <option value="jammukashmir">Jammu Kashmir</option>
-              </select>
-              <label for="floatingSelect">State </label>
-            </div>
-
           </fieldset>
-          <button type="button" class="btn btn-outline-primary" onclick="submitbtn()">Submit</button>
-          <button type="reset" class="btn btn-outline-danger">Reset</button>
+          <% if(locals.msg){%>
+            <div style="color: red;">
+              <%=msg%>
+            </div>
+            <%}%>
+              <div id="error"></div>
+              <button type="button" class="btn btn-outline-primary" onclick="submitbtn()">Submit</button>
+              <button type="reset" class="btn btn-outline-danger">Reset</button>
         </div>
       </form>
     </div>
@@ -101,8 +88,9 @@
         throw new Error('Network response was not ok');
       }
       if (response.status == 201) {
-        alert('You are successfully registerd');
-        window.location = `/`;
+        document.getElementById('error').innerHTML = 'manager ades'
+        alert('Manager added');
+        window.location = `/user`;
       }
     } catch (error) {
       console.log(error);
