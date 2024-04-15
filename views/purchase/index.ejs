@@ -1,26 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Purchase</title>
     <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
     <script src="/js/bootstrap.js"></script>
-    <link rel="stylesheet" href="src/css/dashboard/allpage.css" />
-</head>
+    <link rel="stylesheet" href="src/css/allpage.css" />
+  </head>
 
-<body>
+  <body>
     <%- include('../components/navigation.ejs') %>
-        <div class="div-second">
-            <div>
-                <button type="button" class="btn btn-outline-dark float-end me-5" onclick="generateForm()">
-                    + New
-                </button>
-            </div>
-            <div id="root"></div>
-        </div>
-</body>
-<script src="/js/purchase/index.js"></script>
-
+    <div class="div-second">
+      <div>
+        <button
+          type="button"
+          class="btn btn-outline-dark float-end me-5"
+          onclick="generateForm()"
+        >
+          + New
+        </button>
+      </div>
+      <div id="root"></div>
+    </div>
+  </body>
+  <script src="/js/purchase/index.js"></script>
 </html>

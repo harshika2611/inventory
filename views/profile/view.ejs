@@ -1,31 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profile View</title>
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
+    <script src="/js/bootstrap.js"></script>
+    <link rel="stylesheet" href="src/css/allpage.css" />
+    <link rel="stylesheet" href="src/css/dashboardCustom.css" />
+    <link rel="stylesheet" href="src/css/profile/profileStyle.css" />
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Profile View</title>
-  <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
-  <script src="/js/bootstrap.js"></script>
-  <link rel="stylesheet" href="src/css/dashboard/allpage.css" />
-  <link rel="stylesheet" href="src/css/dashboardCustom.css">
-  <link rel="stylesheet" href="src/css/profile/profileStyle.css">
-</head>
-
-<body>
-  <%- include("../components/navigation")%>
+  <body>
+    <%- include("../components/navigation")%>
     <div class="container div-second">
       <div class="main-container">
         <div class="profile-details">
-          <div>
-            <span>Name : Admin</span><br>
-          </div>
-          <div>
-            <span>Date of Birth : --/--/--</span><br>
-          </div>
-          <div>
-            <span>Role : Admin</span><br>
-          </div>
+          <div><span>Name : Admin</span><br /></div>
+          <div><span>Date of Birth : --/--/--</span><br /></div>
+          <div><span>Role : Admin</span><br /></div>
           <div>
             <span>Email : admin@123.com</span>
           </div>
@@ -33,10 +26,8 @@
             <button class="edit-profile-btn">Edit Profile</button>
           </div>
         </div>
-        <div>
-        </div>
+        <div></div>
       </div>
-      </div>
-</body>
-
+    </div>
+  </body>
 </html>
