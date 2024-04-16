@@ -7,9 +7,11 @@
   <title>Store</title>
   <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
   <script src="/js/bootstrap.js"></script>
-  <script src="js/manageCustomers/manageCustomers.js"></script>
+  <script src="js/store/store.js"></script>
+  <script src="js/commonFunction/commonFunction.js"></script>
   <link rel="stylesheet" href="src/css/dashboard/dashboard.css" />
   <link rel="stylesheet" href="src/css/allpage.css" />
+  <link rel="stylesheet" href="src/css/store/store.css" />
   <style>
     .form-popup {
       display: none;
@@ -58,8 +60,8 @@
 
 <body>
   <%- include('../components/navigation')%>
-    <div class="div-second">
-      <div id="childbody">
+    <div class="div-second managecustomer-section">
+      <div class="managecustomer-container">
         <header>
           <form class="form-inline form1 my-2 my-lg-0">
             <input class="form-control form2 mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
@@ -73,182 +75,47 @@
             <div class="container">
               <div class="row1">
                 <h4>Storage Data</h4>
-                <button type="button" id="btn" class="btn btn-primary" onclick="openForm()">
+                <button type="button"  id="btn" class="btn btn-primary" onclick="addNewStore()">
                   Add
                 </button>
               </div>
             </div>
+            <table class="store__table">
+              <thead>
+                <%if(typeof storeDetails !=="undefined" ){%>
+                  <%for(let key in storeDetails[0]){%>
+                    <th>
+                      <%= key%>
+                    </th>
+                    <%}%>
+                      <th>Action</th>
+              </thead>
+              <tbody>
+                <%for(let element of storeDetails){%>
+                  <tr>
+                    <%for(let key in element){%>
+                      <td>
+                        <%= element[key]%>
+                      </td>
+                      <%}%>
+                        <td id="<%= element.storeId%>" class="store__actionbutton"
+                          onclick="openUpdateStoreForm(this)">
+                          <button type="button" class="btn btn-outline-primary">Edit
+                          </button>
+                        </td>
+                        <td id="<%= element.storeId%>" class="store__actionbutton" onclick="deleteStoreDetails(`<%= element.storeId%>`)">
+                          <button type="button" class="btn btn-outline-danger">Delete</button>
+                        </td>
+                  </tr>
+                  <%}%>
+                    <%}%>
+              </tbody>
+            </table>
           </section>
-          <section>
-            <div class="row row2">
-              <div class="col-sm"><b>Name</b></div>
-              <div class="col-sm"><b>Storage Type</b></div>
-              <div class="col-sm"><b>Location</b></div>
-              <div class="col-sm"></div>
-            </div>
-            <%storeDetails.map((e)=>{%>
-              <div class="container">
-                <div class="row row2">
-                  <div class="col-sm">
-                    <%=e.name%>
-                  </div>
-                  <div class="col-sm">
-                    <%=e.value%>
-                  </div>
-                  <div class="col-sm">
-                    <%=e.city_name%>
-                  </div>
-                  <div class="col-sm">
-                    <button type="button" class="btn btn-outline-primary" onclick="updateFormData()">
-                      Edit
-                    </button>
-                    <button type="button" class="btn btn-outline-danger" onclick="deleteStore(`<%=e.name%>`)">
-                      Delete
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <%})%>
-          </section>
+          <%- include('../form/storeForm')%>
         </main>
       </div>
     </div>
-    <%- include('../form/storeForm')%>
 </body>
-<script>
-  
-  // open store
 
-  async function openForm() {
-    document.getElementById("myForm").style.display = "block";
-    document.getElementById("insertStore").style.display = "block";
-    document.getElementById("updateStore").style.display = "none";
-    document.getElementById("childbody").style = `
--webkit-filter: blur(2px);
--moz-filter: blur(2px);
--o-filter: blur(2px);
--ms-filter: blur(2px);
-filter: blur(2px); `;
-
-    const response = await fetch('/api/getState', {
-      method: 'GET'
-    });
-
-    try {
-      if (!response.ok) {
-        throw new Error("Can't get state");
-      }
-
-      if (response.status === 200) {
-        const stateObject = await response.json();
-        const stateArray = stateObject.stateArray;
-
-        const stateSelectCombo = document.getElementById("stateSelectCombo");
-
-        const optionCreate = document.createElement("option");
-        optionCreate.innerHTML = "Select State";
-        stateSelectCombo.appendChild(optionCreate);
-
-        for (let element of stateArray) {
-          const option = document.createElement("option");
-          option.innerHTML = `${element.state_name}`;
-          option.setAttribute("id", `state${element.state_id}`);
-          option.setAttribute("value", `${element.state_name}`);
-          stateSelectCombo.appendChild(option);
-        }
-      }
-    } catch (error) {
-      console.log(error);
-
-      if (response.status === 404) {
-        console.log("StateArray is empty");
-      }
-      if (response.status === 500) {
-        console.log("Something went wrong");
-      }
-    }
-  }
- 
-  // close form
-
-  function closeForm() {
-    document.getElementById("myForm").style.display = "none";
-    document.getElementById("childbody").style = "none";
-  }
-
-  // delete store
-
-  async function deleteStore(name) {
-    let storeDelete = await fetch(`/deleteStore/${name}`, {
-      method: "post",
-      headers: { "Content-Type": "application/json" },
-    });
-  
-    let response = await storeDelete.json();
-    if (response.message == "Store Deleted") {
-      window.location.href = "/store";
-    }
-  }
-
-  // update store
-// async function updateFormData(){
-//   document.getElementById("myForm").style.display = "block";
-//     document.getElementById("insertStore").style.display = "none";
-//     document.getElementById("updateStore").style.display = "block";
-//     document.getElementById("childbody").style = `
-// -webkit-filter: blur(2px);
-// -moz-filter: blur(2px);
-// -o-filter: blur(2px);
-// -ms-filter: blur(2px);
-// filter: blur(2px); `;
-
-
-// const response = await fetch('/api/getState', {
-//       method: 'GET'
-//     });
-
-//     try {
-//       if (!response.ok) {
-//         throw new Error("Can't get state");
-//       }
-
-//       if (response.status === 200) {
-//         const stateObject = await response.json();
-//         const stateArray = stateObject.stateArray;
-
-//         const stateSelectCombo = document.getElementById("stateSelectCombo");
-
-//         const optionCreate = document.createElement("option");
-//         optionCreate.innerHTML = "Select State";
-//         stateSelectCombo.appendChild(optionCreate);
-
-//         for (let element of stateArray) {
-//           const option = document.createElement("option");
-//           option.innerHTML = `${element.state_name}`;
-//           option.setAttribute("id", `state${element.state_id}`);
-//           option.setAttribute("value", `${element.state_name}`);
-//           stateSelectCombo.appendChild(option);
-//         }
-//       }
-//     } catch (error) {
-//       console.log(error);
-
-//       if (response.status === 404) {
-//         console.log("StateArray is empty");
-//       }
-//       if (response.status === 500) {
-//         console.log("Something went wrong");
-//       }
-//     }
-
-// }
-//   async function updateForm(name) {
-
-//     let storeUpdate = await fetch(`/updateStore/${name}`, {
-//       method: "post",
-//       headers: { "Content-Type": "application/json" },
-//     });
-//   }
-
-</script>
 </html>
