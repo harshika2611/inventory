@@ -3,7 +3,7 @@ const logger = require('../../logs.js');
 const { getCityStateId } = require('../commonFunctions/commonFunctions.js');
 
 async function insertCustomerQuery(body) {
-  // return new Promise((resolve, reject) => {
+	// return new Promise((resolve, reject) => {
 
   // });
   try {

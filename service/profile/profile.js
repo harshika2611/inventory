@@ -30,3 +30,4 @@ async function editProfileQuery() {
 	}
 }
 module.exports = { viewProfileQuery };
+

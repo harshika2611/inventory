@@ -2,123 +2,43 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Manager</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Manage Customers</title>
   <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
   <script src="/js/bootstrap.js"></script>
-  <link rel="stylesheet" href="src/css/dashboard/allpage.css" />
-  <style>
-    .form-popup {
-      display: none;
-      position: absolute;
-      bottom: 0;
-      top: 50px;
-      z-index: 9;
-      width: 500px;
-      right: 490px;
-    }
+  <link rel="stylesheet" href="src/css/allpage.css" />
+  <link rel="stylesheet" href="src/css/manager/manager.css" />
 
-    /* Add styles to the form container */
-    .form-container {
-      max-width: 300px;
-      padding: 10px;
-      background-color: white;
-      /* height: 1000px; */
-    }
-
-    .form-control {
-      width: 700px;
-      display: flex;
-    }
-
-    .form-inline {
-      display: flex;
-      margin-left: 200px;
-    }
-
-    .row2 {
-      margin-top: 26px;
-      margin-left: 100px;
-    }
-
-    .row1 {
-      margin-top: 33px;
-      margin-left: 110px;
-      display: flex;
-    }
-
-    #btn {
-      margin-left: 620px;
-    }
-  </style>
 </head>
 
 <body>
-  <!-- <%- include('../components/navigation')%> -->
-  <div class="div-second">
-    <div id="childbody">
-      <header>
-        <form class="form-inline form1 my-2 my-lg-0">
-          <input class="form-control form2 mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
-          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
-            Search
-          </button>
-        </form>
-      </header>
-      <main>
-        <section>
-          <div class="container">
-            <div class="row1">
-              <h4>Stores</h4>
-              <button type="button" id="btn" class="btn btn-primary" onclick="openForm()">
-                Add
-              </button>
-            </div>
-          </div>
-        </section>
-        <section>
-
-          <div class="container">
-            <div class="row row2">
-              <div class="col-sm">
-
+  <%- include('../components/navigation')%>
+    <section class="div-second manager-section">
+      <div class="manager-container" id="managerGrid">
+        <div class="filter">
+          <p class="btn btn-outline-dark filter1" onclick="addManager()">Add New</p>
+          <div class="filter1">
+            <select onchange="managerFilter()" name="order" class="btn btn-secondary dropdown-toggle filter1"
+              id="order">
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <option value="asc" selected>Ascending</option>
+                <option value="desc">Descending</option>
               </div>
-              <div class="col-sm">
-
-              </div>
-              <div class="col-sm">
-                <button type="button" class="btn btn-outline-primary" onclick="">
-                  Edit
-                </button>
-                <button type="button" class="btn btn-outline-danger" onclick="">
-                  delete
-                </button>
-              </div>
-            </div>
+            </select>
           </div>
 
-        </section>
-      </main>
-    </div>
-  </div>
-  <%- include('../form/managerForm')%>
+        </div>
+        <div class="grid">
+
+        </div>
+      </div>
+      <%- include('../form/managerForm')%>
+    </section>
+    <script src="js/commonFunction/commonFunction.js"></script>
+    <script src="js/manager/manager.js"></script>
+    <script src="js/manager/managerValidation.js"></script>
+
 </body>
-<script>
-  function openForm() {
-    document.getElementById("myForm").style.display = "block";
-    document.getElementById("childbody").style = `
--webkit-filter: blur(2px);
--moz-filter: blur(2px);
--o-filter: blur(2px);
--ms-filter: blur(2px);
-filter: blur(2px); `;
-  }
-  function closeForm() {
-    document.getElementById("myForm").style.display = "none";
-    document.getElementById("childbody").style = "none";
-  }
-
-</script>
 
 </html>
