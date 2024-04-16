@@ -176,6 +176,9 @@ const {
 	showPurchases,
 	createPurchase,
 	fetchSuppliers,
+	fetchProducts,
+	fetchWarehouses,
+	createProductPurchase,
 } = require('../controller/purchase');
 
 router.get(
@@ -190,14 +193,32 @@ router.get(
 	fetchSuppliers
 );
 
+router.get(
+	'/api/purchase/products',
+	passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+	fetchProducts
+);
+
+router.get(
+	'/api/purchase/warehouses',
+	passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+	fetchWarehouses
+);
+
 router.post(
-	'/api/purchase/purchase',
+	'/api/purchase/order',
 	passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
 	createPurchase
 );
 
+router.post(
+	'/api/purchase/product',
+	passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+	createProductPurchase
+);
+
 router.get(
-	'/purchase',
+	'/purchaseOrder',
 	passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
 	showPurchases
 );

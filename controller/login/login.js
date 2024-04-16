@@ -26,10 +26,8 @@ const userLogin = async (req, res) => {
 					return;
 				}
 				const test = user[0].created_at;
-				const expireDatePass = new Date(
-					new Date(test).getTime() + 240 * 3600000
-				).toDateString();
-				const newDatePass = new Date().toDateString();
+				const expireDatePass = new Date(test).getTime() + 240 * 3600000;
+				const newDatePass = new Date().getTime();
 				if (user[0].role_id == 4) {
 					if (results && newDatePass < expireDatePass) {
 						const userId = user[0].id;

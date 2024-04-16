@@ -1,29 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Purchase</title>
-    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
-    <script src="/js/bootstrap.js"></script>
-    <link rel="stylesheet" href="src/css/allpage.css" />
-  </head>
 
-  <body>
-    <%- include('../components/navigation.ejs') %>
-    <div class="div-second">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Purchase</title>
+  <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
+  <script src="/js/bootstrap.js"></script>
+  <link rel="stylesheet" href="src/css/allpage.css" />
+</head>
+
+<body>
+  <%- include('../components/navigation.ejs') %>
+    <div class="div-second pt-3">
       <div class="d-flex mb-5 justify-content-end">
-        <button
-          type="button"
-          class="btn btn-outline-dark"
-          onclick="generateForm1()"
-        >
+        <button type="button" id="newForm" class="btn btn-outline-dark"
+          onclick="document.getElementById('newForm').disabled = true; generateForm1()">
           + New
         </button>
       </div>
       <div id="root">
       </div>
     </div>
-  </body>
-  <script src="/js/purchase/index.js"></script>
+</body>
+<script src="/js/purchase/index.js"></script>
+
 </html>
