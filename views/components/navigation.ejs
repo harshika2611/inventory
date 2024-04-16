@@ -11,9 +11,9 @@
             </div>
             <div class="d-flex flex-column align-items-center align-items-sm-start pt-2 mx-3 min-vh-100 div-h">
               <div class="btn my-2 width-100">
-                <a href="/" class="d-flex align-items-center justify-content-start nav-link"><img src="icons/home.svg"
-                    alt="img" width="30" height="20" />
-                  <span class="fs-6 mx-2 text-light">Dashbord</span>
+                <a href="/dashboard" class="d-flex align-items-center justify-content-start nav-link"><img
+                    src="icons/home.svg" alt="img" width="30" height="20" />
+                  <span class="fs-6 mx-2 text-light">Dashboard</span>
                 </a>
               </div>
               <div class="btn my-2 width-100">
@@ -23,13 +23,13 @@
                 </a>
               </div>
               <div class="btn my-2 width-100">
-                <a href="/" class="d-flex align-items-center justify-content-start nav-link"><img
+                <a href="/getmanager" class="d-flex align-items-center justify-content-start nav-link"><img
                     src="icons/manager.svg" alt="img" width="30" height="20" />
                   <span class="fs-6 mx-2 text-light">Managers</span>
                 </a>
               </div>
               <div class="btn my-2 width-100">
-                <a href="/" class="d-flex align-items-center justify-content-start nav-link"><img
+                <a href="/manageCustomers" class="d-flex align-items-center justify-content-start nav-link"><img
                     src="icons/customer.svg" alt="img" width="30" height="20" />
                   <span class="fs-6 mx-2 text-light">Customers</span>
                 </a>
@@ -41,7 +41,7 @@
                 </a>
               </div>
               <div class="btn my-2 width-100">
-                <a href="/" class="d-flex align-items-center justify-content-start nav-link"><img
+                <a href="/store" class="d-flex align-items-center justify-content-start nav-link"><img
                     src="icons/warehouses.svg" alt="img" width="30" height="20" />
                   <span class="fs-6 mx-2 text-light">Warehouses</span>
                 </a>
@@ -94,50 +94,26 @@
                   </ul>
                 </div>
               </div>
-              <div
-                class="btn my-2 width-100"
-                data-bs-toggle="collapse"
-                data-bs-target="#submenu3"
-                aria-expanded="false"
-              >
-                <img
-                  src="icons/downarrow.svg"
-                  alt="img"
-                  class="float-end mt-1"
-                  width="25"
-                  height="15"
-                />
-                <a
-                  class="d-flex align-items-center justify-content-start nav-link"
-                >
+              <div class="btn my-2 width-100" data-bs-toggle="collapse" data-bs-target="#submenu3"
+                aria-expanded="false">
+                <img src="icons/downarrow.svg" alt="img" class="float-end mt-1" width="25" height="15" />
+                <a class="d-flex align-items-center justify-content-start nav-link">
                   <img src="icons/sales.svg" alt="img" width="30" height="20" />
                   <span class="fs-6 mx-2 text-light">Reports</span>
                 </a>
                 <div class="collapse collapse-horizontal" id="submenu3">
                   <ul class="dis-flex nav flex-row ms-1">
                     <li>
-                      <a
-                        href="/purchaseReport"
-                        class="d-flex align-items-center justify-content-start nav-link text-dark"
-                        ><img
-                          src="icons/purchase.svg"
-                          alt="img"
-                          width="30"
-                          height="20"
-                        />
+                      <a href="/purchaseReport"
+                        class="d-flex align-items-center justify-content-start nav-link text-dark"><img
+                          src="icons/purchase.svg" alt="img" width="30" height="20" />
                         <span class="fs-6 mx-2 text-light">Purchase </span>
                       </a>
                     </li>
                     <li>
-                      <a
-                        href="/sallesReport"
-                        class="d-flex align-items-center justify-content-start nav-link text-dark"
-                        ><img
-                          src="icons/history.svg"
-                          alt="img"
-                          width="30"
-                          height="20"
-                        />
+                      <a href="/sallesReport"
+                        class="d-flex align-items-center justify-content-start nav-link text-dark"><img
+                          src="icons/history.svg" alt="img" width="30" height="20" />
                         <span class="fs-6 mx-2 text-light">Salles</span>
                       </a>
                     </li>
@@ -156,8 +132,9 @@
           <div>
             <img src="icons/notification.svg" alt="img" width="25" height="25" />
             <img src="icons/exit.svg" class="mx-2" alt="img" width="30" height="30" />
-            <img class="user-img" src="icons/profile.png" alt="img" width="30" height="30" class="rounded-circle" />
-            <a href="/profile">Admin</a>
+            <a href="/profile">
+              <img src="icons/profile.png" alt="img" width="30" height="30" class="rounded-circle" />
+            </a>
           </div>
         </div>
       </div>
