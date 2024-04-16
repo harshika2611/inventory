@@ -1,9 +1,9 @@
 .main-container {
 	background-color: rgb(238, 231, 231);
 	display: flex;
+	border-radius: 10px;
 }
 .profile-details {
-	border-radius: 10px;
 	width: 100%;
 	height: fit-content;
 	justify-content: space-between;

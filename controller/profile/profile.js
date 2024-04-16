@@ -1,34 +1,38 @@
-// const profileViewService = require('../../service/profile');
+const {
+	viewProfileQuery,
+	updateProfileQuery,
+} = require('../../service/profile/profile');
 
-const logger = require("../../logs");
+const logger = require('../../logs');
 
 async function viewProfile(req, res) {
-	// try {
-	// 	const profileDetails = await profileViewService(req.body);
-	// 	// return res.status(200).json({ data: profileDetails });
-	// 	return res.status(200).render('./profile/view', { data: profileDetails });
-	// } catch (error) {
-	// 	return res.status(404).json({ message: "Can't get profile details" });
-	// }
-	try{
-		res.render('./profile/view');
+	try {
+		const profileDetails = await viewProfileQuery();
+		return res.render('./profile/view', { profileDetails });
+	} catch (error) {
+		return res.json({ message: "Can't get profile details" });
 	}
-	catch(err){
-		logger.logError(err);
-	}
-	
 }
 
-async function editProfile(req,res){
-	try{
-		res.render('./profile/edit');
-	}
-	catch(err){
+async function editProfile(req, res) {
+	try {
+		const profileDetails = await viewProfileQuery();
+		res.render('./profile/edit', { profileDetails });
+	} catch (err) {
 		logger.logError(err);
 	}
 }
 
+async function updateProfile(req, res) {
+	try {
+		updateProfileQuery();
+		res.render('./profile/profile', {});
+	} catch (err) {
+		logger.logError(err);
+	}
+}
 module.exports = {
 	viewProfile,
 	editProfile,
+	updateProfile,
 };
