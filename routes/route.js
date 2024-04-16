@@ -205,8 +205,10 @@ router.get('/products', productListing);
 const {
 	viewProfile,
 	editProfile,
+	updateProfile,
 } = require('../controller/profile/profile.js');
 router.get('/profile', viewProfile);
 router.get('/profileEdit', editProfile);
+router.post('/profileEdit', updateProfile);
 
 module.exports = router;
