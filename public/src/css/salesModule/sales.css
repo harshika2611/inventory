@@ -12,12 +12,7 @@
 .grid {
   margin-top: 5%;
 }
-#insertFormDiv{
-  display: none;
-}
-#productFormDiv{
-  display: none;
-}
+
 #customer {
   width: 15%;
   margin: 0 2%;
@@ -31,10 +26,18 @@
 #insertSubmit{
   width: 100%;
 }
+#gridComponent {
+  width: 95%;
+  margin: 0 auto;
+}
 #tbody{
   overflow-y: scroll;
 }
 .grid{
   height: 100dvh;
   overflow: scroll;
+}
+#thead{
+  position: sticky;
+  top: 0;
 }

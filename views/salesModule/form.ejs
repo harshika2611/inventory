@@ -1,70 +1,90 @@
-<form name="insertSalesData" id="insertSalesData" onsubmit="return false">
-  <table id="insertForm">
-    <tr>
-      <td><input type="text" name="orderid" hidden id="orderid" /></td>
-    </tr>
-    <tr>
-      <td>
-        <label for="customer" class="insertLabels">Customer : </label>
-        <select name="customer" class=" btn btn-secondary dropdown-toggle" id="customer"></select>
-        
-        <a class="btn btn-outline-dark">New +</a>
+<!DOCTYPE html>
+<html lang="en">
 
-        <label for="orderType" class="insertLabels ms-5" >Type : </label>
-        <select name="orderType" class=" btn btn-secondary dropdown-toggle" id="orderType">
-          <option value="8">Sales</option>
-          <option value="9">Return</option>
-        </select>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <label for="amount" class="insertLabels">Amount : </label>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="src/css/dashboard/dashboard.css" />
+  <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
+  <script src="/js/bootstrap.js"></script>
+  <link rel="stylesheet" href="src/css/salesModule/sales.css" />
+  <link rel="stylesheet" href="src/css/salesModule/form.css" />
+  <link rel="stylesheet" href="src/css/allpage.css" />
+</head>
 
-        <input
-          type="text"
-          class="form-control insertFields"
-          name="amount"
-          id="amount"
-        />
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <label for="shippingAddress" class="insertLabels">Shipping Address : </label>
+<body>
+  <%- include('../components/navigation')%>
+    <div class="div-second">
+      <div class="container">
+        <div id="insertFormDiv">
+          <form name="insertSalesData" id="insertSalesData" onsubmit="return false">
+            <table id="insertForm">
+              <tr>
+                <td><input type="text" name="orderid" hidden id="orderid" /></td>
+              </tr>
+              <tr>
+                <td>
+                  <label for="customer" class="insertLabels">Customer : </label>
+                  <select name="customer" class=" btn btn-secondary dropdown-toggle" id="customer"></select>
 
-        <textarea
-          class="form-control insertFields"
-          name="shippingAddress"
-          id="shippingAddress"
-        ></textarea>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <label  class="insertLabels">Payment Status : </label>
-        <input type="radio" class="form-check-input" value="10" checked name="paymentStatus" id="unpaid"> 
-        <label for="unpaid">Unpaid</label>
-        <input type="radio" class="form-check-input" value="11" name="paymentStatus" id="paid">
-        <label for="paid">Paid</label>
-        </select>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <label for="date" class="insertLabels">Date : </label>
-        <input
-          type="text"
-          class="form-control insertFields"
-          name="date"
-          id="date"
-        />
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <a class="btn btn-outline-success" onclick="insertOrder()" id="insertSubmit">ADD Products</a>
-      </td>
-    </tr>
-  </table>
-</form>
+                  <a class="btn btn-outline-dark">New +</a>
+
+                  <label for="orderType" class="insertLabels ms-5">Type : </label>
+                  <select name="orderType" class=" btn btn-secondary dropdown-toggle" id="orderType">
+                    <option value="8">Sales</option>
+                    <option value="9">Return</option>
+                  </select>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label for="amount" class="insertLabels">Amount : </label>
+
+                  <input type="text" class="form-control insertFields" name="amount" id="amount" />
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label for="shippingAddress" class="insertLabels">Shipping Address : </label>
+
+                  <textarea class="form-control insertFields" name="shippingAddress" id="shippingAddress"></textarea>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label class="insertLabels">Payment Status : </label>
+                  <input type="radio" class="form-check-input" value="10" checked name="paymentStatus" id="unpaid">
+                  <label for="unpaid">Unpaid</label>
+                  <input type="radio" class="form-check-input" value="11" name="paymentStatus" id="paid">
+                  <label for="paid">Paid</label>
+                  </select>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label for="date" class="insertLabels">Date : </label>
+                  <input type="date" class="form-control insertFields" name="date" id="date" />
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a class="btn btn-outline-success" onclick="insertOrder()" id="insertSubmit">ADD Products</a>
+                </td>
+              </tr>
+            </table>
+          </form>
+        </div>
+
+        <div id="productFormDiv">
+          <%- include('../salesModule/productForm')%>
+        </div>
+      </div>
+    </div>
+    <script src="js/salesModule/insertFormApi.js"></script>
+    <script src="js/salesModule/updateOrder.js"></script>
+    <script src="js/salesModule/form.js"></script>
+    <script src="js/salesModule/product.js"></script>
+</body>
+
+</html>
