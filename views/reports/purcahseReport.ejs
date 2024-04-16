@@ -1,25 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
-    <script src="/js/bootstrap.js"></script>
-    <link rel="stylesheet" href="src/css/allpage.css" />
-    <style>
-      .wid-50 {
-        width: 140px;
-      }
-    </style>
-  </head>
-  <body style="background-color: #eeeeee" onload="fetchData()">
-    <%- include("../components/navigation")%>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
+  <script src="/js/bootstrap.js"></script>
+  <link rel="stylesheet" href="src/css/allpage.css" />
+  <style>
+    .wid-50 {
+      width: 140px;
+    }
+  </style>
+</head>
+
+<body style="background-color: #eeeeee" onload="fetchData()">
+  <%- include("../components/navigation")%>
     <div class="div-second">
       <section class="d-flex justify-content-center">
         <div class="card mx-5 mb-2 p-3" style="width: 67rem">
           <div>
-            <span class="fs-2">Products</span>
+            <span class="fs-2">Purchase Products</span>
+            <span class=" float-end">
+              <input type="text" class="w-300 h-25 p-1" placeholder="Search By Product Name"
+                oninput="searchdata(value)">
+            </span>
           </div>
           <div>
             <table class="table table-hover">
@@ -31,7 +37,28 @@
           </div>
         </div>
       </section>
+      <!-- <section class="d-flex justify-content-center">
+        <nav aria-label="Page navigation example">
+          <ul class="pagination pagination-lg">
+            <li class="page-item">
+              <div class="page-link text-dark d-none" aria-label="Previous" id="firstpage">
+                <span aria-hidden="true">&laquo;</span>
+              </div>
+            </li>
+            <li class="page-item" onclick="leftpage()"><span class=" page-link text-dark" id="prepage">0</span>
+            </li>
+            <li class=" page-item"><span class="page-link text-dark" id="currentpage">1</span></li>
+            <li class="page-item" onclick="rightpage()"><span class="page-link text-dark" id="nextpage">2</span></li>
+            <li class="page-item">
+              <div class="page-link text-dark d-none" aria-label="Next" id="lastpage">
+                <span aria-hidden="true">&raquo;</span>
+              </div>
+            </li>
+          </ul>
+        </nav>
+      </section> -->
     </div>
     <script src="/js/reports/purchasereport.js"></script>
-  </body>
+</body>
+
 </html>

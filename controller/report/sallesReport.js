@@ -1,46 +1,46 @@
-const logger = require("../../logs");
+const logger = require('../../logs');
 const {
-  getProductreport,
-  getCategotyreport,
-} = require("../../service/report/sellesReportService");
+	getProductreport,
+	getCategotyreport,
+} = require('../../service/report/sellesReportService');
 
 const getsallesReport = (req, res) => {
-  res.render("reports/sallesReport");
+	res.render('reports/sallesReport');
 };
 const getReportallProducts = (req, res) => {
-  res.render("reports/allProducts");
+	res.render('reports/allProducts');
 };
-
+let storage = 1;
 const getApiproductreport = async (req, res) => {
-  try {
-    const [rows, fields] = await getProductreport();
+	try {
+		const [rows, fields] = await getProductreport(storage);
 
-    const header = [];
-    fields.forEach((ele) => {
-      header.push(ele.name);
-    });
-    res.json({ rows, header });
-  } catch (err) {
-    logger.logError(err);
-  }
+		const header = [];
+		fields.forEach((ele) => {
+			header.push(ele.name);
+		});
+		res.json({ rows, header });
+	} catch (err) {
+		logger.logError(err);
+	}
 };
 
 const getApicategoryreport = async (req, res) => {
-  try {
-    const [rows, fields] = await getCategotyreport();
+	try {
+		const [rows, fields] = await getCategotyreport(storage);
 
-    const header = [];
-    fields.forEach((ele) => {
-      header.push(ele.name);
-    });
-    res.json({ rows, header });
-  } catch (err) {
-    logger.logError(err);
-  }
+		const header = [];
+		fields.forEach((ele) => {
+			header.push(ele.name);
+		});
+		res.json({ rows, header });
+	} catch (err) {
+		logger.logError(err);
+	}
 };
 module.exports = {
-  getsallesReport,
-  getReportallProducts,
-  getApiproductreport,
-  getApicategoryreport,
+	getsallesReport,
+	getReportallProducts,
+	getApiproductreport,
+	getApicategoryreport,
 };
