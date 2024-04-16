@@ -1,0 +1,10 @@
+.container{
+  width: 95%;
+  display: flex;
+  justify-content: center;
+}
+
+
+#productFormDiv{
+  display: none;
+}

@@ -110,11 +110,11 @@ const {
 	getSalesProducts,
 	getSalesCategory,
 	productGrid,
-	fetchOneOrder,
+	deleteOrder
 } = require('../controller/salesModule/salesControllers.js');
-const { renderPage } = require('../controller/salesModule/sales.js');
+const { orderHistory,newOrder } = require('../controller/salesModule/sales.js');
 
-router.get('/fetchOneOrder', fetchOneOrder);
+
 router.get('/salesorder', getsalesOrder);
 router.post('/insertSalesOrder', insertSalesOrder);
 router.post('/insertSalesProduct', insertSalesProduct);
@@ -122,8 +122,10 @@ router.get('/getSalesProducts', getSalesProducts);
 router.get('/getCustomers', getSalesCustomer);
 router.post('/updateSalesOrder', updateSalesOrder);
 router.get('/getSalesCategories', getSalesCategory);
-router.get('/sales', renderPage);
+router.get('/salesHistory', orderHistory);
+router.get('/salesNewOrder', newOrder);
 router.get('/getProductGrid', productGrid);
+router.get('/deleteSalesOrder',deleteOrder)
 //------------------------------------------------------
 
 //---------Manage Customers

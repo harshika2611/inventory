@@ -12,10 +12,11 @@
   </head>
   <body>
     <%- include('../components/navigation')%>
+    <%- include('./deletePopup')%>
     <div class="container div-second">
       <div class="gridComponent" id="gridComponent">
         <div class="allfilters">
-          <a class="btn btn-outline-dark filter" onclick="displayForm()">New +</a>
+          <a class="btn btn-outline-dark filter" href="/salesNewOrder">New +</a>
           <select
             onchange="fetching()"
             name="orderby"
@@ -46,17 +47,12 @@
         <div class="grid">
           <table class="table table-hover">
             <thead class="table-light" id="thead"></thead>
-            
             <tbody id="tbody"></tbody>
           </table>
         </div>
       </div>
-      <div  id="insertFormDiv"><%- include('form')%></div>
-      <div  id="productFormDiv"><%- include('productForm')%></div>
     </div>
     <script src="js/salesModule/fetchGrid.js"></script>
-    <script src="js/salesModule/insertFormApi.js"></script>
     <script src="js/salesModule/manageDisplay.js"></script>
-    <script src="js/salesModule/updateOrder.js"></script>
   </body>
 </html>
