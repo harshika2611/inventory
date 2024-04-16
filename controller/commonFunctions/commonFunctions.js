@@ -30,5 +30,4 @@ async function getCity(req, res) {
   }
 }
 
-
 module.exports = { getState, getCity }
