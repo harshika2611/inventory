@@ -16,7 +16,7 @@ async function insertStoreQuery(body) {
 
 async function getStoreQuery() {
   try {
-    const getStores = `SELECT * FROM storage_space_master inner join option_master on storage_space_master.storage_type = option_master.id inner join city_master on city_master.city_id=storage_space_master.location_id`
+    const getStores = `SELECT s.id as storeId ,s.name as Storagename , option_master.value as StorageType , city_master.city_name as location FROM storage_space_master as s left join option_master on s.storage_type = option_master.id left join city_master on city_master.city_id=s.location_id where s.is_deleted=0`
     const [result] = await connection.execute(getStores);
     // console.log(result)
     return result; //return array
@@ -26,24 +26,48 @@ async function getStoreQuery() {
   }
 }
 
-async function updateStoreQuery(name, body) {
+async function checkStoreExistQuery(storeId) {
   try {
-    const updateStore = `UPDATE storage_space_master SET name=?, storage_type = ?, location_id=? WHERE name=?;`
-    const cityStateId = await getCityStateId(body.state, body.city);
-    const [result] = connection.execute(updateStore,[body.storageName, body.storeType, cityStateId[0].city_id]);
-    return true;
+    const checkStore = `SELECT s.id as storeId ,s.name as Storagename , option_master.value as StorageType , option_master.id as StorageTypeId ,city_master.city_name as location  FROM storage_space_master as s left join option_master on s.storage_type = option_master.id left join city_master on city_master.city_id=s.location_id  WHERE s.id=?;`
+    const [result] = await connection.execute(checkStore, [storeId]);
+    // console.log(result);
+    // console.log(storeId);
+    return result;
   } catch (error) {
-    logger.logError("Update Store: " + error);
+    logger.logError("Check store: " + error);
+    throw error;
   }
 }
 
-async function deleteStoreQuery(name) {
+async function updateStoreQuery(storeId, body) {
   try {
-    const deleteStore = `DELETE FROM storage_space_master WHERE name=?`;
-    const [result] = await connection.execute(deleteStore, name);
+    const storeArray = checkStoreExistQuery(storeId);
+    console.log(storeArray);
+
+    if (storeArray.length === 0) {
+      return false;
+    } else {
+      const updateStore = `UPDATE storage_space_master as s SET name=?, storage_type = ?, location_id=? WHERE s.id=?;`;
+
+      const [result] = connection.execute(updateStore, [body.storageName, body.storeType, body.cityId, storeId]);
+      return true;
+    }
   } catch (error) {
-    logger.logError("Delete Customer: " + error);
+    logger.logError("Update Customer: " + error);
+    throw error;
   }
 }
 
-module.exports = { insertStoreQuery, getStoreQuery, updateStoreQuery, deleteStoreQuery };
+async function deleteStoreQuery(storeId) {
+  // console.log("queryid",storeId);
+  try {
+    const deleteStore = `update storage_space_master set is_deleted = '1' where id = ?`;
+    // console.log(deleteStore);
+    const [result] = await connection.execute(deleteStore, [storeId]);
+    // console.log(result);
+  } catch (error) {
+    logger.logError("Delete Store: " + error);
+  }
+}
+
+module.exports = { insertStoreQuery, getStoreQuery, updateStoreQuery, deleteStoreQuery, checkStoreExistQuery };
