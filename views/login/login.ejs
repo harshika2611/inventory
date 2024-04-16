@@ -11,7 +11,7 @@
 <body>
   <div class="main">
     <h2>Login Form</h2>
-    <form method="post" onsubmit=" return loginValidation()">
+    <form method="post" id="form">
       <label for="email">Email</label>
       <div>
         <input type="email" name="email" id="email" class="form-control" placeholder="xyz@gmail.com">
@@ -31,10 +31,11 @@
           <%}%>
       </div>
 
-      <button type="submit">Login</button>
+      <button type="button" onclick="submitbtn()">Login</button>
     </form>
   </div>
   <script src="/js/login/login.js"></script>
+  <script src="/js/commonFunction/commonFunction.js"></script>
 </body>
 
 </html>

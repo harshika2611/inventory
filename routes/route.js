@@ -14,6 +14,7 @@ const { getHome } = require('../controller/home/homeController');
 const { auth } = require('../middleware/auth');
 const { getForgot } = require('../controller/login/forgot');
 const { forgotPassService } = require('../service/login/forgot.js');
+
 const passport = require('passport');
 const {
 	getsallesReport,
@@ -45,6 +46,10 @@ router.get(
 	userLogout
 );
 
+//store combo
+const { storeComboServices } = require('../service/manager/manager.js');
+router.get('/storeCombo', storeComboServices);
+
 //manage manager
 
 const {
@@ -55,8 +60,9 @@ const {
 	updateManager,
 	insertManager,
 } = require('../controller/manager/manager');
-router.get('/getmanager', getManager);
-router.post('/getmanager', manageManager);
+
+router.get('/manager', getManager);
+router.post('/manager', manageManager);
 router.get('/addmanager', addManager);
 router.get('/insertmanager', insertManager);
 router.get('/getmanager', listManagers);
