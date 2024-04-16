@@ -32,7 +32,8 @@ async function getCustomersQuery() {
     const getCustomers = `SELECT  c.id as CustomerId,c.firstname as Firstname,c.lastname as Lastname,c.email as Email,c.phonenumber as Phonenumber,c.zipcode as Zipcode,city_master.city_name as City,state_master.state_name as State,c.created_at as Created,c.updated_at as Updated 
     FROM customer_master as c
     LEFT JOIN city_master ON c.city_id = city_master.city_id
-    LEFT JOIN state_master ON c.state_id = state_master.state_id;`
+    LEFT JOIN state_master ON c.state_id = state_master.state_id
+    WHERE c.status = '6';`
 
     const [result] = await connection.execute(getCustomers);
     return result; //return array
@@ -59,16 +60,16 @@ async function checkCustomerExistQuery(customerId) {
   }
 }
 
-async function updateCustomerQuery(customerId, body) {
+async function updateCustomerQuery(body) {
   try {
+    const customerId = body.customerId;
     const customerArray = checkCustomerExistQuery(customerId);
-
     if (customerArray.length === 0) {
       return false;
     } else {
-      const updateCustomer = `UPDATE customer_master SET firstname = ?, lastname=?, email=?,phonenumber=?,email=?,address=?,zipcode=?,city=?,state=? WHERE id=?;`;
+      const updateCustomer = `UPDATE customer_master SET firstname = ?, lastname=?, email=?,phonenumber=?,address=?,zipcode=?,city_id=?,state_id=? WHERE id=?;`;
 
-      const [result] = connection.execute(updateCustomer, [body.fname, body.lname, body.email, body.phonenumber, body.email, body.address, body.zipcode, body.cityId, body.stateId, customerId]);
+      const [result] = await connection.execute(updateCustomer, [body.firstname, body.lastname, body.email, body.phonenumber, body.address, body.zipcode, body.city, body.state, customerId]);
       return true;
     }
   } catch (error) {
@@ -79,11 +80,13 @@ async function updateCustomerQuery(customerId, body) {
 
 async function deleteCustomerQuery(customerId) {
   try {
-    const deleteCustomer = `DELETE customer_master WHERE id=?`;
+    const deleteCustomer = `UPDATE customer_master SET status='7' WHERE id=?`;
 
-    const [result] = connection.execute(deleteCustomer, [customerId]);
+    const [result] = await connection.execute(deleteCustomer, [customerId]);
+    return result;
   } catch (error) {
     logger.logError('Delete Customer: ' + error);
+    throw error;
   }
 }
 

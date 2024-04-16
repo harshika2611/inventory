@@ -23,7 +23,7 @@ function errorShow(errorObject) {
   });
 
   for (let key in errorObject) {
-    console.log(key + " " + errorObject[key]);
+    // console.log(key + " " + errorObject[key]);
     const targetElement = document.querySelector(`[name="${key}"]`);
     if (targetElement) {
       const errorSpan = targetElement.nextElementSibling;
