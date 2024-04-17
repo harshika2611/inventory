@@ -1,15 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
-
 //login module
 const {
-	userLogout,
-	checkUser,
-	getUserName,
-	userLogin,
-	getLogin,
-	getLink,
 	userLogout,
 	checkUser,
 	getUserName,
@@ -19,19 +12,16 @@ const {
 } = require('../controller/login/login');
 const { getHome } = require('../controller/home/homeController');
 const { auth } = require('../middleware/auth');
-const { getForgot,forgotPass } = require('../controller/login/forgot');
+const { getForgot, forgotPass } = require('../controller/login/forgot');
 
 const passport = require('passport');
 router.use(passport.initialize());
 auth(passport);
-const {checkLogin}=require('../controller/login/login.js');
-router.get('/checkLogin',checkLogin);
+const { checkLogin } = require('../controller/login/login.js');
+router.get('/checkLogin', checkLogin);
 router.get('/', getLogin);
-router.post('/',userLogin);
+router.post('/', userLogin);
 router.get(
-	'/home',
-	passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
-	getHome
 	'/home',
 	passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
 	getHome
@@ -42,9 +32,6 @@ router.get('/activelink/:link', getLink);
 router.get('/forgot', getForgot);
 router.post('/forgot', forgotPass);
 router.get(
-	'/logout',
-	passport.authenticate('jwt', { session: false }),
-	userLogout
 	'/logout',
 	passport.authenticate('jwt', { session: false }),
 	userLogout
@@ -63,23 +50,13 @@ const {
 	getApiproductPurchasereport,
 } = require('../controller/report/purchaseReport.js');
 
-
-
 //store combo
-const {getStoreCombo}=require('../controller/manager/manager.js')
+const { getStoreCombo } = require('../controller/manager/manager.js');
 router.get('/storeCombo', getStoreCombo);
-
-
 
 //manage manager
 
 const {
-	manageManager,
-	getManager,
-	addManager,
-	listManagers,
-	updateManager,
-	insertManager,
 	manageManager,
 	getManager,
 	addManager,
@@ -99,8 +76,6 @@ router.get('/updatemanager', updateManager);
 const {
 	getState,
 	getCity,
-	getState,
-	getCity,
 } = require('../controller/commonFunctions/commonFunctions.js');
 
 router.get('/api/getState', getState);
@@ -110,9 +85,6 @@ router.post('/api/getCity', getCity);
 router.get('/', getLogin);
 router.post('/', userLogin);
 router.get(
-	'/home',
-	passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
-	getHome
 	'/home',
 	passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
 	getHome
@@ -159,16 +131,14 @@ const {
 	getSalesProducts,
 	getSalesCategory,
 	productGrid,
-  deleteOrder,
-  deleteProduct,
-  updateSalesProduct
+	deleteOrder,
+	deleteProduct,
+	updateSalesProduct,
 } = require('../controller/salesModule/salesControllers.js');
 const {
 	orderHistory,
 	newOrder,
 } = require('../controller/salesModule/sales.js');
-const { orderHistory,newOrder } = require('../controller/salesModule/sales.js');
-
 
 router.get('/salesorder', getsalesOrder);
 router.post('/insertSalesOrder', insertSalesOrder);
@@ -181,20 +151,12 @@ router.get('/getSalesCategories', getSalesCategory);
 router.get('/salesHistory', orderHistory);
 router.get('/salesNewOrder', newOrder);
 router.get('/getProductGrid', productGrid);
-router.get('/deleteSalesOrder',deleteOrder)
-router.get('/deleteSalesProduct',deleteProduct)
+router.get('/deleteSalesOrder', deleteOrder);
+router.get('/deleteSalesProduct', deleteProduct);
 //------------------------------------------------------
 
 //---------Manage Customers
 const {
-	insertCustomer,
-	updateCustomer,
-	getCustomersPage,
-	getAllCustomers,
-	getParticularCustomer,
-	deleteCustomer,
-	filterCustomer,
-} = require('../controller/manageCustomers/manageCustomers.js');
 	insertCustomer,
 	updateCustomer,
 	getCustomersPage,
@@ -221,11 +183,6 @@ const {
 	updateStore,
 	deleteStore,
 	getParticularStore,
-	insertStore,
-	getStore,
-	updateStore,
-	deleteStore,
-	getParticularStore,
 } = require('../controller/stores/store.js');
 router.get('/store', getStore);
 router.get('/getStore', getParticularStore);
@@ -246,28 +203,15 @@ const {
 	fetchOrderDetails,
 	updatePurchase,
 	updateProductPurchase,
-	fetchCombos,
-	showPurchases,
-	createPurchase,
-	fetchSuppliers,
-	fetchProducts,
-	fetchWarehouses,
-	createProductPurchase,
 } = require('../controller/purchase');
 
 router.get(
 	'/api/combos/:name',
 	passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
 	fetchCombos
-	'/api/combos/:name',
-	passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
-	fetchCombos
 );
 
 router.get(
-	'/api/purchase/suppliers',
-	passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
-	fetchSuppliers
 	'/api/purchase/suppliers',
 	passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
 	fetchSuppliers
@@ -277,15 +221,9 @@ router.get(
 	'/api/purchase/products',
 	passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
 	fetchProducts
-	'/api/purchase/products',
-	passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
-	fetchProducts
 );
 
 router.get(
-	'/api/purchase/warehouses',
-	passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
-	fetchWarehouses
 	'/api/purchase/warehouses',
 	passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
 	fetchWarehouses
@@ -301,9 +239,6 @@ router.post(
 	'/api/purchase/order',
 	passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
 	createPurchase
-	'/api/purchase/order',
-	passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
-	createPurchase
 );
 
 router.put(
@@ -313,9 +248,6 @@ router.put(
 );
 
 router.post(
-	'/api/purchase/product',
-	passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
-	createProductPurchase
 	'/api/purchase/product',
 	passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
 	createProductPurchase
@@ -331,9 +263,6 @@ router.get(
 	'/purchaseOrder',
 	passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
 	showPurchases
-	'/purchaseOrder',
-	passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
-	showPurchases
 );
 
 // ------------------- Manage Purchases ---------------------- //
@@ -345,9 +274,6 @@ router.get('/products', productListing);
 //---------------------Profile Module---------------------
 
 const {
-	viewProfile,
-	editProfile,
-	updateProfile,
 	viewProfile,
 	editProfile,
 	updateProfile,
