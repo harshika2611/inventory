@@ -7,7 +7,7 @@ const logger = require('../../logs');
 
 async function viewProfile(req, res) {
 	try {
-		const profileDetails = await viewProfileQuery();
+		const profileDetails = await viewProfileQuery(req.body);
 		return res.render('./profile/view', { profileDetails });
 	} catch (error) {
 		return res.json({ message: "Can't get profile details" });

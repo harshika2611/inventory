@@ -14,7 +14,7 @@ async function viewProfileQuery() {
 
 async function editProfileCurrentData() {
 	try {
-		const getUser = `select firstname,lastname,dob,email from users where email = 'admin@gmail.com';`;
+		const getUser = `select firstname,lastname,dob,email,option_master.id as Role from users inner join option_master on users.role_id = option_master.id where users.email = 'admin@gmail.com';`;
 		const [result] = await connection.execute(getUser);
 		return [result];
 	} catch (error) {
@@ -30,4 +30,3 @@ async function editProfileQuery() {
 	}
 }
 module.exports = { viewProfileQuery };
-
