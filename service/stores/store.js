@@ -16,7 +16,7 @@ async function insertStoreQuery(body) {
 
 async function getStoreQuery() {
   try {
-    const getStores = `SELECT s.id as storeId ,s.name as Storagename , option_master.value as StorageType , city_master.city_name as location FROM storage_space_master as s left join option_master on s.storage_type = option_master.id left join city_master on city_master.city_id=s.location_id where s.is_deleted=0`
+    const getStores = `SELECT s.id as storeId ,s.name as Storagename , option_master.value as StorageType , city_master.city_name as location FROM storage_space_master as s left join option_master on s.storage_type = option_master.id left join city_master on city_master.city_id=s.location_id where s.is_delete =0`
     const [result] = await connection.execute(getStores);
     // console.log(result)
     return result; //return array
@@ -39,19 +39,14 @@ async function checkStoreExistQuery(storeId) {
   }
 }
 
-async function updateStoreQuery(storeId, body) {
+async function updateStoreQuery(body,storeId) {
   try {
-    const storeArray = checkStoreExistQuery(storeId);
-    console.log(storeArray);
-
-    if (storeArray.length === 0) {
-      return false;
-    } else {
-      const updateStore = `UPDATE storage_space_master as s SET name=?, storage_type = ?, location_id=? WHERE s.id=?;`;
-
-      const [result] = connection.execute(updateStore, [body.storageName, body.storeType, body.cityId, storeId]);
+    console.log(storeId);
+    const updateStore = `UPDATE storage_space_master as s SET name=?, storage_type = ?, location_id=? WHERE s.name=?;`;
+    const cityStateId = await getCityStateId(body.state, body.city);
+    const [result] = await connection.execute(updateStore, [body.storageName, body.storeType, cityStateId[0].city_id,body.storageName]);
+    console.log(result, "result");
       return true;
-    }
   } catch (error) {
     logger.logError("Update Customer: " + error);
     throw error;
@@ -61,7 +56,7 @@ async function updateStoreQuery(storeId, body) {
 async function deleteStoreQuery(storeId) {
   // console.log("queryid",storeId);
   try {
-    const deleteStore = `update storage_space_master set is_deleted = '1' where id = ?`;
+    const deleteStore = `update storage_space_master set is_delete = '1' where id = ?`;
     // console.log(deleteStore);
     const [result] = await connection.execute(deleteStore, [storeId]);
     // console.log(result);

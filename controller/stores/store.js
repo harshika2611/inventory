@@ -14,7 +14,7 @@ async function insertStore(req, res) {
 		const storeDetails = req.body;
 		console.log(storeDetails);
 		await insertStoreQuery(storeDetails);
-		res.redirect('/store')
+		return res.json({status:200})
 	} catch (error) {
 		// return res.status(500).json({ message: 'Unable to insert' });
 	}
@@ -60,11 +60,15 @@ async function getParticularStore(req, res) {
 async function updateStore(req, res) {
 	try {
 		const storeDetails = req.body;
-		const updateStoreStatus = await updateStoreQuery(
-			storeId,
-			storeDetails
-			);
-			console.log(updateStoreStatus);
+		const storeId = req.query.storeId;
+		// const cityStateIdArray = await getCityStateId(storeDetails.state, storeDetails.city);
+		
+		//----city, state id store
+		// let cityId = cityStateIdArray[0].city_id;
+		// let stateId = cityStateIdArray[0].state_id;
+		// storeDetails.city = cityId.toString();
+		// storeDetails.state = stateId.toString();
+		const updateStoreStatus = await updateStoreQuery(storeDetails,storeId);
 
 		if (updateStoreStatus) {
 			return res.status(200).json({ message: 'Store Updated' });
@@ -80,7 +84,7 @@ async function deleteStore(req, res) {
 	try {
 		const storeId = req.query.storeId;
 		await deleteStoreQuery(storeId);
-			// window.location.reload('/store')
+			window.location.reload('/store')
 	} catch (error) {
 		return res.status(500).json({ message: 'Unable to delete' });
 	}
