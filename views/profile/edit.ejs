@@ -23,26 +23,33 @@
                 <img class="currentProfileImage" src="icons/profile.png" alt="">
               </div>
               <div class="edit-link">
-                <a href="#">Edit</a>
+                <a href="#">Change</a>
                 <img src="/icons/edit.svg" alt="" width="20" height="20">
               </div>
             </div>
             <div class="col-md-6">
-              <label for="inputEmail4" class="form-label">First Name</label>
+              <label class="form-label">First Name</label>
               <input type="text" class="form-control" value="<%= profileDetails[0][0].firstname  %>">
+              <span>*err</span>
             </div>
             <div class="col-md-6">
-              <label for="inputPassword4" class="form-label">Last Name</label>
+              <label class="form-label">Last Name</label>
               <input type="text" class="form-control" value="<%= profileDetails[0][0].lastname %>">
             </div>
             <div class="col-12">
-              <label for="inputDateOfBirth" class="form-label">Date of Birth</label>
+              <label class="form-label">Date of Birth</label>
               <input type="date" class="form-control" placeholder="1234 Main St"
                 value="<%= profileDetails[0][0].dob %>">
+              <span>*err</span>
             </div>
             <div class="col-12">
-              <label for="inputEmail" class="form-label">Email</label>
-              <input type="text" class="form-control" value="<%= profileDetails[0][0].email%>">
+              <label class="form-label">Email</label>
+              <% if(profileDetails[0][0].Role==4) { %>
+                <input type="text" class="form-control" value="<%= profileDetails[0][0].email%>" disabled>
+                <% } else{ %>
+                  <input type="text" class="form-control" value="<%= profileDetails[0][0].email%>">
+                  <% } %>
+                    <span>*err</span>
             </div>
             <div class="edit-btn-container">
               <button type="submit" class="edit-profile-btn">Save</button>
