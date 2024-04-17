@@ -1,5 +1,5 @@
 .main-container {
-	background-color: rgb(238, 231, 231);
+	background-color: #f0f1f3;
 	display: flex;
 	border-radius: 10px;
 }
@@ -39,6 +39,10 @@
 	width: 80px;
 	border-radius: 50%;
 }
+.img-container {
+	display: flex;
+	justify-content: center;
+}
 .view-img {
 	padding: 30px;
 }
@@ -54,13 +58,13 @@ form {
 	justify-content: center;
 }
 
-.img-container,
 .edit-link {
+	cursor: pointer;
 	display: flex;
 	justify-content: center;
 }
-
+/* 
 .edit-link a,
 img {
 	margin: 5px;
-}
+} */

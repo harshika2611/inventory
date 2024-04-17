@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 
-
 //login module
 const {
 	userLogout,
@@ -13,15 +12,15 @@ const {
 } = require('../controller/login/login');
 const { getHome } = require('../controller/home/homeController');
 const { auth } = require('../middleware/auth');
-const { getForgot,forgotPass } = require('../controller/login/forgot');
+const { getForgot, forgotPass } = require('../controller/login/forgot');
 
 const passport = require('passport');
 router.use(passport.initialize());
 auth(passport);
-const {checkLogin}=require('../controller/login/login.js');
-router.get('/checkLogin',checkLogin);
+const { checkLogin } = require('../controller/login/login.js');
+router.get('/checkLogin', checkLogin);
 router.get('/', getLogin);
-router.post('/',userLogin);
+router.post('/', userLogin);
 router.get(
 	'/home',
 	passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
@@ -51,13 +50,9 @@ const {
 	getApiproductPurchasereport,
 } = require('../controller/report/purchaseReport.js');
 
-
-
 //store combo
-const {getStoreCombo}=require('../controller/manager/manager.js')
+const { getStoreCombo } = require('../controller/manager/manager.js');
 router.get('/storeCombo', getStoreCombo);
-
-
 
 //manage manager
 
@@ -136,12 +131,14 @@ const {
 	getSalesProducts,
 	getSalesCategory,
 	productGrid,
-  deleteOrder,
-  deleteProduct,
-  updateSalesProduct
+	deleteOrder,
+	deleteProduct,
+	updateSalesProduct,
 } = require('../controller/salesModule/salesControllers.js');
-const { orderHistory,newOrder } = require('../controller/salesModule/sales.js');
-
+const {
+	orderHistory,
+	newOrder,
+} = require('../controller/salesModule/sales.js');
 
 router.get('/salesorder', getsalesOrder);
 router.post('/insertSalesOrder', insertSalesOrder);
@@ -154,8 +151,8 @@ router.get('/getSalesCategories', getSalesCategory);
 router.get('/salesHistory', orderHistory);
 router.get('/salesNewOrder', newOrder);
 router.get('/getProductGrid', productGrid);
-router.get('/deleteSalesOrder',deleteOrder)
-router.get('/deleteSalesProduct',deleteProduct)
+router.get('/deleteSalesOrder', deleteOrder);
+router.get('/deleteSalesProduct', deleteProduct);
 //------------------------------------------------------
 
 //---------Manage Customers

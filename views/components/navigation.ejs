@@ -139,11 +139,15 @@
         <div class="m-1">
           <div>
             <img src="icons/notification.svg" alt="img" width="25" height="25" />
-            <a href="/logout">
-              <img src="icons/exit.svg" class="mx-2" alt="img" width="30" height="30" />
-            </a>
-            <a href="/profile">
-              <img src="icons/profile.png" alt="img" width="30" height="30" class="rounded-circle" />
+            <div class="dropdown">
+              <div class="dropbtn">
+                <img src="icons/profile.png" alt="img" width="30" height="30" class="rounded-circle" />
+                <div class="dropdown-content">
+                  <a href="/profile">Profile <img src="icons/user.svg" alt="" height="15px" width="15px"></a>
+                  <a href="/logout">Logout <img src="icons/logout.svg" alt="" height="15px" width="15px"></a>
+                </div>
+              </div>
+            </div>
             </a>
           </div>
         </div>
