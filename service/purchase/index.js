@@ -35,6 +35,19 @@ async function getAllWarehouses() {
 	}
 }
 
+async function fetchPurchaseOrder(data) {
+	try {
+		const [results] = await connection.execute(
+			'SELECT po.*, pp.id as product_purchase_id, pp.product_id, pp.unit_price, pp.quantity FROM purchase_order as po left join purchase_products as pp ON po.id = pp.purchase_id WHERE po.id = ?',
+			[data.id]
+		);
+		return results;
+	} catch (error) {
+		logError(error);
+		return [];
+	}
+}
+
 async function createPurchaseOrder(data) {
 	try {
 		const [results] = await connection.execute(
@@ -61,8 +74,15 @@ async function createPurchaseOrder(data) {
 async function updatePurchaseOrder(data) {
 	try {
 		const [results] = await connection.execute(
-			'UPDATE purchase_order SET supplier_id = ?, amount = ?, payment_status = ? WHERE id = ?',
-			[data.supplier_id, data.amount, data.payment_status, data.id]
+			'UPDATE purchase_order SET name = ?, date = ?, supplier_id = ?, amount = ?, payment_status = ? WHERE id = ?',
+			[
+				data.name,
+				data.date,
+				data.supplier_id,
+				data.amount,
+				data.payment_status,
+				data.id,
+			]
 		);
 		return results;
 	} catch (error) {
@@ -87,7 +107,7 @@ async function addProductInPurchaseOrder(data) {
 async function updateProductInPurchaseOrder(data) {
 	try {
 		const [results] = await connection.execute(
-			'UPDATE purchase_details SET purchase_id = ?, product_id = ?, unit_price = ?, quantity = ? WHERE id = ?',
+			'UPDATE purchase_products SET purchase_id = ?, product_id = ?, unit_price = ?, quantity = ? WHERE id = ?',
 			[
 				data.purchase_id,
 				data.product_id,
@@ -125,4 +145,5 @@ module.exports = {
 	deleteProductFromPurchaseOrder,
 	getAllProducts,
 	getAllWarehouses,
+	fetchPurchaseOrder,
 };
