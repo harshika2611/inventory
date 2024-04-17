@@ -5,7 +5,8 @@ const {
 	insertProduct,
 	updateOrder,
 	productList,
-	deleteQuery
+	deleteQuery,
+	updateProduct
 } = require('../../service/salesModule/salesService');
 const { selectQuery, selectWhere } = require('../../service/selectQuery');
 const { getCombos } = require('../../service/helper');
@@ -145,15 +146,40 @@ async function productGrid(req, res) {
 async function deleteOrder(req, res) {
 	try {
 		let input = [req.query.id];
-		let [rows] = await deleteQuery(input);
+		let [rows] = await deleteQuery('sales_order',input);
 		res.json({ rows });
 	} catch (err) {
 		logger.logError(err);
-		logger.logError('not found');
+		res.json('not found');
+	}
+}
+async function deleteProduct(req, res) {
+	try {
+		let input = [req.query.id];
+		let [rows] = await deleteQuery('sales_products',input);
+		res.json({ rows });
+	} catch (err) {
+		logger.logError(err);
+		res.json('not found');
 	}
 }
 
+async function updateSalesProduct(req, res) {
+	try {
+		let input = [
 
+			req.body.product,
+			req.body.quantity,
+			req.body.rowId,
+		];
+		console.log("input",input);
+		let [rows, fields] = await updateProduct(input);
+		logger.info(rows);
+		res.json({ rows });
+	} catch (err) {
+		logger.logError(err);
+	}
+}
 module.exports = {
 	insertSalesOrder,
 	insertSalesProduct,
@@ -164,4 +190,6 @@ module.exports = {
 	getSalesCategory,
 	productGrid,
 	deleteOrder,
+	deleteProduct,
+	updateSalesProduct
 };

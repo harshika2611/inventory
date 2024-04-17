@@ -36,26 +36,13 @@ function grid(result) {
         <td>${data.payment_status}</td>
         <td>${data.created_at.split(' ')[0]}</td>
         <td>${data.created_at.split(' ')[1]}</td>
-        <td><a class='btn btn-success' onclick="updateOrder('edit',event)">EDIT</a></td>
-        <td><a class="btn btn-danger"  onclick="updateOrder('delete',event)">DELETE</a></td>
+        <td><a class='btn btn-success' id=edit${
+					data.id
+				} onclick="updateOrder('edit',event,'order')">EDIT</a></td>
+        <td><a class="btn btn-danger" id=delete${
+					data.id
+				} onclick="updateOrder('delete',event,'order')">DELETE</a></td>
         </tr>`;
 	});
 	document.getElementById('tbody').innerHTML = body;
-}
-
-//  data-bs-toggle="modal" data-bs-target="#deleteModal" 
-
-async function updateOrder(type, event) {
-	let id = event.target.parentNode.parentNode.children[0].innerHTML;
-	if (type == 'edit') {
-		window.location.href = `/salesNewOrder?id=${id}`;
-	} else {
-		fetchDelete(id);
-	}
-}
-
-async function fetchDelete(id) {
-	let response = await fetch(`/deleteSalesOrder?id=${id}`);
-	let result = await response.json();
-	console.log(result);
 }

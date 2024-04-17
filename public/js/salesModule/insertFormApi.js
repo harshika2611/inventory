@@ -1,24 +1,24 @@
 async function insertOrder() {
 	let orderid = document.getElementById('orderid');
-	let form = document.getElementById('insertSalesData');
 	var flag = false;
 	var id;
+	const insertFormData = formData('insertSalesData');
+	console.log('formdata : ', insertFormData);
+
 	if (orderid.value != '') {
 		id = orderid.value;
-		console.log(new FormData(form));
 		const response = await fetch(`/updateSalesOrder`, {
 			method: 'POST',
-			body: new URLSearchParams(new FormData(form)),
+			body: new URLSearchParams(insertFormData),
 		});
 		const result = await response.json();
 		if (result.rows.affectedRows != 0) {
 			flag = true;
 		}
 	} else {
-		console.log(new FormData(form));
 		const response = await fetch(`/insertSalesOrder`, {
 			method: 'POST',
-			body: new URLSearchParams(new FormData(form)),
+			body: new URLSearchParams(insertFormData),
 		});
 		const result = await response.json();
 
@@ -35,15 +35,14 @@ async function insertOrder() {
 			document.getElementById('orderType').value;
 		displayProductForm();
 		getCategories();
+		fetching();
 	}
 }
 
 async function generateCombo() {
 	const response = await fetch('/getCustomers');
 	const result = await response.json();
-
-  let str 
-    
+	let str;
 	result.rows.forEach((data) => {
 		str += `<option value="${data.id}">${data.firstname}</option>`;
 	});
@@ -58,28 +57,11 @@ async function getCategories() {
 	result.rows.forEach((ele) => {
 		str += `<option value="${ele.opt_id}">${ele.value}</option>`;
 	});
-	document.getElementById('category').innerHTML = str;
+	let arr = document.getElementsByClassName('category')
+		for(ele of arr) {
+		ele.innerHTML = str;
+	}
+		
 }
 
-async function getProducts() {
-	let category_id = document.getElementById('category').value;
-	let response = await fetch(`/getSalesProducts?category_id=${category_id}`);
-	let result = await response.json();
-	let str = `<option value="" selected hidden>Select Product</option>`;
-	result.rows.forEach((ele) => {
-		str += `<option value="${ele.id}">${ele.name}</option>`;
-	});
-	document.getElementById('product').innerHTML = str;
-}
 
-async function addProduct() {
-	let form = document.getElementById('productForm');
-	console.log(form);
-	let response = await fetch('/insertSalesProduct', {
-		method: 'POST',
-		body: new URLSearchParams(new FormData(form)),
-	});
-	let result = await response.json();
-	console.log(result);
-	productGrid();
-}

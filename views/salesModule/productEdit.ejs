@@ -1,0 +1,48 @@
+<div class="modal fade" id="productEdit" tabindex="-1" aria-labelledby="productEditLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="productEditLabel">Modal title</h5>
+        <button type="button" class="btn-close" onclick="modelHide('productEdit')" data-bs-dismiss="modal"
+          aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form name="updateProduct">
+          <table id="editProduct">
+            <tr>
+              <td>
+                <input hidden type="text" name="rowId" id="rowId">
+                <label for="category">Category : </label>
+                <select name="category" id="editcategory" tabindex="1" onchange="getProducts('edit')"
+                  class="category productField me-5 btn btn-secondary dropdown-toggle">
+                  <option value="" selected hidden>Select Category</option>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label for="product">Products : </label>
+                <select name="product" id="editproduct" tabindex="2"
+                  class="productField me-5 btn btn-secondary dropdown-toggle">
+                  <option value="" selected hidden>Select category first</option>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <input type="text" name="quantity" id="editQuantity" placeholder="Quantity....">
+              </td>
+            </tr>
+          </table>
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" onclick="modelHide('productEdit')"
+          data-bs-dismiss="modal">Close</button>
+        <input type="submit" id="confirmEdit" tabindex="4" value="edit" class="btn btn-success productField" />
+      </div>
+
+    </div>
+  </div>
+</div>
