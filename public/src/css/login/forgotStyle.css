@@ -1,0 +1,12 @@
+.eyes{
+	display: flex;
+	justify-content: flex-end;
+	position: relative;
+	width: 19px;
+left: 119px;
+margin: 0 auto;
+top: -44px;
+}
+.eye1{
+	width: 20px;
+} 

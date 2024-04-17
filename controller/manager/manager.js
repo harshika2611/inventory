@@ -10,7 +10,7 @@ const {
 
 const getStoreCombo = async (req, res) => {
 	try {
-		// const result = await storeComboServices();
+		const result = await storeComboServices();
 		if (result.length === 0) {
 			return res.status(404).json({ message: 'Something Went Wrong' });
 		} else {
@@ -54,8 +54,11 @@ const manageManager = async (req, res) => {
 const listManagers = async (req, res) => {
 	try {
 		const result = await listManagersService();
-
+		console.log(result,"aaarrr");
 		res.json(result);
+		for (const element of result) {
+			console.log(element,'all');
+		}
 	} catch (error) {
 		logger.logError(error);
 		res.status(500).json({ message: 'can`t fetch user controller' });
@@ -82,6 +85,10 @@ const addManager = async (req, res) => {
 	try {
 	} catch (error) { }
 };
+
+
+
+
 
 module.exports = {
 	getStoreCombo,

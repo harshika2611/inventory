@@ -4,7 +4,7 @@ const { logError } = require('../../logs');
 
 const userLoginService = async (body) => {
 	try {
-		const sql0 = `select id,email,password,created_at,status,role_id from users where email=?`;
+		const sql0 = `select id,email,password,created_at,status,role_id,expiry from users where email=?`;
 		const [result] = await connection.execute(sql0, [body.email]);
 
 		return result;
