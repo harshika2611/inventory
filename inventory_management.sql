@@ -68,7 +68,7 @@ CREATE TABLE `customer_master` (
   KEY `fk_customer_master_2_idx` (`state_id`),
   CONSTRAINT `fk_customer_master_1` FOREIGN KEY (`city_id`) REFERENCES `city_master` (`city_id`),
   CONSTRAINT `fk_customer_master_2` FOREIGN KEY (`state_id`) REFERENCES `state_master` (`state_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -77,7 +77,7 @@ CREATE TABLE `customer_master` (
 
 LOCK TABLES `customer_master` WRITE;
 /*!40000 ALTER TABLE `customer_master` DISABLE KEYS */;
-INSERT INTO `customer_master` VALUES (1,'Raj','','','',NULL,NULL,101,1,'2024-04-09 09:10:40','2024-04-17 06:00:51',0);
+INSERT INTO `customer_master` VALUES (1,'Raj','Savani','raj@gmail.com','9876543210','ABC','123456',1213,12,'2024-04-09 09:10:40','2024-04-17 09:43:13',0),(3,'Vasu','Parsaniya','vasuparsaniya21@gmail.com','9586606859','','123456',1213,12,'2024-04-17 06:35:15','2024-04-17 06:35:15',0),(4,'Kunj','Savani','kunj@gmail.com','9586606850','Rajkot','123456',1223,12,'2024-04-17 06:35:40','2024-04-17 06:35:40',0),(5,'Bhumi','scscs','sedf@gmail.com','9586606850','sdf','362640',1508,15,'2024-04-17 06:36:06','2024-04-17 06:36:06',0),(6,'sdf','sdf','kunk@gmail.com','9876543210','sdf','123456',1614,16,'2024-04-17 06:36:18','2024-04-17 06:36:18',0),(7,'sdf','fefr','fwefenj@gmail.com','9586606860','','362640',1309,13,'2024-04-17 06:36:40','2024-04-17 06:36:40',0),(8,'wefwf','weffwe','fewfeaniya21@gmail.com','9586606878','ef','362640',1212,12,'2024-04-17 06:36:57','2024-04-17 06:36:57',0),(9,'wefwe','wefef','fwfesaniya21@gmail.com','1234569870','ef','123456',809,8,'2024-04-17 06:37:16','2024-04-17 08:55:45',0),(10,'Vasutest','Parsaniyatest','test@gmail.com','9638527410','sdd','362640',1311,13,'2024-04-17 09:25:02','2024-04-17 09:25:02',0),(11,'Vasu','Parsaniya','fffsdeya21@gmail.com','9586606859','sdfs','362640',1410,14,'2024-04-17 09:44:15','2024-04-17 09:44:15',0),(12,'reger','erg','gergerarsaniya21@gmail.com','9876543210','ergr','362640',1510,15,'2024-04-17 09:46:40','2024-04-17 09:46:40',0),(13,'ggj','ghjgj','vasupargjh@gmail.com','9876543210','dfgf','362640',1614,16,'2024-04-17 09:47:33','2024-04-17 09:47:33',0),(14,'hfhf','fhfh','fghniya21@gmail.com','9586606859','fhfr','362640',1407,14,'2024-04-17 09:49:11','2024-04-17 09:49:11',0),(15,'fgh','fghgh','fg@gmail.com','9876543210','fg','362640',1215,12,'2024-04-17 09:49:45','2024-04-17 09:49:45',0),(16,'Vasu','Parsaniya','frweewniya21@gmail.com','9586606859','werwer','362640',1408,14,'2024-04-17 12:37:38','2024-04-17 12:37:38',0);
 /*!40000 ALTER TABLE `customer_master` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -178,7 +178,7 @@ DROP TABLE IF EXISTS `product_master`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `product_master` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(45) NOT NULL,
+  `product_name` varchar(100) NOT NULL,
   `sku_id` int NOT NULL,
   `category_id` int NOT NULL,
   `cost` int DEFAULT NULL,
@@ -302,13 +302,13 @@ DROP TABLE IF EXISTS `sales_order`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `sales_order` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(45) NOT NULL,
+  `sales_name` varchar(100) NOT NULL,
   `customer_id` int NOT NULL,
   `type` int NOT NULL,
   `amount` int NOT NULL,
   `shipping_address` varchar(100) DEFAULT NULL,
   `payment_status` int DEFAULT NULL,
-  `date` datetime DEFAULT NULL,
+  `order_date` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `is_delete` tinyint NOT NULL DEFAULT '0',
@@ -431,7 +431,7 @@ CREATE TABLE `storage_space_master` (
   KEY `fk_storage_space_master_1_idx` (`storage_type`),
   KEY `fk_storage_space_master_2_idx` (`location_id`),
   CONSTRAINT `fk_storage_space_master_1` FOREIGN KEY (`storage_type`) REFERENCES `option_master` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  CONSTRAINT `fk_storage_space_master_2` FOREIGN KEY (`location_id`) REFERENCES `option_master` (`id`)
+  CONSTRAINT `fk_storage_space_master_2` FOREIGN KEY (`location_id`) REFERENCES `city_master` (`city_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -522,4 +522,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-04-17 11:44:50
+-- Dump completed on 2024-04-17 18:30:06

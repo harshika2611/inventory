@@ -48,7 +48,6 @@ function errorShow(errorObject) {
   // });
 }
 
-
 async function getAllState(selectComboId, selectStateName) {
 
   const response = await fetch('/api/getState', {
