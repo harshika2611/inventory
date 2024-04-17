@@ -16,19 +16,6 @@ const { auth } = require('../middleware/auth');
 const { getForgot,forgotPass } = require('../controller/login/forgot');
 
 const passport = require('passport');
-<<<<<<< HEAD
-const {
-	getsallesReport,
-	getApiproductreport,
-	getApicategoryreport,
-	getReportallProducts,
-} = require('../controller/report/sallesReport.js');
-const {
-	getpurchaseReport,
-	getApiproductPurchasereport,
-} = require('../controller/report/purchaseReport.js');
-=======
->>>>>>> main
 router.use(passport.initialize());
 auth(passport);
 const {checkLogin}=require('../controller/login/login.js');
