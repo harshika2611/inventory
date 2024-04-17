@@ -7,6 +7,8 @@ const {
 	deleteCustomerQuery,
 } = require('../../service/manageCustomers/manageCustomers.js');
 
+const { getCityStateId } = require('../../service/commonFunctions/commonFunctions.js');
+
 async function insertCustomer(req, res) {
 	try {
 		/**if this will send from frontend js then form data
@@ -20,11 +22,14 @@ async function insertCustomer(req, res) {
 	}
 }
 
-async function getCustomers(req, res) {
-	try {
-		const customersDetails = await getCustomersQuery();
-		// logger.info(customersDetails[1]);
+async function getCustomersPage(req, res) {
+	return res.render('manageCustomers/manageCustomers');
+}
 
+async function getAllCustomers(req, res) {
+	try {
+
+		const customersDetails = await getCustomersQuery();
 		for (let element of customersDetails) {
 			const created_at = element.Created;
 			const updated_at = element.Updated;
@@ -41,11 +46,7 @@ async function getCustomers(req, res) {
 			// let createFullDate = `${createdDate}-${createdMonth}-${createdYear} ${createdHour}:${createdMinute}:${createdSecond}`
 			// element.Createdate = createFullDate;
 		}
-
-		return res.render('manageCustomers/manageCustomers', {
-			customersDetails: customersDetails
-		});
-		// return res.status(200).json({ data: customersDetails });
+		return res.status(200).json(customersDetails);
 	} catch (error) {
 		//here render error page
 		logger.logError(error);
@@ -53,12 +54,12 @@ async function getCustomers(req, res) {
 	}
 }
 
+
 async function getParticularCustomer(req, res) {
 	try {
 		const queryString = req.query;
 		// logger.info(queryString.customerId);
 		const customerDetail = await checkCustomerExistQuery(queryString.customerId);
-		logger.info(customerDetail);
 		if (customerDetail.length !== 0) {
 			return res.status(200).json(customerDetail);
 		} else {
@@ -72,10 +73,16 @@ async function getParticularCustomer(req, res) {
 async function updateCustomer(req, res) {
 	try {
 		const customerDetails = req.body;
-		const updateCustomerStatus = await updateCustomerQuery(
-			customerId,
-			customerDetails
-		);
+
+		const cityStateIdArray = await getCityStateId(customerDetails.state, customerDetails.city);
+
+		//----city, state id store
+		let cityId = cityStateIdArray[0].city_id;
+		let stateId = cityStateIdArray[0].state_id;
+		customerDetails.city = cityId.toString();
+		customerDetails.state = stateId.toString();
+
+		const updateCustomerStatus = await updateCustomerQuery(customerDetails);
 
 		if (updateCustomerStatus) {
 			return res.status(200).json({ message: 'Customer Updated' });
@@ -89,9 +96,13 @@ async function updateCustomer(req, res) {
 
 async function deleteCustomer(req, res) {
 	try {
-		const customerId = req.params.id;
-		await deleteCustomerQuery(customerId);
-		return res.status(200).json({ message: 'Customer Deleted' });
+		const customerId = req.query.customerId;
+		const responseObject = await deleteCustomerQuery(customerId);
+		if (responseObject.affectedRows > 0) {
+			return res.status(200).json({ message: 'Customer Deleted' });
+		} else {
+			return res.status(404).json({ message: 'Something Went Wrong' });
+		}
 	} catch (error) {
 		return res.status(500).json({ message: 'Unable to delete' });
 	}
@@ -104,7 +115,8 @@ async function filterCustomer(req, res) {
 module.exports = {
 	insertCustomer,
 	updateCustomer,
-	getCustomers,
+	getCustomersPage,
+	getAllCustomers,
 	getParticularCustomer,
 	deleteCustomer,
 	filterCustomer,

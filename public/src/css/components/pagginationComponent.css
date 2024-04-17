@@ -1,0 +1,67 @@
+:root {
+  --pagginationsection: #f0f1f3;
+  --pagginationcontainer: aliceblue;
+  --pagginationbutton: #F9F9F9;
+}
+
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+.pagginationsection {
+  max-width: 450px;
+  background-color: var(--pagginationsection);
+  padding: 10px;
+  display: none;
+}
+
+.pagginationcontainer {
+  max-width: 450px;
+  padding: 10px;
+  background-color: var(--pagginationcontainer);
+  border-radius: 10px;
+  position: absolute;
+  right: 0;
+}
+
+.rowpaggination {
+  display: flex;
+  margin: 0 -15px;
+}
+
+.colpaggination {
+  width: 200px;
+  padding: 0 15px;
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+
+.pagenumber {
+  width: 600px;
+  padding: 0 15px;
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+
+.pagenumber p {
+  font-size: 20px;
+  margin: 0 auto;
+}
+
+.pagginationbutton {
+  font-size: 20px;
+  background-color: var(--pagginationbutton);
+  border-radius: 50%;
+  padding: 10px;
+  cursor: pointer;
+}

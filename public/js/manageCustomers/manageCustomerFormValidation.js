@@ -5,7 +5,7 @@ function manageCustomerFormValidation(customerFormData) {
   for (let key in customerFormData) {
     switch (key) {
       case "firstname":
-        console.log(key + " " + customerFormData[key]);
+        // console.log(key + " " + customerFormData[key]);
         if (customerFormData[key].length === 0) {
           customerFormErrorObject[key] = "* require";
         } else if (customerFormData[key].trim().length === 0 && customerFormData[key] !== "") {
@@ -16,7 +16,7 @@ function manageCustomerFormValidation(customerFormData) {
         break;
 
       case "lastname":
-        console.log(key + " " + customerFormData[key]);
+        // console.log(key + " " + customerFormData[key]);
 
         if (customerFormData[key].length === 0) {
           customerFormErrorObject[key] = "* require";
@@ -28,7 +28,7 @@ function manageCustomerFormValidation(customerFormData) {
         break;
 
       case "email":
-        console.log(key + " " + customerFormData[key]);
+        // console.log(key + " " + customerFormData[key]);
 
         const regexemail = /^[a-z0-9]+@[a-z]+\.[a-z]{2,3}$/;
 
@@ -42,7 +42,7 @@ function manageCustomerFormValidation(customerFormData) {
         break;
 
       case "phonenumber":
-        console.log(key + " " + customerFormData[key]);
+        // console.log(key + " " + customerFormData[key]);
 
         if (customerFormData[key].length === 0) {
           customerFormErrorObject[key] = "* require";
@@ -54,7 +54,7 @@ function manageCustomerFormValidation(customerFormData) {
         break;
 
       case "address":
-        console.log(key + " " + customerFormData[key]);
+        // console.log(key + " " + customerFormData[key]);
 
         if (customerFormData[key].trim().length === 0 && customerFormData[key] !== "") {
           customerFormErrorObject[key] = "* Please Enter Address Not Only Space";
@@ -64,7 +64,7 @@ function manageCustomerFormValidation(customerFormData) {
         break;
 
       case "zipcode":
-        console.log(key + " " + customerFormData[key]);
+        // console.log(key + " " + customerFormData[key]);
 
         if (customerFormData[key].length === 0) {
           customerFormErrorObject[key] = "* require";
@@ -76,7 +76,7 @@ function manageCustomerFormValidation(customerFormData) {
         break;
 
       case "state":
-        console.log(key + " " + customerFormData[key]);
+        // console.log(key + " " + customerFormData[key]);
 
         const stateSelectCombo = document.getElementById("stateSelectCombo");
 
@@ -88,7 +88,7 @@ function manageCustomerFormValidation(customerFormData) {
         break;
 
       case "city":
-        console.log(key + " " + customerFormData[key]);
+        // console.log(key + " " + customerFormData[key]);
 
         const citySelectCombo = document.getElementById("citySelectCombo");
 

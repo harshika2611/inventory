@@ -1,22 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Profile View</title>
-    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
-    <script src="/js/bootstrap.js"></script>
-    <link rel="stylesheet" href="src/css/allpage.css" />
-    <link rel="stylesheet" href="src/css/dashboardCustom.css" />
-    <link rel="stylesheet" href="src/css/profile/profileStyle.css" />
-  </head>
 
-  <body>
-    <%- include("../components/navigation")%> 
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Profile View</title>
+  <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
+  <script src="/js/bootstrap.js"></script>
+  <link rel="stylesheet" href="src/css/allpage.css" />
+  <link rel="stylesheet" href="src/css/dashboardCustom.css" />
+  <link rel="stylesheet" href="src/css/profile/profileStyle.css" />
+</head>
+
+<body>
+  <%- include("../components/navigation")%>
     <div class="container div-second">
       <div class="main-container">
         <div class="profile-details">
-          <form class="row g-3">
+          <form class="row g-3" action="/profileEdit">
             <div class="container edit-img-container">
               <div class="img-container">
                 <img class="currentProfileImage" src="icons/profile.png" alt="">
@@ -28,26 +29,27 @@
             </div>
             <div class="col-md-6">
               <label for="inputEmail4" class="form-label">First Name</label>
-              <input type="text" class="form-control" id="inputEmail4">
+              <input type="text" class="form-control" value="<%= profileDetails[0][0].firstname  %>">
             </div>
             <div class="col-md-6">
               <label for="inputPassword4" class="form-label">Last Name</label>
-              <input type="text" class="form-control" id="inputPassword4">
+              <input type="text" class="form-control" value="<%= profileDetails[0][0].lastname %>">
             </div>
             <div class="col-12">
               <label for="inputDateOfBirth" class="form-label">Date of Birth</label>
-              <input type="date" class="form-control" id="inputDateOfBirth" placeholder="1234 Main St">
+              <input type="date" class="form-control" placeholder="1234 Main St"
+                value="<%= profileDetails[0][0].dob %>">
             </div>
             <div class="col-12">
               <label for="inputEmail" class="form-label">Email</label>
-              <input type="text" class="form-control" id="inputAddress2">
+              <input type="text" class="form-control" value="<%= profileDetails[0][0].email%>">
             </div>
             <div class="edit-btn-container">
               <button type="submit" class="edit-profile-btn">Save</button>
             </div>
           </form>
-        </div>  
-      </div>      
+        </div>
+      </div>
     </div>
 </body>
 

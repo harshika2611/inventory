@@ -1,26 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Profile View</title>
-    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
-    <script src="/js/bootstrap.js"></script>
-    <link rel="stylesheet" href="src/css/allpage.css" />
-    <link rel="stylesheet" href="src/css/dashboardCustom.css" />
-    <link rel="stylesheet" href="src/css/profile/profileStyle.css" />
-  </head>
 
-  <body>
-    <%- include("../components/navigation")%>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Profile View</title>
+  <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
+  <script src="/js/bootstrap.js"></script>
+  <link rel="stylesheet" href="src/css/allpage.css" />
+  <link rel="stylesheet" href="src/css/dashboardCustom.css" />
+  <link rel="stylesheet" href="src/css/profile/profileStyle.css" />
+</head>
+
+<body>
+  <%- include("../components/navigation")%>
     <div class="container div-second">
       <div class="main-container">
         <div class="profile-details">
-          <div><span>Name : Admin</span><br /></div>
-          <div><span>Date of Birth : --/--/--</span><br /></div>
-          <div><span>Role : Admin</span><br /></div>
+          <div><span>Name : <%= profileDetails[0][0].firstname + " " + profileDetails[0][0].lastname%></span><br />
+          </div>
+          <div><span>Date of Birth : <%= profileDetails[0][0].dob %></span><br /></div>
+          <div><span>Role : <%= profileDetails[0][0].Role %></span><br /></div>
           <div>
-            <span>Email : admin@123.com</span>
+            <span>Email : <%= profileDetails[0][0].email %></span>
           </div>
           <div class="edit-btn-container">
             <button class="edit-profile-btn" onclick="location.href='profileEdit'">Edit Profile</button>
@@ -31,5 +33,6 @@
         </div>
       </div>
     </div>
-  </body>
+</body>
+
 </html>
