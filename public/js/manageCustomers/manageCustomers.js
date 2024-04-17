@@ -41,6 +41,8 @@ function dataTableGrid(customerArray, startIndex) {
         createTr.appendChild(createTd);
       }
     }
+    const createActionTd = document.createElement("td");
+    createActionTd.setAttribute("class", "managecustomer__actioncolumn");
     const createEditTd = document.createElement("td");
     createEditTd.setAttribute("id", `${element.CustomerId}`);
     createEditTd.setAttribute("class", "managecustomer__actionbutton");
@@ -50,7 +52,7 @@ function dataTableGrid(customerArray, startIndex) {
     createEditButton.setAttribute("width", "25");
     createEditButton.setAttribute("height", "25");
     createEditTd.appendChild(createEditButton);
-    createTr.appendChild(createEditTd);
+    createActionTd.appendChild(createEditTd);
 
     const createDeleteTd = document.createElement("td");
     createDeleteTd.setAttribute("id", `${element.CustomerId}`);
@@ -61,7 +63,8 @@ function dataTableGrid(customerArray, startIndex) {
     createDeleteButton.setAttribute("width", "25");
     createDeleteButton.setAttribute("height", "25");
     createDeleteTd.appendChild(createDeleteButton);
-    createTr.appendChild(createDeleteTd);
+    createActionTd.appendChild(createDeleteTd);
+    createTr.appendChild(createActionTd);
 
     createTable.appendChild(createTr);
   }
