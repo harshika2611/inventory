@@ -14,16 +14,20 @@
         <div class="pagginationcontainer">
             <div class="rowpaggination">
                 <div class="colpaggination" id="leftbutton">
-                    <a class="pagginationbutton doubleleft" id="doubleleft" onclick="doubleLeftButton()">DL
+                    <a class="pagginationbutton doubleleft" id="doubleleft" onclick="doubleLeftButton()"><img
+                            src="src/assets/paggination/left-arrow-double.svg" width="30" height="30">
                     </a>
-                    <a class="pagginationbutton singleleft" onclick="singleLeftButton()">SL</a>
+                    <a class="pagginationbutton singleleft" id="singleleft" onclick="singleLeftButton()"><img
+                            src="src/assets/paggination/left-arrow.svg" width="30" height="30"></a>
                 </div>
                 <div class="pagenumber">
                     <p id="currentpageshow" class="currentpageshow">Page</p>
                 </div>
                 <div class="colpaggination">
-                    <a class="pagginationbutton singleright" onclick="singleRightButton()">SR</a>
-                    <a class=" pagginationbutton doubleright" onclick="doubleRightButton()">DR</a>
+                    <a class="pagginationbutton singleright" id="singleright" onclick="singleRightButton()"><img
+                            src="src/assets/paggination/right-arrow.svg" width="30" height="30"></a>
+                    <a class=" pagginationbutton doubleright" id="doubleright" onclick="doubleRightButton()"><img
+                            src="src/assets/paggination/right-arrow-double.svg" width="30" height="30"></a>
                 </div>
             </div>
         </div>

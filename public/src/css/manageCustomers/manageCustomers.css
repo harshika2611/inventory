@@ -17,6 +17,7 @@ a {
   position: absolute;
   top: 0%;
   left: 30%;
+  z-index: 1;
 }
 
 .managecustomer-section {
@@ -26,10 +27,10 @@ a {
 }
 
 .managecustomer-container {
-  width: 1200px;
+  max-width: 1300px;
   padding: 20px;
   margin: 0 auto;
-  overflow-x: scroll;
+  overflow-x: auto;
 }
 
 .managecustomer-container__button {
@@ -45,18 +46,61 @@ a {
   border-radius: 10px;
 }
 
-.managecustomer__table th,
-td {
-  padding: 10px;
-  text-align: center;
+/* Style for the table */
+
+.managecustomer__table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
 }
 
+/* Style for table header */
+.managecustomer__table th {
+  background-color: #f2f2f2;
+  color: #333;
+  font-weight: bold;
+  padding: 12px;
+  text-align: left;
+  border-bottom: 2px solid #ddd;
+}
+
+/* Style for table rows */
+.managecustomer__table tr {
+  border-bottom: 1px solid #ddd;
+}
+
+/* Alternate row color */
 .managecustomer__table tr:nth-child(even) {
-  background-color: rgb(233, 232, 232);
+  background-color: #f9f9f9;
+}
+
+/* Hover effect for rows */
+.managecustomer__table tr:hover {
+  background-color: #f2f2f2;
 }
 
 .managecustomer__actionbutton {
   cursor: pointer;
   padding: 5px;
-  border-radius: 10px;
+}
+
+.managecustomer__table {
+  width: auto;
+  max-width: 100%;
+  /* Ensures table doesn't overflow container */
+  border-collapse: collapse;
+  border-spacing: 0;
+  white-space: nowrap;
+  /* Prevents text wrapping */
+}
+
+.managecustomer__table th,
+.managecustomer__table td {
+  padding: 10px;
+  text-align: left;
+}
+
+/* Style for the action column */
+.managecustomer__actioncolumn {
+  width: 100px;
 }

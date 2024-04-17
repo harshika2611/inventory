@@ -61,13 +61,16 @@ CREATE TABLE `customer_master` (
   `state_id` int NOT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `status` int DEFAULT '6',
   PRIMARY KEY (`id`),
   UNIQUE KEY `email_UNIQUE` (`email`),
   KEY `fk_customer_master_1_idx` (`city_id`),
   KEY `fk_customer_master_2_idx` (`state_id`),
+  KEY `fk_customer_master_3_idx` (`status`),
   CONSTRAINT `fk_customer_master_1` FOREIGN KEY (`city_id`) REFERENCES `city_master` (`city_id`),
-  CONSTRAINT `fk_customer_master_2` FOREIGN KEY (`state_id`) REFERENCES `state_master` (`state_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  CONSTRAINT `fk_customer_master_2` FOREIGN KEY (`state_id`) REFERENCES `state_master` (`state_id`),
+  CONSTRAINT `fk_customer_master_3` FOREIGN KEY (`status`) REFERENCES `option_master` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -76,7 +79,7 @@ CREATE TABLE `customer_master` (
 
 LOCK TABLES `customer_master` WRITE;
 /*!40000 ALTER TABLE `customer_master` DISABLE KEYS */;
-INSERT INTO `customer_master` VALUES (1,'Raj','','','',NULL,NULL,101,1,'2024-04-09 09:10:40',NULL);
+INSERT INTO `customer_master` VALUES (1,'Raj','Savani','raj@gmail.com','9876543210','ABC','123456',101,1,'2024-04-09 09:10:40','2024-04-16 06:16:20',6),(2,'Vasu','Parsaniya','vasuparsaniya21@gmail.com','9586606859','Zinzri','362640',1213,12,'2024-04-16 05:40:34','2024-04-16 06:30:07',6),(4,'Vasu','Parsaniya','vasu21@gmail.com','9586606859','sdfd','362640',1213,12,'2024-04-16 06:15:42','2024-04-16 06:35:55',6),(5,'Kunj','Savani','kunj@gmail.com','9876543210','Rajkot','123456',1223,12,'2024-04-16 06:18:43','2024-04-16 06:35:55',6),(6,'Vasusfdfdf','scscs','bhumibera@gmail.com','9586606850','efef','362640',1616,16,'2024-04-16 06:19:01','2024-04-16 06:35:55',6),(7,'Kunj','scscs','efge@gmail.com','9876543210','sdff','123456',1210,12,'2024-04-16 06:19:22','2024-04-16 12:16:21',6),(8,'Vasu','Parsaniya','kunk@gmail.com','9586606850','fgsder','362640',1105,11,'2024-04-16 06:19:37','2024-04-16 06:35:55',6),(9,'Vasu','Parsaniya','gggiya21@gmail.com','9586606859','dfgdfg','362640',1408,14,'2024-04-16 12:29:00','2024-04-16 12:29:00',6);
 /*!40000 ALTER TABLE `customer_master` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -424,7 +427,7 @@ CREATE TABLE `storage_space_master` (
   KEY `fk_storage_space_master_2_idx` (`location_id`),
   CONSTRAINT `fk_storage_space_master_1` FOREIGN KEY (`storage_type`) REFERENCES `option_master` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `fk_storage_space_master_2` FOREIGN KEY (`location_id`) REFERENCES `option_master` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -512,4 +515,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-04-12 14:21:04
+-- Dump completed on 2024-04-17  9:15:51

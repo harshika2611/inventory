@@ -23,6 +23,15 @@ async function paggination(apiName) {
   endIndex = startIndex + recordsInSinglePage;
   const pagginationArray = dataArray.slice(startIndex, endIndex);
   dataTableGrid(pagginationArray, startIndex);
+
+  document.getElementById("currentpageshow").innerHTML = `Page ${currentPage}`;
+  document.querySelector(".pagginationsection").style.display = "block";
+  //----paggination button style
+  document.getElementById("doubleleft").style.opacity = "0.5";
+  document.getElementById("doubleleft").style.cursor = "not-allowed";
+
+  document.getElementById("singleleft").style.opacity = "0.5";
+  document.getElementById("singleleft").style.cursor = "not-allowed";
 }
 
 function doubleLeftButton() {
@@ -33,6 +42,18 @@ function doubleLeftButton() {
     const pagginationArray = dataArray.slice(startIndex, endIndex);
     dataTableGrid(pagginationArray, startIndex);
   }
+  document.getElementById("currentpageshow").innerHTML = `Page ${currentPage}`;
+  document.getElementById("doubleleft").style.opacity = "0.5";
+  document.getElementById("doubleleft").style.cursor = "not-allowed";
+
+  document.getElementById("singleleft").style.opacity = "0.5";
+  document.getElementById("singleleft").style.cursor = "not-allowed";
+
+  document.getElementById("singleright").style.opacity = "1.0";
+  document.getElementById("singleright").style.cursor = "pointer";
+
+  document.getElementById("doubleright").style.opacity = "1.0";
+  document.getElementById("doubleright").style.cursor = "pointer";
 }
 
 function singleLeftButton() {
@@ -43,6 +64,22 @@ function singleLeftButton() {
     const pagginationArray = dataArray.slice(startIndex, endIndex);
     dataTableGrid(pagginationArray, startIndex);
   }
+
+  if (currentPage === 1) {
+    document.getElementById("doubleleft").style.opacity = "0.5";
+    document.getElementById("doubleleft").style.cursor = "not-allowed";
+
+    document.getElementById("singleleft").style.opacity = "0.5";
+    document.getElementById("singleleft").style.cursor = "not-allowed";
+  }
+
+  document.getElementById("currentpageshow").innerHTML = `Page ${currentPage}`;
+
+  document.getElementById("singleright").style.opacity = "1.0";
+  document.getElementById("singleright").style.cursor = "pointer";
+
+  document.getElementById("doubleright").style.opacity = "1.0";
+  document.getElementById("doubleright").style.cursor = "pointer";
 }
 
 function doubleRightButton() {
@@ -54,15 +91,44 @@ function doubleRightButton() {
     const pagginationArray = dataArray.slice(startIndex, endIndex);
     dataTableGrid(pagginationArray, startIndex);
   }
+  document.getElementById("currentpageshow").innerHTML = `Page ${currentPage}`;
+
+  document.getElementById("doubleleft").style.opacity = "1.0";
+  document.getElementById("doubleleft").style.cursor = "pointer";
+
+  document.getElementById("singleleft").style.opacity = "1.0";
+  document.getElementById("singleleft").style.cursor = "pointer";
+
+  document.getElementById("singleright").style.opacity = "0.5";
+  document.getElementById("singleright").style.cursor = "not-allowed";
+
+  document.getElementById("doubleright").style.opacity = "0.5";
+  document.getElementById("doubleright").style.cursor = "not-allowed";
 }
 
 function singleRightButton() {
 
-  if (currentPage < (totalNumerOfRecords / recordsInSinglePage)) {
+  if (currentPage < Math.ceil(totalNumerOfRecords / recordsInSinglePage)) {
     currentPage = currentPage + 1;
     startIndex = (currentPage - 1) * recordsInSinglePage;
     endIndex = startIndex + recordsInSinglePage;
     const pagginationArray = dataArray.slice(startIndex, endIndex);
     dataTableGrid(pagginationArray, startIndex);
   }
+
+  if (currentPage === Math.ceil(totalNumerOfRecords / recordsInSinglePage)) {
+    document.getElementById("singleright").style.opacity = "0.5";
+    document.getElementById("singleright").style.cursor = "not-allowed";
+
+    document.getElementById("doubleright").style.opacity = "0.5";
+    document.getElementById("doubleright").style.cursor = "not-allowed";
+  }
+
+  document.getElementById("currentpageshow").innerHTML = `Page ${currentPage}`;
+
+  document.getElementById("doubleleft").style.opacity = "1.0";
+  document.getElementById("doubleleft").style.cursor = "pointer";
+
+  document.getElementById("singleleft").style.opacity = "1.0";
+  document.getElementById("singleleft").style.cursor = "pointer";
 }
