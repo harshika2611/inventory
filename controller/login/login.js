@@ -10,70 +10,97 @@ const {
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const logger = require('../../logs');
-
 const { SECRET_KEY } = process.env;
+
+ const checkLogin = (req, res) => {
+	try {
+		let flag=false;
+		const token = req.cookies?.token;
+		if (token) {
+		const data=jwt.verify(token,SECRET_KEY);
+			flag=true;
+			res.json(flag);
+			
+		}else{
+			flag=false;
+			res.json(flag);
+		}
+	} catch (error) {
+		console.log(error);
+	}
+};
+
+
 
 const getLogin = async (req, res) => {
 	res.render('login/login');
 };
+
+
 const userLogin = async (req, res) => {
-	try {
-		const user = await userLoginService(req.body);
+
+	const user = await userLoginService(req.body);
+
 		if (user.length > 0 && user[0].status == 6) {
-			bcrypt.compare(req.body.password, user[0].password, (err, results) => {
-				if (err) {
-					console.log('compare error', err);
-					return;
-				}
+			const result = await bcrypt.compare(req.body.password, user[0].password);
 				const test = user[0].created_at;
-				const expireDatePass = new Date(test).getTime() + 240 * 3600000;
-				const newDatePass = new Date().getTime();
+				const expireDatePass = new Date(user[0].expiry);
+
+				const newDatePass = new Date();
+
 				if (user[0].role_id == 4) {
-					if (results && newDatePass < expireDatePass) {
-						const userId = user[0].id;
-						const roleId = user[0].role_id;
-						const token = jwt.sign({ id: userId, roleId: roleId }, SECRET_KEY, {
-							expiresIn: '2h',
-						});
+					if (result) {
+						if (Math.abs((newDatePass-expireDatePass)/1000/3600/24)<10) {
+							const userId = user[0].id;
+							const roleId = user[0].role_id;
+							const token = jwt.sign(
+								{ id: userId, roleId: roleId },
+								SECRET_KEY,
+								{
+									expiresIn: '2h',
+								}
+							);
+							const id = user[0].id;
+							const logs = await logsService(id);
+							return res
+								.cookie('token', token)
+								.status(200)
+								.send('login success');
+						} else {
+							res.status(403).send('password was expired');
+						}
+					} else {
 						const id = user[0].id;
-						// const logs = await logsService(id);
-						return res.cookie('token', token).redirect(`/dashboard`);
-					} else {
-						// const id = user[0].id;
-						//const log = await logUnsuccessService(id);
-						const error = 'invalid email or password';
-						res.render('login/login', { error });
+						const log = await logUnsuccessService(id);
+						res.status(401).send('invalid email or password');
 					}
-				} else if (user.length > 0 && user[0].role_id == 5) {
-					if (results && newDatePass < expireDatePass) {
-						const userId = user[0].id;
-						const roleId = user[0].role_id;
-						const token = jwt.sign({ id: userId, roleId: roleId }, SECRET_KEY, {
-							expiresIn: '2h',
-						});
-						return res.cookie('token', token).redirect(`/home`);
+				} else if (user[0].role_id == 5) {
+					if (result) {
+						if(Math.abs((newDatePass-expireDatePass)/1000/3600/24)<10){
+							const userId = user[0].id;
+							const roleId = user[0].role_id;
+							const token = jwt.sign({ id: userId, roleId: roleId }, SECRET_KEY, {
+								expiresIn: '2h',
+							});
+							return res.cookie('token', token).status(200).send('login success');
+						}else {
+							res.status(403).send('password was expired');
+						}
 					} else {
-						// const id = user[0].id;
-						// const log = await logUnsuccessService(id);
+						const id = user[0].id;
+						const log = await logUnsuccessService(id);
 						const error = 'invalid email or password';
-						res.render('login/login', { error });
+						res.status(401).send('invalid email or password');
 					}
 				}
-			});
-		} else if (user.length === 0) {
-			const error = 'user not exist';
-			res.render('login/login', { error });
+			
 		}
-		// }
-		// else {
-		// 	const error_expire = 'expired password create new one';
-		// 	res.redirect('/forgot');
-		// }
-	} catch (error) {
-		logger.logError(error);
-		res.status(500).json({ message: 'can`t fetch user controller' });
-	}
+
+
+
+   
 };
+
 const getUserName = async (req, res) => {
 	res.render('login/user');
 };
@@ -124,6 +151,7 @@ const userLogout = async (req, res) => {
 	}
 };
 module.exports = {
+	checkLogin,
 	userLogout,
 	checkUser,
 	getUserName,

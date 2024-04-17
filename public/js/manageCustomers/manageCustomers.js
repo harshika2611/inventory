@@ -1,4 +1,4 @@
-async function getCustomers() {
+function getCustomers() {
   paggination("/api/manageCustomers");
 }
 
@@ -18,7 +18,7 @@ function dataTableGrid(customerArray, startIndex) {
 
   for (let key in customerArray[0]) {
     if (key === "CustomerId") {
-      key = "No";
+      key = "No.";
     }
     const createTh = document.createElement("th");
     createTh.textContent = key;
@@ -68,38 +68,6 @@ function dataTableGrid(customerArray, startIndex) {
 
     createTable.appendChild(createTr);
   }
-
-  // for (let element of customerArray) {
-  //   const createTr = document.createElement("tr");
-  //   for (let key in element) {
-  //     const createTd = document.createElement("td");
-  //     createTd.textContent = element[key];
-  //     createTr.appendChild(createTd);
-  //   }
-  //   const createEditTd = document.createElement("td");
-  //   createEditTd.setAttribute("id", `${element.CustomerId}`);
-  //   createEditTd.setAttribute("class", "managecustomer__actionbutton");
-  //   createEditTd.setAttribute("onclick", "openUpdateCustomerForm(this)");
-  //   const createEditButton = document.createElement("img");
-  //   createEditButton.setAttribute("src", "src/assets/manageCustomer/edit.svg");
-  //   createEditButton.setAttribute("width", "25");
-  //   createEditButton.setAttribute("height", "25");
-  //   createEditTd.appendChild(createEditButton);
-  //   createTr.appendChild(createEditTd);
-
-  //   const createDeleteTd = document.createElement("td");
-  //   createDeleteTd.setAttribute("id", `${element.CustomerId}`);
-  //   createDeleteTd.setAttribute("class", "managecustomer__actionbutton");
-  //   createDeleteTd.setAttribute("onclick", "deleteCustomerDetails(this)");
-  //   const createDeleteButton = document.createElement("img");
-  //   createDeleteButton.setAttribute("src", "src/assets/manageCustomer/delete.svg");
-  //   createDeleteButton.setAttribute("width", "25");
-  //   createDeleteButton.setAttribute("height", "25");
-  //   createDeleteTd.appendChild(createDeleteButton);
-  //   createTr.appendChild(createDeleteTd);
-
-  //   createTable.appendChild(createTr);
-  // }
   tableContainer.appendChild(createTable);
 }
 
@@ -107,8 +75,21 @@ function dataTableGrid(customerArray, startIndex) {
 async function addNewCustomer() {
   const customerForm = document.getElementById("myForm");
   customerForm.style.display = "block";
+  document.getElementById("submitButton").innerHTML = "Submit";
+  document.getElementById("submitButton").setAttribute("onclick", `submitCustomerDetails()`);
 
   getAllState("stateSelectCombo");  //second parameter those state we need to selected 
+
+  //---old field value clear
+  const inputTag = customerForm.querySelectorAll(".customerInput");
+  for (let element of inputTag) {
+    element.value = "";
+  }
+
+  const selectTag = customerForm.getElementsByTagName("select");
+  for (let element of selectTag) {
+    element.selectedIndex = 0;
+  }
 }
 
 
@@ -141,7 +122,8 @@ async function submitCustomerDetails() {
         console.log(response.status);
         console.log(responseMessage.message);
         window.location.replace(window.location.protocol + "//" +
-          window.location.host + `/manageCustomers`)
+          window.location.host + `/manageCustomers`);
+        messagePopUp(responseMessage.message);
       }
     } catch (error) {
       console.log(error);
@@ -163,7 +145,6 @@ function closeForm() {
 async function openUpdateCustomerForm(customer) {
   const customerId = customer.id;
   document.getElementById("myForm").style.display = "block";
-  document.getElementById("submitButton").innerHTML = "Update";
   document.getElementById("submitButton").innerHTML = "Update";
   document.getElementById("submitButton").setAttribute("onclick", `updateCustomerDetails(${customerId})`);
 
@@ -209,10 +190,12 @@ async function openUpdateCustomerForm(customer) {
     }
   } catch (error) {
     if (response.status === 404) {
+      messagePopUp(customerDetails.message);
       console.log(customerDetails.message);
     }
 
     if (response.status === 500) {
+      messagePopUp(customerDetails.message);
       console.log(customerDetails.message);
     }
   }
@@ -248,8 +231,9 @@ async function updateCustomerDetails(customerId) {
         const responseMessage = await response.json();
         console.log(response.status);
         console.log(responseMessage.message);
+        messagePopUp(responseMessage.message);
         window.location.replace(window.location.protocol + "//" +
-          window.location.host + `/manageCustomers`)
+          window.location.host + `/manageCustomers`);
       }
     } catch (error) {
       console.log(error);
@@ -264,12 +248,14 @@ async function updateCustomerDetails(customerId) {
         const responseMessage = await response.json();
         console.log(response.status);
         console.log(responseMessage.message);
+        messagePopUp(responseMessage.message);
       }
 
       if (response.status === 500) {
         const responseMessage = await response.json();
         console.log(response.status);
         console.log(responseMessage.message);
+        messagePopUp(responseMessage.message);
       }
     }
   }
@@ -278,6 +264,7 @@ async function updateCustomerDetails(customerId) {
 
 //----delete customer details
 async function deleteCustomerDetails(customer) {
+
   const customerId = customer.id;
   const response = await fetch(`/api/deleteCustomer?customerId=${customerId}`, {
     method: 'GET'
@@ -292,6 +279,7 @@ async function deleteCustomerDetails(customer) {
     if (response.status === 200) {
       const responseMessage = await response.json();
       console.log(responseMessage.message);
+      messagePopUp(responseMessage.message);
       window.location.replace(window.location.protocol + "//" +
         window.location.host + `/manageCustomers`);
     }
@@ -299,10 +287,12 @@ async function deleteCustomerDetails(customer) {
     const responseMessage = await response.json();
     if (response.status === 404) {
       console.log(responseMessage.message);
+      messagePopUp(responseMessage.message);
     }
 
     if (response.status === 500) {
       console.log(responseMessage.message);
+      messagePopUp(responseMessage.message);
     }
   }
 }

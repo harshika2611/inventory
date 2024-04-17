@@ -24,14 +24,16 @@ async function paggination(apiName) {
   const pagginationArray = dataArray.slice(startIndex, endIndex);
   dataTableGrid(pagginationArray, startIndex);
 
-  document.getElementById("currentpageshow").innerHTML = `Page ${currentPage}`;
-  document.querySelector(".pagginationsection").style.display = "block";
-  //----paggination button style
-  document.getElementById("doubleleft").style.opacity = "0.5";
-  document.getElementById("doubleleft").style.cursor = "not-allowed";
+  if (recordsInSinglePage < dataArray.length) {
+    document.getElementById("currentpageshow").innerHTML = `Page ${currentPage}`;
+    document.querySelector(".pagginationsection").style.display = "block";
+    //----paggination button style
+    document.getElementById("doubleleft").style.opacity = "0.5";
+    document.getElementById("doubleleft").style.cursor = "not-allowed";
 
-  document.getElementById("singleleft").style.opacity = "0.5";
-  document.getElementById("singleleft").style.cursor = "not-allowed";
+    document.getElementById("singleleft").style.opacity = "0.5";
+    document.getElementById("singleleft").style.cursor = "not-allowed";
+  }
 }
 
 function doubleLeftButton() {

@@ -2,9 +2,11 @@ const { Strategy } = require('passport-jwt');
 const connection = require('../config/connection');
 const { SECRET_KEY } = process.env;
 const logger = require('../logs');
-const cookieExtractor = function (req) {
+
+var cookieExtractor = function(req) {
 	return req.cookies?.token;
 };
+
 
 const auth = (passport) => {
 	const options = {};
@@ -30,14 +32,6 @@ const auth = (passport) => {
 	);
 };
 
-const checkLogin = (req, res) => {
-	try {
-		const token = req.cookies?.token;
-		if (token) {
-			passport.authenticate('jwt', { session: false });
-			res.redirect('/home');
-		}
-	} catch (error) {}
-};
 
-module.exports = { auth, checkLogin };
+
+module.exports = { auth,cookieExtractor };

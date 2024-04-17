@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
+
 //login module
 const {
   userLogout,
@@ -12,24 +13,15 @@ const {
 } = require('../controller/login/login');
 const { getHome } = require('../controller/home/homeController');
 const { auth } = require('../middleware/auth');
-const { getForgot } = require('../controller/login/forgot');
-const { forgotPassService } = require('../service/login/forgot.js');
+const { getForgot,forgotPass } = require('../controller/login/forgot');
 
 const passport = require('passport');
-const {
-  getsallesReport,
-  getApiproductreport,
-  getApicategoryreport,
-  getReportallProducts,
-} = require('../controller/report/sallesReport.js');
-const {
-  getpurchaseReport,
-  getApiproductPurchasereport,
-} = require('../controller/report/purchaseReport.js');
 router.use(passport.initialize());
 auth(passport);
+const {checkLogin}=require('../controller/login/login.js');
+router.get('/checkLogin',checkLogin);
 router.get('/', getLogin);
-router.post('/', userLogin);
+router.post('/',userLogin);
 router.get(
   '/home',
   passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
@@ -39,16 +31,33 @@ router.get('/user', getUserName);
 router.post('/user', checkUser);
 router.get('/activelink/:link', getLink);
 router.get('/forgot', getForgot);
-router.post('/forgot', forgotPassService);
+router.post('/forgot', forgotPass);
 router.get(
   '/logout',
   passport.authenticate('jwt', { session: false }),
   userLogout
 );
 
+//----------------------
+
+const {
+	getsallesReport,
+	getApiproductreport,
+	getApicategoryreport,
+	getReportallProducts,
+} = require('../controller/report/sallesReport.js');
+const {
+	getpurchaseReport,
+	getApiproductPurchasereport,
+} = require('../controller/report/purchaseReport.js');
+
+
+
 //store combo
-const { storeComboServices } = require('../service/manager/manager.js');
-router.get('/storeCombo', storeComboServices);
+const {getStoreCombo}=require('../controller/manager/manager.js')
+router.get('/storeCombo', getStoreCombo);
+
+
 
 //manage manager
 
@@ -65,7 +74,7 @@ router.get('/manager', getManager);
 router.post('/manager', manageManager);
 router.get('/addmanager', addManager);
 router.get('/insertmanager', insertManager);
-router.get('/getmanager', listManagers);
+router.get('/api/getmanager', listManagers);
 router.get('/updatemanager', updateManager);
 
 //----getCity and getState

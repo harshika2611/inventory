@@ -3,16 +3,13 @@ const logger = require('../../logs.js');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const connection = require('../../config/connection');
-const forgotPassService = async (req, res) => {
+const forgotPassService = async (body) => {
 	try {
+		const hash = await bcrypt.hash(body.new_pass, saltRounds);
+		const sql0 = `update users set expiry=?, status=?,password=? where email=?`;
+		const [ans] = await connection.execute(sql0, [new Date(),6, hash, body.email]);
+		return ans;
 
-		bcrypt.hash(req.body.new_pass, saltRounds, async (err, hash) => {
-			const sql0 = `update users set status=?,password=? where email=?`;
-			var ans = await connection.execute(sql0, [6, hash, req.body.email]);
-			if (!ans == 0) {
-				res.status(201).send('You are successfully registerd');
-			}
-		});
 	} catch (error) {
 		logger.logError(error);
 		throw error;

@@ -11,7 +11,7 @@
 <body class="body">
   <div class="row form-popup" id="myForm">
     <div class="col-md-12 " data-bs-spy="scroll">
-      <form action="/insertStore" method="post" id="storeForm" name="storeForm">
+      <form method="post" id="storeForm" name="storeForm">
         <h6 onclick="closeForm()" class="text-danger" style="margin-left: 390px; margin-top: 5px; cursor: pointer;">
           Close</h6>
         <div class="container">
@@ -43,10 +43,13 @@
               </select>
             </div>
           </fieldset>
-          <button type="submit" class="btn btn-outline-primary" onclick="submitStoreDetails()">Submit</button>
-          <button type="reset" class="btn btn-outline-danger">Reset</button>
         </div>
       </form>
+      <div class="d-flex">
+        <button class="btn btn-outline-primary " id="insertButton" onclick="submitStoreDetails()">Submit</button>
+        <button class="btn btn-outline-primary " id="updateButton" onclick="updateStoreDetails(this)">Edit</button>
+        <button type="reset" class="btn btn-outline-danger ms-2">Reset</button>
+      </div>
     </div>
   </div>
 

@@ -10,35 +10,58 @@ function checkPass() {
 	}
 }
 
+
+const passField=document.getElementById('confirm_pass');
+document.getElementById("eye_slash").addEventListener('click',function(){
+	if(passField.type== "password"){
+		passField.type= "text"
+		document.getElementById("eye").style.display="block";
+	document.getElementById("eye_slash").style.display="none"
+	}
+})
+document.getElementById("eye").addEventListener('click',function(){
+	if(passField.type= "text"){
+		passField.type= "password"
+		document.getElementById("eye").style.display="none";
+	document.getElementById("eye_slash").style.display="block"
+	}
+});
+
+
 async function submitbtn() {
 	if (checkPass()) {
 		try {
-			const form = document.getElementById('form');
-			const formData = new FormData(form);
-			const serialData = {};
-
-			for (const [key, value] of formData.entries()) {
-				if (serialData[key] != undefined) {
-					serialData[key] += ',' + value;
-				} else {
-					serialData[key] = value;
+			const data = formData('form');
+			const forgotValidation = forgotFormValidation(data);
+		
+			if (Object.keys(forgotValidation).length > 0) {
+				//----client side validation error
+				errorShow(forgotValidation);
+			} else {
+				const response = await fetch(`/forgot`, {
+					method: 'post',
+					headers: {
+						'Content-Type': 'application/json',
+						Accept: 'application/json',
+					},
+					body: JSON.stringify(data),
+				});
+			
+				if (response.status == 200) {
+					alert('You are successfully registerd');
+					window.location = `/`;
 				}
-			}
-			const data = JSON.stringify(serialData);
-			const response = await fetch(`/forgot`, {
-				method: 'post',
-				headers: {
-					'Content-Type': 'application/json',
-					Accept: 'application/json',
-				},
-				body: data,
-			});
-			if (!response.ok) {
-				throw new Error('Network response was not ok');
-			}
-			if (response.status == 201) {
-				alert('You are successfully registerd');
-				window.location = `/`;
+				if (response.status == 401) {
+					//unauthorized
+					error = 'password not matched';
+					document.getElementById('error_forgot').innerHTML = error;
+					alert('passwoed not match');
+				}
+				if (response.status === 400) {
+					const errorObject = await response.json();
+				
+					errorShow(errorObject);
+				}
 			}
 		} catch (error) {
 			console.log(error);
