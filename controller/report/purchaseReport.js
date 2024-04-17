@@ -11,13 +11,8 @@ const getApiproductPurchasereport = async (req, res) => {
 	try {
 		let product = req.query.product || '';
 
-		const [rows, fields] = await getpurchaseProductreport(storage, product);
-
-		const header = [];
-		fields.forEach((ele) => {
-			header.push(ele.name);
-		});
-		res.json({ rows, header });
+		const [rows] = await getpurchaseProductreport(storage, product);
+		res.json(rows);
 	} catch (err) {
 		logger.logError(err);
 	}

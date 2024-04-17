@@ -9,18 +9,22 @@ const getData = async (
 	dataLength,
 	countSalles
 ) => {
-	let { rows, header } = await api.json();
+	let rows = await api.json();
+	let header = Object.keys(rows[0]);
 	if (countSalles == true) {
 		let totalSalles = 0;
 		let totalProcuctcost = 0;
+		rows = changesInApi(rows);
 		rows.map((e) => {
 			totalSalles += e.Selling_Price * e.Product_Salles;
 			totalProcuctcost += e.Product_Cost * e.Product_Salles;
 		});
-
-		document.getElementById('totalSalles').innerText = totalSalles;
-		document.getElementById('totalProfit').innerText =
-			totalSalles - totalProcuctcost;
+		document.getElementById('totalSalles').innerText = new Intl.NumberFormat(
+			'en-IN'
+		).format(totalSalles);
+		document.getElementById('totalProfit').innerText = new Intl.NumberFormat(
+			'en-IN'
+		).format(totalSalles - totalProcuctcost);
 	}
 	let count = 0;
 	let letestdata = [];
@@ -51,4 +55,21 @@ const fetchData = async () => {
 	let api2 = await fetch('api/sallesreport/allcategory');
 	getData(api, productHeader, productData, 5, true);
 	getData(api2, categoryHeader, categoryData, 3, false);
+};
+
+const changesInApi = (array) => {
+	array.map((e) => {
+		if (e.Product_Cost != null) {
+			let cost = String(e.Product_Cost);
+			cost = Number(cost.substring(0, 5));
+			e.Product_Cost = cost;
+		}
+		if (e.Product_Cost == null) {
+			e.Product_Cost = 0;
+		}
+		if (e.Product_Salles == null) {
+			e.Product_Salles = 0;
+		}
+	});
+	return array;
 };
