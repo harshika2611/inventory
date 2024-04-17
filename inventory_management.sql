@@ -61,16 +61,14 @@ CREATE TABLE `customer_master` (
   `state_id` int NOT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `status` int DEFAULT '6',
+  `is_delete` tinyint NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `email_UNIQUE` (`email`),
   KEY `fk_customer_master_1_idx` (`city_id`),
   KEY `fk_customer_master_2_idx` (`state_id`),
-  KEY `fk_customer_master_3_idx` (`status`),
   CONSTRAINT `fk_customer_master_1` FOREIGN KEY (`city_id`) REFERENCES `city_master` (`city_id`),
-  CONSTRAINT `fk_customer_master_2` FOREIGN KEY (`state_id`) REFERENCES `state_master` (`state_id`),
-  CONSTRAINT `fk_customer_master_3` FOREIGN KEY (`status`) REFERENCES `option_master` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  CONSTRAINT `fk_customer_master_2` FOREIGN KEY (`state_id`) REFERENCES `state_master` (`state_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -79,7 +77,7 @@ CREATE TABLE `customer_master` (
 
 LOCK TABLES `customer_master` WRITE;
 /*!40000 ALTER TABLE `customer_master` DISABLE KEYS */;
-INSERT INTO `customer_master` VALUES (1,'Raj','Savani','raj@gmail.com','9876543210','ABC','123456',101,1,'2024-04-09 09:10:40','2024-04-16 06:16:20',6),(2,'Vasu','Parsaniya','vasuparsaniya21@gmail.com','9586606859','Zinzri','362640',1213,12,'2024-04-16 05:40:34','2024-04-16 06:30:07',6),(4,'Vasu','Parsaniya','vasu21@gmail.com','9586606859','sdfd','362640',1213,12,'2024-04-16 06:15:42','2024-04-16 06:35:55',6),(5,'Kunj','Savani','kunj@gmail.com','9876543210','Rajkot','123456',1223,12,'2024-04-16 06:18:43','2024-04-16 06:35:55',6),(6,'Vasusfdfdf','scscs','bhumibera@gmail.com','9586606850','efef','362640',1616,16,'2024-04-16 06:19:01','2024-04-16 06:35:55',6),(7,'Kunj','scscs','efge@gmail.com','9876543210','sdff','123456',1210,12,'2024-04-16 06:19:22','2024-04-16 12:16:21',6),(8,'Vasu','Parsaniya','kunk@gmail.com','9586606850','fgsder','362640',1105,11,'2024-04-16 06:19:37','2024-04-16 06:35:55',6),(9,'Vasu','Parsaniya','gggiya21@gmail.com','9586606859','dfgdfg','362640',1408,14,'2024-04-16 12:29:00','2024-04-16 12:29:00',6);
+INSERT INTO `customer_master` VALUES (1,'Raj','','','',NULL,NULL,101,1,'2024-04-09 09:10:40','2024-04-17 06:00:51',0);
 /*!40000 ALTER TABLE `customer_master` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -125,6 +123,7 @@ CREATE TABLE `manager_details` (
   `id` int NOT NULL AUTO_INCREMENT,
   `user_id` int NOT NULL,
   `storage_id` int NOT NULL,
+  `is_delete` tinyint NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `fk_manager_details_1_idx` (`user_id`),
   KEY `fk_manager_details_2_idx` (`storage_id`),
@@ -184,6 +183,7 @@ CREATE TABLE `product_master` (
   `category_id` int NOT NULL,
   `cost` int DEFAULT NULL,
   `description` varchar(45) DEFAULT NULL,
+  `is_delete` tinyint NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `fk_product_master_3_idx` (`category_id`),
   CONSTRAINT `fk_product_master_3` FOREIGN KEY (`category_id`) REFERENCES `option_master` (`id`)
@@ -196,7 +196,7 @@ CREATE TABLE `product_master` (
 
 LOCK TABLES `product_master` WRITE;
 /*!40000 ALTER TABLE `product_master` DISABLE KEYS */;
-INSERT INTO `product_master` VALUES (1,'Apsara Platinium Pencil Set Of 24',14,15,NULL,NULL);
+INSERT INTO `product_master` VALUES (1,'Apsara Platinium Pencil Set Of 24',14,15,NULL,NULL,0);
 /*!40000 ALTER TABLE `product_master` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -240,9 +240,10 @@ CREATE TABLE `purchase_order` (
   `supplier_id` int NOT NULL,
   `amount` int NOT NULL,
   `payment_status` int NOT NULL,
-  `date` datetime DEFAULT NULL,
+  `date` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `is_delete` tinyint NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `fk_purchase_order_1_idx` (`supplier_id`),
   KEY `fk_purchase_order_2_idx` (`payment_status`),
@@ -257,7 +258,7 @@ CREATE TABLE `purchase_order` (
 
 LOCK TABLES `purchase_order` WRITE;
 /*!40000 ALTER TABLE `purchase_order` DISABLE KEYS */;
-INSERT INTO `purchase_order` VALUES (1,'Pens',1,500,10,NULL,'2024-04-11 12:11:52',NULL),(2,'Pens',1,500,10,NULL,'2024-04-11 12:24:15',NULL);
+INSERT INTO `purchase_order` VALUES (1,'Pens',1,500,10,NULL,'2024-04-11 12:11:52','2024-04-17 06:05:33',0),(2,'Pens',1,500,10,NULL,'2024-04-11 12:24:15','2024-04-17 06:05:33',0);
 /*!40000 ALTER TABLE `purchase_order` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -274,6 +275,7 @@ CREATE TABLE `purchase_products` (
   `product_id` int NOT NULL,
   `unit_price` int NOT NULL,
   `quantity` int NOT NULL,
+  `is_delete` tinyint NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `fk_purchase_details_1_idx` (`purchase_id`),
   KEY `fk_purchase_details_2_idx` (`product_id`),
@@ -309,11 +311,12 @@ CREATE TABLE `sales_order` (
   `date` datetime DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `is_delete` tinyint NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
-  KEY `fk_sales_order_2_idx` (`customer_id`),
-  KEY `fk_sales_order_1_idx` (`type`),
-  CONSTRAINT `fk_sales_order_1` FOREIGN KEY (`type`) REFERENCES `option_master` (`id`),
-  CONSTRAINT `fk_sales_order_2` FOREIGN KEY (`customer_id`) REFERENCES `customer_master` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+  KEY `fk_order_master_2_idx` (`customer_id`),
+  KEY `fk_order_master_1_idx` (`type`),
+  CONSTRAINT `fk_order_master_1` FOREIGN KEY (`type`) REFERENCES `option_master` (`id`),
+  CONSTRAINT `fk_order_master_2` FOREIGN KEY (`customer_id`) REFERENCES `customer_master` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -323,7 +326,7 @@ CREATE TABLE `sales_order` (
 
 LOCK TABLES `sales_order` WRITE;
 /*!40000 ALTER TABLE `sales_order` DISABLE KEYS */;
-INSERT INTO `sales_order` VALUES (1,'',1,8,100,'adadad',11,NULL,'2024-04-09 09:11:28',NULL);
+INSERT INTO `sales_order` VALUES (1,'',1,8,100,'adadad',11,NULL,'2024-04-09 09:11:28','2024-04-17 06:07:16',0);
 /*!40000 ALTER TABLE `sales_order` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -340,13 +343,14 @@ CREATE TABLE `sales_products` (
   `product_id` int NOT NULL,
   `order_type` int NOT NULL,
   `quantity` int NOT NULL,
+  `is_delete` tinyint NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
-  KEY `fk_sales_products_1_idx` (`order_id`),
-  KEY `fk_sales_products_2_idx` (`product_id`),
-  KEY `fk_sales_products_3_idx` (`order_type`),
-  CONSTRAINT `fk_sales_products_1` FOREIGN KEY (`order_id`) REFERENCES `sales_order` (`id`),
-  CONSTRAINT `fk_sales_products_2` FOREIGN KEY (`product_id`) REFERENCES `product_master` (`id`),
-  CONSTRAINT `fk_sales_products_3` FOREIGN KEY (`order_type`) REFERENCES `option_master` (`id`)
+  KEY `fk_order_details_1_idx` (`order_id`),
+  KEY `fk_order_details_2_idx` (`product_id`),
+  KEY `fk_order_details_3_idx` (`order_type`),
+  CONSTRAINT `fk_order_details_1` FOREIGN KEY (`order_id`) REFERENCES `sales_order` (`id`),
+  CONSTRAINT `fk_order_details_2` FOREIGN KEY (`product_id`) REFERENCES `product_master` (`id`),
+  CONSTRAINT `fk_order_details_3` FOREIGN KEY (`order_type`) REFERENCES `option_master` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -422,12 +426,13 @@ CREATE TABLE `storage_space_master` (
   `storage_type` int NOT NULL,
   `location_id` int NOT NULL,
   `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `is_delete` tinyint NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `fk_storage_space_master_1_idx` (`storage_type`),
   KEY `fk_storage_space_master_2_idx` (`location_id`),
   CONSTRAINT `fk_storage_space_master_1` FOREIGN KEY (`storage_type`) REFERENCES `option_master` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `fk_storage_space_master_2` FOREIGN KEY (`location_id`) REFERENCES `option_master` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -453,6 +458,7 @@ CREATE TABLE `supplier_master` (
   `gst` varchar(45) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `is_delete` tinyint NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -463,7 +469,7 @@ CREATE TABLE `supplier_master` (
 
 LOCK TABLES `supplier_master` WRITE;
 /*!40000 ALTER TABLE `supplier_master` DISABLE KEYS */;
-INSERT INTO `supplier_master` VALUES (1,'Bharat Makwana','Apsara','36DBOPA9199A1ZF','2024-04-11 11:16:12',NULL);
+INSERT INTO `supplier_master` VALUES (1,'Bharat Makwana','Apsara','36DBOPA9199A1ZF','2024-04-11 11:16:12',NULL,6);
 /*!40000 ALTER TABLE `supplier_master` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -487,6 +493,7 @@ CREATE TABLE `users` (
   `status` int DEFAULT '6',
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `is_delete` tinyint NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `email_UNIQUE` (`email`),
   KEY `fk_creds_1_idx` (`status`),
@@ -502,7 +509,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,4,'admin',NULL,'admin@gmail.com','2000-03-01','0cfea142240c44cb25f6f25b56abcfa0',NULL,NULL,6,'2024-04-08 11:04:58','2024-04-11 04:53:48');
+INSERT INTO `users` VALUES (1,4,'admin',NULL,'admin@gmail.com','2000-03-01','0cfea142240c44cb25f6f25b56abcfa0',NULL,NULL,6,'2024-04-08 11:04:58','2024-04-11 04:53:48',0);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -515,4 +522,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-04-17  9:15:51
+-- Dump completed on 2024-04-17 11:44:50
