@@ -3,7 +3,7 @@ const logger = require('../../logs.js');
 const { getCityStateId } = require('../commonFunctions/commonFunctions.js');
 
 async function insertCustomerQuery(body) {
-	// return new Promise((resolve, reject) => {
+  // return new Promise((resolve, reject) => {
 
   // });
   try {
@@ -33,7 +33,7 @@ async function getCustomersQuery() {
     FROM customer_master as c
     LEFT JOIN city_master ON c.city_id = city_master.city_id
     LEFT JOIN state_master ON c.state_id = state_master.state_id
-    WHERE c.status = '6';`
+    WHERE c.is_delete = '0';`
 
     const [result] = await connection.execute(getCustomers);
     return result; //return array
