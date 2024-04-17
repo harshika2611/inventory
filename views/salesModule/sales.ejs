@@ -1,58 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <link rel="stylesheet" href="src/css/dashboard/dashboard.css" />
-    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
-    <script src="/js/bootstrap.js"></script>
-    <link rel="stylesheet" href="src/css/salesModule/sales.css" />
-    <link rel="stylesheet" href="src/css/allpage.css" />
-  </head>
-  <body>
-    <%- include('../components/navigation')%>
-    <%- include('./deletePopup')%>
-    <div class="container div-second">
-      <div class="gridComponent" id="gridComponent">
-        <div class="allfilters">
-          <a class="btn btn-outline-dark filter" href="/salesNewOrder">New +</a>
-          <select
-            onchange="fetching()"
-            name="orderby"
-            class="btn btn-secondary dropdown-toggle filter"
-            id="orderby"
-          >
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-              <option value="" selected hidden>Select</option>
-              <option value="id">ID</option>
-              <option value="name">Name</option>
-              <option value="created_at">Date</option>
-              <option value="amount">Amount</option>
-            </div>
-          </select>
 
-          <select
-            onchange="fetching()"
-            name="order"
-            class="btn btn-secondary dropdown-toggle filter"
-            id="order"
-          >
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-              <option value="asc" selected>Ascending</option>
-              <option value="desc">Descending</option>
-            </div>
-          </select>
-        </div>
-        <div class="grid">
-          <table class="table table-hover">
-            <thead class="table-light" id="thead"></thead>
-            <tbody id="tbody"></tbody>
-          </table>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <link rel="stylesheet" href="src/css/dashboard/dashboard.css" />
+  <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
+  <script src="/js/bootstrap.js"></script>
+  <link rel="stylesheet" href="src/css/salesModule/sales.css" />
+  <link rel="stylesheet" href="src/css/allpage.css" />
+</head>
+
+<body>
+  <%- include('../components/navigation')%>
+    <%- include('./deletePopup')%>
+      <div class="container div-second">
+        <div class="gridComponent" id="gridComponent">
+          <div class="allfilters">
+            <a class="btn btn-outline-dark filter" href="/salesNewOrder">New +</a>
+            <select onchange="fetching()" name="orderby" class="btn btn-secondary dropdown-toggle filter" id="orderby">
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <option value="" selected hidden>Select</option>
+                <option value="id">ID</option>
+                <option value="name">Name</option>
+                <option value="created_at">Date</option>
+                <option value="amount">Amount</option>
+              </div>
+            </select>
+
+            <select onchange="fetching()" name="order" class="btn btn-secondary dropdown-toggle filter" id="order">
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <option value="asc" selected>Ascending</option>
+                <option value="desc">Descending</option>
+              </div>
+            </select>
+          </div>
+          <div class="grid">
+            <table class="table table-hover">
+              <thead class="table-light" id="thead"></thead>
+              <tbody id="tbody"></tbody>
+            </table>
+          </div>
         </div>
       </div>
-    </div>
-    <script src="js/salesModule/fetchGrid.js"></script>
-    <script src="js/salesModule/manageDisplay.js"></script>
-  </body>
+
+</body>
+<script src="js/salesModule/fetchGrid.js"></script>
+<script src="js/salesModule/manageDisplay.js"></script>
+<script src="js/salesModule/updateGrid.js"></script>
+
 </html>

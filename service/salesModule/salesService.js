@@ -31,7 +31,7 @@ async function selectOrders(orderby, order, col, value) {
     sales_order.date
   from sales_order join customer_master
   on sales_order.customer_id = customer_master.id
-  where ${col} = '${value}' order by ${orderby} ${order} ;`;
+  where sales_order.is_delete = 0 and ${col} = '${value}' order by ${orderby} ${order} ;`;
 
 	logger.info(sql);
 	return await connection.execute(sql);
@@ -65,16 +65,22 @@ async function updateOrder(input) {
 	return await connection.execute(sql, input);
 }
 async function productList(input) {
-	let sql = `select sales_products.id as id, product_master.name , option_master.value as Category , sales_products.quantity from sales_products join product_master on sales_products.product_id = product_master.id join option_master on option_master.id = product_master.category_id where sales_products.order_id = ?;`;
+	let sql = `select sales_products.id as id, product_master.name , option_master.value as Category , sales_products.quantity from sales_products join product_master on sales_products.product_id = product_master.id join option_master on option_master.id = product_master.category_id where sales_products.order_id = ? and sales_products.is_delete = 0;`;
 
 	logger.info(input);
 	return await connection.execute(sql, input);
 }
-async function deleteQuery(input) {
-	let sql = `update sales_order set is_delete = 1 where id = ?`;
+async function deleteQuery(table,input) {
+	let sql = `update ${table} set is_delete = 1 where id = ?`;
 
 	logger.info(input);
-	return await connection.execute(sql,input);
+	return await connection.execute(sql, input);
+}
+async function updateProduct(input) {
+	let sql = `update sales_products set product_id = ?,quantity = ? where id = ?`;
+
+	logger.info(input);
+	return await connection.execute(sql, input);
 }
 
 module.exports = {
@@ -84,4 +90,5 @@ module.exports = {
 	updateOrder,
 	productList,
 	deleteQuery,
+	updateProduct
 };

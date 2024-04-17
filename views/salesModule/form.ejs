@@ -13,7 +13,9 @@
   <link rel="stylesheet" href="src/css/allpage.css" />
 </head>
 
-<body>
+<body> 
+  <%- include('deletePopup')%>
+  <%- include('productEdit')%>
   <%- include('../components/navigation')%>
     <div class="div-second">
       <div class="container">
@@ -28,7 +30,7 @@
                   <label for="customer" class="insertLabels">Customer : </label>
                   <select name="customer" class=" btn btn-secondary dropdown-toggle" id="customer"></select>
 
-                  <a class="btn btn-outline-dark">New +</a>
+                  <!-- <a class="btn btn-outline-dark">New +</a> -->
 
                   <label for="orderType" class="insertLabels ms-5">Type : </label>
                   <select name="orderType" class=" btn btn-secondary dropdown-toggle" id="orderType">
@@ -85,6 +87,9 @@
     <script src="js/salesModule/updateOrder.js"></script>
     <script src="js/salesModule/form.js"></script>
     <script src="js/salesModule/product.js"></script>
+    <script src="js/salesModule/updateGrid.js"></script>
+    <script src="js/commonFunction/commonFunction.js"></script>
+
 </body>
 
 </html>
