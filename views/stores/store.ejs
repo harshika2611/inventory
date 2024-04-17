@@ -9,10 +9,13 @@
   <script src="/js/bootstrap.js"></script>
   <script src="js/store/store.js"></script>
   <script src="js/commonFunction/commonFunction.js"></script>
+  <link rel="stylesheet" href="src/css/manageCustomers/manageCustomers.css" />
   <link rel="stylesheet" href="src/css/dashboard/dashboard.css" />
   <link rel="stylesheet" href="src/css/allpage.css" />
   <link rel="stylesheet" href="src/css/store/store.css" />
-  <style>
+  <link rel="stylesheet" href="/sweetalert2/sweetalert2.min.css">
+  <script src="/sweetalert2/sweetalert2.min.js"></script>
+  <!-- <style>
     .form-popup {
       display: none;
       position: absolute;
@@ -55,17 +58,29 @@
     #btn {
       margin-left: 620px;
     }
-  </style>
+  </style> -->
 </head>
 
-<body>
+<body onload="getStore()">
   <%- include('../components/navigation')%>
-    <div class="div-second managecustomer-section">
-      <div class="managecustomer-container">
+    <!-- <section class="div-second managecustomer-section">
+    <div class="managecustomer-container" id="managecustomer-container">
+      <div class="managecustomer-container__button">
+        <p class="addnewcustomerbutton" onclick="addNewStore()">Add New</p>
+        <p class="customerfilterbutton" onclick="customerFilter()">Filter</p>
+      </div>
+
+    </div>
+    <%- include('../form/storeForm')%>
+    <%- include('../components/pagginationComponent')%>
+  </section> -->
+
+    <div class="div-second managecustomer-section" id="child">
+      <div class="managecustomer-container" >
         <header>
           <form class="form-inline form1 my-2 my-lg-0">
-            <input class="form-control form2 mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+            <input class="form-control form2 mr-sm-2" type="search" style="display: flex;" placeholder="Search" aria-label="Search" />
+            <button class="btn btn-outline-success my-2 my-sm-0" style="display: flex;" type="submit">
               Search
             </button>
           </form>
@@ -75,7 +90,7 @@
             <div class="container">
               <div class="row1">
                 <h4>Storage Data</h4>
-                <button type="button"  id="btn" class="btn btn-primary" onclick="addNewStore()">
+                <button type="button" id="btn" class="btn btn-primary" onclick="addNewStore()">
                   Add
                 </button>
               </div>
@@ -98,12 +113,12 @@
                         <%= element[key]%>
                       </td>
                       <%}%>
-                        <td id="<%= element.storeId%>" class="store__actionbutton"
-                          onclick="openUpdateStoreForm(this)">
+                        <td id="<%= element.storeId%>" class="store__actionbutton" onclick="openUpdateStoreForm(this)">
                           <button type="button" class="btn btn-outline-primary">Edit
                           </button>
                         </td>
-                        <td id="<%= element.storeId%>" class="store__actionbutton" onclick="deleteStoreDetails(`<%= element.storeId%>`)">
+                        <td id="<%= element.storeId%> submitButton" class="store__actionbutton"
+                          onclick="deleteStoreDetails(`<%= element.storeId%>`)">
                           <button type="button" class="btn btn-outline-danger">Delete</button>
                         </td>
                   </tr>
@@ -113,9 +128,11 @@
             </table>
           </section>
           <%- include('../form/storeForm')%>
+            <%- include('../components/pagginationComponent')%>
         </main>
       </div>
     </div>
+
 </body>
 
 </html>
