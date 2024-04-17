@@ -24,7 +24,7 @@ async function submitbtn() {
 			},
 			body: data,
 		});
-		console.log(data);
+
 		if (!response.ok) {
 			throw new Error('Network response was not ok');
 		}

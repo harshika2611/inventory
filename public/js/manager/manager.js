@@ -26,10 +26,6 @@ async function submitbtn() {
 				},
 				body: JSON.stringify(data),
 			});
-
-			// if (!response.ok) {
-			// 	throw new Error('Network response was not ok');
-			// }
 			if (response.status == 200) {
 				alert('Manager added');
 				window.location = `/user`;
@@ -39,9 +35,7 @@ async function submitbtn() {
 				document.getElementById('error').style.color = 'red';
 			}
 			if (response.status === 400) {
-				console.log('as');
 				const errorObject = await response.json();
-				console.log(errorObject);
 				errorShow(errorObject);
 			}
 		}
@@ -51,7 +45,8 @@ async function submitbtn() {
 }
 
 const getAllStore = async () => {
-	const response = await fetch('/storeCombo');
+	try {
+		const response = await fetch('/storeCombo');
 	const data = await response.json();
 
 	const store = data.result;
@@ -60,4 +55,20 @@ const getAllStore = async () => {
 			'state'
 		).innerHTML += `<option value="${element.id}">${element.city_name}</option>`);
 	});
+	} catch (error) {
+		console.log(error);
+	}
 };
+
+
+const getAllManager=async()=>{
+try {
+	const response=await fetch('/api/getmanager');
+	const data=await response.json();
+	console.log(data,'body');
+	
+} catch (error) {
+	console.log(error);
+}
+}
+getAllManager();

@@ -4,11 +4,10 @@ const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const connection = require('../../config/connection');
 
-const storeComboServices = async (req, res) => {
+const storeComboServices = async () => {
 	try {
 		const sql4 = `SELECT storage_space_master.id,city_master.city_name FROM storage_space_master join city_master on storage_space_master.location_id=city_master.city_id;`;
 		const [result4] = await connection.execute(sql4);
-		res.status(200).json({ result: result4 });
 		return result4;
 	} catch (error) {
 		logger.logError(`Error`, error);
@@ -18,7 +17,10 @@ const storeComboServices = async (req, res) => {
 
 const listManagersService = async () => {
 	try {
-		const sql0 = `select * from users where role_id=?`;
+		const sql0 = `SELECT firstname, lastname,email,name,city_name, status, users.created_at,users.updated_at FROM users 
+		JOIN manager_details ON users.id=manager_details.user_id 
+		JOIN storage_space_master ON storage_space_master.id=manager_details.storage_id 
+		JOIN city_master ON city_master.city_id=storage_space_master.location_id where status=6;`;
 		const [ans] = await connection.execute(sql0, [5]);
 		return ans;
 	} catch (error) {
@@ -48,8 +50,8 @@ const checkManagerService = async (body) => {
 
 const insertManagerService = async (otp, body) => {
 	try {
-		const sql2 = `insert into users (role_id,firstname,lastname,email,dob,unique_code,status)
-		values (?,?,?,?,?,?,?)`;
+		const sql2 = `insert into users (role_id,firstname,lastname,email,dob,unique_code,expiry,status)
+		values (?,?,?,?,?,?,?,?)`;
 
 		const [ans1] = await connection.execute(sql2, [
 			5,
@@ -58,6 +60,7 @@ const insertManagerService = async (otp, body) => {
 			body.email,
 			body.dob,
 			otp,
+			new Date(),
 			7,
 		]);
 		return ans1.insertId;
