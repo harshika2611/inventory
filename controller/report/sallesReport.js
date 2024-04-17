@@ -13,13 +13,8 @@ const getReportallProducts = (req, res) => {
 let storage = 1;
 const getApiproductreport = async (req, res) => {
 	try {
-		const [rows, fields] = await getProductreport(storage);
-
-		const header = [];
-		fields.forEach((ele) => {
-			header.push(ele.name);
-		});
-		res.json({ rows, header });
+		const [rows] = await getProductreport(storage);
+		res.json(rows);
 	} catch (err) {
 		logger.logError(err);
 	}
@@ -27,13 +22,8 @@ const getApiproductreport = async (req, res) => {
 
 const getApicategoryreport = async (req, res) => {
 	try {
-		const [rows, fields] = await getCategotyreport(storage);
-
-		const header = [];
-		fields.forEach((ele) => {
-			header.push(ele.name);
-		});
-		res.json({ rows, header });
+		const [rows] = await getCategotyreport(storage);
+		res.json(rows);
 	} catch (err) {
 		logger.logError(err);
 	}
