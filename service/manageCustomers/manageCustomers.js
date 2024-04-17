@@ -80,7 +80,7 @@ async function updateCustomerQuery(body) {
 
 async function deleteCustomerQuery(customerId) {
   try {
-    const deleteCustomer = `UPDATE customer_master SET status='7' WHERE id=?`;
+    const deleteCustomer = `UPDATE customer_master SET is_delete=1 WHERE id=?`;
 
     const [result] = await connection.execute(deleteCustomer, [customerId]);
     return result;

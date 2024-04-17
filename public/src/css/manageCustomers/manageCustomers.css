@@ -20,6 +20,10 @@ a {
   z-index: 1;
 }
 
+#closeCustomerForm {
+  cursor: pointer;
+  color: red;
+}
 .managecustomer-section {
   max-width: 1300px;
   height: 100dvh;

@@ -80,7 +80,7 @@ const insertManager = async (req, res) => {
 };
 const addManager = async (req, res) => {
 	try {
-	} catch (error) {}
+	} catch (error) { }
 };
 
 module.exports = {

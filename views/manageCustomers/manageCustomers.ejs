@@ -12,16 +12,20 @@
   <script src="js/manageCustomers/manageCustomers.js"></script>
   <script src="js/commonFunction/commonFunction.js"></script>
   <script src="js/manageCustomers/manageCustomerFormValidation.js"></script>
+  <script src="js/manageCustomers/manageCustomerFilter.js"></script>
+  <script src="js/components/messagePopUp.js"></script>
 </head>
 
 <body onload="getCustomers()">
   <%- include('../components/navigation')%>
     <section class="div-second managecustomer-section">
       <div class="managecustomer-container" id="managecustomer-container">
-        <div class="managecustomer-container__button">
-          <p class="addnewcustomerbutton" onclick="addNewCustomer()">Add New</p>
-          <p class="customerfilterbutton" onclick="customerFilter()">Filter</p>
-        </div>
+        <%- include('../components/messagePopUp')%>
+
+          <div class="managecustomer-container__button">
+            <p class="addnewcustomerbutton" onclick="addNewCustomer()">Add New</p>
+            <p class="customerfilterbutton" onclick="customerFilterShow()">Filter</p>
+          </div>
 
       </div>
       <%- include('../form/customerForm')%>
