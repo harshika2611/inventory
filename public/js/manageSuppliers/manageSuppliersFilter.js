@@ -1,13 +1,13 @@
-function customerFilterShow() {
-  const searchDiv = document.querySelector(".managecustomer-container__button");
+function supplierFilterShow() {
+  const searchDiv = document.querySelector(".managesupplier-container__button");
   const createSelect = document.createElement("select");
-  const filterButton = document.querySelector(".customerfilterbutton");
-  createSelect.setAttribute("id", "searchCustomerSelect");
+  const filterButton = document.querySelector(".supplierfilterbutton");
+  createSelect.setAttribute("id", "searchSupplierSelect");
   createSelect.setAttribute("onchange", "searchInputAdd()");
   createSelect.style.width = "200px";
 
   //----array element is same name as dataArray key
-  const searchOptionArray = ["Select Search Column", "Firstname", "Lastname", "Email", "Zipcode", "City", "State"];
+  const searchOptionArray = ["Select Search Column", "Firstname", "Lastname", "Email", "Companyname", "GST", "Zipcode", "City", "State"];
 
   for (let element of searchOptionArray) {
     const createOption = document.createElement("option");
@@ -18,22 +18,22 @@ function customerFilterShow() {
   searchDiv.appendChild(createSelect);
 
   filterButton.textContent = "Clear";
-  filterButton.setAttribute("onclick", "customerFilterHide()")
+  filterButton.setAttribute("onclick", "supplierFilterHide()")
 }
 
-function customerFilterHide() {
-  const searchCustomerSelect = document.getElementById("searchCustomerSelect");
+function supplierFilterHide() {
+  const searchSupplierSelect = document.getElementById("searchSupplierSelect");
   const searchInput = document.getElementById("searchInput");
-  const filterButton = document.querySelector(".customerfilterbutton");
+  const filterButton = document.querySelector(".supplierfilterbutton");
 
-  if (searchCustomerSelect) {
-    searchCustomerSelect.remove();
+  if (searchSupplierSelect) {
+    searchSupplierSelect.remove();
   }
   if (searchInput) {
     searchInput.remove();
   }
   filterButton.textContent = "Filter";
-  filterButton.setAttribute("onclick", "customerFilterShow()");
+  filterButton.setAttribute("onclick", "supplierFilterShow()");
 
   window.location.reload();
 }
@@ -41,21 +41,21 @@ function customerFilterHide() {
 //--------------
 function searchInputAdd() {
   const searchInput = document.getElementById("searchInput");
-  const searchCustomerSelect = document.getElementById("searchCustomerSelect");
-  const searchDiv = document.querySelector(".managecustomer-container__button");
+  const searchSupplierSelect = document.getElementById("searchSupplierSelect");
+  const searchDiv = document.querySelector(".managesupplier-container__button");
   const createInput = document.createElement("input");
-  const filterButton = document.querySelector(".customerfilterbutton");
+  const filterButton = document.querySelector(".supplierfilterbutton");
 
   if (searchInput) {
     searchInput.remove();
   }
 
-  if (searchCustomerSelect && searchCustomerSelect.selectedIndex > 0) {
+  if (searchSupplierSelect && searchSupplierSelect.selectedIndex > 0) {
     createInput.setAttribute("type", "text");
     createInput.setAttribute("id", "searchInput");
     createInput.setAttribute("class", "searchInput");
     createInput.setAttribute("placeholder", "search....");
-    createInput.setAttribute("onchange", `customerFilter("${searchCustomerSelect.value}")`);
+    createInput.setAttribute("onchange", `supplierFilter("${searchSupplierSelect.value}")`);
 
     createInput.style.width = "250px";
     createInput.style.padding = "20px";
@@ -67,10 +67,10 @@ function searchInputAdd() {
     searchDiv.appendChild(createInput);
   }
   filterButton.textContent = "Clear";
-  filterButton.setAttribute("onclick", "customerFilterHide()")
+  filterButton.setAttribute("onclick", "supplierFilterHide()")
 }
 
-function customerFilter(filterColumn) {
+function supplierFilter(filterColumn) {
   const searchInput = document.getElementById("searchInput");
   let filterArray = [];
   dataArray.forEach((element) => {
@@ -89,16 +89,15 @@ function customerFilter(filterColumn) {
 }
 
 function pagginationFilter(filterArray, currPage) {
-  dataArray = [];
+  let dataArrayFilter = [];
   for (let element of filterArray) {
-    dataArray.push(element);
+    dataArrayFilter.push(element);
   }
-  // console.log(dataArray);
 
   currentPage = currPage;
   startIndex = (currentPage - 1) * recordsInSinglePage;
   endIndex = startIndex + recordsInSinglePage;
-  const pagginationArray = dataArray.slice(startIndex, endIndex);
+  const pagginationArray = dataArrayFilter.slice(startIndex, endIndex);
   dataTableGrid(pagginationArray, startIndex);
 
   if (recordsInSinglePage < dataArray.length) {
