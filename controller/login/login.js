@@ -43,11 +43,8 @@ const userLogin = async (req, res) => {
 
 		if (user.length > 0 && user[0].status == 6) {
 			const result = await bcrypt.compare(req.body.password, user[0].password);
-				const test = user[0].created_at;
 				const expireDatePass = new Date(user[0].expiry);
-
 				const newDatePass = new Date();
-
 				if (user[0].role_id == 4) {
 					if (result) {
 						if (Math.abs((newDatePass-expireDatePass)/1000/3600/24)<10) {

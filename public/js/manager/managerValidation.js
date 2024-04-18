@@ -39,19 +39,6 @@ function manageManagerFormValidation(data) {
 				}
 				break;
 
-			case 'dob':
-				const regexDate = /^\d{4}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])$/;
-				if (data[key]) {
-					if (!regexDate.test(data[key]) && data[key] !== '') {
-						customerFormErrorObject[key] = '* Please Enter Valid date';
-					} else {
-						delete customerFormErrorObject[key];
-					}
-				} else {
-					delete customerFormErrorObject[key];
-				}
-				break;
-
 			case 'state':
 				
 

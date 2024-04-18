@@ -12,7 +12,7 @@
 
 </head>
 
-<body>
+<body onload="getAllManager()">
   <%- include('../components/navigation')%>
     <section class="div-second manager-section">
       <div class="manager-container" id="managerGrid">
@@ -30,17 +30,20 @@
 
         </div>
         <div class="grid">
-          <table class="table table-hover">
-            <thead class="table-light" id="thead"></thead>
+          <table class="table table-hover" id="table">
+            <thead class="table-light" id="thead">
+            </thead>
             <tbody id="tbody"></tbody>
           </table>
         </div>
       </div>
       <%- include('../form/managerForm')%>
+        <%- include('../components/pagginationComponent')%>
     </section>
     <script src="js/commonFunction/commonFunction.js"></script>
     <script src="js/manager/manager.js"></script>
     <script src="js/manager/managerValidation.js"></script>
+
 
 </body>
 
