@@ -4,7 +4,7 @@
 	"editor.defaultFormatter": "esbenp.prettier-vscode",
 	"prettier.bracketSameLine": false,
 	"prettier.semi": true,
-	"prettier.useTabs": true,
+	"prettier.useTabs": false,
 	"prettier.tabWidth": 2,
 	"prettier.singleQuote": true,
 	"[html]": {
