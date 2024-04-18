@@ -1,6 +1,6 @@
-:root {
+/* :root {
   --managecustomersection: #f0f1f3;
-}
+} */
 
 * {
   margin: 0;
@@ -18,12 +18,14 @@ a {
   top: 0%;
   left: 30%;
 }
-
-.managecustomer-section {
+#btn{
+  margin-left: 1022px;
+}
+/* .managecustomer-section {
   max-width: 1300px;
   height: 100dvh;
   background-color: var(--managecustomersection);
-}
+} */
 
 .managecustomer-container {
   width: 1200px;
@@ -37,23 +39,7 @@ a {
   gap: 20px;
 }
 
-.addnewcustomerbutton,
-.customerfilterbutton {
-  padding: 10px;
-  background-color: gray;
-  cursor: pointer;
-  border-radius: 10px;
-}
-
-.store__table th,
-td {
-  padding: 10px;
-  text-align: center;
-}
-
-
 .store__actionbutton {
   cursor: pointer;
   padding: 5px;
-  border-radius: 10px;
 }
