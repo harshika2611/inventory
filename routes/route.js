@@ -1,86 +1,86 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
 
 //login module
 const {
-  userLogout,
-  checkUser,
-  getUserName,
-  userLogin,
-  getLogin,
-  getLink,
-} = require("../controller/login/login");
-const { getHome } = require("../controller/home/homeController");
-const { auth } = require("../middleware/auth");
-const { getForgot, forgotPass } = require("../controller/login/forgot");
-const passport = require("passport");
+	userLogout,
+	checkUser,
+	getUserName,
+	userLogin,
+	getLogin,
+	getLink,
+} = require('../controller/login/login');
+const { getHome } = require('../controller/home/homeController');
+const { auth } = require('../middleware/auth');
+const { getForgot, forgotPass } = require('../controller/login/forgot');
+const passport = require('passport');
 router.use(passport.initialize());
 auth(passport);
-const { checkLogin } = require("../controller/login/login.js");
-router.get("/checkLogin", checkLogin);
-router.get("/", getLogin);
-router.post("/", userLogin);
+const { checkLogin } = require('../controller/login/login.js');
+router.get('/checkLogin', checkLogin);
+router.get('/', getLogin);
+router.post('/', userLogin);
 router.get(
-  "/home",
-  passport.authenticate("jwt", { session: false, failureRedirect: "/" }),
-  getHome
+	'/home',
+	passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+	getHome
 );
-router.get("/user", getUserName);
-router.post("/user", checkUser);
-router.get("/activelink/:link", getLink);
-router.get("/forgot", getForgot);
-router.post("/forgot", forgotPass);
+router.get('/user', getUserName);
+router.post('/user', checkUser);
+router.get('/activelink/:link', getLink);
+router.get('/forgot', getForgot);
+router.post('/forgot', forgotPass);
 router.get(
-  "/logout",
-  passport.authenticate("jwt", { session: false }),
-  userLogout
+	'/logout',
+	passport.authenticate('jwt', { session: false }),
+	userLogout
 );
 
 //----------------------
 
 const {
-  getsallesReport,
-  getApiproductreport,
-  getApicategoryreport,
-  getReportallProducts,
-} = require("../controller/report/sallesReport.js");
+	getsallesReport,
+	getApiproductreport,
+	getApicategoryreport,
+	getReportallProducts,
+} = require('../controller/report/sallesReport.js');
+
 const {
-  getpurchaseReport,
-  getApiproductPurchasereport,
-} = require("../controller/report/purchaseReport.js");
+	getpurchaseReport,
+	getApiproductPurchasereport,
+} = require('../controller/report/purchaseReport.js');
 
 //store combo
-const { getStoreCombo } = require("../controller/manager/manager.js");
-router.get("/storeCombo", getStoreCombo);
+const { getStoreCombo } = require('../controller/manager/manager.js');
+router.get('/storeCombo', getStoreCombo);
 
 //manage manager
 
 const {
-  deleteManager,
-  manageManager,
-  getManager,
-  getPerticularManager,
-  listManagers,
-  updateManager,
-  insertManager,
-} = require("../controller/manager/manager");
+	deleteManager,
+	manageManager,
+	getManager,
+	getPerticularManager,
+	listManagers,
+	updateManager,
+	insertManager,
+} = require('../controller/manager/manager');
 
-router.get("/manager", getManager);
-router.post("/manager", manageManager);
-router.get("/api/getmanagers", listManagers);
-router.get("/api/getmanager/:id", getPerticularManager);
-router.post("/updatemanager", updateManager);
-router.post("/api/deleteManager/:id", deleteManager);
-router.get("/insertmanager", insertManager);
+router.get('/manager', getManager);
+router.post('/manager', manageManager);
+router.get('/api/getmanagers', listManagers);
+router.get('/api/getmanager/:id', getPerticularManager);
+router.post('/updatemanager', updateManager);
+router.post('/api/deleteManager/:id', deleteManager);
+router.get('/insertmanager', insertManager);
 
 //----getCity and getState
 const {
-  getState,
-  getCity,
-} = require("../controller/commonFunctions/commonFunctions.js");
-
-router.get("/api/getState", getState);
-router.post("/api/getCity", getCity);
+	getState,
+	getCity,
+} = require('../controller/commonFunctions/commonFunctions.js');
+getState, getCity, router.get('/api/getState', getState);
+router.post('/api/getCity', getCity);
 
 //report
 
@@ -106,13 +106,13 @@ router.get('/salesReportallProducts', getReportallProducts);
 router.get('/api/salesreport/allproduct', getApiproductreport);
 router.get('/api/salesreport/allcategory', getApicategoryreport);
 
-router.get("/purchaseReport", getpurchaseReport);
-router.get("/api/purchasereport/allproduct", getApiproductPurchasereport);
+router.get('/purchaseReport', getpurchaseReport);
+router.get('/api/purchasereport/allproduct', getApiproductPurchasereport);
 
-router.get("/orderReport", getorderReport);
-router.get("/orderProduct/:id", getorderProducts);
-router.get("/api/orderreport/allorder", getApiorderRreport);
-router.get("/api/orderreport/allproduct/:id", getApiordersProductRreport);
+router.get('/orderReport', getorderReport);
+router.get('/orderProduct/:id', getorderProducts);
+router.get('/api/orderreport/allorder', getApiorderRreport);
+router.get('/api/orderreport/allproduct/:id', getApiordersProductRreport);
 
 //----Dashboard
 const {
@@ -138,6 +138,7 @@ const {
 	deleteProduct,
 	updateSalesProduct,
 } = require('../controller/salesModule/salesControllers.js');
+
 const {
 	orderHistory,
 	newOrder,
@@ -177,24 +178,24 @@ const {
 	filterCustomer,
 } = require('../controller/manageCustomers/manageCustomers.js');
 
-const manageCustomerValidation = require("../controller/manageCustomers/manageCustomerValidation.js");
+const manageCustomerValidation = require('../controller/manageCustomers/manageCustomerValidation.js');
 
-router.get("/manageCustomers", getCustomersPage);
-router.get("/api/manageCustomers", getAllCustomers);
-router.get("/api/getCustomers", getParticularCustomer);
-router.post("/api/insertCustomer", manageCustomerValidation, insertCustomer);
-router.post("/api/updateCustomer", manageCustomerValidation, updateCustomer);
-router.get("/api/deleteCustomer", deleteCustomer);
-router.post("/filterCustomer", filterCustomer);
+router.get('/manageCustomers', getCustomersPage);
+router.get('/api/manageCustomers', getAllCustomers);
+router.get('/api/getCustomers', getParticularCustomer);
+router.post('/api/insertCustomer', manageCustomerValidation, insertCustomer);
+router.post('/api/updateCustomer', manageCustomerValidation, updateCustomer);
+router.get('/api/deleteCustomer', deleteCustomer);
+router.post('/filterCustomer', filterCustomer);
 
 // ---------Store
 const {
-  insertStore,
-  getStore,
-  updateStore,
-  deleteStore,
-  getParticularStore,
-  filterStore
+	insertStore,
+	getStore,
+	updateStore,
+	deleteStore,
+	getParticularStore,
+	filterStore,
 } = require('../controller/stores/store.js');
 router.get('/store', getStore);
 router.get('/getStore', getParticularStore);
@@ -281,8 +282,8 @@ router.get(
 // ------------------- Manage Purchases ---------------------- //
 
 //---------------------Products Module---------------------
-const { productListing } = require("../controller/products/productListing.js");
-router.get("/products", productListing);
+const { productListing } = require('../controller/products/productListing.js');
+router.get('/products', productListing);
 
 //---------------------Profile Module---------------------
 
@@ -293,8 +294,8 @@ const {
 } = require('../controller/profile/profile.js');
 const { getOrderreport } = require('../service/report/orderReportService.js');
 
-router.get("/profile", viewProfile);
-router.get("/profileEdit", editProfile);
-router.post("/profileEdit", updateProfile);
+router.get('/profile', viewProfile);
+router.get('/profileEdit', editProfile);
+router.post('/profileEdit', updateProfile);
 
 module.exports = router;

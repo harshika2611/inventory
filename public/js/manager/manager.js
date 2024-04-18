@@ -45,6 +45,33 @@ async function submitbtn() {
 }
 
 const getAllStore = async () => {
+<<<<<<< HEAD
+	try {
+		const response = await fetch('/storeCombo');
+		const data = await response.json();
+
+		const store = data.result;
+		store.forEach((element) => {
+			const option = (document.getElementById(
+				'state'
+			).innerHTML += `<option value="${element.id}">${element.city_name}</option>`);
+		});
+	} catch (error) {
+		console.log(error);
+	}
+};
+
+const getAllManager = async () => {
+	try {
+		const response = await fetch('/api/getmanager');
+		const data = await response.json();
+		console.log(data, 'body');
+	} catch (error) {
+		console.log(error);
+	}
+};
+getAllManager();
+=======
   try {
     const response = await fetch("/storeCombo");
     const data = await response.json();
@@ -191,3 +218,4 @@ async function updateDeails(id) {
     console.log(error);
   }
 }
+>>>>>>> main
