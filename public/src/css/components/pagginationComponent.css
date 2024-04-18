@@ -1,9 +1,8 @@
 :root {
   --pagginationsection: #f0f1f3;
   --pagginationcontainer: aliceblue;
-  --pagginationbutton: #F9F9F9;
+  --pagginationbutton: #f9f9f9;
 }
-
 
 * {
   margin: 0;
@@ -29,7 +28,6 @@ a {
   background-color: var(--pagginationcontainer);
   border-radius: 10px;
   position: absolute;
-  right: 0;
 }
 
 .rowpaggination {
