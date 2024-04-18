@@ -16,7 +16,8 @@ async function insertStoreQuery(body) {
 
 async function getStoreQuery() {
   try {
-    const getStores = `SELECT s.id as storeId ,s.name as Storagename , option_master.value as StorageType , city_master.city_name as location FROM storage_space_master as s left join option_master on s.storage_type = option_master.id left join city_master on city_master.city_id=s.location_id where s.is_delete =0`
+    const getStores = `SELECT s.id as storeId ,s.name as Storagename , option_master.value as StorageType , city_master.city_name as location,s.created_at FROM storage_space_master as s left join option_master on s.storage_type = option_master.id left join city_master on city_master.city_id=s.location_id where s.is_delete =0`;
+
     const [result] = await connection.execute(getStores);
     // console.log(result)
     return result; //return array
@@ -39,14 +40,14 @@ async function checkStoreExistQuery(storeId) {
   }
 }
 
-async function updateStoreQuery(body,storeId) {
+async function updateStoreQuery(body, storeId) {
   try {
     console.log(storeId);
     const updateStore = `UPDATE storage_space_master as s SET name=?, storage_type = ?, location_id=? WHERE s.name=?;`;
     const cityStateId = await getCityStateId(body.state, body.city);
-    const [result] = await connection.execute(updateStore, [body.storageName, body.storeType, cityStateId[0].city_id,body.storageName]);
+    const [result] = await connection.execute(updateStore, [body.storageName, body.storeType, cityStateId[0].city_id, body.storageName]);
     console.log(result, "result");
-      return true;
+    return true;
   } catch (error) {
     logger.logError("Update Customer: " + error);
     throw error;

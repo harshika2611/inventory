@@ -35,10 +35,7 @@
 
               <label for="floatingInput">Email address</label>
             </div>
-            <div class="form-floating mb-3">
-              <input name="dob" type="text" class="form-control" id="floatingInput" placeholder="YYYY-MM-DD">
-              <label for="floatingInput">Date of Birth</label>
-            </div>
+
             <div class="form-floating customerform__errordiv">
               <select name="state" id="state">
                 <option value="select here">select location</option>
@@ -47,7 +44,7 @@
             </div>
           </fieldset>
           <div id="error"></div>
-          <button type="button" class="btn btn-outline-primary" onclick="submitbtn()">Submit</button>
+          <button type="button" id="submitBtn" class="btn btn-outline-primary" onclick="submitbtn()">Submit</button>
           <button type="reset" class="btn btn-outline-danger">Reset</button>
         </div>
       </form>

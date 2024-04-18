@@ -16,10 +16,13 @@
 	padding: 5px;
 }
 .grid {
-	margin-top: 5%;
+	margin-top: 3%;
 	height: 100dvh;
 	overflow: scroll;
 }
 #order {
 	margin: 3px;
+}
+th,td{
+	padding: 12px;
 }

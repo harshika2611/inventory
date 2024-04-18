@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="src/css/allpage.css" />
   <link rel="stylesheet" href="src/css/dashboardCustom.css" />
   <link rel="stylesheet" href="src/css/profile/profileStyle.css" />
+  <link rel="stylesheet" href="src/css/manager/manager.css" />
 </head>
 
 <body>
@@ -17,47 +18,51 @@
     <div class="container div-second">
       <div class="main-container">
         <div class="profile-details">
-          <form class="row g-3" action="/profileEdit">
+          <form class="row g-3" id="form" method="post">
             <div class="container edit-img-container">
               <div class="img-container">
                 <img class="currentProfileImage" src="icons/profile.png" alt="">
               </div>
               <div class="edit-link">
-                <a href="#">Change</a>
+                <span onclick="addManager()">Change</span>
                 <img src="/icons/edit.svg" alt="" width="20" height="20">
               </div>
             </div>
             <div class="col-md-6">
               <label class="form-label">First Name</label>
-              <input type="text" class="form-control" value="<%= profileDetails[0][0].firstname  %>">
-              <span>*err</span>
+              <input name="firstname" type="text" class="form-control" value="<%= profileDetails[0][0].firstname  %>">
+
             </div>
             <div class="col-md-6">
               <label class="form-label">Last Name</label>
-              <input type="text" class="form-control" value="<%= profileDetails[0][0].lastname %>">
+              <input name="lastname" type="text" class="form-control" value="<%= profileDetails[0][0].lastname %>">
             </div>
             <div class="col-12">
               <label class="form-label">Date of Birth</label>
-              <input type="date" class="form-control" placeholder="1234 Main St"
+              <input name="dob" type="date" class="form-control" placeholder="1234 Main St"
                 value="<%= profileDetails[0][0].dob %>">
-              <span>*err</span>
+
             </div>
             <div class="col-12">
               <label class="form-label">Email</label>
               <% if(profileDetails[0][0].Role==4) { %>
-                <input type="text" class="form-control" value="<%= profileDetails[0][0].email%>" disabled>
+                <input name="email" type="text" class="form-control" value="<%= profileDetails[0][0].email%>" disabled>
                 <% } else{ %>
-                  <input type="text" class="form-control" value="<%= profileDetails[0][0].email%>">
+                  <input name="email" type="text" class="form-control" value="<%= profileDetails[0][0].email%>">
                   <% } %>
-                    <span>*err</span>
+
             </div>
             <div class="edit-btn-container">
-              <button type="submit" class="edit-profile-btn">Save</button>
+              <button type="button" class="edit-profile-btn" onclick="submitbtn();">Save</button>
             </div>
           </form>
         </div>
       </div>
+      <%- include('../form/imageUploadForm')%>
     </div>
+    <script src="js/commonFunction/commonFunction.js"></script>
+    <script src="js/manager/manager.js"></script>
+    <script src="js/manager/managerValidation.js"></script>
 </body>
 
 </html>

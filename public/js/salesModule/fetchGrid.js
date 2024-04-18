@@ -1,23 +1,33 @@
 async function fetching() {
+
+	
 	let orderby = document.getElementById('orderby').value;
 	let order = document.getElementById('order').value;
 	url = `/salesorder?order=${order}`;
 	if (orderby != '') {
 		url = url + `&orderby=${orderby}`;
 	}
-	let response = await fetch(url);
-	let result = await response.json();
-	grid(result);
+	paggination(url)
+	
+	// let response = await fetch(url);
+	// let result = await response.json();
+	// grid(result);
 }
 fetching();
 
-function grid(result) {
+function dataTableGrid(result) {
+	console.log(result);
 	let head = `<tr>`;
-	result.header.forEach((ele) => {
-		if (ele != 'date') {
-			head += `<th scope="col">${ele}</th>`;
+	for (let key in result[0]) {
+    if (key === "id") {
+      key = "No.";
+    } 
+		if (key != 'date') {
+			 head += `<th scope="col">${key}</th>`;
 		}
-	});
+   
+   
+	}
 	head += `<th scope="col">Time</th>
   <th scope="col">Edit</th>
   <th scope="col">Delete</th>`;
@@ -25,7 +35,7 @@ function grid(result) {
 	document.getElementById('thead').innerHTML = head;
 
 	let body = ``;
-	result.rows.forEach((data) => {
+	result.forEach((data) => {
 		body += `<tr>
         <th scope="row">${data.id}</th>
         <td>${data.customer_id}</td>

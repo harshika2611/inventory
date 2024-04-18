@@ -1,6 +1,6 @@
-const connection = require('../../config/connection.js');
-const logger = require('../../logs.js');
-const { getCityStateId } = require('../commonFunctions/commonFunctions.js');
+const connection = require("../../config/connection.js");
+const logger = require("../../logs.js");
+const { getCityStateId } = require("../commonFunctions/commonFunctions.js");
 
 async function insertCustomerQuery(body) {
   // return new Promise((resolve, reject) => {
@@ -22,7 +22,7 @@ async function insertCustomerQuery(body) {
       cityStateId[0].state_id,
     ]);
   } catch (error) {
-    logger.logError('Insert Customer: ' + error);
+    logger.logError("Insert Customer: " + error);
     throw error;
   }
 }
@@ -97,7 +97,7 @@ async function deleteCustomerQuery(customerId) {
     const [result] = await connection.execute(deleteCustomer, [customerId]);
     return result;
   } catch (error) {
-    logger.logError('Delete Customer: ' + error);
+    logger.logError("Delete Customer: " + error);
     throw error;
   }
 }

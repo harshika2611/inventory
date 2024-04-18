@@ -1,0 +1,115 @@
+:root {
+  --managecustomersection: #f0f1f3;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+}
+
+#myForm {
+  display: none;
+  position: absolute;
+  top: 0%;
+  left: 30%;
+  z-index: 1;
+}
+
+#closeSupplierForm {
+  cursor: pointer;
+  color: red;
+}
+.managesupplier-section {
+  max-width: 1300px;
+  height: 100dvh;
+  background-color: var(--managecustomersection);
+}
+
+.managesupplier-container {
+  max-width: 1300px;
+  padding: 20px;
+  margin: 0 auto;
+  overflow-x: auto;
+}
+
+.managesupplier-container__button {
+  display: flex;
+  gap: 20px;
+}
+
+.addnewsupplierbutton,
+.supplierfilterbutton {
+  padding: 10px;
+  background-color: gray;
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+/* Style for the table */
+
+.managesupplier__table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* Style for table header */
+.managesupplier__table th {
+  background-color: #f2f2f2;
+  color: #333;
+  font-weight: bold;
+  padding: 12px;
+  text-align: left;
+  border-bottom: 2px solid #ddd;
+}
+
+/* Style for table rows */
+.managesupplier__table tr {
+  border-bottom: 1px solid #ddd;
+}
+
+/* Alternate row color */
+.managesupplier__table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+/* Hover effect for rows */
+.managesupplier__table tr:hover {
+  background-color: #f2f2f2;
+}
+
+.managesupplier__actionbutton {
+  cursor: pointer;
+  padding: 5px;
+}
+
+.managesupplier__table {
+  width: auto;
+  max-width: 100%;
+  /* Ensures table doesn't overflow container */
+  border-collapse: collapse;
+  border-spacing: 0;
+  white-space: nowrap;
+  /* Prevents text wrapping */
+}
+
+.managesupplier__table th,
+.managesupplier__table td {
+  padding: 10px;
+  text-align: left;
+}
+
+/* Style for the action column */
+.managesupplier__actioncolumn {
+  width: 100px;
+}
+
+/* paggination */
+.pagginationcontainer {
+  right: 0;
+}

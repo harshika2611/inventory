@@ -108,3 +108,8 @@ a {
 .managecustomer__actioncolumn {
   width: 100px;
 }
+
+/* paggination */
+.pagginationcontainer {
+  right: 0;
+}

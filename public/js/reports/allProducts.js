@@ -13,7 +13,7 @@ const getData = async (api, tableHeader, tableData) => {
 		.join('');
 };
 const fetchData = async () => {
-	paggination('api/sallesreport/allproduct');
+	paggination('api/salesreport/allproduct');
 	// let api = await fetch('api/sallesreport/allproduct');
 	// getData(api, productHeader, productData);
 };

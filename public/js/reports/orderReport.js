@@ -51,9 +51,9 @@ const searchdata = () => {
 	if (toDate.length == 0) {
 		toDate = currentDate;
 	}
-	// paggination(
-	// 	`api/orderreport/allorder?fromDate=${fromDate}&&toDate=${toDate}`
-	// );
-	// console.log(fromDate);
-	// console.log(toDate);
+	console.log(fromDate);
+	console.log(toDate);
+	paggination(
+		`/api/orderreport/allorder?fromDate=${fromDate}&&toDate=${toDate}`
+	);
 };

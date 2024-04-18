@@ -9,13 +9,11 @@
 .filter {
   margin-left: 1%;
 }
-.grid {
+.grid{
+  height: 60dvh;
+  overflow: scroll;
   margin-top: 5%;
-}
 
-#customer {
-  width: 15%;
-  margin: 0 2%;
 }
 .insertFields {
   margin-bottom: 2%;
@@ -33,10 +31,7 @@
 #tbody{
   overflow-y: scroll;
 }
-.grid{
-  height: 100dvh;
-  overflow: scroll;
-}
+
 #thead{
   position: sticky;
   top: 0;

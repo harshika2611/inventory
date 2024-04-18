@@ -86,15 +86,15 @@ a:hover {
 	font-style: italic;
 	/* background-color: skyblue; */
 }
-.eyes{
+.eyes {
 	display: flex;
 	justify-content: flex-end;
 	position: relative;
 	width: 19px;
-left: 119px;
-margin: 0 auto;
-top: 29px;
+	left: 119px;
+	margin: 0 auto;
+	top: 29px;
 }
-.eye1{
+.eye1 {
 	width: 20px;
 }

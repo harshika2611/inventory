@@ -5,28 +5,85 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Supplier</title>
   <link rel="stylesheet" href="src/css/form.css">
+  <link rel="stylesheet" href="src/css/manageSupplier/supplierForm.css" />
 </head>
 
-<body>
+
+<body class="body">
   <div class="row form-popup" id="myForm">
-    <div class="col-md-12">
-      <form action="" method="">
-        <h1>Supplier</h1>
+    <div class="col-md-12 " data-bs-spy="scroll">
+      <form id="supplierForm" name="supplierForm">
+        <div class="container">
+          <h1>Supplier Form</h1>
+          <p onclick="closeForm()" id="closeSupplierForm">close</p>
+          <fieldset>
 
-        <fieldset>
-          <label for="name">Name :</label>
-          <input type="text" id="name" name="user_name">
+            <div class="form-floating mb-3 supplierform__errordiv">
+              <input name="firstname" type="text" class="form-control supplierInput" id="floatingInput"
+                placeholder="name@example.com">
+              <label for="floatingInput">First Name </label>
+            </div>
 
-          <label for="text">GST no. :</label>
-          <input type="text" id="gst" name="user_email">
+            <div class="form-floating mb-3 supplierform__errordiv">
+              <input name="lastname" type="text" class="form-control supplierInput" id="floatingInput"
+                placeholder="name@example.com">
+              <label for="floatingInput">Last Name </label>
+            </div>
 
-          <label for="text">Company Name :</label>
-          <input type="text" id="name" name="name">
+            <div class="form-floating mb-3 supplier__errordiv">
+              <input name="email" type="text" class="form-control supplierInput" id="floatingInput"
+                placeholder="name@example.com">
+              <label for="floatingInput">Email address</label>
+            </div>
 
-        </fieldset>
-        <button type="submit" id="s1" class="btn btn-outline-primary" onclick="closeForm()">Submit</button>
-        <button type="reset" class="btn btn-outline-danger">Reset</button>
+            <div class="form-floating mb-3 supplier__errordiv">
+              <input name="phonenumber" type="text" class="form-control supplierInput" id="floatingInput"
+                placeholder="name@example.com">
+              <label for="floatingInput">Phone Number </label>
+            </div>
 
+            <div class="form-floating mb-3 supplierform__errordiv">
+              <input name="companyname" type="text" class="form-control supplierInput" id="floatingInput"
+                placeholder="Enter Company Name">
+              <label for="floatingInput">Company Name </label>
+            </div>
+
+
+            <div class="form-floating mb-3 supplierform__errordiv">
+              <input name="gst" type="text" class="form-control supplierInput" id="floatingInput"
+                placeholder="Enter Company Name">
+              <label for="floatingInput">GST </label>
+            </div>
+
+            <div class="form-floating supplierform__errordiv">
+              <textarea name="address" class="form-control supplierInput" placeholder="Leave a comment here"
+                id="floatingTextarea"></textarea>
+              <label for="floatingTextarea">Address</label>
+            </div>
+
+            <div class="form-floating mb-3 supplierform__errordiv">
+              <input name="zipcode" type="text" class="form-control supplierInput" id="floatingInput"
+                placeholder="name@example.com">
+              <label for="floatingInput">Zipcode </label>
+            </div>
+
+
+            <div class="form-floating supplierform__errordiv">
+              <select name="state" class="form-select" id="stateSelectCombo" aria-label="Floating label select example"
+                onchange="getCity(this)">
+
+              </select>
+            </div>
+
+            <div class="form-floating supplierform__errordiv">
+              <select name="city" class="form-select" id="citySelectCombo" aria-label="Floating label select example">
+              </select>
+            </div>
+
+          </fieldset>
+          <p id="submitButton" class="btn btn-outline-primary" onclick="submitSupplierDetails()">Submit</p>
+          <input type="reset" class="btn btn-outline-danger" value="Reset">
+        </div>
       </form>
     </div>
   </div>

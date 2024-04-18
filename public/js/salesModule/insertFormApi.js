@@ -1,38 +1,43 @@
 async function insertOrder() {
 	let orderid = document.getElementById('orderid');
-	var flag = false;
-	var id;
+	let flag = false;
+	let id;
 	const insertFormData = formData('insertSalesData');
-	console.log('formdata : ', insertFormData);
+	insertFormData['orderType'] = '8';
+	const insertFormErrorValidation = insertSalesFormValidation(insertFormData);
 
-	if (orderid.value != '') {
-		id = orderid.value;
-		const response = await fetch(`/updateSalesOrder`, {
-			method: 'POST',
-			body: new URLSearchParams(insertFormData),
-		});
-		const result = await response.json();
-		if (result.rows.affectedRows != 0) {
-			flag = true;
-		}
+	// const insertSalesFormValidation = true;
+	if (Object.keys(insertFormErrorValidation).length > 0) {
+		//----client side validation error
+		errorShow(insertFormErrorValidation);
 	} else {
-		const response = await fetch(`/insertSalesOrder`, {
+		if (orderid.value != '') {
+			id = orderid.value;
+			url = `/updateSalesOrder`;
+		} else {
+			url = `/insertSalesOrder`;
+		}
+		let option = {
 			method: 'POST',
 			body: new URLSearchParams(insertFormData),
-		});
-		const result = await response.json();
+		};
+		let result = await commonFetch(url, option);
 
-		if (result != 'not found') {
+		if (result.rows.affectedRows != 0 && result != 'not found') {
 			flag = true;
-			id = result.rows.insertId;
-			getCategories();
 		}
+
+		// else if () {
+		// 	flag = true;
+		// 	id = result.rows.insertId;
+		// 	getCategories();
+		// }
 	}
 	console.log(flag);
 	if (flag == true) {
 		document.getElementById('productOrderId').value = id;
-		document.getElementById('productOrderType').value =
-			document.getElementById('orderType').value;
+		// document.getElementById('productOrderType').value =
+		// 	document.getElementById('orderType').value;
 		displayProductForm();
 		getCategories();
 		fetching();
@@ -40,8 +45,7 @@ async function insertOrder() {
 }
 
 async function generateCombo() {
-	const response = await fetch('/getCustomers');
-	const result = await response.json();
+	const result = await commonFetch('/getCustomers');
 	let str;
 	result.rows.forEach((data) => {
 		str += `<option value="${data.id}">${data.firstname}</option>`;
@@ -50,18 +54,18 @@ async function generateCombo() {
 }
 generateCombo();
 
+
 async function getCategories() {
-	let response = await fetch('./getSalesCategories');
-	let result = await response.json();
+	let result = await commonFetch('/getSalesCategories');
 	let str = `<option value="" selected hidden>Select Category</option>`;
 	result.rows.forEach((ele) => {
 		str += `<option value="${ele.opt_id}">${ele.value}</option>`;
 	});
-	let arr = document.getElementsByClassName('category')
-		for(ele of arr) {
+	let arr = document.getElementsByClassName('category');
+	for (ele of arr) {
 		ele.innerHTML = str;
 	}
-		
+	 
 }
 
 

@@ -15,7 +15,7 @@ const getorderProducts = (req, res) => {
 
 const getApiorderRreport = async (req, res) => {
 	try {
-		console.log(Object.keys(req.query).length);
+		// console.log(Object.keys(req.query).length);
 		if (Object.keys(req.query).length === 0) {
 			const [rows] = await getOrderreport();
 			res.json(rows);
@@ -23,6 +23,7 @@ const getApiorderRreport = async (req, res) => {
 			let fromDate = req.query.fromDate;
 			let toDate = req.query.toDate;
 			const [rows] = await getOrderreportBydate(fromDate, toDate);
+			// console.log(rows);
 			res.json(rows);
 		}
 	} catch (err) {

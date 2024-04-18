@@ -76,17 +76,18 @@
   </section> -->
 
     <div class="div-second managecustomer-section" id="child">
-      <div class="managecustomer-container" >
+      <div class="managecustomer-container">
         <header>
           <form class="form-inline form1 my-2 my-lg-0">
-            <input class="form-control form2 mr-sm-2" type="search" style="display: flex;" placeholder="Search" aria-label="Search" />
+            <input class="form-control form2 mr-sm-2" type="search" style="display: flex;" placeholder="Search"
+              aria-label="Search" />
             <button class="btn btn-outline-success my-2 my-sm-0" style="display: flex;" type="submit">
               Search
             </button>
           </form>
         </header>
         <main>
-          <section>
+          <section id="store-section">
             <div class="container">
               <div class="row1">
                 <h4>Storage Data</h4>
@@ -95,44 +96,12 @@
                 </button>
               </div>
             </div>
-            <table class="store__table">
-              <thead>
-                <%if(typeof storeDetails !=="undefined" ){%>
-                  <%for(let key in storeDetails[0]){%>
-                    <th>
-                      <%= key%>
-                    </th>
-                    <%}%>
-                      <th>Action</th>
-              </thead>
-              <tbody>
-                <%for(let element of storeDetails){%>
-                  <tr>
-                    <%for(let key in element){%>
-                      <td>
-                        <%= element[key]%>
-                      </td>
-                      <%}%>
-                        <td id="<%= element.storeId%>" class="store__actionbutton" onclick="openUpdateStoreForm(this)">
-                          <button type="button" class="btn btn-outline-primary">Edit
-                          </button>
-                        </td>
-                        <td id="<%= element.storeId%> submitButton" class="store__actionbutton"
-                          onclick="deleteStoreDetails(`<%= element.storeId%>`)">
-                          <button type="button" class="btn btn-outline-danger">Delete</button>
-                        </td>
-                  </tr>
-                  <%}%>
-                    <%}%>
-              </tbody>
-            </table>
           </section>
           <%- include('../form/storeForm')%>
             <%- include('../components/pagginationComponent')%>
         </main>
       </div>
     </div>
-
 </body>
 
 </html>

@@ -7,13 +7,13 @@
           aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form name="updateProduct">
+        <form name="updateProduct" onsubmit="return false">
           <table id="editProduct">
             <tr>
               <td>
                 <input hidden type="text" name="rowId" id="rowId">
-                <label for="category">Category : </label>
-                <select name="category" id="editcategory" tabindex="1" onchange="getProducts('edit')"
+                <label for="categoryEdit">Category : </label>
+                <select name="categoryEdit" id="editcategory" tabindex="1" onchange="getProducts('edit')"
                   class="category productField me-5 btn btn-secondary dropdown-toggle">
                   <option value="" selected hidden>Select Category</option>
                 </select>
@@ -21,8 +21,8 @@
             </tr>
             <tr>
               <td>
-                <label for="product">Products : </label>
-                <select name="product" id="editproduct" tabindex="2"
+                <label for="productEdit">Products : </label>
+                <select name="productEdit" id="editproduct" tabindex="2"
                   class="productField me-5 btn btn-secondary dropdown-toggle">
                   <option value="" selected hidden>Select category first</option>
                 </select>
@@ -30,7 +30,7 @@
             </tr>
             <tr>
               <td>
-                <input type="text" name="quantity" id="editQuantity" placeholder="Quantity....">
+                <input type="text" name="quantityEdit" id="editQuantity" placeholder="Quantity...." tabindex="3">
               </td>
             </tr>
           </table>
@@ -40,7 +40,7 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" onclick="modelHide('productEdit')"
           data-bs-dismiss="modal">Close</button>
-        <input type="submit" id="confirmEdit" tabindex="4" value="edit" class="btn btn-success productField" />
+        <input type="submit" id="confirmEdit" tabindex="4" value="EDIT" class="btn btn-success productField" />
       </div>
 
     </div>

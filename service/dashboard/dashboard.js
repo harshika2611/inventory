@@ -1,16 +1,10 @@
 const connection = require('../../config/connection.js');
 const logger = require('../../logs.js');
 
-async function getTime() {
+const getProductStock = async (storage) => {
+  let sql =
+    'SELECT id ,product_name,stock FROM product_master left join products_details on products_details.product_id=product_master.id where storage_id=? order by stock;';
+  return await connection.execute(sql, [storage]);
+};
 
-  try {
-    const gettime = `SELECT created_at FROM customer_master;`
-    const [result] = await connection.execute(gettime);
-    return result;
-  } catch (error) {
-    logger.info(error);
-  }
-
-}
-
-module.exports = { getTime }
+module.exports = { getProductStock };

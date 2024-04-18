@@ -10,11 +10,13 @@
   <script src="/js/bootstrap.js"></script>
   <link rel="stylesheet" href="src/css/salesModule/sales.css" />
   <link rel="stylesheet" href="src/css/allpage.css" />
+ 
 </head>
 
 <body>
   <%- include('../components/navigation')%>
     <%- include('./deletePopup')%>
+
       <div class="container div-second">
         <div class="gridComponent" id="gridComponent">
           <div class="allfilters">
@@ -43,11 +45,15 @@
             </table>
           </div>
         </div>
+        <section id="paggination">
+          <%- include('../components/pagginationComponent')%>
+        </section>
       </div>
 
 </body>
 <script src="js/salesModule/fetchGrid.js"></script>
 <script src="js/salesModule/manageDisplay.js"></script>
 <script src="js/salesModule/updateGrid.js"></script>
+<script src="js/components/pagginationComponent"></script>
 
 </html>

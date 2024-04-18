@@ -93,7 +93,7 @@ function pagginationFilter(filterArray, currPage) {
   for (let element of filterArray) {
     dataArray.push(element);
   }
-  console.log(dataArray);
+  // console.log(dataArray);
 
   currentPage = currPage;
   startIndex = (currentPage - 1) * recordsInSinglePage;

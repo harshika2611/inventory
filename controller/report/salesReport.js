@@ -2,10 +2,10 @@ const logger = require('../../logs');
 const {
 	getProductreport,
 	getCategotyreport,
-} = require('../../service/report/sellesReportService');
+} = require('../../service/report/selesReportService');
 
-const getsallesReport = (req, res) => {
-	res.render('reports/sallesReport');
+const getsalesReport = (req, res) => {
+	res.render('reports/salesReport');
 };
 const getReportallProducts = (req, res) => {
 	res.render('reports/allProducts');
@@ -29,7 +29,7 @@ const getApicategoryreport = async (req, res) => {
 	}
 };
 module.exports = {
-	getsallesReport,
+	getsalesReport,
 	getReportallProducts,
 	getApiproductreport,
 	getApicategoryreport,
