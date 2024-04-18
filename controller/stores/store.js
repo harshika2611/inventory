@@ -90,4 +90,9 @@ async function deleteStore(req, res) {
 	}
 }
 
-module.exports = { insertStore, getStore, updateStore, deleteStore, getParticularStore };
+
+async function filterStore(req, res) {
+	try {
+	} catch (error) { }
+}
+module.exports = { insertStore, getStore, updateStore, deleteStore, getParticularStore, filterStore };

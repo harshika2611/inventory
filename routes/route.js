@@ -182,17 +182,19 @@ router.post('/filterCustomer', filterCustomer);
 
 // ---------Store
 const {
-	insertStore,
-	getStore,
-	updateStore,
-	deleteStore,
-	getParticularStore,
+  insertStore,
+  getStore,
+  updateStore,
+  deleteStore,
+  getParticularStore,
+  filterStore
 } = require('../controller/stores/store.js');
 router.get('/store', getStore);
 router.get('/getStore', getParticularStore);
 router.post('/insertStore', insertStore);
 router.post('/updateStore', updateStore);
 router.post('/deleteStore', deleteStore);
+router.post('/filterStore', filterStore);
 
 // ------------------- Manage Purchases ---------------------- //
 

@@ -22,10 +22,8 @@
                 placeholder="name@example.com" required>
               <label for="floatingInput">Place Name</label>
             </div>
-
-            <label for="floatingSelect">Storage Type </label>
             <div class="form-floating">
-              <select name="storeType">
+              <select class="form-select" name="storeType">
                 <option value="16" id="Warehouses">Warehouses</option>
                 <option value="17" id="Stores">Stores</option>
                 <option value="18" id="Distribution Centers">Distribution Centers</option>
@@ -45,7 +43,7 @@
           </fieldset>
         </div>
       </form>
-      <div class="d-flex">
+      <div class="d-flex" style="background: #f4f7f8; border-radius: 6px;">
         <button class="btn btn-outline-primary " id="insertButton" onclick="submitStoreDetails()">Submit</button>
         <button class="btn btn-outline-primary " id="updateButton" onclick="updateStoreDetails(this)">Edit</button>
         <button type="reset" class="btn btn-outline-danger ms-2">Reset</button>

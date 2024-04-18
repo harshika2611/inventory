@@ -171,7 +171,7 @@ async function deleteStoreDetails(storeId) {
   });
   swalWithBootstrapButtons.fire({
     title: "Are you sure?",
-    text: "You won't be able to revert this!",
+    text: "Delete Warehouse?",
     icon: "warning",
     showCancelButton: true,
     confirmButtonText: "Yes, delete it!",
@@ -191,7 +191,7 @@ async function deleteStoreDetails(storeId) {
     ) {
       swalWithBootstrapButtons.fire({
         title: "Cancelled",
-        text: "Your imaginary file is safe :)",
+        text: "Cancelled...",
         icon: "error"
       });
     }
@@ -204,4 +204,34 @@ const deletedata = async (storeId) => {
     method: 'POST'
   });
   window.location.replace('/store')
+}
+
+// Search
+
+const search = (key) => {
+  // Declare variables
+  var input, filter, table, tr, td, i, txtValue;
+  input = key;
+  // console.log(input);
+  filter = input;
+  table = document.getElementById("t1");
+  tr = table.getElementsByTagName("tr");
+
+  // Loop through all table rows, and hide those who don't match the search query
+  for (i = 0; i < tr.length; i++) {
+      for (let j = 0; j < 5; j++) {
+          td = tr[i].getElementsByTagName("td")[j];
+          if (td) {
+              txtValue = td.textContent || td.innerText;
+              if (txtValue.indexOf(filter) > -1) {
+                  tr[i].style.display = "";
+                  break;
+              } else {
+                  tr[i].style.display = "none";
+              }
+          }
+      }
+
+  }
+
 }
