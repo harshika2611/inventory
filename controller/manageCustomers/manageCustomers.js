@@ -102,10 +102,6 @@ async function updateCustomer(req, res) {
       customerDetails.state,
       customerDetails.city
     );
-    const cityStateIdArray = await getCityStateId(
-      customerDetails.state,
-      customerDetails.city
-    );
 
     //----city, state id store
     let cityId = cityStateIdArray[0].city_id;
