@@ -1,6 +1,6 @@
 const showProduct = () => {
 	// console.log("hii");
-	window.location = `/sallesReportallProducts`;
+	window.location = `/salesReportallProducts`;
 };
 const getData = async (
 	api,
@@ -16,8 +16,8 @@ const getData = async (
 		let totalProcuctcost = 0;
 		rows = changesInApi(rows);
 		rows.map((e) => {
-			totalSalles += e.Selling_Price * e.Product_Salles;
-			totalProcuctcost += e.Product_Cost * e.Product_Salles;
+			totalSalles += e.Seling_Price * e.Product_Sales;
+			totalProcuctcost += e.Product_Cost * e.Product_Sales;
 		});
 		document.getElementById('totalSalles').innerText = new Intl.NumberFormat(
 			'en-IN'
@@ -51,8 +51,8 @@ const fetchData = async () => {
 	let productData = document.getElementById('productData');
 	let categoryHeader = document.getElementById('categorytHeader');
 	let categoryData = document.getElementById('categoryData');
-	let api = await fetch('api/sallesreport/allproduct');
-	let api2 = await fetch('api/sallesreport/allcategory');
+	let api = await fetch('api/salesreport/allproduct');
+	let api2 = await fetch('api/salesreport/allcategory');
 	getData(api, productHeader, productData, 5, true);
 	getData(api2, categoryHeader, categoryData, 3, false);
 };
