@@ -52,6 +52,7 @@ async function insertProduct(input) {
 }
 
 async function updateOrder(input) {
+	logger.info(input)
 	let sql = `update sales_order set 
     customer_id = ?,
     type = ?,

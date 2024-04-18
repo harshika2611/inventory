@@ -142,7 +142,7 @@ const {
 const {
 	orderHistory,
 	newOrder,
-} = require('../controller/salesModule/sales.js');
+} = require('../controller/salesModule/salesRender.js');
 
 router.get('/salesorder', getsalesOrder);
 router.post('/insertSalesOrder', insertSalesOrder);
@@ -153,8 +153,16 @@ router.post('/updateSalesOrder', updateSalesOrder);
 router.post('/updateSalesProduct', updateSalesProduct);
 router.get('/getSalesCategories', getSalesCategory);
 router.get('/salesHistory', orderHistory);
-router.get('/salesNewOrder', newOrder);
-router.get('/getProductGrid', productGrid);
+router.get(
+	'/salesNewOrder',
+	passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+	newOrder
+);
+router.get(
+	'/getProductGrid',
+	passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+	productGrid
+);
 router.get('/deleteSalesOrder', deleteOrder);
 router.get('/deleteSalesProduct', deleteProduct);
 //------------------------------------------------------

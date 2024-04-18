@@ -39,6 +39,7 @@ async function insertSalesProduct(req, res) {
 			req.body.ordertype,
 			req.body.quantity,
 		];
+		logger.info('input :: '+input)
 		let [rows, fields] = await insertProduct(input);
 		logger.info(rows);
 		res.json({ rows });
@@ -75,7 +76,7 @@ async function getsalesOrder(req, res) {
 		fields.forEach((ele) => {
 			header.push(ele.name);
 		});
-		res.json({ rows, header });
+		res.json(rows);
 	} catch (err) {
 		logger.logError(err);
 	}
@@ -92,7 +93,7 @@ async function updateSalesOrder(req, res) {
 			req.body.date,
 			req.body.orderid,
 		];
-
+logger.info(input)
 		const [rows, fields] = await updateOrder(input);
 
 		logger.info(rows);

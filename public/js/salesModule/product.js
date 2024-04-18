@@ -1,8 +1,8 @@
 var productGridResult;
 async function fetching() {
 	let orderId = document.getElementById('productOrderId').value;
-	let response = await fetch(`/getProductGrid?orderId=${orderId}`);
-	let result = await response.json();
+	let result = await commonFetch(`/getProductGrid?orderId=${orderId}`);
+
 	productGridResult = result.rows; //to select one row
 	let head = `<tr>`;
 	result.header.forEach((ele) => {
@@ -33,8 +33,10 @@ async function fetching() {
 
 async function getProducts(type) {
 	let category_id = document.getElementById(`${type}category`).value;
-	let response = await fetch(`/getSalesProducts?category_id=${category_id}`);
-	let result = await response.json();
+	let result = await commonFetch(
+		`/getSalesProducts?category_id=${category_id}`
+	);
+
 	let str = `<option value="" selected hidden>Select Product</option>`;
 	result.rows.forEach((ele) => {
 		str += `<option value="${ele.id}">${ele.name}</option>`;
@@ -43,15 +45,30 @@ async function getProducts(type) {
 }
 
 async function addProduct() {
-	let form = document.getElementById('productForm');
-	console.log(form);
-	let response = await fetch('/insertSalesProduct', {
-		method: 'POST',
-		body: new URLSearchParams(new FormData(form)),
-	});
-	let result = await response.json();
-	console.log(result);
-	fetching();
+	console.log(123);
+	const productFormData = formData('productForm');
+	console.log(productFormData);
+	const productValidation = productFormValidation(productFormData);
+	// const productValidation = true;
+	console.log(productValidation);
+
+	if (Object.keys(productValidation).length > 0) {
+		console.log('error');
+		//----client side validation error
+		errorShow(productValidation);
+	} else {
+		let form = document.getElementById('productForm');
+		console.log(form);
+
+		let option = {
+			method: 'POST',
+			body: new URLSearchParams(productFormData),
+		};
+		let response = await commonFetch('/insertSalesProduct', option);
+		let result = await response.json();
+		console.log(result);
+		fetching();
+	}
 }
 
 async function allocateProductEdit(id) {
@@ -69,24 +86,26 @@ async function allocateProductEdit(id) {
 		}
 	}
 	await getProducts('edit');
-	let editproduct= document.getElementById('editproduct');
+	let editproduct = document.getElementById('editproduct');
 	for (op of editproduct) {
 		if (op.innerHTML == data.name) {
 			op.setAttribute('selected', true);
 		}
 	}
-	document.getElementById('editQuantity').value = data.quantity
+	document.getElementById('editQuantity').value = data.quantity;
 }
 async function editProduct(id) {
 	console.log(123);
 	const updateProduct = formData('updateProduct');
-	let response = await fetch(`/updateSalesProduct`, {
+
+	let option = {
 		method: 'POST',
 		body: new URLSearchParams(updateProduct),
-	});
+	};
+	let response = await commonFetch(`/updateSalesProduct`, option);
 	let result = await response.json();
 	console.log(result);
-	
+
 	modelHide('productEdit');
 	await fetching();
 }

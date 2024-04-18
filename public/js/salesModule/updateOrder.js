@@ -14,20 +14,20 @@ function updateOrderForm(result, id) {
 	let date = document.getElementById('date');
 	let orderid = document.getElementById('orderid');
 	orderid.value = id;
-	console.log(result.rows[0].customer_id);
+	console.log(result[0].customer_id);
 	for (op of customer) {
 		console.log(op);
-		if (op.value == result.rows[0].customer_id) {
+		if (op.value == result[0].customer_id) {
 			op.setAttribute('selected', true);
 		}
 	}
-	amount.value = result.rows[0].amount;
-	shippingAddress.innerHTML = result.rows[0].shipping_address;
+	amount.value = result[0].amount;
+	shippingAddress.innerHTML = result[0].shipping_address;
 	for (op of paymentStatus) {
-		if (op.value == result.rows[0].payment_status) {
+		if (op.value == result[0].payment_status) {
 			op.setAttribute('selected', true);
 		}
 	}
-	date.value = result.rows[0].date;
+	date.value = result[0].date;
 }
 // we will use grid fetch function for edit and delete
