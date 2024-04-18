@@ -3,27 +3,34 @@
     <tr>
       <td>
         <input type="text" name="orderid" id="productOrderId" hidden />
-        <input type="text" name="ordertype" id="productOrderType" hidden />
       </td>
       <td>
-        <label for="category">Category : </label>
+        <!-- <label for="category">Category : </label> -->
         <select name="category" id="category" tabindex="1" onchange="getProducts('')"
           class="productField category me-5 btn btn-secondary dropdown-toggle">
           <option value="" selected hidden>Select Category</option>
         </select>
       </td>
       <td>
-        <label for="product">Products : </label>
-        <select name="product" id="product" tabindex="2" class="productField product me-5 btn btn-secondary dropdown-toggle">
+        <!-- <label for="product">Products : </label> -->
+        <select name="product" id="product" tabindex="2"
+          class="productField product me-5 btn btn-secondary dropdown-toggle">
           <option value="" selected hidden>Select category first</option>
         </select>
       </td>
       <td>
-        <input type="number" name="quantity" tabindex="3" id="quantity" placeholder="Quantity....."
+        <!-- <label for="orderType" class="insertLabels ms-5">Type : </label> -->
+        <select name="ordertype" tabindex="3" class=" btn btn-secondary dropdown-toggle" id="orderType">
+          <option value="8">Sales</option>
+          <option value="9">Return</option>
+        </select>
+      </td>
+      <td>
+        <input type="number" name="quantity" tabindex="4" id="quantity" placeholder="Quantity....."
           class="productField me-5 form-control" min="1" max="5" />
       </td>
       <td>
-        <input type="submit" tabindex="4" value="ADD" class="productField me-5 btn btn-outline-success"
+        <input type="submit" tabindex="5" value="ADD" class="productField me-5 btn btn-outline-success"
           onclick="addProduct()" />
       </td>
     </tr>
