@@ -1,13 +1,13 @@
-const connection = require('../../config/connection.js');
-const logger = require('../../logs.js');
-const { getCityStateId } = require('../commonFunctions/commonFunctions.js');
+const connection = require("../../config/connection.js");
+const logger = require("../../logs.js");
+const { getCityStateId } = require("../commonFunctions/commonFunctions.js");
 
 async function insertCustomerQuery(body) {
   // return new Promise((resolve, reject) => {
 
   // });
   try {
-    const insertCustomer = `INSERT INTO customer_master(firstname,lastname,email,phonenumber,address,zipcode,city_id,state_id) VALUES(?,?,?,?,?,?,?,?);`
+    const insertCustomer = `INSERT INTO customer_master(firstname,lastname,email,phonenumber,address,zipcode,city_id,state_id) VALUES(?,?,?,?,?,?,?,?);`;
 
     const cityStateId = await getCityStateId(body.state, body.city); //array contain object
 
@@ -22,7 +22,7 @@ async function insertCustomerQuery(body) {
       cityStateId[0].state_id,
     ]);
   } catch (error) {
-    logger.logError('Insert Customer: ' + error);
+    logger.logError("Insert Customer: " + error);
     throw error;
   }
 }
@@ -33,7 +33,7 @@ async function getCustomersQuery() {
     FROM customer_master as c
     LEFT JOIN city_master ON c.city_id = city_master.city_id
     LEFT JOIN state_master ON c.state_id = state_master.state_id
-    WHERE c.is_delete = '0';`
+    WHERE c.is_delete = '0';`;
 
     const [result] = await connection.execute(getCustomers);
     return result; //return array
@@ -50,7 +50,7 @@ async function checkCustomerExistQuery(customerId) {
     FROM customer_master as c
     LEFT JOIN city_master ON c.city_id = city_master.city_id
     LEFT JOIN state_master ON c.state_id = state_master.state_id
-    WHERE id=?;`
+    WHERE id=?;`;
 
     const [result] = await connection.execute(checkCustomer, [customerId]);
     return result;
@@ -69,7 +69,17 @@ async function updateCustomerQuery(body) {
     } else {
       const updateCustomer = `UPDATE customer_master SET firstname = ?, lastname=?, email=?,phonenumber=?,address=?,zipcode=?,city_id=?,state_id=? WHERE id=?;`;
 
-      const [result] = await connection.execute(updateCustomer, [body.firstname, body.lastname, body.email, body.phonenumber, body.address, body.zipcode, body.city, body.state, customerId]);
+      const [result] = await connection.execute(updateCustomer, [
+        body.firstname,
+        body.lastname,
+        body.email,
+        body.phonenumber,
+        body.address,
+        body.zipcode,
+        body.city,
+        body.state,
+        customerId,
+      ]);
       return true;
     }
   } catch (error) {
@@ -85,9 +95,15 @@ async function deleteCustomerQuery(customerId) {
     const [result] = await connection.execute(deleteCustomer, [customerId]);
     return result;
   } catch (error) {
-    logger.logError('Delete Customer: ' + error);
+    logger.logError("Delete Customer: " + error);
     throw error;
   }
 }
 
-module.exports = { insertCustomerQuery, getCustomersQuery, checkCustomerExistQuery, updateCustomerQuery, deleteCustomerQuery };
+module.exports = {
+  insertCustomerQuery,
+  getCustomersQuery,
+  checkCustomerExistQuery,
+  updateCustomerQuery,
+  deleteCustomerQuery,
+};
