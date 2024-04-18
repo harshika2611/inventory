@@ -1,0 +1,38 @@
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manager</title>
+  <link rel="stylesheet" href="src/css/form.css">
+  <style>
+    #myForm {
+      display: block;
+    }
+  </style>
+
+</head>
+
+<body class="body">
+  <div class="row form-popup" id="myForm">
+    <div class="col-md-12 " data-bs-spy="scroll">
+      <form method="post" id="form" enctype="multipart/form-data">
+        <h6 onclick="closeForm()" class="text-danger" style="margin-left: 390px; margin-top: 5px; cursor: pointer;">
+          Close</h6>
+        <div class="container">
+          <h1>Upload Image</h1>
+          <fieldset>
+            <div class="form-floating mb-3">
+              <input name="newImage" type="file" class="form-control" id="floatingInput" required>
+              <label for="floatingInput">Upload new Image </label>
+            </div>
+          </fieldset>
+          <div id="error"></div>
+          <button type="button" class="btn btn-outline-primary" onclick="submitbtn()">Upload</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</body>
+
+</html>
