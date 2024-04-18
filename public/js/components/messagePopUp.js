@@ -1,7 +1,6 @@
 function messagePopUp(responseMessage) {
   const messagePopUpContainer = document.getElementById("messagePopUpSection__container");
   const oldP = document.getElementById("messagePopUp");
-  alert(messagePopUpContainer);
   if (oldP) {
     oldP.remove();
   }
