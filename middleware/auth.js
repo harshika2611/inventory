@@ -15,6 +15,7 @@ const auth = (passport) => {
 	passport.use(
 		new Strategy(options, async (payload, done) => {
 			try {
+				logger.info(payload);
 				const [result] = await connection.execute(
 					'select * from users where id=?',
 					[payload.id]

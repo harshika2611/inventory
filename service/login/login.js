@@ -8,7 +8,11 @@ const userLoginService = async (body) => {
     users.id, email, password, created_at, status, role_id, expiry,storage_id
 FROM
     users
+<<<<<<< HEAD
+      LEFT JOIN
+=======
        LEFT JOIN
+>>>>>>> main
     manager_details ON users.id = manager_details.user_id
 WHERE
     email =?`;

@@ -21,7 +21,7 @@ async function updateOrder(type, event, page) {
 			window.location.href = `/${url}?id=${id}`;
 			fetching();
 		} else {
-			console.log(id);
+		
 			let editModal = new bootstrap.Modal(
 				document.getElementById(`${editModalName}`)
 			);
@@ -52,7 +52,7 @@ async function fetchDelete(id, page) {
 			break;
 	}
 	let result = await commonFetch(`/${url}?id=${id}`);
-	console.log(result);
+
 }
 function modelHide(modelName) {
 	bootstrap.Modal.getInstance(document.getElementById(`${modelName}`)).hide();
