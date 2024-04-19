@@ -251,6 +251,12 @@ router.get(
   fetchWarehouses
 );
 
+router.get(
+  '/api/order/:id',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  fetchOrderDetails
+);
+
 router.post(
   '/api/purchase/order',
   passport.authenticate('jwt', { session: false, failureRedirect: '/' }),

@@ -14,7 +14,7 @@ async function getAllSuppliers() {
 async function getAllProducts() {
   try {
     const [results] = await connection.execute(
-      'SELECT id, name FROM product_master'
+      'SELECT id, product_name FROM product_master'
     );
     return results;
   } catch (error) {
@@ -26,7 +26,7 @@ async function getAllProducts() {
 async function getProductsByCategory(id) {
   try {
     const [results] = await connection.execute(
-      'SELECT `id`, `name` FROM product_master WHERE `category_id` = ?',
+      'SELECT `id`, `product_name` FROM product_master WHERE `category_id` = ?',
       [id]
     );
     return results;
@@ -63,7 +63,7 @@ async function fetchPurchaseOrder(data) {
             left join
           purchase_products as pp
             ON po.id = pp.purchase_id AND pp.is_delete != 1
-            join
+            left join
           product_master as pm
             ON pp.product_id = pm.id
         WHERE

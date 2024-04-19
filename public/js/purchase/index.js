@@ -307,7 +307,8 @@ function generateAddProductRows(
 			</div>
 			<div class="col">
 				<div class="form-floating">
-					<input type="number" class="form-control custom-disabled" id="floatingUnitPrice" placeholder="unitPrice" min="1" name="unit_price" required
+					<input type="number" class="form-control custom-disabled" id="floatingUnitPrice" placeholder="unitPrice" min="1"
+            name="unit_price" required
 						${productDetails?.unitPrice ? `value = "${productDetails?.unitPrice}"` : ''}
 					>
 					<label for="floatingUnitPrice">Unit Price</label>
@@ -318,7 +319,8 @@ function generateAddProductRows(
 			</div>
 			<div class="col">
 				<div class="form-floating">
-					<input type="number" class="form-control custom-disabled" id="floatingQuantity" placeholder="quantity" min="1" name="quantity" required
+					<input type="number" class="form-control custom-disabled" id="floatingQuantity" placeholder="quantity" min="1"
+            name="quantity" required
 						${productDetails?.quantity ? `value = "${productDetails?.quantity}"` : ''}
 					>
 					<label for="floatingQuantity">Quantity</label>
@@ -339,6 +341,8 @@ function generateAddProductRows(
 
 async function populateProductDropdown(e) {
   let productOptions = await generateProductsDropDown(e.target.value);
+  e.target.parentElement.parentElement.parentElement.children[1].children[0].children[0].value =
+    '';
   e.target.parentElement.parentElement.parentElement.children[1].children[0].children[0].innerHTML =
     productOptions;
 }
@@ -364,7 +368,23 @@ async function saveProduct(e, purchaseProductId = null) {
     quantity: quantityElement.value,
   };
 
-  if (checkValidation(data, validation.form2, true)) {
+  const validationResult = checkValidation(data, validation.form2, true);
+
+  if (validationResult.length) {
+    validationResult.forEach((obj) => {
+      switch (obj.field) {
+        case 'product_id':
+          productElement.required = true;
+          break;
+        case 'unit_price':
+          unitPriceElement.required = true;
+          break;
+        case 'quantity':
+          quantityElement.required = true;
+          break;
+      }
+    });
+  } else {
     try {
       data.purchase_id = orderId;
 
@@ -388,6 +408,7 @@ async function saveProduct(e, purchaseProductId = null) {
       );
 
       await response.json();
+      await getOrderDetails(orderId);
       generateForm2();
     } catch (error) {
       console.log(error);
@@ -433,7 +454,10 @@ function generateSuppliersDropDown() {
     .then((data) => {
       let content = '';
       data.forEach((o) => {
-        content += `<option value="${o.id}">${o.supplier_name}</option>`;
+        content += `<option value="${o.id}">${o?.firstname.concat(
+          ' ',
+          o?.lastname
+        )}</option>`;
       });
       return content;
     })
@@ -446,7 +470,7 @@ function generateProductsDropDown(id) {
     .then((data) => {
       let content = '';
       data.forEach((o) => {
-        content += `<option value="${o.id}">${o.name}</option>`;
+        content += `<option value="${o.id}">${o.product_name}</option>`;
       });
       return content;
     })
