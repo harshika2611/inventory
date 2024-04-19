@@ -38,7 +38,7 @@ async function selectOrders(orderby, order, col, value) {
 }
 
 async function insertOrder(input) {
-	sql = `insert into sales_order (id, customer_id, type, amount, shipping_address, payment_status, date, created_at, updated_at) values (default,?,?,?,?,?,?,current_timestamp(),current_timestamp());`;
+	sql = `insert into sales_order (id, customer_id, type, shipping_address, payment_status, date, created_at, updated_at) values (default,?,?,?,?,?,current_timestamp(),current_timestamp());`;
 
 	logger.info(input);
 	return await connection.execute(sql, input);
@@ -46,7 +46,6 @@ async function insertOrder(input) {
 
 async function insertProduct(input) {
 	sql = `insert into sales_products (id, order_id, product_id, order_type, quantity) values (default,?,?,?,?);`;
-
 	logger.info(input);
 	return await connection.execute(sql, input);
 }
@@ -56,7 +55,6 @@ async function updateOrder(input) {
 	let sql = `update sales_order set 
     customer_id = ?,
     type = ?,
-    amount= ?,
     shipping_address= ?,
     payment_status = ?,
 		date = ?
@@ -66,7 +64,7 @@ async function updateOrder(input) {
 	return await connection.execute(sql, input);
 }
 async function productList(input) {
-	let sql = `select sales_products.id as id, product_master.name , option_master.value as Category , sales_products.quantity from sales_products join product_master on sales_products.product_id = product_master.id join option_master on option_master.id = product_master.category_id where sales_products.order_id = ? and sales_products.is_delete = 0;`;
+	let sql = `select sales_products.id as id, product_master.product_name , option_master.value as Category , sales_products.quantity,product_master.cost as UnitPrice ,(sales_products.quantity * product_master.cost ) as Total from sales_products join product_master on sales_products.product_id = product_master.id join option_master on option_master.id = product_master.category_id where sales_products.order_id = ? and sales_products.is_delete = 0;`;
 
 	logger.info(input);
 	return await connection.execute(sql, input);
@@ -84,6 +82,15 @@ async function updateProduct(input) {
 	return await connection.execute(sql, input);
 }
 
+async function updateAmount(input) {
+	try {
+		return await connection.execute(`update sales_order set amount = ? where id = ?;`,input)
+	}
+	catch (e) {
+		logger.info(e);
+	}
+}
+
 module.exports = {
 	selectOrders,
 	insertOrder,
@@ -91,5 +98,6 @@ module.exports = {
 	updateOrder,
 	productList,
 	deleteQuery,
-	updateProduct
+	updateProduct,
+	updateAmount
 };

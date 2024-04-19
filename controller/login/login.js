@@ -34,7 +34,7 @@ const getLogin = async (req, res) => {
 
 const userLogin = async (req, res) => {
   const user = await userLoginService(req.body);
-  console.log(user, "here");
+  // console.log(user, "here");
   if (user.length > 0 && user[0].status == 6) {
     const result = await bcrypt.compare(req.body.password, user[0].password);
     const expireDatePass = new Date(user[0].expiry);

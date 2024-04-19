@@ -22,8 +22,9 @@
           <div class="container">
             <div id="insertFormDiv">
               <form name="insertSalesData" id="insertSalesData" onsubmit="return false">
-                <!-- <div class="form-floating mb-3">
-                  <input name="date" type="date" class="form-control" id="floatingDate" placeholder="date">
+                <input type="text" name="orderid" hidden id="orderid" />
+                <div class="form-floating mb-3">
+                  <input name="date" type="date" class="form-control" id="date" placeholder="date">
                   <label for="floatingDate">Date</label>
                 </div>
                 <div class="form-floating mb-3">
@@ -32,76 +33,38 @@
                   <label for="floatingSupplier">Customer</label>
                 </div>
                 <div class="form-floating mb-3">
-                  <select name="payment_status" class="form-select" aria-label="select" id="payment_status"></select>
+                  <select name="paymentStatus" class="form-select" aria-label="select"  id="paymentStatus"></select>
                   <label for="floatingPaymentStatus">Payment</label>
                   <div class="invalid-feedback">
                     Please select a valid payment status.
                   </div>
-                </div> -->
-                <table id="insertForm">
-                  <tr>
-                    <td><input type="text" name="orderid" hidden id="orderid" /></td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <label for="customer" class="insertLabels">Customer : </label>
-                      <select name="customer" class=" btn btn-secondary dropdown-toggle" id="customer"></select>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <label for="amount" class="insertLabels">Amount : </label>
-
-                      <input type="text" class="form-control insertFields" name="amount" id="amount" />
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <label for="shippingAddress" class="insertLabels">Shipping Address : </label>
-
-                      <textarea class="form-control insertFields" name="shippingAddress"
-                        id="shippingAddress"></textarea>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <label class="insertLabels">Payment Status : </label>
-                      <input type="radio" class="form-check-input" value="10" checked name="paymentStatus" id="unpaid">
-                      <label for="unpaid">Unpaid</label>
-                      <input type="radio" class="form-check-input" value="11" name="paymentStatus" id="paid">
-                      <label for="paid">Paid</label>
-                      </select>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <label for="date" class="insertLabels">Date : </label>
-                      <input type="date" class="form-control insertFields" name="date" id="date" />
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <a class="btn btn-outline-success" onclick="insertOrder()" id="insertSubmit">ADD Products</a>
-                    </td>
-                  </tr>
-                </table>
+                </div>
+                <div class="form-floating mb-3">
+                  <textarea class="form-control insertFields" name="shippingAddress" placeholder="Shipping Address" id="shippingAddress"></textarea>
+                  <label for="floatingPaymentStatus">Shipping Address</label>
+                  
+                </div>
+                <button type="button" class="btn btn-primary"onclick="insertOrder()" id="insertSubmit">
+                  Submit
+                </button>
+                
               </form>
             </div>
-
-
             <div id="productFormDiv">
-              <%- include('../salesModule/productForm')%>
-            </div>
+                  <%- include('../salesModule/productForm')%>
+                </div>
           </div>
-        </div>
-        <script src="js/salesModule/insertFormApi.js"></script>
-        <script src="js/salesModule/updateOrder.js"></script>
-        <script src="js/salesModule/form.js"></script>
-        <script src="js/salesModule/product.js"></script>
-        <script src="js/salesModule/updateGrid.js"></script>
-        <script src="js/commonFunction/commonFunction.js"></script>
-        <script src="js/salesModule/insertFormvalidation.js"></script>
-        <script src="js/salesModule/productFormValidation.js"></script>
+          
+          
+          <script src="js/salesModule/form.js"></script>
+          <script src="js/salesModule/insertFormApi.js"></script>
+          <script src="js/salesModule/updateOrder.js"></script>
+        
+          <script src="js/salesModule/product.js"></script>
+          <script src="js/salesModule/updateGrid.js"></script>
+          <script src="js/commonFunction/commonFunction.js"></script>
+          <script src="js/salesModule/insertFormvalidation.js"></script>
+          <script src="js/salesModule/productFormValidation.js"></script>
 
 </body>
 
