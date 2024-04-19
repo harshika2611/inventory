@@ -278,10 +278,12 @@ const {
   editProfile,
   updateProfile,
 } = require('../controller/profile/profile.js');
+const { storeImage } = require('../controller/profile/uploadImage.js');
 const { getOrderreport } = require('../service/report/orderReportService.js');
 
 router.get('/profile', viewProfile);
 router.get('/profileEdit', editProfile);
 router.post('/profileEdit', updateProfile);
+router.post('/imageUpload', storeImage);
 
 module.exports = router;
