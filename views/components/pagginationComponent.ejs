@@ -1,37 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Paggination Component</title>
+<body>
     <link rel="stylesheet" href="src/css/components/pagginationComponent.css">
     <script src="js/components/pagginationComponent.js"></script>
-</head>
-
-<body>
     <section class="pagginationsection">
         <div class="pagginationcontainer">
             <div class="rowpaggination">
                 <div class="colpaggination" id="leftbutton">
-                    <a class="pagginationbutton doubleleft" id="doubleleft" onclick="doubleLeftButton()"><img
+                    <a class="pagginationbutton firstPage" id="firstPage" onclick="firstPageButton()"><img
                             src="src/assets/paggination/left-arrow-double.svg" width="30" height="30">
                     </a>
-                    <a class="pagginationbutton singleleft" id="singleleft" onclick="singleLeftButton()"><img
+                    <a class="pagginationbutton prevPage" id="prevPage" onclick="prevPageButton()"><img
                             src="src/assets/paggination/left-arrow.svg" width="30" height="30"></a>
                 </div>
                 <div class="pagenumber">
                     <p id="currentpageshow" class="currentpageshow">Page</p>
                 </div>
                 <div class="colpaggination">
-                    <a class="pagginationbutton singleright" id="singleright" onclick="singleRightButton()"><img
+                    <a class="pagginationbutton nextPage" id="nextPage" onclick="nextPageButton()"><img
                             src="src/assets/paggination/right-arrow.svg" width="30" height="30"></a>
-                    <a class=" pagginationbutton doubleright" id="doubleright" onclick="doubleRightButton()"><img
+                    <a class=" pagginationbutton lastPage" id="lastPage" onclick="lastPageButton()"><img
                             src="src/assets/paggination/right-arrow-double.svg" width="30" height="30"></a>
                 </div>
             </div>
         </div>
     </section>
 </body>
-
-</html>
