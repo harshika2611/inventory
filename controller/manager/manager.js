@@ -1,5 +1,6 @@
-const logger = require("../../logs.js");
+const logger = require('../../logs.js');
 const {
+  deleteManagerService,
   checkUpdateManagerService,
   getPerticularManagerService,
   storeComboServices,
@@ -8,48 +9,48 @@ const {
   listManagersService,
   updateManagerService,
   insertManagerService,
-} = require("../../service/manager/manager");
+} = require('../../service/manager/manager');
 
 const getStoreCombo = async (req, res) => {
   try {
     const result = await storeComboServices();
     if (result.length === 0) {
-      return res.status(404).json({ message: "Something Went Wrong" });
+      return res.status(404).json({ message: 'Something Went Wrong' });
     } else {
       return res.status(200).json({ result: result });
     }
   } catch (error) {
     logger.logError(error);
-    res.status(500).json({ message: "can`t fetch user controller" });
+    res.status(500).json({ message: 'can`t fetch user controller' });
   }
 };
 
 const getManager = async (req, res) => {
-  res.render("manager/manager");
+  res.render('manager/manager');
 };
 
 const manageManager = async (req, res) => {
   try {
     const result1 = await checkManagerService(req.body);
-    console.log(result1, "gottt");
+    console.log(result1, 'gottt');
     if (result1.length) {
-      return res.status(409).send("already exist");
+      return res.status(409).send('already exist');
     } else {
       try {
         const otp = Math.floor(Math.random() * 1000000000000 + 1);
         const result2 = await insertManagerService(otp, req.body);
         const managerDetails = await insertManagerDetail(result2, req.body);
-        return res.status(200).send("maanger add");
+        return res.status(200).send('maanger add');
       } catch (error) {
         logger.logError(error);
-        return res.status(500).json({ message: "can`t fetch user controller" });
+        return res.status(500).json({ message: 'can`t fetch user controller' });
       }
     }
 
     // const manager = await insertManagerService();
   } catch (error) {
     logger.logError(error);
-    res.status(500).json({ message: "can`t fetch user controller" });
+    res.status(500).json({ message: 'can`t fetch user controller' });
   }
 };
 
@@ -61,46 +62,39 @@ const listManagers = async (req, res) => {
       const updated_at = iterator.Updated;
 
       if (created_at === updated_at) {
-        iterator.Updated = "-";
+        iterator.Updated = '-';
       }
     }
     return res.status(200).json(result);
   } catch (error) {
     logger.logError(error);
-    res.status(500).json({ message: "can`t fetch user controller" });
+    return res.status(500).json({ message: 'can`t fetch user controller' });
   }
 };
 
 const updateManager = async (req, res) => {
   try {
-    console.log(req.body, "updatedd");
+    console.log(req.body, 'updatedd');
     const checkManger = await checkUpdateManagerService(req.body);
-    console.log(checkManger, checkManger.length, "ansss");
+    console.log(checkManger, checkManger.length, 'ansss');
     if (checkManger.length) {
-      return res.status(409).send("already exist");
+      return res.status(409).send('already exist');
     } else {
       try {
         const otp = Math.floor(Math.random() * 1000000000000 + 1);
         const result1 = await updateManagerService(otp, req.body);
-        return res.status(200).send("maanger add");
+        return res.status(200).send('maanger add');
       } catch (error) {
         logger.logError(error);
-        return res.status(500).json({ message: "can`t fetch user controller" });
+        return res.status(500).json({ message: 'can`t fetch user controller' });
       }
     }
   } catch (error) {
     logger.logError(error);
-    return res.status(500).json({ message: "can`t fetch user controller" });
+    return res.status(500).json({ message: 'can`t fetch user controller' });
   }
 };
 
-const insertManager = async (req, res) => {
-  try {
-  } catch (error) {
-    logger.logError(error);
-    res.status(500).json({ message: "can`t fetch user controller" });
-  }
-};
 const getPerticularManager = async (req, res) => {
   try {
     const id = req.params.id;
@@ -108,21 +102,27 @@ const getPerticularManager = async (req, res) => {
     if (manager.length !== 0) {
       return res.status(200).json(manager);
     } else {
-      return res.status(404).json({ message: "Manager not found" });
+      return res.status(404).json({ message: 'Manager not found' });
     }
   } catch (error) {
     logger.logError(error);
-    res.status(500).json({ message: "can`t fetch user controller" });
+    res.status(500).json({ message: 'can`t fetch user controller' });
   }
 };
 
 const deleteManager = async (req, res) => {
   try {
     const id = req.params.id;
-    console.log(id, "delete");
+    const result = await deleteManagerService(id);
+    if (result.affectedRows > 0) {
+      return res.status(200).json({ message: 'Manager is deleted' });
+    } else {
+      return res.status(404).json({ message: 'error' });
+    }
   } catch (error) {
     logger.logError(error);
-    res.status(500).json({ message: "can`t fetch user controller" });
+    console.log(error);
+    res.status(500).json({ message: 'can`t fetch user controller' });
   }
 };
 
@@ -133,6 +133,5 @@ module.exports = {
   getManager,
   listManagers,
   updateManager,
-  insertManager,
   getPerticularManager,
 };

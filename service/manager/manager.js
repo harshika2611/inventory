@@ -1,8 +1,8 @@
-const { logError } = require("../../logs");
-const logger = require("../../logs.js");
-const bcrypt = require("bcrypt");
+const { logError } = require('../../logs');
+const logger = require('../../logs.js');
+const bcrypt = require('bcrypt');
 const saltRounds = 10;
-const connection = require("../../config/connection");
+const connection = require('../../config/connection');
 
 const storeComboServices = async () => {
   try {
@@ -147,7 +147,23 @@ const insertManagerDetail = async (result2, body) => {
   }
 };
 
+const deleteManagerService = async (id) => {
+  try {
+    const sql0 = `UPDATE manager_details 
+   SET 
+       is_delete = ?
+   WHERE
+      user_id = ?`;
+    const [result] = await connection.execute(sql0, [1, id]);
+    return result;
+  } catch (error) {
+    logger.logError(`Error`, error);
+    throw error;
+  }
+};
+
 module.exports = {
+  deleteManagerService,
   checkUpdateManagerService,
   getPerticularManagerService,
   storeComboServices,

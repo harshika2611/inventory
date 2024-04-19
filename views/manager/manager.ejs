@@ -14,35 +14,36 @@
 
 <body>
   <%- include('../components/navigation')%>
-    <section class="div-second manager-section">
-      <div class="manager-container" id="managerGrid">
-        <div class="filter">
-          <p class="btn btn-outline-dark filter1" onclick="addManager()">Add New</p>
-          <div class="filter1">
-            <select onchange="managerFilter()" name="order" class="btn btn-secondary dropdown-toggle filter1"
-              id="order">
-              <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                <option value="asc" selected>Ascending</option>
-                <option value="desc">Descending</option>
-              </div>
-            </select>
-          </div>
+    <%- include('./deletePopup')%>
+      <section class="div-second manager-section">
+        <div class="manager-container" id="managerGrid">
+          <div class="filter">
+            <p class="btn btn-outline-dark filter1" onclick="addManager()">Add New</p>
+            <div class="filter1">
+              <select onchange="managerFilter()" name="order" class="btn btn-secondary dropdown-toggle filter1"
+                id="order">
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                  <option value="asc" selected>Ascending</option>
+                  <option value="desc">Descending</option>
+                </div>
+              </select>
+            </div>
 
+          </div>
+          <div class="grid" id="grid">
+            <table class="table table-hover" id="table">
+              <thead class="table-light" id="thead">
+              </thead>
+              <tbody id="tbody"></tbody>
+            </table>
+          </div>
         </div>
-        <div class="grid">
-          <table class="table table-hover" id="table">
-            <thead class="table-light" id="thead">
-            </thead>
-            <tbody id="tbody"></tbody>
-          </table>
-        </div>
-      </div>
-      <%- include('../form/managerForm')%>
-        <%- include('../components/pagginationComponent')%>
-    </section>
-    <script src="js/commonFunction/commonFunction.js"></script>
-    <script src="js/manager/manager.js"></script>
-    <script src="js/manager/managerValidation.js"></script>
+        <%- include('../form/managerForm')%>
+          <%- include('../components/pagginationComponent')%>
+      </section>
+      <script src="js/commonFunction/commonFunction.js"></script>
+      <script src="js/manager/manager.js"></script>
+      <script src="js/manager/managerValidation.js"></script>
 
 
 </body>
