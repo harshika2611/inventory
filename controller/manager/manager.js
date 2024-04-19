@@ -32,18 +32,17 @@ const manageManager = async (req, res) => {
   try {
     const result1 = await checkManagerService(req.body);
     console.log(result1, "gottt");
-    if (result1.length > 0) {
-      const msg = "already added manager";
-      res.status(409).send("already exist");
+    if (result1.length) {
+      return res.status(409).send("already exist");
     } else {
       try {
         const otp = Math.floor(Math.random() * 1000000000000 + 1);
         const result2 = await insertManagerService(otp, req.body);
         const managerDetails = await insertManagerDetail(result2, req.body);
-        res.status(200).send("maanger add");
+        return res.status(200).send("maanger add");
       } catch (error) {
         logger.logError(error);
-        res.status(500).json({ message: "can`t fetch user controller" });
+        return res.status(500).json({ message: "can`t fetch user controller" });
       }
     }
 
@@ -78,21 +77,20 @@ const updateManager = async (req, res) => {
     const checkManger = await checkUpdateManagerService(req.body);
     console.log(checkManger, checkManger.length, "ansss");
     if (checkManger.length) {
-      const msg = "already added manager";
       return res.status(409).send("already exist");
     } else {
       try {
         const otp = Math.floor(Math.random() * 1000000000000 + 1);
         const result1 = await updateManagerService(otp, req.body);
-        res.status(200).send("maanger add");
+        return res.status(200).send("maanger add");
       } catch (error) {
         logger.logError(error);
-        res.status(500).json({ message: "can`t fetch user controller" });
+        return res.status(500).json({ message: "can`t fetch user controller" });
       }
     }
   } catch (error) {
     logger.logError(error);
-    res.status(500).json({ message: "can`t fetch user controller" });
+    return res.status(500).json({ message: "can`t fetch user controller" });
   }
 };
 
@@ -121,7 +119,7 @@ const getPerticularManager = async (req, res) => {
 const deleteManager = async (req, res) => {
   try {
     const id = req.params.id;
-    console.log(req.params, "delete");
+    console.log(id, "delete");
   } catch (error) {
     logger.logError(error);
     res.status(500).json({ message: "can`t fetch user controller" });

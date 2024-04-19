@@ -47,7 +47,6 @@ WHERE
 
 const getPerticularManagerService = async (id) => {
   try {
-    console.log(id, "aaaaaa");
     const sql1 = `SELECT 
     users.id,
     firstname,

@@ -13,7 +13,38 @@ async function submitbtn() {
   try {
     const data = formData("form");
     const managerValidation = manageManagerFormValidation(data);
+    try {
+      const data = formData("form");
+      const managerValidation = manageManagerFormValidation(data);
 
+      if (Object.keys(managerValidation).length > 0) {
+        //----client side validation error
+        errorShow(managerValidation);
+      } else {
+        const response = await fetch(`/manager`, {
+          method: "post",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify(data),
+        });
+        if (response.status == 200) {
+          alert("Manager added");
+          window.location = `/user`;
+        }
+        if (response.status === 409) {
+          document.getElementById("error").innerHTML = "manager already exist";
+          document.getElementById("error").style.color = "red";
+        }
+        if (response.status === 400) {
+          const errorObject = await response.json();
+          errorShow(errorObject);
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
     if (Object.keys(managerValidation).length > 0) {
       //----client side validation error
       errorShow(managerValidation);
@@ -45,33 +76,6 @@ async function submitbtn() {
 }
 
 const getAllStore = async () => {
-<<<<<<< HEAD
-	try {
-		const response = await fetch('/storeCombo');
-		const data = await response.json();
-
-		const store = data.result;
-		store.forEach((element) => {
-			const option = (document.getElementById(
-				'state'
-			).innerHTML += `<option value="${element.id}">${element.city_name}</option>`);
-		});
-	} catch (error) {
-		console.log(error);
-	}
-};
-
-const getAllManager = async () => {
-	try {
-		const response = await fetch('/api/getmanager');
-		const data = await response.json();
-		console.log(data, 'body');
-	} catch (error) {
-		console.log(error);
-	}
-};
-getAllManager();
-=======
   try {
     const response = await fetch("/storeCombo");
     const data = await response.json();
@@ -90,6 +94,7 @@ getAllManager();
 const getAllManager = async () => {
   paggination("/api/getmanagers");
 };
+getAllManager();
 function dataTableGrid(manager, startIndex) {
   const table = document.getElementById("thead");
   const tableBody = document.getElementById("tbody");
@@ -180,7 +185,9 @@ async function updateManager(manager) {
       }
       getAllStore();
     }
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 async function updateDeails(id) {
@@ -218,4 +225,3 @@ async function updateDeails(id) {
     console.log(error);
   }
 }
->>>>>>> main
