@@ -21,7 +21,14 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/css', express.static('./node_modules/bootstrap/dist/css'));
 app.use('/js', express.static('./node_modules/bootstrap/dist/js'));
-app.use("/sweetalert2", express.static(path.join(__dirname, '/node_modules/sweetalert2/dist')))
+app.use(
+  '/charts',
+  express.static(path.join(__dirname, 'node_modules/apexcharts/dist'))
+);
+app.use(
+  '/sweetalert2',
+  express.static(path.join(__dirname, '/node_modules/sweetalert2/dist'))
+);
 
 //ejs file render we need to set path of located files
 app.set('views', path.join(__dirname, 'views'));
@@ -33,17 +40,17 @@ app.use(cookieParser());
 app.use(route);
 
 portFinder.getPort(function (err, port) {
-	try {
-		if (err) throw err;
-		app.listen(port, (error) => {
-			logger.info('Server Listen At ' + port);
-		});
-	} catch (err) {
-		logger.logError('Error In Server Listen: ' + err);
-	}
+  try {
+    if (err) throw err;
+    app.listen(port, (error) => {
+      logger.info('Server Listen At ' + port);
+    });
+  } catch (err) {
+    logger.logError('Error In Server Listen: ' + err);
+  }
 });
 
-app.use('*',(req, res) => {
-	// res.send({ message: 'Not Found' });
-	return res.render("components/404")
+app.use('*', (req, res) => {
+  // res.send({ message: 'Not Found' });
+  return res.render('components/404');
 });

@@ -2,8 +2,11 @@ let productHeader = document.getElementById('productHeader');
 let productData = document.getElementById('productData');
 
 const searchdata = async (input) => {
+	console.log(input);
 	input = input.trim();
-	paggination(`api/purchasereport/allproduct?product=${input}`);
+	setTimeout(() => {
+		paggination(`api/purchasereport/allproduct?product=${input}`);
+	}, 5000);
 };
 
 const fetchData = async () => {
