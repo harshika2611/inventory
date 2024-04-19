@@ -43,6 +43,7 @@ portFinder.getPort(function (err, port) {
 	}
 });
 
-app.use((req, res) => {
-	res.send({ message: 'Not Found' });
+app.use('*',(req, res) => {
+	// res.send({ message: 'Not Found' });
+	return res.render("components/404")
 });

@@ -78,22 +78,26 @@
     <div class="div-second managecustomer-section" id="child">
       <div class="managecustomer-container">
         <header>
-          <form class="form-inline form1 my-2 my-lg-0">
-            <input class="form-control form2 mr-sm-2" type="search" style="display: flex;" placeholder="Search"
-              aria-label="Search" />
-            <button class="btn btn-outline-success my-2 my-sm-0" style="display: flex;" type="submit">
-              Search
-            </button>
+          <div class="header">
+            <img src="/icons/house-fill.svg" width="50px" height="50px" alt="">
+            <!-- <img src="/icons/house-add-fill.svg" width="30px" alt=""> -->
+            <h3 class="text-center" style="font-size: 36px;
+            padding-top: 20px;">Warehouses</h3>
+          </div><br>
+          <input class="form-control form2 mr-sm-2 w-50" type="search" style="margin-left: 280px;" id="input"
+            placeholder="Search" onkeyup="search(this.value)" aria-label="Search" />
           </form>
         </header>
         <main>
           <section id="store-section">
             <div class="container">
               <div class="row1">
-                <h4>Storage Data</h4>
-                <button type="button" id="btn" class="btn btn-primary" onclick="addNewStore()">
+                <!-- <h4 class="text-center">Storages Data</h4> -->
+                <img src="/icons/house-add-fill.svg" id="btn" onclick="addNewStore()" width="40px"
+                  style="cursor: pointer;" alt="">
+                <!-- <button type="button" id="btn" class="btn btn-primary" onclick="addNewStore()">
                   Add
-                </button>
+                </button> -->
               </div>
             </div>
           </section>

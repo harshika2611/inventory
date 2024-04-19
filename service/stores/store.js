@@ -16,7 +16,7 @@ async function insertStoreQuery(body) {
 
 async function getStoreQuery() {
   try {
-    const getStores = `SELECT s.id as storeId ,s.name as Storagename , option_master.value as StorageType , city_master.city_name as location,s.created_at FROM storage_space_master as s left join option_master on s.storage_type = option_master.id left join city_master on city_master.city_id=s.location_id where s.is_delete =0`;
+    const getStores = `SELECT s.id as storeId ,s.name as StorageName , option_master.value as StorageType , city_master.city_name as Location,s.created_at as CreatedTime FROM storage_space_master as s left join option_master on s.storage_type = option_master.id left join city_master on city_master.city_id=s.location_id where s.is_delete =0`;
 
     const [result] = await connection.execute(getStores);
     // console.log(result)
