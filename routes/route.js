@@ -17,9 +17,11 @@ const passport = require('passport');
 router.use(passport.initialize());
 auth(passport);
 const { checkLogin } = require('../controller/login/login.js');
+const loginFormValidation = require('../controller/login/loginValidation.js');
+const forgotFormValidation = require('../controller/login/forgotValidation.js');
 router.get('/checkLogin', checkLogin);
 router.get('/', getLogin);
-router.post('/', userLogin);
+router.post('/', loginFormValidation, userLogin);
 router.get(
   '/home',
   passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
@@ -29,7 +31,7 @@ router.get('/user', getUserName);
 router.post('/user', checkUser);
 router.get('/activelink/:link', getLink);
 router.get('/forgot', getForgot);
-router.post('/forgot', forgotPass);
+router.post('/forgot', forgotFormValidation, forgotPass);
 router.get(
   '/logout',
   passport.authenticate('jwt', { session: false }),
@@ -51,7 +53,6 @@ const {
   getPerticularManager,
   listManagers,
   updateManager,
-  insertManager,
 } = require('../controller/manager/manager');
 const manageManagerFormValidation = require('../controller/manager/managerValidation.js');
 router.get('/manager', getManager);
@@ -59,8 +60,7 @@ router.post('/manager', manageManagerFormValidation, manageManager);
 router.get('/api/getmanagers', listManagers);
 router.get('/api/getmanager/:id', getPerticularManager);
 router.post('/updatemanager', manageManagerFormValidation, updateManager);
-router.post('/api/deleteManager/:id', deleteManager);
-router.get('/insertmanager', insertManager);
+router.get('/api/deleteManager/:id', deleteManager);
 
 //----getCity and getState
 const {
@@ -165,7 +165,7 @@ const {
   deleteCustomer,
 } = require('../controller/manageCustomers/manageCustomers.js');
 
-const manageCustomerValidation = require('../controller/manageCustomers/manageCustomerValidation.js');
+const manageCustomerValidation = require('../middleware/manageCustomers/manageCustomerValidation.js');
 
 router.get('/manageCustomers', getCustomersPage);
 router.get('/api/manageCustomers', getAllCustomers);
@@ -184,7 +184,7 @@ const {
   deleteSupplier,
 } = require('../controller/manageSuppliers/manageSuppliers.js');
 
-const manageSuppliersValidation = require('../controller/manageSuppliers/manageSuppliersValidation.js');
+const manageSuppliersValidation = require('../middleware/manageSuppliers/manageSuppliersValidation.js');
 
 router.get('/manageSuppliers', getSuppliersPage);
 router.get('/api/manageSuppliers', getAllSuppliers);
@@ -221,10 +221,6 @@ const {
   fetchProducts,
   fetchWarehouses,
   createProductPurchase,
-  fetchOrderDetails,
-  updatePurchase,
-  updateProductPurchase,
-  deleteProductPurchase,
 } = require('../controller/purchase');
 
 router.get(
@@ -240,7 +236,7 @@ router.get(
 );
 
 router.get(
-  '/api/purchase/products/:id',
+  '/api/purchase/products',
   passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
   fetchProducts
 );
@@ -251,40 +247,16 @@ router.get(
   fetchWarehouses
 );
 
-router.get(
-  '/api/order/:id',
-  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
-  fetchOrderDetails
-);
-
 router.post(
   '/api/purchase/order',
   passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
   createPurchase
 );
 
-router.put(
-  '/api/purchase/order/:id',
-  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
-  updatePurchase
-);
-
 router.post(
   '/api/purchase/product',
   passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
   createProductPurchase
-);
-
-router.put(
-  '/api/purchase/product/:id',
-  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
-  updateProductPurchase
-);
-
-router.delete(
-  '/api/purchase/product/:id',
-  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
-  deleteProductPurchase
 );
 
 router.get(

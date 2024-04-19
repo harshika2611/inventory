@@ -1,6 +1,6 @@
-const connection = require("../../config/connection");
-const logger = require("../../logs");
-const { logError } = require("../../logs");
+const connection = require('../../config/connection');
+const logger = require('../../logs');
+const { logError } = require('../../logs');
 
 const userLoginService = async (body) => {
   try {
@@ -8,7 +8,7 @@ const userLoginService = async (body) => {
     users.id, email, password, created_at, status, role_id, expiry,storage_id
 FROM
     users
-        LEFT JOIN
+       LEFT JOIN
     manager_details ON users.id = manager_details.user_id
 WHERE
     email =?`;
@@ -77,14 +77,7 @@ const expireService = async (link) => {
   }
 };
 
-const registerService = async () => {
-  try {
-    const sql7 = ``;
-  } catch (error) {}
-};
-
 module.exports = {
-  registerService,
   expireService,
   userService,
   checkUserService,

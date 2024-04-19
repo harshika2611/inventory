@@ -1,8 +1,10 @@
+const { query } = require('../../config/connection');
 const logger = require('../../logs');
 const {
 	getOrderreport,
 	getApiordersProduct,
 	getOrderreportBydate,
+	getOrderDayreport,
 } = require('../../service/report/orderReportService');
 
 const getorderReport = (req, res) => {
@@ -15,9 +17,13 @@ const getorderProducts = (req, res) => {
 
 const getApiorderRreport = async (req, res) => {
 	try {
-		// console.log(Object.keys(req.query).length);
-		if (Object.keys(req.query).length === 0) {
+		let queryLength = Object.keys(req.query).length;
+		if (queryLength === 0) {
 			const [rows] = await getOrderreport();
+			res.json(rows);
+		} else if (queryLength == 1) {
+			let query = Object.keys(req.query);
+			const [rows] = await getOrderDayreport(query[0], req.query[query[0]]);
 			res.json(rows);
 		} else {
 			let fromDate = req.query.fromDate;

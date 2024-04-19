@@ -6,9 +6,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
   <script src="/js/bootstrap.js"></script>
+  <link rel="stylesheet" href="/charts/apexcharts.css" />
   <link rel="stylesheet" href="src/css/allpage.css" />
   <link rel="stylesheet" href="src/css/dashboard/dashboardCustom.css" />
   <title>Dashboard</title>
+  <style>
+
+  </style>
 </head>
 
 <body>
@@ -23,14 +27,14 @@
                 <p class="salesoverview__p">Today Sales</p>
                 <div class="todaysales_div_div">
                   <img src="src/assets/dashboard/cart-shopping.svg" alt="img" width="30" height="30" />
-                  <p>&#8377; 1000</p>
+                  <p id="daySales">&#8377; 1000</p>
                 </div>
               </div>
               <div class="todaysales_div">
                 <p class="salesoverview__p">This Month Sales</p>
                 <div class="todaysales_div_div">
                   <img src="src/assets/dashboard/cart-shopping.svg" alt="img" width="30" height="30" />
-                  <p>&#8377; 1000</p>
+                  <div id="monthSales"></div>
                 </div>
               </div>
             </div>
@@ -106,6 +110,7 @@
       </div>
       </div>
     </section>
+    <script src="/charts/apexcharts.min.js"></script>
     <script src="/js/dashboard/dashboard.js"></script>
 </body>
 
