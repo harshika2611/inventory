@@ -250,8 +250,8 @@ async function generateForm2() {
   if (orderDetails?.products.length > 0) {
     orderDetails.products.forEach(async (obj) => {
       generateAddProductRows(
-        await generateProductsDropDown(obj.categoryId),
-        categoryOptions,
+        await generateProductsDropDown(obj.categoryId, obj.productId),
+        await generateDropDown('productCategory', obj.categoryId),
         obj.purchaseProductId,
         { ...obj }
       );
@@ -281,10 +281,9 @@ function generateAddProductRows(
 			<div class="col">
 				<div class="form-floating">
 					<select class="form-select custom-disabled" aria-label="select" id="floatingCategories" name="category" required
-						${productDetails?.categoryId ? `value = "${productDetails?.categoryId}"` : ''}
 						onchange="populateProductDropdown(event)"
 					>
-						${categoryOptions}
+            ${categoryOptions}
 					</select>
 					<label for="floatingCategories">Category</label>
 					<div class="invalid-feedback">
@@ -294,9 +293,7 @@ function generateAddProductRows(
 			</div>
 			<div class="col">
 				<div class="form-floating">
-					<select class="form-select custom-disabled" aria-label="select" id="floatingProducts" name="product_id" required
-						${productDetails?.productId ? `value = "${productDetails?.productId}"` : ''}
-					>
+					<select class="form-select custom-disabled" aria-label="select" id="floatingProducts" name="product_id" required>
 						${productOptions}
 					</select>
 					<label for="floatingProducts">Product</label>
@@ -435,13 +432,17 @@ async function deleteProduct(e, purchaseProductId = null) {
   });
 }
 
-function generateDropDown(value) {
+function generateDropDown(value, selectedId) {
   return fetch(`api/combos/${value}`)
     .then((res) => res.json())
     .then((data) => {
       let content = '';
       data.forEach((o) => {
-        content += `<option value="${o.opt_id}">${o.value}</option>`;
+        content += `<option value="${o.opt_id}" ${
+          o.opt_id == selectedId ? 'selected="selected"' : ''
+        }>
+          ${o.value}
+        </option>`;
       });
       return content;
     })
@@ -464,13 +465,15 @@ function generateSuppliersDropDown() {
     .catch(() => '');
 }
 
-function generateProductsDropDown(id) {
+function generateProductsDropDown(id, selectedId) {
   return fetch('api/purchase/products/' + id)
     .then((res) => res.json())
     .then((data) => {
       let content = '';
       data.forEach((o) => {
-        content += `<option value="${o.id}">${o.product_name}</option>`;
+        content += `<option value="${o.id}" ${
+          o.id == selectedId ? 'selected="selected"' : ''
+        } >${o.product_name}</option>`;
       });
       return content;
     })
