@@ -26,7 +26,7 @@ a {
 }
 .managesupplier-section {
   max-width: 1300px;
-  height: 100dvh;
+  height: 850px;
   background-color: var(--managecustomersection);
 }
 
@@ -35,6 +35,13 @@ a {
   padding: 20px;
   margin: 0 auto;
   overflow-x: auto;
+}
+
+.managesupplierTitle {
+  padding: 20px 0;
+  font-size: 30px;
+  font-weight: 400;
+  width: 350px;
 }
 
 .managesupplier-container__button {

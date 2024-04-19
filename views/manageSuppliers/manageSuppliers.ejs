@@ -10,6 +10,8 @@
   <link rel="stylesheet" href="src/css/allpage.css" />
   <link rel="stylesheet" href="src/css/manageSuppliers/manageSuppliers.css" />
   <script src="js/manageSuppliers/manageSuppliers.js"></script>
+  <script src="js/manageSuppliers/manageSupplierInsert.js"></script>
+  <script src="js/manageSuppliers/manageSupplierUpdate.js"></script>
   <script src="js/commonFunction/commonFunction.js"></script>
   <script src="js/manageSuppliers/manageSuppliersFormValidation.js"></script>
   <script src="js/manageSuppliers/manageSuppliersFilter.js"></script>
@@ -21,12 +23,11 @@
     <section class="div-second managesupplier-section">
       <div class="managesupplier-container" id="managesupplier-container">
         <%- include('../components/messagePopUp')%>
-
+          <p class="managesupplierTitle">Suppliers</p>
           <div class="managesupplier-container__button">
             <p class="addnewsupplierbutton" onclick="addNewSupplier()">Add New</p>
             <p class="supplierfilterbutton" onclick="supplierFilterShow()">Filter</p>
           </div>
-
       </div>
       <%- include('../form/supplierForm')%>
         <%- include('../components/pagginationComponent')%>

@@ -165,7 +165,7 @@ const {
   deleteCustomer,
 } = require('../controller/manageCustomers/manageCustomers.js');
 
-const manageCustomerValidation = require('../controller/manageCustomers/manageCustomerValidation.js');
+const manageCustomerValidation = require('../middleware/manageCustomers/manageCustomerValidation.js');
 
 router.get('/manageCustomers', getCustomersPage);
 router.get('/api/manageCustomers', getAllCustomers);
@@ -184,7 +184,7 @@ const {
   deleteSupplier,
 } = require('../controller/manageSuppliers/manageSuppliers.js');
 
-const manageSuppliersValidation = require('../controller/manageSuppliers/manageSuppliersValidation.js');
+const manageSuppliersValidation = require('../middleware/manageSuppliers/manageSuppliersValidation.js');
 
 router.get('/manageSuppliers', getSuppliersPage);
 router.get('/api/manageSuppliers', getAllSuppliers);

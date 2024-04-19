@@ -10,6 +10,8 @@
   <link rel="stylesheet" href="src/css/allpage.css" />
   <link rel="stylesheet" href="src/css/manageCustomers/manageCustomers.css" />
   <script src="js/manageCustomers/manageCustomers.js"></script>
+  <script src="js/manageCustomers/manageCustomerInsert.js"></script>
+  <script src="js/manageCustomers/manageCustomerUpdate.js"></script>
   <script src="js/commonFunction/commonFunction.js"></script>
   <script src="js/manageCustomers/manageCustomerFormValidation.js"></script>
   <script src="js/manageCustomers/manageCustomerFilter.js"></script>
@@ -21,6 +23,7 @@
     <section class="div-second managecustomer-section">
       <div class="managecustomer-container" id="managecustomer-container">
         <%- include('../components/messagePopUp')%>
+          <p class="managecustomerTitle">Customers</p>
 
           <div class="managecustomer-container__button">
             <p class="addnewcustomerbutton" onclick="addNewCustomer()">Add New</p>
