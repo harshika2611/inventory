@@ -100,18 +100,19 @@ function customerFilter(filterColumn) {
 }
 
 function pagginationFilter(filterArray, currPage) {
-  let tempArray = [];
+  dataArray = [];
   for (let element of filterArray) {
-    tempArray.push(element);
+    dataArray.push(element);
   }
+  // console.log(dataArray);
 
   currentPage = currPage;
   startIndex = (currentPage - 1) * recordsInSinglePage;
   endIndex = startIndex + recordsInSinglePage;
-  const pagginationArray = tempArray.slice(startIndex, endIndex);
+  const pagginationArray = dataArray.slice(startIndex, endIndex);
   dataTableGrid(pagginationArray, startIndex);
 
-  if (recordsInSinglePage < tempArray.length) {
+  if (recordsInSinglePage < dataArray.length) {
     document.getElementById(
       'currentpageshow'
     ).innerHTML = `Page ${currentPage}`;
