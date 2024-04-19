@@ -1,5 +1,4 @@
 const {
-  registerService,
   userService,
   checkUserService,
   userLoginService,

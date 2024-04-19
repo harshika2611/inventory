@@ -1,30 +1,42 @@
 function loginFormValidation(data) {
-	let loginError = {};
-	for (let key in data) {
-		switch (key) {
-			case 'email':
-				const regexemail = /^[a-z0-9]+@[a-z]+\.[a-z]{2,3}$/;
+  let loginError = {};
+  for (let key in data) {
+    switch (key) {
+      case 'email':
+        const regexemail = /^[a-z0-9]+@[a-z]+\.[a-z]{2,3}$/;
 
-				if (data[key].length === 0) {
-					loginError[key] = '* require';
-				} else if (!regexemail.test(data[key]) && data[key] !== '') {
-					loginError[key] = '* Please Enter Valid Email';
-				} else {
-					delete loginError[key];
-				}
-				break;
-			case 'password':
-				const regexPass =
-				/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-				if (data[key].length === 0) {
-					loginError[key] = '* require';
-				} else if (!regexPass.test(data[key]) && data[key] !== '') {
-					loginError[key] = 'please enter valid password';
-				} else {
-					delete loginError[key];
-				}
-				break;
-		}
-	}
-	return loginError;
+        if (data[key].length === 0) {
+          loginError[key] = '* require';
+        } else if (!regexemail.test(data[key]) && data[key] !== '') {
+          loginError[key] = '* Please Enter Valid Email';
+        } else {
+          delete loginError[key];
+        }
+        break;
+      case 'password':
+        console.log(data[key], 'aaaaa');
+        if (data[key].length === 0) {
+          loginError[key] = '* require';
+        } else if (data[key].length < 8 && data[key] !== '') {
+          loginError[key] = 'Password must be at least 8 characters';
+        } else if (data[key].length > 15 && data[key] !== '') {
+          loginError[key] = 'Password length must not exceed 15 characters';
+        } else if (data[key].search(/[A-Z]/) < 0) {
+          loginError[key] =
+            'Password must contain at least one uppercase letter';
+        } else if (data[key].search(/[a-z]/) < 0) {
+          loginError[key] =
+            'Password must contain at least one lowercase letter';
+        } else if (data[key].search(/[0-9]/) < 0) {
+          loginError[key] = 'Password must contain at least one number';
+        } else if (data[key].search(/[@$!%*?&]/) < 0) {
+          loginError[key] =
+            'Password must contain at least one special character';
+        } else {
+          delete loginError[key];
+        }
+        break;
+    }
+  }
+  return loginError;
 }

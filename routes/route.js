@@ -17,9 +17,11 @@ const passport = require('passport');
 router.use(passport.initialize());
 auth(passport);
 const { checkLogin } = require('../controller/login/login.js');
+const loginFormValidation = require('../controller/login/loginValidation.js');
+const forgotFormValidation = require('../controller/login/forgotValidation.js');
 router.get('/checkLogin', checkLogin);
 router.get('/', getLogin);
-router.post('/', userLogin);
+router.post('/', loginFormValidation, userLogin);
 router.get(
   '/home',
   passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
@@ -29,7 +31,7 @@ router.get('/user', getUserName);
 router.post('/user', checkUser);
 router.get('/activelink/:link', getLink);
 router.get('/forgot', getForgot);
-router.post('/forgot', forgotPass);
+router.post('/forgot', forgotFormValidation, forgotPass);
 router.get(
   '/logout',
   passport.authenticate('jwt', { session: false }),
@@ -51,7 +53,6 @@ const {
   getPerticularManager,
   listManagers,
   updateManager,
-  insertManager,
 } = require('../controller/manager/manager');
 const manageManagerFormValidation = require('../controller/manager/managerValidation.js');
 router.get('/manager', getManager);
@@ -59,8 +60,7 @@ router.post('/manager', manageManagerFormValidation, manageManager);
 router.get('/api/getmanagers', listManagers);
 router.get('/api/getmanager/:id', getPerticularManager);
 router.post('/updatemanager', manageManagerFormValidation, updateManager);
-router.post('/api/deleteManager/:id', deleteManager);
-router.get('/insertmanager', insertManager);
+router.get('/api/deleteManager/:id', deleteManager);
 
 //----getCity and getState
 const {

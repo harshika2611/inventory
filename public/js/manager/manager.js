@@ -1,20 +1,20 @@
 function addManager() {
-  const customerForm = document.getElementById("myForm");
-  customerForm.style.display = "block";
+  const customerForm = document.getElementById('myForm');
+  customerForm.style.display = 'block';
 
   getAllStore();
 }
 function closeForm() {
-  document.getElementById("myForm").style.display = "none";
+  document.getElementById('myForm').style.display = 'none';
   // document.getElementById("childbody").style = "none";
 }
 
 async function submitbtn() {
   try {
-    const data = formData("form");
+    const data = formData('form');
     const managerValidation = manageManagerFormValidation(data);
     try {
-      const data = formData("form");
+      const data = formData('form');
       const managerValidation = manageManagerFormValidation(data);
 
       if (Object.keys(managerValidation).length > 0) {
@@ -22,20 +22,20 @@ async function submitbtn() {
         errorShow(managerValidation);
       } else {
         const response = await fetch(`/manager`, {
-          method: "post",
+          method: 'post',
           headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
           },
           body: JSON.stringify(data),
         });
         if (response.status == 200) {
-          alert("Manager added");
+          alert('Manager added');
           window.location = `/user`;
         }
         if (response.status === 409) {
-          document.getElementById("error").innerHTML = "manager already exist";
-          document.getElementById("error").style.color = "red";
+          document.getElementById('error').innerHTML = 'manager already exist';
+          document.getElementById('error').style.color = 'red';
         }
         if (response.status === 400) {
           const errorObject = await response.json();
@@ -50,20 +50,20 @@ async function submitbtn() {
       errorShow(managerValidation);
     } else {
       const response = await fetch(`/manager`, {
-        method: "post",
+        method: 'post',
         headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
         },
         body: JSON.stringify(data),
       });
       if (response.status == 200) {
-        alert("Manager added");
+        alert('Manager added');
         window.location = `/user`;
       }
       if (response.status === 409) {
-        document.getElementById("error").innerHTML = "manager already exist";
-        document.getElementById("error").style.color = "red";
+        document.getElementById('error').innerHTML = 'manager already exist';
+        document.getElementById('error').style.color = 'red';
       }
       if (response.status === 400) {
         const errorObject = await response.json();
@@ -77,13 +77,13 @@ async function submitbtn() {
 
 const getAllStore = async () => {
   try {
-    const response = await fetch("/storeCombo");
+    const response = await fetch('/storeCombo');
     const data = await response.json();
 
     const store = data.result;
     store.forEach((element) => {
       const option = (document.getElementById(
-        "state"
+        'state'
       ).innerHTML += `<option value="${element.id}">${element.city_name}</option>`);
     });
   } catch (error) {
@@ -92,33 +92,33 @@ const getAllStore = async () => {
 };
 
 const getAllManager = async () => {
-  paggination("/api/getmanagers");
+  paggination('/api/getmanagers');
 };
 getAllManager();
+
 function dataTableGrid(manager, startIndex) {
-  const table = document.getElementById("thead");
-  const tableBody = document.getElementById("tbody");
+  const table = document.getElementById('thead');
+  const tableBody = document.getElementById('tbody');
 
   for (let key in manager[0]) {
-    if (key === "id") {
-      key = "No.";
+    if (key === 'id') {
+      key = 'No.';
     }
-    const createTh = document.createElement("th");
+    const createTh = document.createElement('th');
     createTh.textContent = key;
     table.appendChild(createTh);
   }
-  const createTh = document.createElement("th");
-  createTh.textContent = "Action";
-  createTh.colSpan = "2";
+  const createTh = document.createElement('th');
+  createTh.textContent = 'Action';
+  createTh.colSpan = '2';
   table.appendChild(createTh);
-
   for (const element of manager) {
-    const createTr = document.createElement("tr");
+    const createTr = document.createElement('tr');
     tableBody.appendChild(createTr);
 
     for (const key in element) {
-      const createTd = document.createElement("td");
-      if (key == "id") {
+      const createTd = document.createElement('td');
+      if (key == 'id') {
         createTd.textContent = ++startIndex;
         createTr.appendChild(createTd);
       } else {
@@ -127,25 +127,26 @@ function dataTableGrid(manager, startIndex) {
       }
     }
 
-    const createEditTd = document.createElement("td");
-    createEditTd.setAttribute("class", "editButton");
-    createEditTd.setAttribute("id", `${element.id}`);
-    createEditTd.setAttribute("onclick", "updateManager(this)");
-    const createEditButton = document.createElement("img");
-    createEditButton.setAttribute("src", "src/assets/manageCustomer/edit.svg");
-    createEditButton.setAttribute("width", "25");
-    createEditButton.setAttribute("height", "25");
+    const createEditTd = document.createElement('td');
+    createEditTd.setAttribute('class', 'editButton');
+    createEditTd.setAttribute('id', `${element.id}`);
+    createEditTd.setAttribute('onclick', 'updateManager(this)');
+    const createEditButton = document.createElement('img');
+    createEditButton.setAttribute('src', 'src/assets/manageCustomer/edit.svg');
+    createEditButton.setAttribute('width', '25');
+    createEditButton.setAttribute('height', '25');
     createEditTd.appendChild(createEditButton);
-    const createDeleteTd = document.createElement("td");
-    createDeleteTd.setAttribute("id", `${element.id}`);
-    createDeleteTd.setAttribute("class", "deleteButton");
-    const createDeleteButton = document.createElement("img");
+    const createDeleteTd = document.createElement('td');
+    createDeleteTd.setAttribute('id', `${element.id}`);
+    createDeleteTd.setAttribute('class', 'deleteButton');
+    createDeleteTd.setAttribute('onclick', 'deleteManager(this)');
+    const createDeleteButton = document.createElement('img');
     createDeleteButton.setAttribute(
-      "src",
-      "src/assets/manageCustomer/delete.svg"
+      'src',
+      'src/assets/manageCustomer/delete.svg'
     );
-    createDeleteButton.setAttribute("width", "25");
-    createDeleteButton.setAttribute("height", "25");
+    createDeleteButton.setAttribute('width', '25');
+    createDeleteButton.setAttribute('height', '25');
     createDeleteTd.appendChild(createDeleteButton);
     createTr.appendChild(createEditTd);
     createTr.appendChild(createDeleteTd);
@@ -154,31 +155,31 @@ function dataTableGrid(manager, startIndex) {
 
 async function updateManager(manager) {
   const id = manager.id;
-  console.log(id, "asssperrrrr");
-  document.getElementById("myForm").style.display = "block";
-  document.getElementById("submitBtn").innerHTML = "Update";
+  console.log(id, 'asssperrrrr');
+  document.getElementById('myForm').style.display = 'block';
+  document.getElementById('submitBtn').innerHTML = 'Update';
   document
-    .getElementById("submitBtn")
-    .setAttribute("onclick", `updateDeails(${id})`);
+    .getElementById('submitBtn')
+    .setAttribute('onclick', `updateDeails(${id})`);
   const response = await fetch(`/api/getmanager/${id}`);
   const managerDetails = await response.json();
-  console.log(managerDetails, "also");
+  console.log(managerDetails, 'also');
   try {
     if (!response.ok) {
-      throw new Error("Error In Get Customer Details");
+      throw new Error('Error In Get Customer Details');
     }
     if (response.status == 200) {
       for (const key in managerDetails[0]) {
-        console.log(key, "abc");
+        console.log(key, 'abc');
         let element = document.querySelector(`[name="${key}"]`);
         switch (key) {
-          case "firstname":
+          case 'firstname':
             element.value = managerDetails[0][key];
             break;
-          case "lastname":
+          case 'lastname':
             element.value = managerDetails[0][key];
             break;
-          case "email":
+          case 'email':
             element.value = managerDetails[0][key];
             break;
         }
@@ -192,29 +193,29 @@ async function updateManager(manager) {
 
 async function updateDeails(id) {
   try {
-    const data = formData("form");
+    const data = formData('form');
     data.id = id;
-    console.log(data, "heress");
+    console.log(data, 'heress');
     const managerValidation = manageManagerFormValidation(data);
     if (Object.keys(managerValidation).length > 0) {
       //----client side validation error
       errorShow(managerValidation);
     } else {
       const response = await fetch(`/updatemanager`, {
-        method: "post",
+        method: 'post',
         headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
         },
         body: JSON.stringify(data),
       });
       if (response.status == 200) {
-        alert("Manager updated");
+        alert('Manager updated');
         window.location = `/manager`;
       }
       if (response.status == 409) {
-        document.getElementById("error").innerHTML = "manager already exist";
-        document.getElementById("error").style.color = "red";
+        document.getElementById('error').innerHTML = 'manager already exist';
+        document.getElementById('error').style.color = 'red';
       }
       if (response.status == 400) {
         const errorObject = await response.json();
@@ -224,4 +225,33 @@ async function updateDeails(id) {
   } catch (error) {
     console.log(error);
   }
+}
+
+async function deleteManager(manager) {
+  const id = manager.id;
+  console.log(id, 'what');
+  let modal = new bootstrap.Modal(document.getElementById('deleteModal'));
+  modal.show();
+  let confirm = document.getElementById('confirm');
+  confirm.setAttribute('onclick', `deleteManagerPop(${id})`);
+}
+
+async function deleteManagerPop(id) {
+  const response = await fetch(`/api/deleteManager/${id}`);
+  try {
+    if (response.status == 200) {
+      const message = await response.json();
+      window.location = '/manager';
+    }
+    if (response.status == 404) {
+      const message = await response.json();
+      console.log(message.message);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+function modelHide() {
+  bootstrap.Modal.getInstance(document.getElementById('deleteModal')).hide();
 }
