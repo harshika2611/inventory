@@ -17,22 +17,29 @@
     <div class="container div-second">
       <div class="main-container">
         <div class="profile-details">
-          <div><span>Name : <%= profileDetails[0][0].firstname + " " + profileDetails[0][0].lastname%></span><br />
-          </div>
-          <div><span>Date of Birth : <%= profileDetails[0][0].dob %></span><br /></div>
-          <div><span>Role : <%= profileDetails[0][0].Role %></span><br /></div>
-          <div>
-            <span>Email : <%= profileDetails[0][0].email %></span>
-          </div>
-          <div class="edit-btn-container">
-            <button class="edit-profile-btn" onclick="location.href='/profileEdit'">Edit Profile</button>
-          </div>
-        </div>
-        <div class="img-container view-img">
-          <img src="icons/profile.png" alt="" srcset="">
+          <% if(profileDetails[0][0].Role !=4) { %>
+            <div><span>Name : <%= profileDetails[0][0].firstname%></span><br />
+              <% } else {%>
+                <div><span>Name : <%= profileDetails[0][0].firstname + " " + profileDetails[0][0].lastname%>
+                  </span><br />
+                  <% } %>
+                </div>
+                <div><span>Date of Birth : <%= profileDetails[0][0].dob %></span><br /></div>
+                <div>
+                  <div><span>Role : <%= profileDetails[0][0].Role %></span></div><br />
+                </div>
+                <div>
+                  <span>Email : <%= profileDetails[0][0].email %></span>
+                </div>
+                <div class="edit-btn-container">
+                  <button class="edit-profile-btn" onclick="location.href='/profileEdit'">Edit Profile</button>
+                </div>
+            </div>
+            <div class="img-container view-img">
+              <img src="icons/profile.png" alt="" srcset="">
+            </div>
         </div>
       </div>
-    </div>
 </body>
 
 </html>

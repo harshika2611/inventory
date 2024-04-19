@@ -5,12 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Manager</title>
   <link rel="stylesheet" href="src/css/form.css">
-  <style>
-    #myForm {
-      display: block;
-    }
-  </style>
-
+  <link rel="stylesheet" href="src/css/profile/uploadImageForm.css">
 </head>
 
 <body class="body">
@@ -23,16 +18,21 @@
           <h1>Upload Image</h1>
           <fieldset>
             <div class="form-floating mb-3">
-              <input name="newImage" type="file" class="form-control" id="floatingInput" required>
-              <label for="floatingInput">Upload new Image </label>
+              <input name="newImage" type="file" class="form-control" id="choose-file"
+                accept="image/png, image/jpg, image/jpeg" required>
+              <label for="floatingInput">Upload new Image
+              </label>
             </div>
           </fieldset>
-          <div id="error"></div>
-          <button type="button" class="btn btn-outline-primary" onclick="submitbtn()">Upload</button>
+          <div id="preview">
+          </div>
+          <button type="button" id="UploadImage" class="btn btn-outline-primary">Upload<img class="upload-logo"
+              src="/icons/upload.svg" alt="" height="20" width="20"></button>
         </div>
       </form>
     </div>
   </div>
+  <script src="js/profile/imageUploadForm.js"></script>
 </body>
 
 </html>
