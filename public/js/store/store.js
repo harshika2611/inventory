@@ -27,7 +27,7 @@ function dataTableGrid(storeArray, startIndex) {
   const createTh = document.createElement("th");
   createTh.textContent = "Action";
   createTable.appendChild(createTh);
-
+  console.log(storeArray);
 
   for (let element of storeArray) {
     const createTr = document.createElement("tr");
@@ -44,7 +44,7 @@ function dataTableGrid(storeArray, startIndex) {
     const createActionTd = document.createElement("td");
     createActionTd.setAttribute("class", "store__actioncolumn");
     const createEditTd = document.createElement("td");
-    createEditTd.setAttribute("id", `${element.CustomerId}`);
+    createEditTd.setAttribute("id", `${element.storeId}`);
     createEditTd.setAttribute("class", "store__actionbutton");
     createEditTd.setAttribute("onclick", "openUpdateStoreForm(this)");
     const createEditButton = document.createElement("img");
@@ -158,6 +158,7 @@ async function openUpdateStoreForm(store) {
         storeDetails[0].Storagename;
       let storeType = document.getElementsByName('storeType')[0];
       storeType.value = storeDetails[0].StorageTypeId;
+      console.log(storeDetails[0]);
       getAllState('stateSelectCombo', storeDetails[0].state);
       const stateSelectCombo = { id: 'stateSelectCombo' };
       getCity(stateSelectCombo, storeDetails[0].state, storeDetails[0].city);

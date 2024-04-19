@@ -68,7 +68,7 @@ CREATE TABLE `customer_master` (
   KEY `fk_customer_master_2_idx` (`state_id`),
   CONSTRAINT `fk_customer_master_1` FOREIGN KEY (`city_id`) REFERENCES `city_master` (`city_id`),
   CONSTRAINT `fk_customer_master_2` FOREIGN KEY (`state_id`) REFERENCES `state_master` (`state_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=144 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=118 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -187,7 +187,7 @@ CREATE TABLE `product_master` (
   PRIMARY KEY (`id`),
   KEY `fk_product_master_3_idx` (`category_id`),
   CONSTRAINT `fk_product_master_3` FOREIGN KEY (`category_id`) REFERENCES `option_master` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=383 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=357 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -457,14 +457,24 @@ DROP TABLE IF EXISTS `supplier_master`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `supplier_master` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `supplier_name` varchar(45) NOT NULL,
-  `company_name` varchar(45) NOT NULL,
+  `firstname` varchar(45) NOT NULL,
+  `lastname` varchar(45) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `phonenumber` char(10) NOT NULL,
+  `companyname` varchar(100) NOT NULL,
+  `address` varchar(150) DEFAULT NULL,
+  `zipcode` varchar(10) NOT NULL,
+  `city_id` int NOT NULL,
+  `state_id` int NOT NULL,
   `gst` varchar(45) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `is_delete` tinyint NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  PRIMARY KEY (`id`),
+  KEY `fk_supplier_master_1_idx` (`city_id`),
+  KEY `fk_supplier_master_2_idx` (`state_id`),
+  CONSTRAINT `fk_supplier_master_1` FOREIGN KEY (`city_id`) REFERENCES `city_master` (`city_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -473,7 +483,7 @@ CREATE TABLE `supplier_master` (
 
 LOCK TABLES `supplier_master` WRITE;
 /*!40000 ALTER TABLE `supplier_master` DISABLE KEYS */;
-INSERT INTO `supplier_master` VALUES (1,'Bharat Makwana','Apsara','36DBOPA9199A1ZF','2024-04-11 11:16:12','2024-04-18 07:21:28',0),(2,'Cordi','10','59','2024-04-18 07:23:30','2024-04-18 07:23:30',0),(3,'Dotty','87','37','2024-04-18 07:23:30','2024-04-18 07:23:30',0),(4,'Giustina','7','74','2024-04-18 07:23:30','2024-04-18 07:23:30',0),(5,'Kathi','60','63','2024-04-18 07:23:30','2024-04-18 07:23:30',0),(6,'Daphne','15','32','2024-04-18 07:23:30','2024-04-18 07:23:30',0),(7,'Imojean','31','67','2024-04-18 07:23:30','2024-04-18 07:23:30',0),(8,'Kittie','19','100','2024-04-18 07:23:30','2024-04-18 07:23:30',0),(9,'Kimmy','86','73','2024-04-18 07:23:30','2024-04-18 07:23:30',0),(10,'Steffane','68','65','2024-04-18 07:23:30','2024-04-18 07:23:30',0),(11,'Melanie','70','100','2024-04-18 07:23:30','2024-04-18 07:23:30',0),(12,'Wendi','21','47','2024-04-18 07:23:30','2024-04-18 07:23:30',0),(13,'Lory','37','74','2024-04-18 07:23:30','2024-04-18 07:23:30',0),(14,'Daryl','58','53','2024-04-18 07:23:30','2024-04-18 07:23:30',0),(15,'Florie','4','50','2024-04-18 07:23:30','2024-04-18 07:23:30',0),(16,'Leeanne','76','83','2024-04-18 07:23:30','2024-04-18 07:23:30',0),(17,'Cyndie','83','62','2024-04-18 07:23:30','2024-04-18 07:23:30',0),(18,'Sheree','76','87','2024-04-18 07:23:30','2024-04-18 07:23:30',0),(19,'Veda','45','85','2024-04-18 07:23:30','2024-04-18 07:23:30',0),(20,'Chastity','36','61','2024-04-18 07:23:30','2024-04-18 07:23:30',0),(21,'Nicoli','39','63','2024-04-18 07:23:30','2024-04-18 07:23:30',0),(22,'Merle','54','47','2024-04-18 07:23:30','2024-04-18 07:23:30',0),(23,'Sashenka','47','98','2024-04-18 07:23:30','2024-04-18 07:23:30',0),(24,'Orsola','59','34','2024-04-18 07:23:30','2024-04-18 07:23:30',0),(25,'Ida','100','68','2024-04-18 07:23:30','2024-04-18 07:23:30',0),(26,'Dulce','98','80','2024-04-18 07:23:30','2024-04-18 07:23:30',0),(27,'Elena','48','90','2024-04-18 07:23:30','2024-04-18 07:23:30',0);
+INSERT INTO `supplier_master` VALUES (1,'Bharat Makwana','','','','Apsara',NULL,'362640',101,1,'36DBOPA9199A1ZF','2024-04-11 11:16:12','2024-04-18 11:14:59',0),(2,'Cordi','','','','10',NULL,'362640',101,1,'59','2024-04-18 07:23:30','2024-04-18 11:14:59',0),(3,'Dotty','','','','87',NULL,'362640',101,1,'37','2024-04-18 07:23:30','2024-04-18 11:14:59',0),(4,'Giustina','','','','7',NULL,'362640',101,1,'74','2024-04-18 07:23:30','2024-04-18 11:14:59',0),(5,'Kathi','','','','60',NULL,'362640',101,1,'63','2024-04-18 07:23:30','2024-04-18 13:25:43',1),(6,'Daphne','','','','15',NULL,'362640',101,1,'32','2024-04-18 07:23:30','2024-04-18 11:14:59',0),(7,'Imojean','','','','31',NULL,'362640',101,1,'67','2024-04-18 07:23:30','2024-04-18 11:14:59',0),(8,'Kittie','','','','19',NULL,'362640',101,1,'100','2024-04-18 07:23:30','2024-04-18 11:14:59',0),(9,'Kimmy','','','','86',NULL,'362640',101,1,'73','2024-04-18 07:23:30','2024-04-18 11:14:59',0),(10,'Steffane','','','','68',NULL,'362640',101,1,'65','2024-04-18 07:23:30','2024-04-18 11:14:59',0),(11,'Melanie','','','','70',NULL,'362640',101,1,'100','2024-04-18 07:23:30','2024-04-18 11:14:59',0),(12,'Wendi','','','','21',NULL,'362640',101,1,'47','2024-04-18 07:23:30','2024-04-18 11:14:59',0),(13,'Lory','','','','37',NULL,'362640',101,1,'74','2024-04-18 07:23:30','2024-04-18 11:14:59',0),(14,'Daryl','','','','58',NULL,'362640',101,1,'53','2024-04-18 07:23:30','2024-04-18 11:14:59',0),(15,'Florie','','','','4',NULL,'362640',101,1,'50','2024-04-18 07:23:30','2024-04-18 11:14:59',0),(16,'Leeanne','','','','76',NULL,'362640',101,1,'83','2024-04-18 07:23:30','2024-04-18 11:14:59',0),(17,'Cyndie','','','','83',NULL,'362640',101,1,'62','2024-04-18 07:23:30','2024-04-18 11:14:59',0),(18,'Sheree','','','','76',NULL,'362640',101,1,'87','2024-04-18 07:23:30','2024-04-18 11:14:59',0),(19,'Veda','','','','45',NULL,'362640',101,1,'85','2024-04-18 07:23:30','2024-04-18 11:14:59',0),(20,'Chastity','','','','36',NULL,'362640',101,1,'61','2024-04-18 07:23:30','2024-04-18 11:14:59',0),(21,'Nicoli','','','','39',NULL,'362640',101,1,'63','2024-04-18 07:23:30','2024-04-18 11:14:59',0),(22,'Merle','','','','54',NULL,'362640',101,1,'47','2024-04-18 07:23:30','2024-04-18 11:14:59',0),(23,'Sashenka','','','','47',NULL,'362640',101,1,'98','2024-04-18 07:23:30','2024-04-18 11:14:59',0),(24,'Orsola','','','','59',NULL,'362640',101,1,'34','2024-04-18 07:23:30','2024-04-18 11:14:59',0),(25,'Ida','','','','100',NULL,'362640',101,1,'68','2024-04-18 07:23:30','2024-04-18 11:14:59',0),(26,'Dulce','','','','98',NULL,'362640',101,1,'80','2024-04-18 07:23:30','2024-04-18 11:14:59',0),(27,'Elena','Parsaniya','dfgdfga21@gmail.com','9586606859','dfg','','362640',101,1,'90','2024-04-18 07:23:30','2024-04-18 13:34:51',0),(28,'Vasu','Parsaniya','vasuparsaniya21@gmail.com','9586606859','asaa','','362640',1212,12,'22AAAAA0000A1Z5','2024-04-18 13:07:07','2024-04-18 13:25:31',0);
 /*!40000 ALTER TABLE `supplier_master` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -526,4 +536,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-04-18  5:31:01
+-- Dump completed on 2024-04-19  9:31:26

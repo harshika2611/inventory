@@ -53,12 +53,12 @@ const {
   updateManager,
   insertManager,
 } = require('../controller/manager/manager');
-
+const manageManagerFormValidation = require('../controller/manager/managerValidation.js');
 router.get('/manager', getManager);
-router.post('/manager', manageManager);
+router.post('/manager', manageManagerFormValidation, manageManager);
 router.get('/api/getmanagers', listManagers);
 router.get('/api/getmanager/:id', getPerticularManager);
-router.post('/updatemanager', updateManager);
+router.post('/updatemanager', manageManagerFormValidation, updateManager);
 router.post('/api/deleteManager/:id', deleteManager);
 router.get('/insertmanager', insertManager);
 
@@ -249,12 +249,6 @@ router.get(
   '/api/purchase/warehouses',
   passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
   fetchWarehouses
-);
-
-router.get(
-  '/api/order/:id',
-  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
-  fetchOrderDetails
 );
 
 router.post(
