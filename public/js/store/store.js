@@ -21,16 +21,19 @@ function dataTableGrid(storeArray, startIndex) {
       key = "No.";
     }
     const createTh = document.createElement("th");
+    // createTh.setAttribute("class", "bg-dark text-light");
     createTh.textContent = key;
     createTable.appendChild(createTh);
   }
   const createTh = document.createElement("th");
   createTh.textContent = "Action";
+  // createTh.setAttribute("class", "bg-dark text-light");
   createTable.appendChild(createTh);
   console.log(storeArray);
 
   for (let element of storeArray) {
     const createTr = document.createElement("tr");
+    createTr.setAttribute("class", "");
     for (let key in element) {
       const createTd = document.createElement("td");
       if (key === "storeId") {
@@ -47,8 +50,9 @@ function dataTableGrid(storeArray, startIndex) {
     createEditTd.setAttribute("id", `${element.storeId}`);
     createEditTd.setAttribute("class", "store__actionbutton");
     createEditTd.setAttribute("onclick", "openUpdateStoreForm(this)");
-    const createEditButton = document.createElement("img");
-    createEditButton.setAttribute("src", "src/assets/manageCustomer/edit.svg");
+    const createEditButton = document.createElement("button");
+    createEditButton.textContent = "Edit";
+    createEditButton.setAttribute("class", "btn btn-outline-primary");
     createEditButton.setAttribute("width", "25");
     createEditButton.setAttribute("height", "25");
     createEditTd.appendChild(createEditButton);
@@ -58,8 +62,9 @@ function dataTableGrid(storeArray, startIndex) {
     createDeleteTd.setAttribute("id", `${element.storeId}`);
     createDeleteTd.setAttribute("class", "store__actionbutton");
     createDeleteTd.setAttribute("onclick", `deleteStoreDetails(${element.storeId})`);
-    const createDeleteButton = document.createElement("img");
-    createDeleteButton.setAttribute("src", "src/assets/manageCustomer/delete.svg");
+    const createDeleteButton = document.createElement("button");
+    createDeleteButton.textContent = "Delete";
+    createDeleteButton.setAttribute("class", "btn btn-outline-danger");
     createDeleteButton.setAttribute("width", "25");
     createDeleteButton.setAttribute("height", "25");
     createDeleteTd.appendChild(createDeleteButton);
@@ -280,13 +285,33 @@ const deletedata = async (storeId) => {
 
 // Search
 
+function debounce(cb, interval, immediate) {
+  var timeout;
+
+  return function() {
+    var context = this, args = arguments;
+    var later = function() {
+      timeout = null;
+      if (!immediate) cb.apply(context, args);
+    };          
+
+    var callNow = immediate && !timeout;
+
+    clearTimeout(timeout);
+    timeout = setTimeout(later, interval);
+
+    if (callNow) cb.apply(context, args);
+  };
+};
+
+
 const search = (key) => {
   // Declare variables
   var input, filter, table, tr, td, i, txtValue;
   input = key;
   // console.log(input);
   filter = input;
-  table = document.getElementById('t1');
+  table = document.getElementById('store__table');
   tr = table.getElementsByTagName('tr');
 
   // Loop through all table rows, and hide those who don't match the search query
@@ -305,3 +330,4 @@ const search = (key) => {
     }
   }
 };
+document.getElementById('input').onkeyup = debounce(search, 400);
