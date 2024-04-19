@@ -4,133 +4,141 @@
  */
 
 let dataArray = [];
+let arrayForPaggination = [];
 let currentPage = 1;
-const recordsInSinglePage = 6;
+let pageSize = 6;
 let totalNumerOfRecords;
 let startIndex;
 let endIndex;
 
-async function paggination(apiName) {
-  const response = await fetch(apiName, {
-    method: 'GET'
-  });
+async function paggination(apiName = null, records = []) {
+  if (apiName) {
+    const response = await fetch(apiName, {
+      method: 'GET',
+    });
+    const responseArray = await response.json();
+    dataArray = [...responseArray]; //return shallow copy or array
+    /**this array is use for paggination in both case also in filter */
+    arrayForPaggination = [...dataArray];
+  } else {
+    arrayForPaggination = [...records];
+  }
 
-  const responseArray = await response.json();
-  dataArray = [...responseArray]; //return shallow copy or array
-  totalNumerOfRecords = responseArray.length;
+  totalNumerOfRecords = arrayForPaggination.length;
 
-  startIndex = (currentPage - 1) * recordsInSinglePage;
-  endIndex = startIndex + recordsInSinglePage;
-  const pagginationArray = dataArray.slice(startIndex, endIndex);
+  startIndex = (currentPage - 1) * pageSize;
+  endIndex = startIndex + pageSize;
+  const pagginationArray = arrayForPaggination.slice(startIndex, endIndex);
+
   dataTableGrid(pagginationArray, startIndex);
 
-  if (recordsInSinglePage < dataArray.length) {
-    document.getElementById("currentpageshow").innerHTML = `Page ${currentPage}`;
-    document.querySelector(".pagginationsection").style.display = "block";
+  if (pageSize < arrayForPaggination.length) {
+    document.getElementById(
+      'currentpageshow'
+    ).innerHTML = `Page ${currentPage}`;
+    document.querySelector('.pagginationsection').style.display = 'block';
     //----paggination button style
-    document.getElementById("doubleleft").style.opacity = "0.5";
-    document.getElementById("doubleleft").style.cursor = "not-allowed";
+    document.getElementById('firstPage').style.opacity = '0.5';
+    document.getElementById('firstPage').style.cursor = 'not-allowed';
 
-    document.getElementById("singleleft").style.opacity = "0.5";
-    document.getElementById("singleleft").style.cursor = "not-allowed";
+    document.getElementById('prevPage').style.opacity = '0.5';
+    document.getElementById('prevPage').style.cursor = 'not-allowed';
   }
 }
 
-function doubleLeftButton() {
+function firstPageButton() {
   if (currentPage > 1) {
     currentPage = 1;
-    startIndex = (currentPage - 1) * recordsInSinglePage;
-    endIndex = startIndex + recordsInSinglePage;
-    const pagginationArray = dataArray.slice(startIndex, endIndex);
+    startIndex = (currentPage - 1) * pageSize;
+    endIndex = startIndex + pageSize;
+    const pagginationArray = arrayForPaggination.slice(startIndex, endIndex);
     dataTableGrid(pagginationArray, startIndex);
   }
-  document.getElementById("currentpageshow").innerHTML = `Page ${currentPage}`;
-  document.getElementById("doubleleft").style.opacity = "0.5";
-  document.getElementById("doubleleft").style.cursor = "not-allowed";
+  document.getElementById('currentpageshow').innerHTML = `Page ${currentPage}`;
+  document.getElementById('firstPage').style.opacity = '0.5';
+  document.getElementById('firstPage').style.cursor = 'not-allowed';
 
-  document.getElementById("singleleft").style.opacity = "0.5";
-  document.getElementById("singleleft").style.cursor = "not-allowed";
+  document.getElementById('prevPage').style.opacity = '0.5';
+  document.getElementById('prevPage').style.cursor = 'not-allowed';
 
-  document.getElementById("singleright").style.opacity = "1.0";
-  document.getElementById("singleright").style.cursor = "pointer";
+  document.getElementById('nextPage').style.opacity = '1.0';
+  document.getElementById('nextPage').style.cursor = 'pointer';
 
-  document.getElementById("doubleright").style.opacity = "1.0";
-  document.getElementById("doubleright").style.cursor = "pointer";
+  document.getElementById('lastPage').style.opacity = '1.0';
+  document.getElementById('lastPage').style.cursor = 'pointer';
 }
 
-function singleLeftButton() {
+function prevPageButton() {
   if (currentPage > 1) {
     currentPage = currentPage - 1;
-    startIndex = (currentPage - 1) * recordsInSinglePage;
-    endIndex = startIndex + recordsInSinglePage;
-    const pagginationArray = dataArray.slice(startIndex, endIndex);
+    startIndex = (currentPage - 1) * pageSize;
+    endIndex = startIndex + pageSize;
+    const pagginationArray = arrayForPaggination.slice(startIndex, endIndex);
     dataTableGrid(pagginationArray, startIndex);
   }
 
   if (currentPage === 1) {
-    document.getElementById("doubleleft").style.opacity = "0.5";
-    document.getElementById("doubleleft").style.cursor = "not-allowed";
+    document.getElementById('firstPage').style.opacity = '0.5';
+    document.getElementById('firstPage').style.cursor = 'not-allowed';
 
-    document.getElementById("singleleft").style.opacity = "0.5";
-    document.getElementById("singleleft").style.cursor = "not-allowed";
+    document.getElementById('prevPage').style.opacity = '0.5';
+    document.getElementById('prevPage').style.cursor = 'not-allowed';
   }
 
-  document.getElementById("currentpageshow").innerHTML = `Page ${currentPage}`;
+  document.getElementById('currentpageshow').innerHTML = `Page ${currentPage}`;
 
-  document.getElementById("singleright").style.opacity = "1.0";
-  document.getElementById("singleright").style.cursor = "pointer";
+  document.getElementById('nextPage').style.opacity = '1.0';
+  document.getElementById('nextPage').style.cursor = 'pointer';
 
-  document.getElementById("doubleright").style.opacity = "1.0";
-  document.getElementById("doubleright").style.cursor = "pointer";
+  document.getElementById('lastPage').style.opacity = '1.0';
+  document.getElementById('lastPage').style.cursor = 'pointer';
 }
 
-function doubleRightButton() {
-
-  if (currentPage < Math.ceil(totalNumerOfRecords / recordsInSinglePage)) {
-    currentPage = Math.ceil(totalNumerOfRecords / recordsInSinglePage);
-    startIndex = (currentPage - 1) * recordsInSinglePage;
-    endIndex = startIndex + recordsInSinglePage;
-    const pagginationArray = dataArray.slice(startIndex, endIndex);
-    dataTableGrid(pagginationArray, startIndex);
-  }
-  document.getElementById("currentpageshow").innerHTML = `Page ${currentPage}`;
-
-  document.getElementById("doubleleft").style.opacity = "1.0";
-  document.getElementById("doubleleft").style.cursor = "pointer";
-
-  document.getElementById("singleleft").style.opacity = "1.0";
-  document.getElementById("singleleft").style.cursor = "pointer";
-
-  document.getElementById("singleright").style.opacity = "0.5";
-  document.getElementById("singleright").style.cursor = "not-allowed";
-
-  document.getElementById("doubleright").style.opacity = "0.5";
-  document.getElementById("doubleright").style.cursor = "not-allowed";
-}
-
-function singleRightButton() {
-
-  if (currentPage < Math.ceil(totalNumerOfRecords / recordsInSinglePage)) {
+function nextPageButton() {
+  if (currentPage < Math.ceil(totalNumerOfRecords / pageSize)) {
     currentPage = currentPage + 1;
-    startIndex = (currentPage - 1) * recordsInSinglePage;
-    endIndex = startIndex + recordsInSinglePage;
-    const pagginationArray = dataArray.slice(startIndex, endIndex);
+    startIndex = (currentPage - 1) * pageSize;
+    endIndex = startIndex + pageSize;
+    const pagginationArray = arrayForPaggination.slice(startIndex, endIndex);
     dataTableGrid(pagginationArray, startIndex);
   }
 
-  if (currentPage === Math.ceil(totalNumerOfRecords / recordsInSinglePage)) {
-    document.getElementById("singleright").style.opacity = "0.5";
-    document.getElementById("singleright").style.cursor = "not-allowed";
+  if (currentPage === Math.ceil(totalNumerOfRecords / pageSize)) {
+    document.getElementById('nextPage').style.opacity = '0.5';
+    document.getElementById('nextPage').style.cursor = 'not-allowed';
 
-    document.getElementById("doubleright").style.opacity = "0.5";
-    document.getElementById("doubleright").style.cursor = "not-allowed";
+    document.getElementById('lastPage').style.opacity = '0.5';
+    document.getElementById('lastPage').style.cursor = 'not-allowed';
   }
 
-  document.getElementById("currentpageshow").innerHTML = `Page ${currentPage}`;
+  document.getElementById('currentpageshow').innerHTML = `Page ${currentPage}`;
 
-  document.getElementById("doubleleft").style.opacity = "1.0";
-  document.getElementById("doubleleft").style.cursor = "pointer";
+  document.getElementById('firstPage').style.opacity = '1.0';
+  document.getElementById('firstPage').style.cursor = 'pointer';
 
-  document.getElementById("singleleft").style.opacity = "1.0";
-  document.getElementById("singleleft").style.cursor = "pointer";
+  document.getElementById('prevPage').style.opacity = '1.0';
+  document.getElementById('prevPage').style.cursor = 'pointer';
+}
+
+function lastPageButton() {
+  if (currentPage < Math.ceil(totalNumerOfRecords / pageSize)) {
+    currentPage = Math.ceil(totalNumerOfRecords / pageSize);
+    startIndex = (currentPage - 1) * pageSize;
+    endIndex = startIndex + pageSize;
+    const pagginationArray = arrayForPaggination.slice(startIndex, endIndex);
+    dataTableGrid(pagginationArray, startIndex);
+  }
+  document.getElementById('currentpageshow').innerHTML = `Page ${currentPage}`;
+
+  document.getElementById('firstPage').style.opacity = '1.0';
+  document.getElementById('firstPage').style.cursor = 'pointer';
+
+  document.getElementById('prevPage').style.opacity = '1.0';
+  document.getElementById('prevPage').style.cursor = 'pointer';
+
+  document.getElementById('nextPage').style.opacity = '0.5';
+  document.getElementById('nextPage').style.cursor = 'not-allowed';
+
+  document.getElementById('lastPage').style.opacity = '0.5';
+  document.getElementById('lastPage').style.cursor = 'not-allowed';
 }
