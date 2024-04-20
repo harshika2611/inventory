@@ -1,4 +1,5 @@
 function getSuppliers() {
+  currentPage = 1;
   paggination("/api/manageSuppliers");
 }
 

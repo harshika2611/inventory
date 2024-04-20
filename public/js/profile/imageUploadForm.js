@@ -32,4 +32,4 @@ function getImage() {
 uploadButton.addEventListener('click', function () {
   uploadImage();
 });
-async function uploadImage() {}
+async function uploadImage() { }

@@ -221,12 +221,18 @@ const {
 
 const manageCustomerValidation = require('../middleware/manageCustomers/manageCustomerValidation.js');
 
+const { uploadFile } = require('../controller/manageCustomers/manageCustomersFileUpload.js');
+
+const { uploadCustomerFile } = require('../middleware/manageCustomers/manageCustomerFileUpload.js');
+
 router.get('/manageCustomers', getCustomersPage);
 router.get('/api/manageCustomers', getAllCustomers);
 router.get('/api/getCustomers', getParticularCustomer);
 router.post('/api/insertCustomer', manageCustomerValidation, insertCustomer);
 router.post('/api/updateCustomer', manageCustomerValidation, updateCustomer);
 router.get('/api/deleteCustomer', deleteCustomer);
+
+router.post('/api/customersFileUpload', uploadCustomerFile.single("customersFile"), uploadFile);
 
 //---------Manage Suppliers
 const {

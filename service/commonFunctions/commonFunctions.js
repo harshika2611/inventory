@@ -41,11 +41,13 @@ async function getCityQuery(stateName) {
 
 async function getCityStateId(stateName, cityName) {
   try {
-    const getCityStateIdQuery = `SELECT s.state_id as state_id,c.city_id as city_id         FROM state_master as s
+    console.log(stateName);
+    const getCityStateIdQuery = `SELECT s.state_id as state_id,c.city_id as city_id FROM state_master as s
     LEFT JOIN city_master as c ON s.state_id = c.state_id
     WHERE s.state_name=? AND c.city_name=?`;
 
     const [result] = await connection.execute(getCityStateIdQuery, [stateName, cityName]);
+    // logger.info(result);
     return result;
   } catch (error) {
     logger.logError("Get State and City Id: " + error);

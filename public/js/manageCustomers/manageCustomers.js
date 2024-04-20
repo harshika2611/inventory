@@ -1,4 +1,5 @@
 function getCustomers() {
+  // currentPage = 1;
   paggination('/api/manageCustomers');
 }
 
