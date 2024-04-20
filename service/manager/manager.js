@@ -15,7 +15,7 @@ const storeComboServices = async () => {
   }
 };
 
-const listManagersService = async (status) => {
+const listManagersService = async (status, order, field) => {
   try {
     const sql0 = `SELECT 
     users.id,
@@ -39,10 +39,10 @@ FROM
     option_master ON option_master.id = users.status
 WHERE
   option_master.value =?
-        AND manager_details.is_delete = ?`;
+        AND manager_details.is_delete = ?
+ORDER BY ${field} ${order}`;
     console.log(status, 'con');
     const [ans] = await connection.execute(sql0, [status, 0]);
-    console.log(ans);
     return ans;
   } catch (error) {
     logger.logError(`Error`, error);
