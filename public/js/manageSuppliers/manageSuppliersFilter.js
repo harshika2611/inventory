@@ -39,12 +39,12 @@ function supplierFilterHide() {
   totalNumerOfRecords = dataArray.length;
   arrayForPaggination = [...dataArray];
 
-  startIndex = (currentPage - 1) * recordsInSinglePage;
-  endIndex = startIndex + recordsInSinglePage;
+  startIndex = (currentPage - 1) * pageSize;
+  endIndex = startIndex + pageSize;
   const pagginationArray = arrayForPaggination.slice(startIndex, endIndex);
   dataTableGrid(pagginationArray, startIndex);
 
-  if (recordsInSinglePage < arrayForPaggination.length) {
+  if (pageSize < arrayForPaggination.length) {
     document.getElementById("currentpageshow").innerHTML = `Page ${currentPage}`;
     document.querySelector(".pagginationsection").style.display = "block";
     //----paggination button style
@@ -55,11 +55,11 @@ function supplierFilterHide() {
     document.getElementById("singleleft").style.cursor = "not-allowed";
 
     //-----right
-    document.getElementById("doubleright").style.opacity = "1.0";
-    document.getElementById("doubleright").style.cursor = "pointer";
+    document.getElementById("lastPage").style.opacity = "1.0";
+    document.getElementById("lastPage").style.cursor = "pointer";
 
-    document.getElementById("singleright").style.opacity = "1.0";
-    document.getElementById("singleright").style.cursor = "pointer";
+    document.getElementById("nextPage").style.opacity = "1.0";
+    document.getElementById("nextPage").style.cursor = "pointer";
   }
 }
 
@@ -120,12 +120,12 @@ function pagginationFilter(filterArray, currPage) {
   }
   totalNumerOfRecords = arrayForPaggination.length;
   currentPage = currPage;
-  startIndex = (currentPage - 1) * recordsInSinglePage;
-  endIndex = startIndex + recordsInSinglePage;
+  startIndex = (currentPage - 1) * pageSize;
+  endIndex = startIndex + pageSize;
   const pagginationArray = arrayForPaggination.slice(startIndex, endIndex);
   dataTableGrid(pagginationArray, startIndex);
 
-  if (recordsInSinglePage < arrayForPaggination.length) {
+  if (pageSize < arrayForPaggination.length) {
     document.getElementById("currentpageshow").innerHTML = `Page ${currentPage}`;
     document.querySelector(".pagginationsection").style.display = "block";
     //----paggination button style
@@ -135,11 +135,11 @@ function pagginationFilter(filterArray, currPage) {
     document.getElementById("singleleft").style.opacity = "0.5";
     document.getElementById("singleleft").style.cursor = "not-allowed";
     //-----right
-    document.getElementById("doubleright").style.opacity = "1.0";
-    document.getElementById("doubleright").style.cursor = "pointer";
+    document.getElementById("lastPage").style.opacity = "1.0";
+    document.getElementById("lastPage").style.cursor = "pointer";
 
-    document.getElementById("singleright").style.opacity = "1.0";
-    document.getElementById("singleright").style.cursor = "pointer";
+    document.getElementById("nextPage").style.opacity = "1.0";
+    document.getElementById("nextPage").style.cursor = "pointer";
   } else {
     document.querySelector(".pagginationsection").style.display = "none";
   }
