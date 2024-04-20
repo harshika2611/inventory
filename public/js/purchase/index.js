@@ -2,6 +2,20 @@ let orderId =
   Number(new URLSearchParams(location.search)?.get('orderId')) ?? undefined;
 let orderDetails;
 
+pageSize = 4;
+
+async function dataTableGrid(records) {
+  document.querySelector('form').innerHTML = '';
+  for (const obj of records) {
+    generateAddProductRows(
+      await generateProductsDropDown(obj.categoryId, obj.productId),
+      await generateDropDown('productCategory', obj.categoryId),
+      obj.purchaseProductId,
+      { ...obj }
+    );
+  }
+}
+
 const modal = new bootstrap.Modal('#deleteModal');
 
 const patterns = {
@@ -247,18 +261,7 @@ async function generateForm2() {
     generateAddProductRows('', categoryOptions);
   });
 
-  if (orderDetails?.products.length > 0) {
-    orderDetails.products.forEach(async (obj) => {
-      generateAddProductRows(
-        await generateProductsDropDown(obj.categoryId, obj.productId),
-        await generateDropDown('productCategory', obj.categoryId),
-        obj.purchaseProductId,
-        { ...obj }
-      );
-    });
-  } else {
-    generateAddProductRows('', categoryOptions);
-  }
+  paggination(null, orderDetails?.products || [{}]);
 }
 
 async function getOrderDetails(id) {
@@ -426,6 +429,7 @@ async function deleteProduct(e, purchaseProductId = null) {
         }
       );
       await response.json();
+      await getOrderDetails(orderId);
     }
     modal.hide();
     generateForm2();
