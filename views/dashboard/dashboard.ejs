@@ -6,9 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
   <script src="/js/bootstrap.js"></script>
-  <link rel="stylesheet" href="/charts/apexcharts.css" />
   <link rel="stylesheet" href="src/css/allpage.css" />
   <link rel="stylesheet" href="src/css/dashboard/dashboardCustom.css" />
+  <link rel="stylesheet" href="/charts/apexcharts.css" />
   <title>Dashboard</title>
   <style>
 
@@ -20,23 +20,10 @@
     <section class="div-second dashboard-section">
       <div class="dashboard-container">
         <div class="div-container__grid">
-          <div class="div-container__grid__salesoverview w-75">
+          <div class="div-container__grid__salesoverview">
             <p class="div-container__grid__name">Sales Overview</p>
             <div class="salesoverview__todaysales">
-              <div class="todaysales_div">
-                <p class="salesoverview__p">Today Sales</p>
-                <div class="todaysales_div_div">
-                  <img src="src/assets/dashboard/cart-shopping.svg" alt="img" width="30" height="30" />
-                  <p id="daySales">&#8377; 1000</p>
-                </div>
-              </div>
-              <div class="todaysales_div">
-                <p class="salesoverview__p">This Month Sales</p>
-                <div class="todaysales_div_div">
-                  <img src="src/assets/dashboard/cart-shopping.svg" alt="img" width="30" height="30" />
-                  <div id="monthSales"></div>
-                </div>
-              </div>
+              <div id="daySales"></div>
             </div>
           </div>
           <div class="div-container__grid__inventorysummary">
@@ -50,13 +37,13 @@
             </div>
           </div>
           <div class="outofstock_div px-3 text-center">
-            <p class="inventorysummary__p px-3 text-center"">Out Of Stock</p>
-                <div class=" outofstock_div_div">
+            <p class="inventorysummary__p">Out Of Stock</p>
+            <div class=" outofstock_div_div px-3 text-center">
               <img src="src/assets/dashboard/Products.svg" alt="img" width="30" height="30" />
-            <p id="outStock">10</p>
+              <p id="outStock">10</p>
+            </div>
           </div>
         </div>
-      </div>
       </div>
 
       <div class="div-container__grid__purchaseoverview">
@@ -78,20 +65,7 @@
           </div>
         </div>
       </div>
-      <div class="div-container__grid__latestpurchase">
-        <div class="latestpurchase__div">
-          <p class="div-container__grid__name">Orders</p>
-          <a href="/orderReport">see all</a>
-        </div>
-        <table class="table table-hover">
-          <thead id="orderTableHead">
-          </thead>
-          <tbody id="orderTableBody">
-          </tbody>
-        </table>
-      </div>
-
-      <div class="div-container__grid__lowquantitystock">
+      <div class="div-container__grid__latestpurchase ">
         <p class="div-container__grid__name">Low Quantity Stock
           <select class="float-end btn btn-dark" name="lowProduct" id="lowProduct" onchange="changeproductQuantity()">
             <option value="10">10</option>
@@ -104,6 +78,18 @@
           <thead id="lowQuantityStockTableHead">
           </thead>
           <tbody id="lowQuantityStockTableBody">
+          </tbody>
+        </table>
+      </div>
+      <div class="div-container__grid__lowquantitystock">
+        <div class="latestpurchase__div">
+          <p class="div-container__grid__name">Orders</p>
+          <a href="/orderReport">see all</a>
+        </div>
+        <table class="table table-hover">
+          <thead id="orderTableHead">
+          </thead>
+          <tbody id="orderTableBody">
           </tbody>
         </table>
       </div>

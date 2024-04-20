@@ -46,12 +46,15 @@ async function paggination(apiName = null, records = []) {
     document.getElementById('prevPage').style.cursor = 'not-allowed';
 
     //-----right
-    document.getElementById("lastPage").style.opacity = "1.0";
-    document.getElementById("lastPage").style.cursor = "pointer";
+    document.getElementById('lastPage').style.opacity = '1.0';
+    document.getElementById('lastPage').style.cursor = 'pointer';
 
-    document.getElementById("nextPage").style.opacity = "1.0";
-    document.getElementById("nextPage").style.cursor = "pointer";
+    document.getElementById('nextPage').style.opacity = '1.0';
+    document.getElementById('nextPage').style.cursor = 'pointer';
   } else {
+    document.getElementById(
+      'currentpageshow'
+    ).innerHTML = `Page ${currentPage}`;
     document.querySelector('.pagginationsection').style.display = 'none';
   }
 }

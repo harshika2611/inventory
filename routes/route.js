@@ -99,16 +99,36 @@ const {
   getApiordersProductRreport,
 } = require('../controller/report/orderReport.js');
 
-router.get('/salesReport', getsalesReport);
-router.get('/salesReportallProducts', getReportallProducts);
+router.get(
+  '/salesReport',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  getsalesReport
+);
+router.get(
+  '/salesReportallProducts',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  getReportallProducts
+);
 router.get('/api/salesreport/allproduct', getApiproductreport);
 router.get('/api/salesreport/allcategory', getApicategoryreport);
 
-router.get('/purchaseReport', getpurchaseReport);
+router.get(
+  '/purchaseReport',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  getpurchaseReport
+);
 router.get('/api/purchasereport/allproduct', getApiproductPurchasereport);
 
-router.get('/orderReport', getorderReport);
-router.get('/orderProduct/:id', getorderProducts);
+router.get(
+  '/orderReport',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  getorderReport
+);
+router.get(
+  '/orderProduct/:id',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  getorderProducts
+);
 router.get('/api/orderreport/allorder', getApiorderRreport);
 router.get('/api/orderreport/allproduct/:id', getApiordersProductRreport);
 
@@ -376,8 +396,12 @@ router.get(
 // ------------------- Manage Purchases ---------------------- //
 
 //---------------------Products Module---------------------
-const { productListing } = require('../controller/product/productListing.js');
-router.get('/product', productListing);
+const {
+  productListing,
+  productInfo,
+} = require('../controller/product/productListing.js');
+router.get('/products', productListing);
+router.get('/productInfo', productInfo);
 
 //---------------------Profile Module---------------------
 
