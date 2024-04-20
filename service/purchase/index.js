@@ -166,6 +166,33 @@ async function deleteProductFromPurchaseOrder(id) {
   }
 }
 
+async function fetchPurchaseOrders() {
+  try {
+    const [results] = await connection.execute(
+      `SELECT
+        purchase.id,
+        supplier.firstname,
+        supplier.companyname,
+        supplier.phonenumber,
+        supplier.gst,
+        purchase.amount,
+        payment.\`value\` AS payment_status,
+        purchase.\`date\`
+      FROM
+        purchase_order AS purchase
+            JOIN
+        supplier_master AS supplier ON purchase.supplier_id = supplier.id
+            JOIN
+        option_master AS payment ON payment.id = purchase.payment_status
+      `
+    );
+    return results;
+  } catch (error) {
+    logError(error);
+    return [];
+  }
+}
+
 module.exports = {
   getAllSuppliers,
   createPurchaseOrder,
@@ -177,4 +204,5 @@ module.exports = {
   getAllWarehouses,
   fetchPurchaseOrder,
   getProductsByCategory,
+  fetchPurchaseOrders,
 };

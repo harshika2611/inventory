@@ -228,12 +228,20 @@ router.post('/filterStore', filterStore);
 
 const {
   fetchCombos,
-  showPurchases,
+  showPurchaseOrder,
   createPurchase,
   fetchSuppliers,
   fetchProducts,
   fetchWarehouses,
   createProductPurchase,
+  fetchOrderDetails,
+  updatePurchase,
+  updateProductPurchase,
+  deleteProductPurchase,
+  purchaseValidations,
+  checkValidation,
+  fetchOrdersDetails,
+  showPurchaseOrders,
 } = require('../controller/purchase');
 
 router.get(
@@ -249,7 +257,7 @@ router.get(
 );
 
 router.get(
-  '/api/purchase/products',
+  '/api/purchase/products/:id',
   passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
   fetchProducts
 );
@@ -260,22 +268,62 @@ router.get(
   fetchWarehouses
 );
 
+router.get(
+  '/api/order/:id',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  fetchOrderDetails
+);
+
 router.post(
   '/api/purchase/order',
   passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  checkValidation(purchaseValidations.form1),
   createPurchase
+);
+
+router.put(
+  '/api/purchase/order/:id',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  checkValidation(purchaseValidations.form1),
+  updatePurchase
 );
 
 router.post(
   '/api/purchase/product',
   passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  checkValidation(purchaseValidations.form2),
   createProductPurchase
+);
+
+router.put(
+  '/api/purchase/product/:id',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  checkValidation(purchaseValidations.form2),
+  updateProductPurchase
+);
+
+router.delete(
+  '/api/purchase/product/:id',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  deleteProductPurchase
+);
+
+router.get(
+  '/api/orders',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  fetchOrdersDetails
 );
 
 router.get(
   '/purchaseOrder',
   passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
-  showPurchases
+  showPurchaseOrder
+);
+
+router.get(
+  '/purchaseHistory',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  showPurchaseOrders
 );
 
 // ------------------- Manage Purchases ---------------------- //

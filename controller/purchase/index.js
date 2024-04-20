@@ -9,8 +9,56 @@ const {
   updateProductInPurchaseOrder,
   deleteProductFromPurchaseOrder,
   getProductsByCategory,
+  fetchPurchaseOrders,
 } = require('../../service/purchase');
 const { getCombos } = require('../../service/helper');
+
+const patterns = {
+  textOnly: '^[a-zA-Z\\s]+$',
+  numberOnly: '^\\d+$',
+  email: '^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$',
+  date: '^(19[0-9]{2}|2[0-9]{3})-(0[1-9]|1[012])-([123]0|[012][1-9]|31)$',
+};
+
+// Pattern Field is optional
+const purchaseValidations = {
+  form1: {
+    name: {
+      required: true,
+      pattern: patterns.textOnly,
+    },
+    date: {
+      required: true,
+      pattern: patterns.date,
+    },
+    supplier_id: {
+      required: true,
+      pattern: patterns.numberOnly,
+    },
+    amount: {
+      required: true,
+      pattern: patterns.numberOnly,
+    },
+    payment_status: {
+      required: false,
+      pattern: patterns.numberOnly,
+    },
+  },
+  form2: {
+    product_id: {
+      required: true,
+      pattern: patterns.numberOnly,
+    },
+    unit_price: {
+      required: true,
+      pattern: patterns.numberOnly,
+    },
+    quantity: {
+      required: true,
+      pattern: patterns.numberOnly,
+    },
+  },
+};
 
 async function fetchCombos(req, res) {
   try {
@@ -78,8 +126,21 @@ async function fetchOrderDetails(req, res) {
   }
 }
 
-async function showPurchases(req, res) {
+async function fetchOrdersDetails(req, res) {
+  try {
+    const response = await fetchPurchaseOrders();
+    res.json(response);
+  } catch (error) {
+    res.json({ error });
+  }
+}
+
+async function showPurchaseOrder(req, res) {
   res.render('purchase');
+}
+
+async function showPurchaseOrders(req, res) {
+  res.render('purchase/history');
 }
 
 async function createPurchase(req, res) {
@@ -124,8 +185,41 @@ async function deleteProductPurchase(req, res) {
   }
 }
 
+function checkValidation(validation) {
+  return ({ body }, res, next) => {
+    for (let arr of Object.entries(validation)) {
+      const field = arr[0];
+      const obj = arr[1];
+      if (obj.required) {
+        if (!body[field]) {
+          res.json({
+            status: 'error',
+            message: `${field} is required!`,
+            field,
+          });
+          return false;
+        }
+      }
+
+      // Note pattern is optional property
+      if (obj?.pattern && body[field]) {
+        if (!new RegExp(obj.pattern, 'i').test(body[field])) {
+          res.json({
+            status: 'error',
+            message: `Invalid input for ${field}!`,
+            field,
+          });
+          return false;
+        }
+      }
+    }
+    next();
+  };
+}
+
 module.exports = {
-  showPurchases,
+  purchaseValidations,
+  showPurchaseOrder,
   createPurchase,
   fetchCombos,
   fetchSuppliers,
@@ -136,4 +230,7 @@ module.exports = {
   updatePurchase,
   updateProductPurchase,
   deleteProductPurchase,
+  checkValidation,
+  fetchOrdersDetails,
+  showPurchaseOrders,
 };
