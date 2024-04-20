@@ -73,7 +73,7 @@ async function generateForm1(oId = null) {
 		</div>
 		<div class="form-floating mb-3">
 			<input name="date" type="date" class="form-control" id="floatingDate" placeholder="date"
-				${orderDetails?.date ? `value = "${orderDetails?.date}"` : ''}
+				${orderDetails?.date ? `value = "${orderDetails?.date.split(' ')[0]}"` : ''}
 			>
 			<label for="floatingDate">Date</label>
 			<div class="invalid-feedback">
