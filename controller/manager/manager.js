@@ -31,6 +31,7 @@ const getManager = async (req, res) => {
 
 const manageManager = async (req, res) => {
   try {
+    console.log(req.user.id, 'gettt');
     const result1 = await checkManagerService(req.body);
     console.log(result1, 'gottt');
     if (result1.length) {
@@ -46,8 +47,6 @@ const manageManager = async (req, res) => {
         return res.status(500).json({ message: 'can`t fetch user controller' });
       }
     }
-
-    // const manager = await insertManagerService();
   } catch (error) {
     logger.logError(error);
     res.status(500).json({ message: 'can`t fetch user controller' });
@@ -56,11 +55,19 @@ const manageManager = async (req, res) => {
 
 const listManagers = async (req, res) => {
   try {
-    const result = await listManagersService();
+    // let status;
+    // if (req.query.status == undefined) {
+    //   status = 'Active';
+    // } else {
+    //   status = req.query.status;
+    //   console.log(status, 'change');
+    // }
+    let status = req.query.status || 'Active';
+    console.log(status, 'what');
+    const result = await listManagersService(status);
     for (let iterator of result) {
       const created_at = iterator.Created;
       const updated_at = iterator.Updated;
-
       if (created_at === updated_at) {
         iterator.Updated = '-';
       }
