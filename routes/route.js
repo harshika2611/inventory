@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const multer = require('multer');
 
 //login module
 const {
@@ -281,8 +282,8 @@ router.get(
 // ------------------- Manage Purchases ---------------------- //
 
 //---------------------Products Module---------------------
-const { productListing } = require('../controller/products/productListing.js');
-router.get('/products', productListing);
+const { productListing } = require('../controller/product/productListing.js');
+router.get('/product', productListing);
 
 //---------------------Profile Module---------------------
 
@@ -294,7 +295,11 @@ const {
 const { storeImage } = require('../controller/profile/uploadImage.js');
 const { getOrderreport } = require('../service/report/orderReportService.js');
 
-router.get('/profile', viewProfile);
+router.get(
+  '/profile',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  viewProfile
+);
 router.get('/profileEdit', editProfile);
 router.post('/profileEdit', updateProfile);
 router.post('/imageUpload', storeImage);

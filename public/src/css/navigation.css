@@ -1,92 +1,115 @@
 .nav-costom1 {
-	width: 210px;
+  width: 210px;
 }
 
 .logout-container {
-	display: flex;
-	justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 .nav-costom2 {
-	height: 70px;
-	width: 1155px;
+  height: 70px;
+  width: 1155px;
 }
 
 #navdiv1 {
-	background-color: red;
-	margin: 0px auto;
-	position: relative;
-	width: 1400px;
+  background-color: red;
+  margin: 0px auto;
+  position: relative;
+  width: 1400px;
 }
 
 .main-div {
-	position: absolute;
+  position: absolute;
 }
 
 .user-image {
-	cursor: pointer;
+  cursor: pointer;
 }
 
 .width-100 {
-	width: 100%;
+  width: 100%;
 }
 
 .div-h {
-	min-height: 800px !important;
+  min-height: 800px !important;
 }
 
 .bgColor {
-	background-color: #31384f;
+  background-color: #31384f;
 }
 
 img {
-	color: white;
+  color: white;
 }
 
 .user-img {
-	cursor: pointer;
-}
-
-.dropbtn {
-	background-color: #3498db;
-	color: white;
-	padding: 16px;
-	font-size: 16px;
-	border: none;
-	cursor: pointer;
-}
-
-.dropbtn:hover,
-.dropbtn:focus {
-	background-color: #2980b9;
+  cursor: pointer;
 }
 
 .dropdown {
-	position: relative;
-	display: inline-block;
+  position: relative;
+  display: inline-block;
 }
 
 .dropdown-content {
-	display: none;
-	position: absolute;
-	background-color: #f1f1f1;
-	min-width: 160px;
-	overflow: auto;
-	box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-	z-index: 1;
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  overflow: auto;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
 }
 
 .dropdown-content a {
-	color: black;
-	padding: 12px 16px;
-	text-decoration: none;
-	display: block;
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
 }
 
 .dropdown a:hover {
-	background-color: #ddd;
+  background-color: #ddd;
 }
 
 .show {
-	display: block;
+  display: block;
+}
+
+.dropimg {
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+.dropdown {
+  position: relative;
+  display: inline;
+  left: -100%;
+}
+
+.dropdown-content {
+  display: none;
+  border-radius: 10%;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  overflow: auto;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown a:hover {
+  background-color: #ddd;
+}
+
+.show {
+  display: block;
 }

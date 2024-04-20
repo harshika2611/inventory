@@ -1,0 +1,42 @@
+.form-popup {
+  display: none;
+  position: absolute;
+  bottom: 0;
+  top: 50px;
+  z-index: 9;
+  width: 500px;
+  right: 490px;
+}
+
+/* Add styles to the form container */
+.form-container {
+  max-width: 300px;
+  padding: 10px;
+  background-color: white;
+  /* height: 1000px; */
+}
+
+.form-control {
+  width: 700px;
+  display: flex;
+}
+
+.form-inline {
+  display: flex;
+  margin-left: 200px;
+}
+
+.row2 {
+  margin-top: 26px;
+  margin-left: 100px;
+}
+
+.row1 {
+  margin-top: 33px;
+  margin-left: 110px;
+  display: flex;
+}
+
+#btn {
+  margin-left: 620px;
+}

@@ -1,5 +1,5 @@
 async function productListing(req, res) {
-	res.render('./products/listing');
+  res.render('./product/listing');
 }
 
 module.exports = { productListing };
