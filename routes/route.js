@@ -225,6 +225,8 @@ const {
   updatePurchase,
   updateProductPurchase,
   deleteProductPurchase,
+  purchaseValidations,
+  checkValidation,
 } = require('../controller/purchase');
 
 router.get(
@@ -260,24 +262,28 @@ router.get(
 router.post(
   '/api/purchase/order',
   passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  checkValidation(purchaseValidations.form1),
   createPurchase
 );
 
 router.put(
   '/api/purchase/order/:id',
   passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  checkValidation(purchaseValidations.form1),
   updatePurchase
 );
 
 router.post(
   '/api/purchase/product',
   passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  checkValidation(purchaseValidations.form2),
   createProductPurchase
 );
 
 router.put(
   '/api/purchase/product/:id',
   passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  checkValidation(purchaseValidations.form2),
   updateProductPurchase
 );
 

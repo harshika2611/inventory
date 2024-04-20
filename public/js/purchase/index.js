@@ -145,6 +145,8 @@ async function submitForm1(update = false) {
 
       if (result.insertId && !orderId) {
         orderId = result.insertId;
+      } else if (result.status == 'error') {
+        return;
       }
 
       generateForm2();
@@ -346,7 +348,12 @@ async function saveProduct(e, purchaseProductId = null) {
         }
       );
 
-      await response.json();
+      const result = await response.json();
+
+      if (result.status == 'error') {
+        return;
+      }
+
       await getOrderDetails(orderId);
       generateForm2();
     } catch (error) {

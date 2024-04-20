@@ -32,18 +32,20 @@ function generateSuppliersDropDown() {
 }
 
 function generateProductsDropDown(id, selectedId) {
-  return fetch('api/purchase/products/' + id)
-    .then((res) => res.json())
-    .then((data) => {
-      let content = '';
-      data.forEach((o) => {
-        content += `<option value="${o.id}" ${
-          o.id == selectedId ? 'selected="selected"' : ''
-        } >${o.product_name}</option>`;
-      });
-      return content;
-    })
-    .catch(() => '');
+  return id
+    ? fetch('api/purchase/products/' + id)
+        .then((res) => res.json())
+        .then((data) => {
+          let content = '';
+          data.forEach((o) => {
+            content += `<option value="${o.id}" ${
+              o.id == selectedId ? 'selected="selected"' : ''
+            } >${o.product_name}</option>`;
+          });
+          return content;
+        })
+        .catch(() => '')
+    : '';
 }
 
 function generateWarehousesDropDown() {
