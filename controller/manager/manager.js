@@ -63,8 +63,11 @@ const listManagers = async (req, res) => {
     //   console.log(status, 'change');
     // }
     let status = req.query.status || 'Active';
-    console.log(status, 'what');
-    const result = await listManagersService(status);
+    let order = req.query.order || 'asc';
+    let field = req.query.field || 'id';
+    console.log(field, 'get');
+    console.log(order, 'told');
+    const result = await listManagersService(status,order,field);
     for (let iterator of result) {
       const created_at = iterator.Created;
       const updated_at = iterator.Updated;
