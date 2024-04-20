@@ -55,8 +55,17 @@ const {
   updateManager,
 } = require('../controller/manager/manager');
 const manageManagerFormValidation = require('../controller/manager/managerValidation.js');
-router.get('/manager', getManager);
-router.post('/manager', manageManagerFormValidation, manageManager);
+router.get(
+  '/manager',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  getManager
+);
+router.post(
+  '/manager',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  manageManagerFormValidation,
+  manageManager
+);
 router.get('/api/getmanagers', listManagers);
 router.get('/api/getmanager/:id', getPerticularManager);
 router.post('/updatemanager', manageManagerFormValidation, updateManager);
@@ -107,7 +116,11 @@ const {
   dashboard,
   getApiproductStock,
 } = require('../controller/dashboard/dashboard.js');
-router.get('/dashboard', dashboard);
+router.get(
+  '/dashboard',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  dashboard
+);
 router.get('/api/productStock', getApiproductStock);
 //-------------
 

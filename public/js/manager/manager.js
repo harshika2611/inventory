@@ -1,3 +1,9 @@
+let url = new URL(window.location.href);
+// let params = new URLSearchParams(url.search);
+// let status = params.get('status');
+// console.log(status, 'url');
+console.log(url, 'what');
+
 function addManager() {
   const customerForm = document.getElementById('myForm');
   customerForm.style.display = 'block';
@@ -13,43 +19,12 @@ async function submitbtn() {
   try {
     const data = formData('form');
     const managerValidation = manageManagerFormValidation(data);
-    try {
-      const data = formData('form');
-      const managerValidation = manageManagerFormValidation(data);
-
-      if (Object.keys(managerValidation).length > 0) {
-        //----client side validation error
-        errorShow(managerValidation);
-      } else {
-        const response = await fetch(`/manager`, {
-          method: 'post',
-          headers: {
-            'Content-Type': 'application/json',
-            Accept: 'application/json',
-          },
-          body: JSON.stringify(data),
-        });
-        if (response.status == 200) {
-          alert('Manager added');
-          window.location = `/user`;
-        }
-        if (response.status === 409) {
-          document.getElementById('error').innerHTML = 'manager already exist';
-          document.getElementById('error').style.color = 'red';
-        }
-        if (response.status === 400) {
-          const errorObject = await response.json();
-          errorShow(errorObject);
-        }
-      }
-    } catch (error) {
-      console.log(error);
-    }
     if (Object.keys(managerValidation).length > 0) {
       //----client side validation error
       errorShow(managerValidation);
     } else {
-      const response = await fetch(`/manager`, {
+      url = `/manager`;
+      const response = await fetch(url, {
         method: 'post',
         headers: {
           'Content-Type': 'application/json',
@@ -91,16 +66,13 @@ const getAllStore = async () => {
   }
 };
 
-const getAllManager = async () => {
-  paggination('/api/getmanagers');
-};
-getAllManager();
-
 function dataTableGrid(manager, startIndex) {
   const table = document.getElementById('thead');
   const tableBody = document.getElementById('tbody');
-
+  console.log(manager, 'get');
+  tableBody.innerHTML = '';
   for (let key in manager[0]) {
+    console.log(key, 'all');
     if (key === 'id') {
       key = 'No.';
     }
@@ -155,13 +127,14 @@ function dataTableGrid(manager, startIndex) {
 
 async function updateManager(manager) {
   const id = manager.id;
+  url = `/api/getmanager/${id}`;
   console.log(id, 'asssperrrrr');
   document.getElementById('myForm').style.display = 'block';
   document.getElementById('submitBtn').innerHTML = 'Update';
   document
     .getElementById('submitBtn')
     .setAttribute('onclick', `updateDeails(${id})`);
-  const response = await fetch(`/api/getmanager/${id}`);
+  const response = await fetch(url);
   const managerDetails = await response.json();
   console.log(managerDetails, 'also');
   try {
@@ -195,13 +168,14 @@ async function updateDeails(id) {
   try {
     const data = formData('form');
     data.id = id;
+    url = `/updatemanager`;
     console.log(data, 'heress');
     const managerValidation = manageManagerFormValidation(data);
     if (Object.keys(managerValidation).length > 0) {
       //----client side validation error
       errorShow(managerValidation);
     } else {
-      const response = await fetch(`/updatemanager`, {
+      const response = await fetch(url, {
         method: 'post',
         headers: {
           'Content-Type': 'application/json',
@@ -237,7 +211,8 @@ async function deleteManager(manager) {
 }
 
 async function deleteManagerPop(id) {
-  const response = await fetch(`/api/deleteManager/${id}`);
+  url = `/api/deleteManager/${id}`;
+  const response = await fetch(url);
   try {
     if (response.status == 200) {
       const message = await response.json();
@@ -256,3 +231,10 @@ function modelHide() {
   bootstrap.Modal.getInstance(document.getElementById('deleteModal')).hide();
 }
 
+function managerFilter() {
+  let status = document.getElementById('status').value;
+  console.log(status, 'givesss');
+  url = `/api/getmanagers?status=${status}`;
+  paggination(url);
+}
+managerFilter();
