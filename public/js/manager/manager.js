@@ -255,3 +255,4 @@ async function deleteManagerPop(id) {
 function modelHide() {
   bootstrap.Modal.getInstance(document.getElementById('deleteModal')).hide();
 }
+

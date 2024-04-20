@@ -1,20 +1,9 @@
 
 const connection = require('../config/connection');
 
-async function selectQuery(table,orderby,order){
-
-  if (order == undefined) {
-    order = "asc";
-  }
- 
-  if (orderby == undefined) {
-    orderby = "id";
-  }
-  
-  sql = `select * from ${table} order by ${orderby} ${order}`;
+async function selectQuery(table,columns){
+  sql = `select ${columns} as value from ${table}`;
   return await connection.execute(sql);
-  
-
 }
 
 async function selectWhere(name,col,value){

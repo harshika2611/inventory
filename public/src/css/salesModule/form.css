@@ -1,15 +1,29 @@
-.container{
-  width: 95%;
-  display: flex;
-  justify-content: center;
+.container {
+	width: 95%;
+	display: flex;
+	justify-content: center;
 }
 
-#insertFormDiv{
-  width: 100%;
+#insertFormDiv {
+	width: 100%;
 }
-#insertForm{
-  width: 100%;
+#insertForm {
+	width: 100%;
 }
-#productFormDiv{
-  display: none;
+#productFormDiv {
+	display: none;
+}
+
+.productTableDiv{
+	height: 70dvh;
+	overflow: scroll;
+	margin-top: 5%;
+}
+#productFooter {
+  text-align: center;
+  margin: 3rem auto;
+}
+#productListHead{
+	position: sticky;
+	top: 0;
 }

@@ -6,16 +6,16 @@ const {
 	updateOrder,
 	productList,
 	deleteQuery,
-	updateProduct
+	updateProduct,
+	updateAmount
 } = require('../../service/salesModule/salesService');
 const { selectQuery, selectWhere } = require('../../service/selectQuery');
-const { getCombos } = require('../../service/helper');
+// const { getCombos } = require('../../service/helper');
 
 async function insertSalesOrder(req, res) {
 	let input = [
 		req.body.customer,
 		req.body.orderType,
-		req.body.amount,
 		`${req.body.shippingAddress}`,
 		req.body.paymentStatus,
 		req.body.date,
@@ -39,7 +39,7 @@ async function insertSalesProduct(req, res) {
 			req.body.ordertype,
 			req.body.quantity,
 		];
-		logger.info('input :: '+input)
+		logger.info('input :: ' + input);
 		let [rows, fields] = await insertProduct(input);
 		logger.info(rows);
 		res.json({ rows });
@@ -50,9 +50,10 @@ async function insertSalesProduct(req, res) {
 
 async function getSalesCustomer(req, res) {
 	try {
-		let order = req.query.order;
-		let orderby = req.query.orderby;
-		const [rows, fields] = await selectQuery('customer_master', orderby, order);
+		const [rows, fields] = await selectQuery(
+			'customer_master',
+			'id as opt_id,firstname'
+		);
 
 		const header = [];
 		fields.forEach((ele) => {
@@ -87,13 +88,12 @@ async function updateSalesOrder(req, res) {
 		const input = [
 			req.body.customer,
 			req.body.orderType,
-			req.body.amount,
 			`${req.body.shippingAddress}`,
 			req.body.paymentStatus,
 			req.body.date,
 			req.body.orderid,
 		];
-logger.info(input)
+		logger.info(input);
 		const [rows, fields] = await updateOrder(input);
 
 		logger.info(rows);
@@ -104,10 +104,9 @@ logger.info(input)
 }
 async function getSalesProducts(req, res) {
 	try {
-		let [rows, fields] = await selectWhere(
+		let [rows, fields] = await selectQuery(
 			'product_master',
-			'category_id',
-			`${req.query.category_id}`
+			'id as opt_id,category_id,product_name'
 		);
 		let header = [];
 		fields.forEach((ele) => {
@@ -119,25 +118,33 @@ async function getSalesProducts(req, res) {
 	}
 }
 
-async function getSalesCategory(req, res) {
-	try {
-		let rows = await getCombos('%productCategory%');
-		res.json({ rows });
-		logger.info(rows);
-	} catch (err) {
-		logger.logError(err);
-	}
-}
+// async function fetchCombos(req, res) {
+// 	try {
+// 		let combo = req.params.combo
+// 		let rows = await getCombos(`%${combo}%`);
+// 		res.json({ rows });
+// 		logger.info(rows);
+// 	} catch (err) {
+// 		logger.logError(err);
+// 	}
+// }
 
 async function productGrid(req, res) {
 	try {
 		let input = [req.query.orderId];
 		let [rows, fields] = await productList(input);
+		console.log(rows, fields);
 		let header = [];
 		fields.forEach((ele) => {
 			header.push(ele.name);
 		});
 		res.json({ rows, header });
+		let totalAmount = 0;
+		rows.forEach((ele) => {
+			totalAmount += ele.Total;
+		});
+		let input2 = [totalAmount,req.query.orderId]
+		let data = await updateAmount(input2);
 	} catch (err) {
 		logger.logError(err);
 		logger.logError('not found');
@@ -147,17 +154,18 @@ async function productGrid(req, res) {
 async function deleteOrder(req, res) {
 	try {
 		let input = [req.query.id];
-		let [rows] = await deleteQuery('sales_order',input);
+		let [rows] = await deleteQuery('sales_order', input);
 		res.json({ rows });
 	} catch (err) {
 		logger.logError(err);
 		res.json('not found');
 	}
 }
+
 async function deleteProduct(req, res) {
 	try {
 		let input = [req.query.id];
-		let [rows] = await deleteQuery('sales_products',input);
+		let [rows] = await deleteQuery('sales_products', input);
 		res.json({ rows });
 	} catch (err) {
 		logger.logError(err);
@@ -167,13 +175,8 @@ async function deleteProduct(req, res) {
 
 async function updateSalesProduct(req, res) {
 	try {
-		let input = [
-
-			req.body.product,
-			req.body.quantity,
-			req.body.rowId,
-		];
-		console.log("input",input);
+		let input = [req.body.product, req.body.quantity, req.body.rowId];
+		console.log('input', input);
 		let [rows, fields] = await updateProduct(input);
 		logger.info(rows);
 		res.json({ rows });
@@ -188,9 +191,9 @@ module.exports = {
 	getsalesOrder,
 	updateSalesOrder,
 	getSalesProducts,
-	getSalesCategory,
+	// fetchCombos,
 	productGrid,
 	deleteOrder,
 	deleteProduct,
-	updateSalesProduct
+	updateSalesProduct,
 };

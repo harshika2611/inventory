@@ -1,3 +1,5 @@
+const multer = require('multer');
+
 const {
 	viewProfileQuery,
 	updateProfileQuery,
@@ -31,6 +33,7 @@ async function updateProfile(req, res) {
 		logger.logError(err);
 	}
 }
+
 module.exports = {
 	viewProfile,
 	editProfile,

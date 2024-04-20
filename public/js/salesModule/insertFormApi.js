@@ -1,10 +1,12 @@
 async function insertOrder() {
 	let orderid = document.getElementById('orderid');
 	let flag = false;
+	let isInsert = false;
 	let id;
 	const insertFormData = formData('insertSalesData');
 	insertFormData['orderType'] = '8';
 	const insertFormErrorValidation = insertSalesFormValidation(insertFormData);
+
 
 	// const insertSalesFormValidation = true;
 	if (Object.keys(insertFormErrorValidation).length > 0) {
@@ -16,6 +18,7 @@ async function insertOrder() {
 			url = `/updateSalesOrder`;
 		} else {
 			url = `/insertSalesOrder`;
+			isInsert = true;
 		}
 		let option = {
 			method: 'POST',
@@ -26,46 +29,36 @@ async function insertOrder() {
 		if (result.rows.affectedRows != 0 && result != 'not found') {
 			flag = true;
 		}
-
-		// else if () {
-		// 	flag = true;
-		// 	id = result.rows.insertId;
-		// 	getCategories();
-		// }
+		if (isInsert == true) {
+			id = result.rows.insertId;
+		}
 	}
-	console.log(flag);
 	if (flag == true) {
 		document.getElementById('productOrderId').value = id;
-		// document.getElementById('productOrderType').value =
-		// 	document.getElementById('orderType').value;
 		displayProductForm();
-		getCategories();
+		await getCombos('productCategory');
+		console.log(document.getElementById('productCategory').value);
+		await getallProducts();
 		fetching();
 	}
 }
 
-async function generateCombo() {
+async function getcustomer() {
 	const result = await commonFetch('/getCustomers');
+	generateCombo(result.rows, 'customer');
+}
+getcustomer();
+
+async function generateCombo(result, id) {
 	let str;
-	result.rows.forEach((data) => {
-		str += `<option value="${data.id}">${data.firstname}</option>`;
+	result.forEach((data) => {
+		str += `<option value="${data.opt_id}">${data.value}</option>`;
 	});
-	document.getElementById('customer').innerHTML = str;
-}
-generateCombo();
-
-
-async function getCategories() {
-	let result = await commonFetch('/getSalesCategories');
-	let str = `<option value="" selected hidden>Select Category</option>`;
-	result.rows.forEach((ele) => {
-		str += `<option value="${ele.opt_id}">${ele.value}</option>`;
-	});
-	let arr = document.getElementsByClassName('category');
-	for (ele of arr) {
-		ele.innerHTML = str;
-	}
-	 
+	document.getElementById(`${id}`).innerHTML = str;
 }
 
-
+async function getCombos(name) {
+	let result = await commonFetch(`/api/combos/${name}`);
+	generateCombo(result, name);
+}
+getCombos('paymentStatus');

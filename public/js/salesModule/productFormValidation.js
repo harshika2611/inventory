@@ -6,9 +6,9 @@ function productFormValidation(productFormData) {
 			case 'category':
 				// console.log(key + " " + productFormData[key]);
 
-				const categoryCombo = document.getElementById('category');
+				const categoryCombo = document.getElementById('productCategory');
 
-				if (categoryCombo.selectedIndex < 1) {
+				if (categoryCombo.value == '') {
 					productFormErrorObject[key] = '* require';
 				} else {
 					delete productFormErrorObject[key];
@@ -20,7 +20,7 @@ function productFormValidation(productFormData) {
 
 				const productCombo = document.getElementById('product');
 
-				if (productCombo.selectedIndex < 1) {
+				if (productCombo.value == '') {
 					productFormErrorObject[key] = '* require';
 				} else {
 					delete productFormErrorObject[key];
@@ -32,7 +32,7 @@ function productFormValidation(productFormData) {
 
 				const orderTypeCombo = document.getElementById('orderType');
 
-				if (orderTypeCombo.selectedIndex < 0) {
+				if (orderTypeCombo.value == '') {
 					productFormErrorObject[key] = '* require';
 				} else {
 					delete productFormErrorObject[key];
