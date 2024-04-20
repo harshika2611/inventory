@@ -4,10 +4,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Purchase</title>
+  <title>Purchase Order</title>
   <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
   <script src="/js/bootstrap.js"></script>
   <link rel="stylesheet" href="src/css/allpage.css" />
+  <link rel="stylesheet" href="src/css/purchase/styles.css">
 </head>
 
 <body>
@@ -39,8 +40,12 @@
       </div> -->
       <div class="mt-5" id="root">
       </div>
+      <%- include('../components/pagginationComponent')%>
     </div>
 </body>
+<script src="/js/purchase/pagination.js"></script>
+<script src="/js/purchase/validations.js"></script>
+<script src="/js/purchase/generators.js"></script>
 <script src="/js/purchase/index.js"></script>
 
 </html>
