@@ -9,6 +9,7 @@ const {
   updateProductInPurchaseOrder,
   deleteProductFromPurchaseOrder,
   getProductsByCategory,
+  fetchPurchaseOrders,
 } = require('../../service/purchase');
 const { getCombos } = require('../../service/helper');
 
@@ -125,8 +126,21 @@ async function fetchOrderDetails(req, res) {
   }
 }
 
-async function showPurchases(req, res) {
+async function fetchOrdersDetails(req, res) {
+  try {
+    const response = await fetchPurchaseOrders();
+    res.json(response);
+  } catch (error) {
+    res.json({ error });
+  }
+}
+
+async function showPurchaseOrder(req, res) {
   res.render('purchase');
+}
+
+async function showPurchaseOrders(req, res) {
+  res.render('purchase/history');
 }
 
 async function createPurchase(req, res) {
@@ -204,7 +218,8 @@ function checkValidation(validation) {
 }
 
 module.exports = {
-  showPurchases,
+  purchaseValidations,
+  showPurchaseOrder,
   createPurchase,
   fetchCombos,
   fetchSuppliers,
@@ -216,5 +231,6 @@ module.exports = {
   updateProductPurchase,
   deleteProductPurchase,
   checkValidation,
-  purchaseValidations,
+  fetchOrdersDetails,
+  showPurchaseOrders,
 };

@@ -215,7 +215,7 @@ router.post('/filterStore', filterStore);
 
 const {
   fetchCombos,
-  showPurchases,
+  showPurchaseOrder,
   createPurchase,
   fetchSuppliers,
   fetchProducts,
@@ -227,6 +227,8 @@ const {
   deleteProductPurchase,
   purchaseValidations,
   checkValidation,
+  fetchOrdersDetails,
+  showPurchaseOrders,
 } = require('../controller/purchase');
 
 router.get(
@@ -294,9 +296,21 @@ router.delete(
 );
 
 router.get(
+  '/api/orders',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  fetchOrdersDetails
+);
+
+router.get(
   '/purchaseOrder',
   passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
-  showPurchases
+  showPurchaseOrder
+);
+
+router.get(
+  '/purchaseHistory',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  showPurchaseOrders
 );
 
 // ------------------- Manage Purchases ---------------------- //

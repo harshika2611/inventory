@@ -6,3 +6,7 @@
 .pagginationcontainer {
   position: relative;
 }
+
+form {
+  min-height: 280px;
+}
