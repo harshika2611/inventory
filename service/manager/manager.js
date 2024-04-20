@@ -15,15 +15,16 @@ const storeComboServices = async () => {
   }
 };
 
-const listManagersService = async () => {
+const listManagersService = async (status) => {
   try {
     const sql0 = `SELECT 
     users.id,
-    firstname ,
-    lastname ,
-    email ,
-    name ,
-    city_name,
+    firstname AS Firstname,
+    lastname AS Lastname,
+    email AS Email,
+    name AS Place,
+    city_name AS Location,
+    option_master.value as Status,
     users.created_at AS Created,
     users.updated_at AS Updated
 FROM
@@ -34,10 +35,14 @@ FROM
     storage_space_master ON storage_space_master.id = manager_details.storage_id
         JOIN
     city_master ON city_master.city_id = storage_space_master.location_id
+        JOIN
+    option_master ON option_master.id = users.status
 WHERE
-    status = ?
+  option_master.value =?
         AND manager_details.is_delete = ?`;
-    const [ans] = await connection.execute(sql0, [6, 0]);
+    console.log(status, 'con');
+    const [ans] = await connection.execute(sql0, [status, 0]);
+    console.log(ans);
     return ans;
   } catch (error) {
     logger.logError(`Error`, error);

@@ -19,16 +19,17 @@
         <div class="manager-container" id="managerGrid">
           <div class="filter">
             <p class="btn btn-outline-dark filter1" onclick="addManager()">Add New</p>
+
             <div class="filter1">
-              <select onchange="managerFilter()" name="order" class="btn btn-secondary dropdown-toggle filter1"
-                id="order">
+              <select onchange="managerFilter()" name="status" class="btn btn-secondary dropdown-toggle filter1"
+                id="status">
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                  <option value="asc" selected>Ascending</option>
-                  <option value="desc">Descending</option>
+                  <option value="Active" selected>Active</option>
+                  <option value="Inactive">Inactive</option>
                 </div>
               </select>
-            </div>
 
+            </div>
           </div>
           <div class="grid" id="grid">
             <table class="table table-hover" id="table">
