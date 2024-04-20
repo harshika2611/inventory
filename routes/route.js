@@ -140,21 +140,61 @@ const {
   deleteProduct,
   updateSalesProduct,
 } = require('../controller/salesModule/salesControllers.js');
+const {
+  orderValidation,
+  productValidation,
+} = require('../middleware/salesModule/salesValidation.js');
 
 const {
   orderHistory,
   newOrder,
 } = require('../controller/salesModule/salesRender.js');
 
-router.get('/salesorder', getsalesOrder);
-router.post('/insertSalesOrder', insertSalesOrder);
-router.post('/insertSalesProduct', insertSalesProduct);
-router.get('/getSalesProducts', getSalesProducts);
-router.get('/getCustomers', getSalesCustomer);
-router.post('/updateSalesOrder', updateSalesOrder);
-router.post('/updateSalesProduct', updateSalesProduct);
+router.get(
+  '/salesorder',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  getsalesOrder
+);
+router.post(
+  '/insertSalesOrder',
+  orderValidation,
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  insertSalesOrder
+);
+router.post(
+  '/insertSalesProduct',
+  productValidation,
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  insertSalesProduct
+);
+router.get(
+  '/getSalesProducts',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  getSalesProducts
+);
+router.get(
+  '/getCustomers',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  getSalesCustomer
+);
+router.post(
+  '/updateSalesOrder',
+  orderValidation,
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  updateSalesOrder
+);
+router.post(
+  '/updateSalesProduct',
+  productValidation,
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  updateSalesProduct
+);
 // router.get('/getSalesCategories', getSalesCategory);
-router.get('/salesHistory', orderHistory);
+router.get(
+  '/salesHistory',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  orderHistory
+);
 router.get(
   '/salesNewOrder',
   passport.authenticate('jwt', { session: false, failureRedirect: '/' }),

@@ -51,7 +51,7 @@ async function fetchDelete(id, page) {
 			url = 'deleteSalesProduct';
 			break;
 	}
-	let result = await commonFetch(`/${url}?id=${id}`);
+	let [result,response] = await commonFetch(`/${url}?id=${id}`);
 
 }
 function modelHide(modelName) {
