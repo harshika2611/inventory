@@ -10,3 +10,18 @@
 form {
   min-height: 280px;
 }
+
+input[type='search'] {
+  padding: 5px;
+  border-radius: 50px;
+  outline: none;
+}
+
+th,
+td {
+  text-align: center;
+}
+
+.pagenumber p {
+  font-size: unset !important;
+}

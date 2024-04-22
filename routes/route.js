@@ -420,8 +420,9 @@ const {
   deleteProductPurchase,
   purchaseValidations,
   checkValidation,
-  fetchOrdersDetails,
   showPurchaseOrders,
+  fetchPurchases,
+  deletePurchase,
 } = require('../controller/purchase');
 
 router.get(
@@ -478,7 +479,10 @@ router.post(
 router.put(
   '/api/purchase/product/:id',
   passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
-  checkValidation(purchaseValidations.form2),
+  checkValidation({
+    ...purchaseValidations.form2,
+    product_id: { required: false },
+  }),
   updateProductPurchase
 );
 
@@ -489,9 +493,15 @@ router.delete(
 );
 
 router.get(
-  '/api/orders',
+  '/api/purchases',
   passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
-  fetchOrdersDetails
+  fetchPurchases
+);
+
+router.delete(
+  '/api/purchase/:id',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  deletePurchase
 );
 
 router.get(
