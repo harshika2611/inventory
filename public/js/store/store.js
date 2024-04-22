@@ -1,11 +1,8 @@
-async function getStore() {
+function getStore() {
   paggination('/api/store');
 }
 
 function dataTableGrid(storeArray, startIndex) {
-  // console.log(customerArray);
-  //-----div contain table
-  //-----old exist table remove
   const oldTable = document.getElementById('store__table');
   if (oldTable) {
     oldTable.remove();
@@ -29,7 +26,6 @@ function dataTableGrid(storeArray, startIndex) {
   createTh.textContent = 'Action';
   // createTh.setAttribute("class", "bg-dark text-light");
   createTable.appendChild(createTh);
-  console.log(storeArray);
 
   for (let element of storeArray) {
     const createTr = document.createElement('tr');
@@ -82,11 +78,12 @@ function dataTableGrid(storeArray, startIndex) {
 async function addNewStore() {
   const storeForm = document.getElementById('myForm');
   storeForm.style.display = 'block';
-  document.getElementById('child').style.display = `-webkit-filter: blur(2px);
-  -moz-filter: blur(2px);
-  -o-filter: blur(2px);
-  -ms-filter: blur(2px);
-  filter: blur(2px);`;
+  document.getElementById('store-section').style = `
+  filter: blur(5px);
+  `;
+  document.getElementById('header').style = `
+  filter: blur(5px);
+  `;
   document.getElementById('insertButton').style.display = 'block';
   document.getElementById('updateButton').style.display = 'none';
   // window.location.replace('/store')
@@ -104,6 +101,11 @@ async function submitStoreDetails() {
   //   errorShow(storeDetailsValidation);
   // } else {
   //----backend
+  const storeValidation = storeFormValidation(storeFormData);
+    if (Object.keys(storeValidation).length > 0) {
+      //----client side validation error
+      errorShow(storeValidation);
+    } else {
   const response = await fetch('/insertStore', {
     method: 'POST',
     body: JSON.stringify(storeFormData),
@@ -134,21 +136,35 @@ async function submitStoreDetails() {
       // errorShow(errorObject);
     }
   }
-  // }
+  }
 }
 
 function closeForm() {
   document.getElementById('myForm').style.display = 'none';
+  document.getElementById('store-section').style = 'none';
+  document.getElementById('header').style = 'none';
 }
 
 //---------update store details
 async function openUpdateStoreForm(store) {
+  const storeId = store.id;
   document.getElementById('myForm').style.display = 'block';
   document.getElementById('insertButton').style.display = 'none';
   document.getElementById('updateButton').style.display = 'block';
-  const form = document.getElementById('storeForm');
-  // document.getElementById("storeForm").action = '/updateStore'
-  const storeId = store.id;
+  document.getElementById('store-section').style = `-webkit-filter: blur(2px);
+  -moz-filter: blur(5px);
+  -o-filter: blur(5px);
+  -ms-filter: blur(5px);
+  filter: blur(5px);
+  `;
+  document.getElementById('header').style = `-webkit-filter: blur(2px);
+  -moz-filter: blur(5px);
+  -o-filter: blur(5px);
+  -ms-filter: blur(5px);
+  filter: blur(5px);
+  `;
+  document.getElementById('updateButton').setAttribute("onclick",`updateStoreDetails(${storeId})`);
+
   const response = await fetch(`/getStore/?storeId=${storeId}`, {
     method: 'GET',
   });
@@ -160,12 +176,11 @@ async function openUpdateStoreForm(store) {
     }
 
     if (response.status === 200) {
-      // console.log(storeDetails);
       document.getElementsByName('storageName')[0].value =
         storeDetails[0].Storagename;
       let storeType = document.getElementsByName('storeType')[0];
       storeType.value = storeDetails[0].StorageTypeId;
-      console.log(storeDetails[0]);
+      // console.log(storeDetails[0]);
       getAllState('stateSelectCombo', storeDetails[0].state);
       const stateSelectCombo = { id: 'stateSelectCombo' };
       getCity(stateSelectCombo, storeDetails[0].state, storeDetails[0].city);
@@ -182,58 +197,56 @@ async function openUpdateStoreForm(store) {
 }
 
 async function updateStoreDetails(storeId) {
+  
   const storeFormData = formData('storeForm'); //parameter as formname
   storeFormData.storeId = storeId;
-
-  // const customerDetailsValidation = manageCustomerFormValidation(storeFormData);
-  // const customerDetailsValidation = true;
-
-  // if (Object.keys(customerDetailsValidation).length > 0) {
-  //   //----client side validation error
-  //   errorShow(customerDetailsValidation);
-  // } else {
   //----backend
+  const storeValidation = storeFormValidation(storeFormData);
+  if (Object.keys(storeValidation).length > 0) {
+    //----client side validation error
+    errorShow(storeValidation);
+  } else {
+    const response = await fetch('/updateStore', {
+      method: 'POST',
+      body: JSON.stringify(storeFormData),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
 
-  const response = await fetch('/updateStore', {
-    method: 'POST',
-    body: JSON.stringify(storeFormData),
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
+    try {
+      if (!response.ok) {
+        throw new Error('Error In Backend Validation Manage Store');
+      }
 
-  try {
-    if (!response.ok) {
-      throw new Error('Error In Backend Validation Manage Store');
-    }
+      if (response.status === 200) {
+        const responseMessage = await response.json();
+        console.log(response.status);
+        console.log(responseMessage.message);
+        window.location.replace(
+          window.location.protocol + '//' + window.location.host + `/store`
+        );
+      }
+    } catch (error) {
+      console.log(error);
 
-    if (response.status === 200) {
-      const responseMessage = await response.json();
-      console.log(response.status);
-      console.log(responseMessage.message);
-      window.location.replace(
-        window.location.protocol + '//' + window.location.host + `/store`
-      );
-    }
-  } catch (error) {
-    console.log(error);
+      if (response.status === 400) {
+        const errorObject = await response.json();
+        console.log(errorObject);
+        errorShow(errorObject);
+      }
 
-    if (response.status === 400) {
-      const errorObject = await response.json();
-      console.log(errorObject);
-      errorShow(errorObject);
-    }
+      if (response.status === 404) {
+        const responseMessage = await response.json();
+        console.log(response.status);
+        console.log(responseMessage.message);
+      }
 
-    if (response.status === 404) {
-      const responseMessage = await response.json();
-      console.log(response.status);
-      console.log(responseMessage.message);
-    }
-
-    if (response.status === 500) {
-      const responseMessage = await response.json();
-      console.log(response.status);
-      console.log(responseMessage.message);
+      if (response.status === 500) {
+        const responseMessage = await response.json();
+        console.log(response.status);
+        console.log(responseMessage.message);
+      }
     }
   }
 }
@@ -332,4 +345,4 @@ const search = (key) => {
     }
   }
 };
-document.getElementById('input').onkeyup = debounce(search, 400);
+// document.getElementById('input').onkeyup = debounce(search, 400);

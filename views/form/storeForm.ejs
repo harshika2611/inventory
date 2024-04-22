@@ -1,19 +1,17 @@
-<html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Store</title>
+<link rel="stylesheet" href="src/css/form.css">
+<script src="js/store/store.js"></script>
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Store</title>
-  <link rel="stylesheet" href="src/css/form.css">
-  <script src="js/store/store.js"></script>
-</head>
 
 <body class="body">
   <div class="row form-popup" id="myForm">
     <div class="col-md-12 " data-bs-spy="scroll">
       <form method="post" id="storeForm" name="storeForm">
-        <h6 onclick="closeForm()" class="text-danger" style="margin-left: 390px; margin-top: 5px; cursor: pointer;">
-          Close</h6>
+        <h6 onclick="closeForm()" class="text-danger"
+          style="margin-left: 390px; margin-top: 5px; cursor: pointer; font-size: 25px;">
+          X</h6>
         <div class="container">
           <h1>Storage Details</h1>
           <fieldset>
@@ -32,7 +30,7 @@
 
             <div class="form-floating customerform__errordiv">
               <select name="state" class="form-select" id="stateSelectCombo" aria-label="Floating label select example"
-                onchange="getCity(this)">
+                onchange="getCity(this)" required>
               </select>
             </div>
 

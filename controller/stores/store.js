@@ -12,7 +12,7 @@ const {
 async function insertStore(req, res) {
   try {
     const storeDetails = req.body;
-    console.log(storeDetails);
+    // console.log(storeDetails);
     await insertStoreQuery(storeDetails);
     return res.json({ status: 200 })
   } catch (error) {
@@ -46,7 +46,7 @@ async function getParticularStore(req, res) {
       return res.status(404).json({ message: "Store Not Found" });
     }
   } catch (error) {
-    console.log(error)
+    // console.log(error)
     res.status(500).json({ message: "Something Went Wrong" });
   }
 }
@@ -56,7 +56,8 @@ async function getParticularStore(req, res) {
 async function updateStore(req, res) {
   try {
     const storeDetails = req.body;
-    const storeId = req.query.storeId;
+    // console.log(storeDetails);
+    // const storeId = req.query.storeId;
     // const cityStateIdArray = await getCityStateId(storeDetails.state, storeDetails.city);
 
     //----city, state id store
@@ -64,7 +65,7 @@ async function updateStore(req, res) {
     // let stateId = cityStateIdArray[0].state_id;
     // storeDetails.city = cityId.toString();
     // storeDetails.state = stateId.toString();
-    const updateStoreStatus = await updateStoreQuery(storeDetails, storeId);
+    const updateStoreStatus = await updateStoreQuery(storeDetails, storeDetails.storeId);
 
     if (updateStoreStatus) {
       return res.status(200).json({ message: 'Store Updated' });
