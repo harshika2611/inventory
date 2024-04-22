@@ -1,36 +1,37 @@
 const logger = require('../../logs');
 const {
-	getProductreport,
-	getCategotyreport,
+  getProductreport,
+  getCategotyreport,
 } = require('../../service/report/selesReportService');
 
 const getsalesReport = (req, res) => {
-	res.render('reports/salesReport');
+  res.render('reports/salesReport');
 };
 const getReportallProducts = (req, res) => {
-	res.render('reports/allProducts');
+  res.render('reports/allProducts');
 };
-let storage = 1;
 const getApiproductreport = async (req, res) => {
-	try {
-		const [rows] = await getProductreport(storage);
-		res.json(rows);
-	} catch (err) {
-		logger.logError(err);
-	}
+  try {
+    let storage = req.user.storageId || 1;
+    const [rows] = await getProductreport(storage);
+    res.json(rows);
+  } catch (err) {
+    logger.logError(err);
+  }
 };
 
 const getApicategoryreport = async (req, res) => {
-	try {
-		const [rows] = await getCategotyreport(storage);
-		res.json(rows);
-	} catch (err) {
-		logger.logError(err);
-	}
+  try {
+    let storage = req.user.storageId || 1;
+    const [rows] = await getCategotyreport(storage);
+    res.json(rows);
+  } catch (err) {
+    logger.logError(err);
+  }
 };
 module.exports = {
-	getsalesReport,
-	getReportallProducts,
-	getApiproductreport,
-	getApicategoryreport,
+  getsalesReport,
+  getReportallProducts,
+  getApiproductreport,
+  getApicategoryreport,
 };
