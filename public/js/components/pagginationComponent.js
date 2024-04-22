@@ -12,6 +12,7 @@ let startIndex;
 let endIndex;
 
 async function paggination(apiName = null, records = []) {
+  currentPage = 1;
   if (apiName) {
     const response = await fetch(apiName, {
       method: 'GET',
@@ -43,6 +44,18 @@ async function paggination(apiName = null, records = []) {
 
     document.getElementById('prevPage').style.opacity = '0.5';
     document.getElementById('prevPage').style.cursor = 'not-allowed';
+
+    //-----right
+    document.getElementById('lastPage').style.opacity = '1.0';
+    document.getElementById('lastPage').style.cursor = 'pointer';
+
+    document.getElementById('nextPage').style.opacity = '1.0';
+    document.getElementById('nextPage').style.cursor = 'pointer';
+  } else {
+    document.getElementById(
+      'currentpageshow'
+    ).innerHTML = `Page ${currentPage}`;
+    document.querySelector('.pagginationsection').style.display = 'none';
   }
 }
 

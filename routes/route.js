@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const multer = require('multer');
 
 //login module
 const {
@@ -98,16 +99,36 @@ const {
   getApiordersProductRreport,
 } = require('../controller/report/orderReport.js');
 
-router.get('/salesReport', getsalesReport);
-router.get('/salesReportallProducts', getReportallProducts);
+router.get(
+  '/salesReport',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  getsalesReport
+);
+router.get(
+  '/salesReportallProducts',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  getReportallProducts
+);
 router.get('/api/salesreport/allproduct', getApiproductreport);
 router.get('/api/salesreport/allcategory', getApicategoryreport);
 
-router.get('/purchaseReport', getpurchaseReport);
+router.get(
+  '/purchaseReport',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  getpurchaseReport
+);
 router.get('/api/purchasereport/allproduct', getApiproductPurchasereport);
 
-router.get('/orderReport', getorderReport);
-router.get('/orderProduct/:id', getorderProducts);
+router.get(
+  '/orderReport',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  getorderReport
+);
+router.get(
+  '/orderProduct/:id',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  getorderProducts
+);
 router.get('/api/orderreport/allorder', getApiorderRreport);
 router.get('/api/orderreport/allproduct/:id', getApiordersProductRreport);
 
@@ -139,21 +160,61 @@ const {
   deleteProduct,
   updateSalesProduct,
 } = require('../controller/salesModule/salesControllers.js');
+const {
+  orderValidation,
+  productValidation,
+} = require('../middleware/salesModule/salesValidation.js');
 
 const {
   orderHistory,
   newOrder,
 } = require('../controller/salesModule/salesRender.js');
 
-router.get('/salesorder', getsalesOrder);
-router.post('/insertSalesOrder', insertSalesOrder);
-router.post('/insertSalesProduct', insertSalesProduct);
-router.get('/getSalesProducts', getSalesProducts);
-router.get('/getCustomers', getSalesCustomer);
-router.post('/updateSalesOrder', updateSalesOrder);
-router.post('/updateSalesProduct', updateSalesProduct);
+router.get(
+  '/salesorder',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  getsalesOrder
+);
+router.post(
+  '/insertSalesOrder',
+  orderValidation,
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  insertSalesOrder
+);
+router.post(
+  '/insertSalesProduct',
+  productValidation,
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  insertSalesProduct
+);
+router.get(
+  '/getSalesProducts',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  getSalesProducts
+);
+router.get(
+  '/getCustomers',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  getSalesCustomer
+);
+router.post(
+  '/updateSalesOrder',
+  orderValidation,
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  updateSalesOrder
+);
+router.post(
+  '/updateSalesProduct',
+  productValidation,
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  updateSalesProduct
+);
 // router.get('/getSalesCategories', getSalesCategory);
-router.get('/salesHistory', orderHistory);
+router.get(
+  '/salesHistory',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  orderHistory
+);
 router.get(
   '/salesNewOrder',
   passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
@@ -180,12 +241,18 @@ const {
 
 const manageCustomerValidation = require('../middleware/manageCustomers/manageCustomerValidation.js');
 
+const { uploadFile } = require('../controller/manageCustomers/manageCustomersFileUpload.js');
+
+const { uploadCustomerFile } = require('../middleware/manageCustomers/manageCustomerFileUpload.js');
+
 router.get('/manageCustomers', getCustomersPage);
 router.get('/api/manageCustomers', getAllCustomers);
 router.get('/api/getCustomers', getParticularCustomer);
 router.post('/api/insertCustomer', manageCustomerValidation, insertCustomer);
 router.post('/api/updateCustomer', manageCustomerValidation, updateCustomer);
 router.get('/api/deleteCustomer', deleteCustomer);
+
+router.post('/api/customersFileUpload', uploadCustomerFile.single("customersFile"), uploadFile);
 
 //---------Manage Suppliers
 const {
@@ -329,8 +396,12 @@ router.get(
 // ------------------- Manage Purchases ---------------------- //
 
 //---------------------Products Module---------------------
-const { productListing } = require('../controller/products/productListing.js');
+const {
+  productListing,
+  productInfo,
+} = require('../controller/product/productListing.js');
 router.get('/products', productListing);
+router.get('/productInfo', productInfo);
 
 //---------------------Profile Module---------------------
 
@@ -342,7 +413,11 @@ const {
 const { storeImage } = require('../controller/profile/uploadImage.js');
 const { getOrderreport } = require('../service/report/orderReportService.js');
 
-router.get('/profile', viewProfile);
+router.get(
+  '/profile',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  viewProfile
+);
 router.get('/profileEdit', editProfile);
 router.post('/profileEdit', updateProfile);
 router.post('/imageUpload', storeImage);

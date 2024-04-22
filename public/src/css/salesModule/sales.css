@@ -9,11 +9,10 @@
 .filter {
   margin-left: 1%;
 }
-.grid{
+.grid {
   height: 60dvh;
   overflow: scroll;
   margin-top: 5%;
-
 }
 .insertFields {
   margin-bottom: 2%;
@@ -21,18 +20,24 @@
 .insertLabels {
   margin-bottom: 1%;
 }
-#insertSubmit{
+#insertSubmit {
   width: 100%;
 }
 #gridComponent {
+  padding-top: 3%;
   width: 95%;
   margin: 0 auto;
 }
-#tbody{
+#tbody {
   overflow-y: scroll;
 }
 
-#thead{
+#thead {
   position: sticky;
   top: 0;
+}
+
+#searchbar {
+  margin-right: auto;
+  width: auto;
 }

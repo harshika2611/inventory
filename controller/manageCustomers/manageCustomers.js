@@ -37,30 +37,6 @@ async function getAllCustomers(req, res) {
     logger.logError(error);
     return res.status(404).json({ message: "Can't get customers" });
   }
-  try {
-    const customersDetails = await getCustomersQuery();
-    for (let element of customersDetails) {
-      const created_at = element.Created;
-      const updated_at = element.Updated;
-
-      if (created_at === updated_at) {
-        element.Updated = '-';
-      }
-      // let createdDate = new Date(created_at).getDate();
-      // let createdMonth = new Date(created_at).getMonth() + 1;
-      // let createdYear = new Date(created_at).getFullYear();
-      // let createdHour = new Date(created_at).getHours();
-      // let createdMinute = new Date(created_at).getMinutes();
-      // let createdSecond = new Date(created_at).getSeconds();
-      // let createFullDate = `${createdDate}-${createdMonth}-${createdYear} ${createdHour}:${createdMinute}:${createdSecond}`
-      // element.Createdate = createFullDate;
-    }
-    return res.status(200).json(customersDetails);
-  } catch (error) {
-    //here render error page
-    logger.logError(error);
-    return res.status(404).json({ message: "Can't get customers" });
-  }
 }
 
 async function getParticularCustomer(req, res) {

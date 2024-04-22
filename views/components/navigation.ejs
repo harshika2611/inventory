@@ -1,4 +1,5 @@
 <link rel="stylesheet" href="src/css/navigation.css" />
+<script src="js/components/navbar.js"></script>
 
 <div id="navdiv1">
   <div class="position-absolute top-0 start-0 d-flex z-1 main-div">
@@ -17,7 +18,7 @@
                 </a>
               </div>
               <div class="btn my-2 width-100">
-                <a href="/" class="d-flex align-items-center justify-content-start nav-link"><img
+                <a href="/product" class="d-flex align-items-center justify-content-start nav-link"><img
                     src="icons/Products.svg" alt="img" width="30" height="20" />
                   <span class="fs-6 mx-2 text-light">Products</span>
                 </a>
@@ -142,14 +143,20 @@
         <div class="m-1">
           <div>
             <img src="icons/notification.svg" alt="img" width="25" height="25" />
-            <a href="/profile"><img src="icons/profile.png" alt="img" width="40" height="40"
-                class="rounded-circle" /></a>
-            <div class="dropdown-content t-10">
+            <img src="icons/profile.png" onclick="showDropDown();" class="dropimg" alt="img" width="40" height="40"
+              class="rounded-circle" /></a>
+            <div class="dropdown">
+              <div id="dropdownList" class="dropdown-content">
+                <a href="/profile"><img src="/icons/profile.svg" alt="" height="15" width="15">Profile</a>
+                <a href="/logout" onclick="logout();"><img src="/icons/logout.svg" alt="" height="15"
+                    width="15">Logout</a>
+              </div>
             </div>
-            </a>
+
           </div>
         </div>
       </div>
-    </nav>
   </div>
+  </nav>
+</div>
 </div>

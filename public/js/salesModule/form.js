@@ -8,14 +8,14 @@ if (id != null) {
 }
 async function fetchUpdate(id) {
 	url = `/salesorder?col=sales_order.id&colValue=${id}`;
-	let result = await commonFetch(url);
+	let [result,response] = await commonFetch(url);
 	updateOrderForm(result, id);
 }
 
 async function commonFetch(url,option) {
 	const response = await fetch(url,option);
 	const result = await response.json()
-	return result;
+	return [result,response];
 }
 // function displayProductForm() {
 // 	document.getElementById('productFormDiv').style.display='block'

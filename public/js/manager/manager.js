@@ -1,8 +1,4 @@
 let url = new URL(window.location.href);
-// let params = new URLSearchParams(url.search);
-// let status = params.get('status');
-// console.log(status, 'url');
-console.log(url, 'what');
 
 function addManager() {
   const customerForm = document.getElementById('myForm');
@@ -69,21 +65,40 @@ const getAllStore = async () => {
 function dataTableGrid(manager, startIndex) {
   const table = document.getElementById('thead');
   const tableBody = document.getElementById('tbody');
-  console.log(manager, 'get');
+  table.innerHTML = '';
   tableBody.innerHTML = '';
   for (let key in manager[0]) {
-    console.log(key, 'all');
-    if (key === 'id') {
-      key = 'No.';
-    }
     const createTh = document.createElement('th');
     createTh.textContent = key;
     table.appendChild(createTh);
+    const span = document.createElement('span');
+    span.setAttribute('class', `${key}`);
+    createTh.appendChild(span);
+    const achor = document.createElement('span');
+    achor.setAttribute('onclick', `filterUp(event,'ASC')`);
+    const img = document.createElement('img');
+    img.setAttribute('src', 'icons/bxs-up-arrow.svg');
+    img.setAttribute('id', `${key}`);
+    const achor2 = document.createElement('span');
+    achor2.setAttribute('onclick', `filterUp(event,'DESC')`);
+    const img2 = document.createElement('img');
+    img2.setAttribute('src', 'icons/bxs-down-arrow.svg');
+    img2.setAttribute('id', `${key}`);
+    img2.setAttribute('width', '15');
+    img.setAttribute('width', '15');
+    span.appendChild(achor2);
+    achor2.appendChild(img2);
+    achor.appendChild(img);
+    span.appendChild(achor);
+    if (key == 'id') {
+      span.remove();
+    }
   }
   const createTh = document.createElement('th');
   createTh.textContent = 'Action';
   createTh.colSpan = '2';
   table.appendChild(createTh);
+
   for (const element of manager) {
     const createTr = document.createElement('tr');
     tableBody.appendChild(createTr);
@@ -238,3 +253,11 @@ function managerFilter() {
   paggination(url);
 }
 managerFilter();
+
+function filterUp(event, order) {
+  const key = event.target.getAttribute('id');
+  console.log(key);
+
+  url = `/api/getmanagers?field=id&order=${order}`;
+  paggination(url);
+}

@@ -20,7 +20,7 @@ const auth = (passport) => {
         );
         console.log(result[0], 'hereget');
         if (result.length > 0) {
-          return done(null, result[0]);
+          return done(null, payload);
         }
         return done(null, false), payload;
       } catch (error) {

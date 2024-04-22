@@ -1,9 +1,12 @@
 const connection = require('../../config/connection');
 const logger = require('../../logs');
 
-async function selectOrders(orderby, order, col, value) {
+async function selectOrders(orderby, order, col, value,storageId) {
 	if (order == undefined) {
 		order = 'asc';
+	}
+	if (storageId == null) {
+		storageId='*'
 	}
 	if (orderby == undefined) {
 		orderby = 'id';
@@ -20,25 +23,26 @@ async function selectOrders(orderby, order, col, value) {
 	}
 
 	sql = `select 
-    sales_order.id,
+    sales_order.id as ID,
     sales_order.customer_id,
     customer_master.firstname,
     customer_master.lastname,
     sales_order.amount,
+		sales_order.type as OrderType,
     sales_order.shipping_address,
     sales_order.payment_status,
     sales_order.created_at,
     sales_order.date
   from sales_order join customer_master
   on sales_order.customer_id = customer_master.id
-  where sales_order.is_delete = 0 and ${col} = '${value}' order by ${orderby} ${order} ;`;
+  where sales_order.is_delete = 0 and ${col} = '${value}' and storage_id = ? order by ${orderby} ${order} ;`;
 
 	logger.info(sql);
-	return await connection.execute(sql);
+	return await connection.execute(sql,[storageId]);
 }
 
 async function insertOrder(input) {
-	sql = `insert into sales_order (id, customer_id, type, shipping_address, payment_status, date, created_at, updated_at) values (default,?,?,?,?,?,current_timestamp(),current_timestamp());`;
+	sql = `insert into sales_order (id, customer_id, type, shipping_address, payment_status, date,storage_id) values (default,?,?,?,?,?,?);`;
 
 	logger.info(input);
 	return await connection.execute(sql, input);
@@ -57,7 +61,8 @@ async function updateOrder(input) {
     type = ?,
     shipping_address= ?,
     payment_status = ?,
-		date = ?
+		date = ?,
+		storage_id = ?
   where id = ?`;
 
 	logger.info(input);

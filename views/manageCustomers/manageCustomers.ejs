@@ -16,6 +16,7 @@
   <script src="js/manageCustomers/manageCustomerFormValidation.js"></script>
   <script src="js/manageCustomers/manageCustomerFilter.js"></script>
   <script src="js/components/messagePopUp.js"></script>
+  <script src="js/manageCustomers/manageCustomerFileUpload.js"></script>
 </head>
 
 <body onload="getCustomers()">
@@ -29,7 +30,10 @@
             <p class="addnewcustomerbutton" onclick="addNewCustomer()">Add New</p>
             <p class="customerfilterbutton" onclick="customerFilterShow()">Filter</p>
           </div>
-
+          <form enctype="multipart/form-data" id="customerFileUploadForm" name="customerFileUploadForm">
+            <input type="file" name="customersFile" accept=".csv">
+            <p onclick="customerFileUpload()">Upload File</p>
+          </form>
       </div>
       <%- include('../form/customerForm')%>
         <%- include('../components/pagginationComponent')%>

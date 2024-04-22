@@ -27,6 +27,18 @@ async function insertCustomerQuery(body) {
   }
 }
 
+
+async function insertCustomerFromFileQuery(customerArray) {
+  try {
+    const insertCustomer = `INSERT INTO customer_master(firstname,lastname,email,phonenumber,address,zipcode,city_id,state_id) VALUES(?,?,?,?,?,?,?,?);`;
+
+    const [result] = await connection.execute(insertCustomer, [customerArray]);
+  } catch (error) {
+    logger.logError("Insert Customer: " + error);
+    throw error;
+  }
+}
+
 async function getCustomersQuery() {
   try {
     const getCustomers = `SELECT  c.id as CustomerId,c.firstname as Firstname,c.lastname as Lastname,c.email as Email,
@@ -104,6 +116,7 @@ async function deleteCustomerQuery(customerId) {
 
 module.exports = {
   insertCustomerQuery,
+  insertCustomerFromFileQuery,
   getCustomersQuery,
   checkCustomerExistQuery,
   updateCustomerQuery,
