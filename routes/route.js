@@ -192,7 +192,12 @@ const {
 const {
   orderHistory,
   newOrder,
+  invoicePdf,
 } = require('../controller/salesModule/salesRender.js');
+
+const {
+  invoiceGenerator,
+} = require('../controller/salesModule/pdfGeneration.js');
 
 router.get(
   '/salesorder',
@@ -249,8 +254,27 @@ router.get(
   passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
   productGrid
 );
-router.get('/deleteSalesOrder', deleteOrder);
-router.get('/deleteSalesProduct', deleteProduct);
+router.get(
+  '/deleteSalesOrder',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  deleteOrder
+);
+router.get(
+  '/deleteSalesProduct',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  deleteProduct
+);
+router.get(
+  '/getPdf',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  invoiceGenerator
+);
+router.get(
+  '/invoice',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  invoicePdf
+);
+
 //------------------------------------------------------
 
 //---------Manage Customers
