@@ -24,7 +24,7 @@ const checkLogin = (req, res) => {
       res.json(flag);
     }
   } catch (error) {
-    console.log(error);
+    logger.logError(error);
   }
 };
 
@@ -34,7 +34,6 @@ const getLogin = async (req, res) => {
 
 const userLogin = async (req, res) => {
   const user = await userLoginService(req.body);
-  console.log(user, 'here');
   if (user.length > 0 && user[0].status == 6) {
     const result = await bcrypt.compare(req.body.password, user[0].password);
     const expireDatePass = new Date(user[0].expiry);
@@ -45,7 +44,6 @@ const userLogin = async (req, res) => {
           const userId = user[0].id;
           const roleId = user[0].role_id;
           const storageId = user[0].storage_id;
-          console.log(storageId, 'what');
           const token = jwt.sign(
             { id: userId, roleId: roleId, storageId: storageId },
             SECRET_KEY,
@@ -70,7 +68,6 @@ const userLogin = async (req, res) => {
           const userId = user[0].id;
           const roleId = user[0].role_id;
           const storageId = user[0].storage_id;
-          console.log(storageId, 'what');
           const token = jwt.sign(
             { id: userId, roleId: roleId, storageId: storageId },
             SECRET_KEY,

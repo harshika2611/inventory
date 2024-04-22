@@ -41,7 +41,6 @@ async function getCityQuery(stateName) {
 
 async function getCityStateId(stateName, cityName) {
   try {
-    console.log(stateName);
     const getCityStateIdQuery = `SELECT s.state_id as state_id,c.city_id as city_id FROM state_master as s
     LEFT JOIN city_master as c ON s.state_id = c.state_id
     WHERE s.state_name=? AND c.city_name=?`;
@@ -56,4 +55,19 @@ async function getCityStateId(stateName, cityName) {
   }
 }
 
-module.exports = { getStateQuery, getCityQuery, getCityStateId }
+async function getAllCityState() {
+  try {
+    const getAllCityStateIdQuery = `SELECT s.state_id as state_id,s.state_name as state_name,c.city_id as city_id, c.city_name as city_name FROM state_master as s
+    LEFT JOIN city_master as c ON s.state_id = c.state_id`;
+
+    const [result] = await connection.execute(getAllCityStateIdQuery);
+    // logger.info(result);
+    return result;
+  } catch (error) {
+    logger.logError("Get All State and City: " + error);
+    throw error;  //rethrow
+    // return [];
+  }
+}
+
+module.exports = { getStateQuery, getCityQuery, getCityStateId, getAllCityState }

@@ -43,6 +43,9 @@ async function getParticularCustomer(req, res) {
   try {
     const queryString = req.query;
     // logger.info(queryString.customerId);
+    if (!queryString.customerId) {
+      return res.redirect('/manageCustomers');
+    }
     const customerDetail = await checkCustomerExistQuery(
       queryString.customerId
     );
@@ -100,6 +103,10 @@ async function updateCustomer(req, res) {
 async function deleteCustomer(req, res) {
   try {
     const customerId = req.query.customerId;
+
+    if (!customerId) {
+      return res.redirect('/manageCustomers');
+    }
     const responseObject = await deleteCustomerQuery(customerId);
     if (responseObject.affectedRows > 0) {
       return res.status(200).json({ message: 'Customer Deleted' });

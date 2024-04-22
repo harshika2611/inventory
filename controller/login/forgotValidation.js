@@ -1,6 +1,5 @@
 function forgotFormValidation(req, res, next) {
   const forgotDetails = req.body;
-  console.log(forgotDetails);
   let forgotError = {};
   for (let key in forgotDetails) {
     switch (key) {
@@ -19,7 +18,6 @@ function forgotFormValidation(req, res, next) {
         }
         break;
       case 'confirm_pass':
-        console.log(forgotDetails[key], 'aaaaa');
         if (forgotDetails[key].length === 0) {
           forgotError[key] = '* require';
         } else if (forgotDetails[key].length < 8 && forgotDetails[key] !== '') {

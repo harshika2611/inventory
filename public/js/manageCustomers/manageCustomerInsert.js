@@ -52,7 +52,6 @@ async function submitCustomerDetails() {
       }
     } catch (error) {
       console.log(error);
-
       if (response.status === 400) {
         const errorObject = await response.json();
         // console.log(errorObject);

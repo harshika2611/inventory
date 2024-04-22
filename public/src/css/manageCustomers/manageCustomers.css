@@ -26,7 +26,11 @@ a {
 }
 .managecustomer-section {
   max-width: 1300px;
+<<<<<<< HEAD
+  min-height: 850px;
+=======
   height: 100%;
+>>>>>>> main
   background-color: var(--managecustomersection);
 }
 
@@ -50,7 +54,8 @@ a {
 }
 
 .addnewcustomerbutton,
-.customerfilterbutton {
+.customerfilterbutton,
+#fileUploadButton {
   padding: 10px;
   background-color: gray;
   cursor: pointer;
@@ -119,4 +124,36 @@ a {
 /* paggination */
 .pagginationcontainer {
   right: 0;
+}
+
+/* fileupload */
+.importDataDiv {
+  display: flex;
+  gap: 20px;
+  position: relative;
+}
+#customerFileUploadForm {
+  display: none;
+  margin: 0;
+  width: 350px;
+  position: absolute;
+  top: 80%;
+}
+
+.fileUploadDiv {
+  display: none;
+}
+
+#customersFile {
+  padding: 10px;
+}
+
+.importDataButton,
+#fileUploadButton {
+  padding: 10px;
+  background-color: gray;
+  cursor: pointer;
+  border-radius: 10px;
+  text-align: center;
+  width: 150px;
 }

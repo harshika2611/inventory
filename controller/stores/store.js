@@ -38,7 +38,6 @@ async function getParticularStore(req, res) {
   try {
     const queryString = req.query;
     // logger.info(queryString.customerId);
-    // console.log(queryString)
     const storeDetail = await checkStoreExistQuery(queryString.storeId);
     if (storeDetail.length !== 0) {
       return res.status(200).json(storeDetail);
