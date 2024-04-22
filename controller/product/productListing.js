@@ -7,7 +7,6 @@ const productInfo = async (req, res) => {
   try {
     if (req.query.id) {
       const [rows] = await getProduct(req.query.id, storage);
-      console.log(rows);
       res.render('product/productInfo');
     } else {
       res.render('components/404');
