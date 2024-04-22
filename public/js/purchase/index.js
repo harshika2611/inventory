@@ -5,11 +5,16 @@ let orderDetails;
 const modal = new bootstrap.Modal('#deleteModal');
 
 async function generateForm1(oId = null) {
-  const paymentOptions = await generateDropDown('paymentStatus');
-
-  const supplierOptions = await generateSuppliersDropDown();
-
   await getOrderDetails(oId);
+
+  const paymentOptions = await generateDropDown(
+    'paymentStatus',
+    orderDetails?.paymentStatus
+  );
+
+  const supplierOptions = await generateSuppliersDropDown(
+    orderDetails?.supplierId
+  );
 
   const root = document.getElementById('root');
 
@@ -34,9 +39,7 @@ async function generateForm1(oId = null) {
 			</div>
 		</div>
 		<div class="form-floating mb-3">
-			<select name="supplier_id" class="form-select" aria-label="select" id="floatingSupplier"
-				${orderDetails?.supplierId ? `value = "${orderDetails?.supplierId}"` : ''}
-			>
+			<select name="supplier_id" class="form-select" aria-label="select" id="floatingSupplier">
 				${supplierOptions}
 			</select>
 			<label for="floatingSupplier">Supplier</label>
@@ -54,9 +57,7 @@ async function generateForm1(oId = null) {
 			</div>
 		</div>
 		<div class="form-floating mb-3">
-			<select name="payment_status" class="form-select" aria-label="select" id="floatingPaymentStatus"
-				${orderDetails?.paymentStatus ? `value = "${orderDetails?.paymentStatus}"` : ''}
-			>
+			<select name="payment_status" class="form-select" aria-label="select" id="floatingPaymentStatus">
 				${paymentOptions}
 			</select>
 			<label for="floatingPaymentStatus">Payment</label>
@@ -145,11 +146,14 @@ async function submitForm1(update = false) {
 
       if (result.insertId && !orderId) {
         orderId = result.insertId;
-      } else if (result.status == 'error') {
+      } else if (
+        result.status == 'error' ||
+        (!result.length && result instanceof Array)
+      ) {
         return;
       }
 
-      generateForm2();
+      await generateForm2();
     } catch (error) {
       console.log(error);
     }
@@ -162,7 +166,7 @@ async function generateForm2() {
   const root = document.getElementById('root');
 
   let content = `
-  	<div class="d-flex mb-5 justify-content-end">
+  <div class="d-flex mb-5 justify-content-end">
 		<button
 			type="button"
 			class="btn btn-outline-dark"
@@ -202,7 +206,10 @@ async function generateForm2() {
     generateAddProductRows('', categoryOptions);
   });
 
-  paggination(null, orderDetails?.products || [{}]);
+  paggination(
+    null,
+    orderDetails?.products?.length ? orderDetails?.products : [{}]
+  );
 }
 
 async function getOrderDetails(id) {
@@ -225,7 +232,11 @@ function generateAddProductRows(
 			<div class="col">
 				<div class="form-floating">
 					<select class="form-select custom-disabled" aria-label="select" id="floatingCategories" name="category" required
-						onchange="onCategoryChange(event)"
+						${
+              productDetails?.categoryId
+                ? 'disabled'
+                : 'onchange="onCategoryChange(event)"'
+            }
 					>
             ${categoryOptions}
 					</select>
@@ -237,7 +248,9 @@ function generateAddProductRows(
 			</div>
 			<div class="col">
 				<div class="form-floating">
-					<select class="form-select custom-disabled" aria-label="select" id="floatingProducts" name="product_id" required>
+					<select class="form-select custom-disabled" aria-label="select" id="floatingProducts" name="product_id" required
+            ${productDetails?.productId ? 'disabled' : ''}
+          >
 						${productOptions}
 					</select>
 					<label for="floatingProducts">Product</label>
@@ -355,7 +368,7 @@ async function saveProduct(e, purchaseProductId = null) {
       }
 
       await getOrderDetails(orderId);
-      generateForm2();
+      await generateForm2();
     } catch (error) {
       console.log(error);
     }
@@ -365,7 +378,8 @@ async function saveProduct(e, purchaseProductId = null) {
 async function deleteProduct(e, purchaseProductId = null) {
   modal.show();
 
-  document.getElementById('confirm').addEventListener('click', async () => {
+  // Setting onclick so that we don't need to explicity remove click listener once called.
+  document.getElementById('confirm').onclick = async () => {
     e.target.parentElement.parentElement.parentElement.remove();
     if (purchaseProductId) {
       const response = await fetch(
@@ -378,8 +392,8 @@ async function deleteProduct(e, purchaseProductId = null) {
       await getOrderDetails(orderId);
     }
     modal.hide();
-    generateForm2();
-  });
+    await generateForm2();
+  };
 }
 
 function modelHide() {

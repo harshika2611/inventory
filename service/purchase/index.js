@@ -81,8 +81,15 @@ async function fetchPurchaseOrder(data) {
 async function createPurchaseOrder(data) {
   try {
     const [results] = await connection.execute(
-      'INSERT INTO purchase_order (name, supplier_id, amount, payment_status, date) VALUES (?, ?, ?, ?, ?)',
-      [data.name, data.supplier_id, data.amount, data.payment_status, data.date]
+      'INSERT INTO purchase_order (name, supplier_id, storage_id, amount, payment_status, date) VALUES (?, ?, ?, ?, ?, ?)',
+      [
+        data.name,
+        data.supplier_id,
+        data.storage_id,
+        data.amount,
+        data.payment_status,
+        data.date,
+      ]
     );
     return results;
   } catch (error) {
@@ -124,9 +131,52 @@ async function updatePurchaseOrder(data) {
 async function addProductInPurchaseOrder(data) {
   try {
     const [results] = await connection.execute(
-      'INSERT INTO purchase_products (purchase_id, product_id, unit_price, quantity) VALUES (?, ?, ?, ?)',
+      `
+      INSERT INTO purchase_products (purchase_id, product_id, unit_price, quantity) VALUES (?, ?, ?, ?);
+      `,
       [data.purchase_id, data.product_id, data.unit_price, data.quantity]
     );
+
+    if (results?.insertId) {
+      const exists = await connection.execute(
+        `
+        SELECT
+          COUNT(product_id) as count
+        FROM
+          products_details
+        WHERE
+          product_id = ?
+            AND
+          storage_id = ?
+      `,
+        [data.product_id, data.storage_id]
+      );
+
+      if (Number(exists[0][0]?.count) > 0) {
+        await connection.execute(
+          `
+          UPDATE products_details
+            SET
+              stock = stock + ?
+            WHERE
+              product_id = ?
+                AND
+              storage_id = ?
+        `,
+          [data.quantity, data.product_id, data.storage_id]
+        );
+      } else {
+        await connection.execute(
+          `
+          INSERT INTO products_details
+            (product_id, storage_id, stock)
+          VALUES
+            (?, ?, ?)
+        `,
+          [data.product_id, data.storage_id, data.quantity]
+        );
+      }
+    }
     return results;
   } catch (error) {
     logError(error);
@@ -136,15 +186,42 @@ async function addProductInPurchaseOrder(data) {
 
 async function updateProductInPurchaseOrder(data) {
   try {
+    const [result] = await connection.execute(
+      `
+      SELECT
+        (? - quantity) as diff
+      FROM
+        purchase_products
+      WHERE
+        id = ?
+    `,
+      [data.quantity, data.id]
+    );
+
     const [results] = await connection.execute(
-      'UPDATE purchase_products SET purchase_id = ?, product_id = ?, unit_price = ?, quantity = ? WHERE id = ?',
-      [
-        data.purchase_id,
-        data.product_id,
-        data.unit_price,
-        data.quantity,
-        data.id,
-      ]
+      `
+      UPDATE
+        purchase_products
+          SET
+            unit_price = ?,
+            quantity = ?
+          WHERE
+            id = ?
+    `,
+      [data.unit_price, data.quantity, data.id]
+    );
+
+    await connection.execute(
+      `  
+      UPDATE
+        products_details
+          SET
+            stock = stock + ?
+          WHERE
+            product_id = ?
+              AND
+            storage_id = ?`,
+      [result[0].diff, data.product_id, data.storage_id]
     );
     return results;
   } catch (error) {
@@ -153,11 +230,35 @@ async function updateProductInPurchaseOrder(data) {
   }
 }
 
-async function deleteProductFromPurchaseOrder(id) {
+async function deleteProductFromPurchaseOrder(data) {
   try {
+    const [result] = await connection.execute(
+      `  
+      SELECT
+        product_id, quantity
+      FROM
+        purchase_products
+      WHERE
+        id = ?`,
+      [data.id]
+    );
+
+    await connection.execute(
+      `
+      UPDATE
+        products_details
+          SET
+            stock = stock - ?
+          WHERE
+            product_id = ?
+              AND
+            storage_id = ?`,
+      [result[0].quantity, result[0].product_id, data.storage_id]
+    );
+
     const [results] = await connection.execute(
       'UPDATE purchase_products SET is_delete = 1 WHERE id = ?',
-      [id]
+      [data.id]
     );
     return results;
   } catch (error) {
@@ -166,25 +267,44 @@ async function deleteProductFromPurchaseOrder(id) {
   }
 }
 
-async function fetchPurchaseOrders() {
+async function fetchPurchaseOrders(data) {
   try {
     const [results] = await connection.execute(
       `SELECT
         purchase.id,
-        supplier.firstname,
-        supplier.companyname,
-        supplier.phonenumber,
-        supplier.gst,
-        purchase.amount,
-        payment.\`value\` AS payment_status,
-        purchase.\`date\`
+        supplier.firstname as fname,
+        supplier.companyname as company,
+        supplier.phonenumber as phone,
+        supplier.gst as gst,
+        purchase.amount as amount,
+        payment_status,
+        purchase.\`date\` as date
       FROM
         purchase_order AS purchase
             JOIN
         supplier_master AS supplier ON purchase.supplier_id = supplier.id
-            JOIN
-        option_master AS payment ON payment.id = purchase.payment_status
+      WHERE
+        purchase.is_delete != 1
+          AND
+        storage_id = ${data.storage_id}
+          AND
+        payment_status = ${data.payment_status}
+      ORDER BY
+        ${data?.field ? `\`${data.field}\` ${data.order}` : ''}
       `
+    );
+    return results;
+  } catch (error) {
+    logError(error);
+    return [];
+  }
+}
+
+async function deletePurchaseOrder(data) {
+  try {
+    const [results] = await connection.execute(
+      'UPDATE purchase_order SET is_delete = 1 WHERE id = ?',
+      [data.id]
     );
     return results;
   } catch (error) {
@@ -205,4 +325,5 @@ module.exports = {
   fetchPurchaseOrder,
   getProductsByCategory,
   fetchPurchaseOrders,
+  deletePurchaseOrder,
 };
