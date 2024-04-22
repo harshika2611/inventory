@@ -1,10 +1,7 @@
 function manageManagerFormValidation(req, res, next) {
   const managerDetails = req.body;
-  console.log(managerDetails, 'got');
-  console.log(managerDetails, 'validatin');
   let managerFormError = {};
   for (let key in managerDetails) {
-    console.log(key, 'validation');
     switch (key) {
       case 'firstname':
         if (managerDetails[key].length === 0) {
@@ -47,7 +44,6 @@ function manageManagerFormValidation(req, res, next) {
         break;
 
       case 'state':
-        console.log(managerDetails[key], 'eehehehehe');
         if (managerDetails[key] == 'select here') {
           managerFormError[key] = '*require';
         } else {

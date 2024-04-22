@@ -3,9 +3,6 @@ const logger = require("../../logs.js");
 const { getCityStateId } = require("../commonFunctions/commonFunctions.js");
 
 async function insertCustomerQuery(body) {
-  // return new Promise((resolve, reject) => {
-
-  // });
   try {
     const insertCustomer = `INSERT INTO customer_master(firstname,lastname,email,phonenumber,address,zipcode,city_id,state_id) VALUES(?,?,?,?,?,?,?,?);`;
 
@@ -30,9 +27,11 @@ async function insertCustomerQuery(body) {
 
 async function insertCustomerFromFileQuery(customerArray) {
   try {
-    const insertCustomer = `INSERT INTO customer_master(firstname,lastname,email,phonenumber,address,zipcode,city_id,state_id) VALUES(?,?,?,?,?,?,?,?);`;
+    const insertCustomer = "INSERT INTO customer_master(firstname,lastname,email,phonenumber,address,zipcode,city_id,state_id) VALUES (?,?,?,?,?,?,?,?)";
 
-    const [result] = await connection.execute(insertCustomer, [customerArray]);
+    for (let element of customerArray) {
+      const [result] = await connection.execute(insertCustomer, [element[0], element[1], element[2], element[3], element[4], element[5], element[6], element[7]]);
+    }
   } catch (error) {
     logger.logError("Insert Customer: " + error);
     throw error;

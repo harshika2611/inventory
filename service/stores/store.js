@@ -42,11 +42,11 @@ async function checkStoreExistQuery(storeId) {
 
 async function updateStoreQuery(body, storeId) {
   try {
-    console.log(storeId);
-    const updateStore = `UPDATE storage_space_master as s SET name=?, storage_type = ?, location_id=? WHERE s.name=?;`;
+    // console.log(storeId);
+    const updateStore = `UPDATE storage_space_master as s SET s.name=?, s.storage_type = ?, s.location_id=? WHERE s.id=?;`;
     const cityStateId = await getCityStateId(body.state, body.city);
-    const [result] = await connection.execute(updateStore, [body.storageName, body.storeType, cityStateId[0].city_id, body.storageName]);
-    console.log(result, "result");
+    const [result] = await connection.execute(updateStore, [body.storageName, body.storeType, cityStateId[0].city_id, storeId]);
+    // console.log(result, "result");
     return true;
   } catch (error) {
     logger.logError("Update Customer: " + error);

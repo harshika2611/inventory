@@ -18,7 +18,6 @@ const auth = (passport) => {
           'select id,role_id from users where id=?',
           [payload.id]
         );
-        console.log(result[0], 'hereget');
         if (result.length > 0) {
           return done(null, payload);
         }

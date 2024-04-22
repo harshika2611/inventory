@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Supplier</title>
   <link rel="stylesheet" href="src/css/form.css">
-  <link rel="stylesheet" href="src/css/manageSupplier/supplierForm.css" />
+  <link rel="stylesheet" href="src/css/manageSuppliers/supplierForm.css" />
 </head>
 
 
@@ -14,9 +14,10 @@
     <div class="col-md-12 " data-bs-spy="scroll">
       <form id="supplierForm" name="supplierForm">
         <div class="container">
-          <h1>Supplier Form</h1>
-          <p onclick="closeForm()" id="closeSupplierForm">close</p>
-          <fieldset>
+          <h1>Supplier Details</h1>
+          <p onclick="closeForm()" id="closeSupplierForm"><img src="src/assets/manageCustomer/cross.svg" width="30"
+              height="30"></p>
+          <fieldset class="manageSupplierFieldset">
 
             <div class="form-floating mb-3 supplierform__errordiv">
               <input name="firstname" type="text" class="form-control supplierInput" id="floatingInput"

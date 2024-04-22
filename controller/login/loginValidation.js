@@ -18,7 +18,6 @@ function loginFormValidation(req, res, next) {
         }
         break;
       case 'password':
-        console.log(loginDetails[key], 'aaaaa');
         if (loginDetails[key].length === 0) {
           loginError[key] = '* require';
         } else if (loginDetails[key].length < 8 && loginDetails[key] !== '') {

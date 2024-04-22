@@ -77,7 +77,7 @@ const {
   getState,
   getCity,
 } = require('../controller/commonFunctions/commonFunctions.js');
-getState, getCity, router.get('/api/getState', getState);
+router.get('/api/getState', getState);
 router.post('/api/getCity', getCity);
 
 //report
@@ -109,15 +109,27 @@ router.get(
   passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
   getReportallProducts
 );
-router.get('/api/salesreport/allproduct', getApiproductreport);
-router.get('/api/salesreport/allcategory', getApicategoryreport);
+router.get(
+  '/api/salesreport/allproduct',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  getApiproductreport
+);
+router.get(
+  '/api/salesreport/allcategory',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  getApicategoryreport
+);
 
 router.get(
   '/purchaseReport',
   passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
   getpurchaseReport
 );
-router.get('/api/purchasereport/allproduct', getApiproductPurchasereport);
+router.get(
+  '/api/purchasereport/allproduct',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  getApiproductPurchasereport
+);
 
 router.get(
   '/orderReport',
@@ -129,8 +141,16 @@ router.get(
   passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
   getorderProducts
 );
-router.get('/api/orderreport/allorder', getApiorderRreport);
-router.get('/api/orderreport/allproduct/:id', getApiordersProductRreport);
+router.get(
+  '/api/orderreport/allorder',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  getApiorderRreport
+);
+router.get(
+  '/api/orderreport/allproduct/:id',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  getApiordersProductRreport
+);
 
 //----Dashboard
 const {
@@ -142,7 +162,11 @@ router.get(
   passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
   dashboard
 );
-router.get('/api/productStock', getApiproductStock);
+router.get(
+  '/api/productStock',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  getApiproductStock
+);
 //-------------
 
 //----------------------------sales Module-------------------------
@@ -241,18 +265,53 @@ const {
 
 const manageCustomerValidation = require('../middleware/manageCustomers/manageCustomerValidation.js');
 
-const { uploadFile } = require('../controller/manageCustomers/manageCustomersFileUpload.js');
+const {
+  uploadFile,
+} = require('../controller/manageCustomers/manageCustomersFileUpload.js');
 
-const { uploadCustomerFile } = require('../middleware/manageCustomers/manageCustomerFileUpload.js');
+const {
+  uploadCustomerFile,
+} = require('../middleware/manageCustomers/manageCustomerFileUpload.js');
 
-router.get('/manageCustomers', getCustomersPage);
-router.get('/api/manageCustomers', getAllCustomers);
-router.get('/api/getCustomers', getParticularCustomer);
-router.post('/api/insertCustomer', manageCustomerValidation, insertCustomer);
-router.post('/api/updateCustomer', manageCustomerValidation, updateCustomer);
-router.get('/api/deleteCustomer', deleteCustomer);
+router.get(
+  '/manageCustomers',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  getCustomersPage
+);
+router.get(
+  '/api/manageCustomers',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  getAllCustomers
+);
+router.get(
+  '/api/getCustomers',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  getParticularCustomer
+);
+router.post(
+  '/api/insertCustomer',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  manageCustomerValidation,
+  insertCustomer
+);
+router.post(
+  '/api/updateCustomer',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  manageCustomerValidation,
+  updateCustomer
+);
+router.get(
+  '/api/deleteCustomer',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  deleteCustomer
+);
 
-router.post('/api/customersFileUpload', uploadCustomerFile.single("customersFile"), uploadFile);
+router.post(
+  '/api/customersFileUpload',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  uploadCustomerFile.single('customersFile'),
+  uploadFile
+);
 
 //---------Manage Suppliers
 const {
@@ -266,12 +325,38 @@ const {
 
 const manageSuppliersValidation = require('../middleware/manageSuppliers/manageSuppliersValidation.js');
 
-router.get('/manageSuppliers', getSuppliersPage);
-router.get('/api/manageSuppliers', getAllSuppliers);
-router.get('/api/getSuppliers', getParticularSupplier);
-router.post('/api/insertSupplier', manageSuppliersValidation, insertSupplier);
-router.post('/api/updateSupplier', manageSuppliersValidation, updateSupplier);
-router.get('/api/deleteSupplier', deleteSupplier);
+router.get(
+  '/manageSuppliers',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  getSuppliersPage
+);
+router.get(
+  '/api/manageSuppliers',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  getAllSuppliers
+);
+router.get(
+  '/api/getSuppliers',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  getParticularSupplier
+);
+router.post(
+  '/api/insertSupplier',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  manageSuppliersValidation,
+  insertSupplier
+);
+router.post(
+  '/api/updateSupplier',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  manageSuppliersValidation,
+  updateSupplier
+);
+router.get(
+  '/api/deleteSupplier',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  deleteSupplier
+);
 
 // ---------Store
 const {
@@ -283,13 +368,41 @@ const {
   getParticularStore,
   filterStore,
 } = require('../controller/stores/store.js');
-router.get('/store', getStorePage);
-router.get('/api/store', getStore);
-router.get('/getStore', getParticularStore);
-router.post('/insertStore', insertStore);
-router.post('/updateStore', updateStore);
-router.post('/deleteStore', deleteStore);
-router.post('/filterStore', filterStore);
+const storeValidation = require('../middleware/store/storeValidation.js');
+
+router.get(
+  '/store',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  getStorePage
+);
+router.get(
+  '/api/store',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  getStore
+);
+router.get(
+  '/getStore',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  getParticularStore
+);
+router.post(
+  '/insertStore',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  storeValidation,
+  insertStore
+);
+router.post(
+  '/updateStore',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  storeValidation,
+  updateStore
+);
+router.post(
+  '/deleteStore',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  deleteStore
+);
+// router.post('/filterStore',passport.authenticate('jwt', { session: false, failureRedirect: '/' }), filterStore);
 
 // ------------------- Manage Purchases ---------------------- //
 
@@ -399,9 +512,19 @@ router.get(
 const {
   productListing,
   productInfo,
+  getApiproduct,
 } = require('../controller/product/productListing.js');
 router.get('/products', productListing);
-router.get('/productInfo', productInfo);
+router.get(
+  '/productInfo',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  productInfo
+);
+router.get(
+  '/api/products',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  getApiproduct
+);
 
 //---------------------Profile Module---------------------
 

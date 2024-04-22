@@ -31,9 +31,7 @@ const getManager = async (req, res) => {
 
 const manageManager = async (req, res) => {
   try {
-    console.log(req.user.id, 'gettt');
     const result1 = await checkManagerService(req.body);
-    console.log(result1, 'gottt');
     if (result1.length) {
       return res.status(409).send('already exist');
     } else {
@@ -60,14 +58,11 @@ const listManagers = async (req, res) => {
     //   status = 'Active';
     // } else {
     //   status = req.query.status;
-    //   console.log(status, 'change');
     // }
     let status = req.query.status || 'Active';
     let order = req.query.order || 'asc';
     let field = req.query.field || 'id';
-    console.log(field, 'get');
-    console.log(order, 'told');
-    const result = await listManagersService(status,order,field);
+    const result = await listManagersService(status, order, field);
     for (let iterator of result) {
       const created_at = iterator.Created;
       const updated_at = iterator.Updated;
@@ -84,9 +79,7 @@ const listManagers = async (req, res) => {
 
 const updateManager = async (req, res) => {
   try {
-    console.log(req.body, 'updatedd');
     const checkManger = await checkUpdateManagerService(req.body);
-    console.log(checkManger, checkManger.length, 'ansss');
     if (checkManger.length) {
       return res.status(409).send('already exist');
     } else {
@@ -131,7 +124,6 @@ const deleteManager = async (req, res) => {
     }
   } catch (error) {
     logger.logError(error);
-    console.log(error);
     res.status(500).json({ message: 'can`t fetch user controller' });
   }
 };

@@ -14,6 +14,14 @@
 
 #closeSupplierForm {
   cursor: pointer;
-  color: red;
-  text-align: right;
+  width: 100px;
+  position: absolute;
+  top: 5%;
+  right: 0;
+}
+
+.manageSupplierFieldset {
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 20px;
 }

@@ -28,7 +28,9 @@
 }
 
 .width-100 {
-  width: 100%;
+  width: 232px;
+  z-index: 11;
+  border: none;
 }
 
 .div-h {
@@ -37,6 +39,8 @@
 
 .bgColor {
   background-color: #31384f;
+  border-radius: 0 65px 0 0;
+  position: fixed;
 }
 
 img {

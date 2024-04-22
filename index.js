@@ -52,5 +52,5 @@ portFinder.getPort(function (err, port) {
 
 app.use('*', (req, res) => {
   // res.send({ message: 'Not Found' });
-  return res.render('components/404');
+  return res.render('components/errorPage');
 });
