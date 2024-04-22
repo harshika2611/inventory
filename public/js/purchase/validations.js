@@ -78,6 +78,7 @@ function checkValidation(body, validation, special = false) {
 
   if (result.length > 0) {
     result.forEach((obj) => {
+      document.getElementsByName(obj.field)[0].value = '';
       document.getElementsByName(obj.field)[0].required = true;
     });
     return false;

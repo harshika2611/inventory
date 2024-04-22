@@ -15,16 +15,15 @@ function generateDropDown(value, selectedId) {
     .catch(() => '');
 }
 
-function generateSuppliersDropDown() {
+function generateSuppliersDropDown(id = null) {
   return fetch('api/purchase/suppliers')
     .then((res) => res.json())
     .then((data) => {
       let content = '';
       data.forEach((o) => {
-        content += `<option value="${o.id}">${o?.firstname.concat(
-          ' ',
-          o?.lastname
-        )}</option>`;
+        content += `<option value="${o.id}" ${
+          o.id == id ? 'selected="selected"' : ''
+        }>${o?.firstname.concat(' ', o?.lastname)}</option>`;
       });
       return content;
     })

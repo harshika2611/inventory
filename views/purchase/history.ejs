@@ -17,13 +17,13 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title" id="deleteModal">Delete Product</h1>
+                        <h1 class="modal-title" id="deleteModal">Delete Purchase Order</h1>
                         <button type="button" class="btn-close" onclick="modelHide()" data-bs-dismiss="modal"
                             aria-label="Close">
                         </button>
                     </div>
                     <div class="modal-body">
-                        Are you sure you want to delete this product ?
+                        Are you sure you want to delete this purchase order ?
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" onclick="modelHide()"
@@ -34,17 +34,37 @@
             </div>
         </div>
         <div class="div-second pt-3">
-            <!-- <div class="d-flex mb-5 justify-content-end">
-        <button type="button" id="newForm" class="btn btn-outline-dark"
-          onclick="document.getElementById('newForm').disabled = true; generateForm1(8)">
-          + New
-        </button>
-      </div> -->
+            <div class="d-flex mt-3 mb-5 justify-content-between">
+                <input type="search" name="search"
+                    placeholder="Search by supplier name, company name, phone number or gst"
+                    tooltip="Search by supplier name, company name, phone number or gst"
+                    oninput="searchAnything(event)">
+
+                <div class="d-flex justify-content-end">
+                    <button type="button" id="newForm" class="btn btn-outline-dark me-3"
+                        onclick="window.location.href = '/purchaseOrder'">
+                        + New
+                    </button>
+
+                    <div class="form-floating">
+                        <select name="payment_status" class="form-select" aria-label="select" id="floatingPaymentStatus"
+                            onchange="triggerPaymentStatus(event)">
+                        </select>
+                        <label for="floatingPaymentStatus">Payment</label>
+                    </div>
+                </div>
+            </div>
             <div class="mt-5" id="root">
+                <table class="table table-hover" id="table">
+                    <thead class="table-light" id="thead">
+                    </thead>
+                    <tbody id="tbody"></tbody>
+                </table>
             </div>
             <%- include('../components/pagginationComponent')%>
         </div>
 </body>
+<script src="/js/purchase/generators.js"></script>
 <script src="/js/purchase/history.js"></script>
 
 </html>

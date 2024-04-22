@@ -10,6 +10,7 @@ const {
   deleteProductFromPurchaseOrder,
   getProductsByCategory,
   fetchPurchaseOrders,
+  deletePurchaseOrder,
 } = require('../../service/purchase');
 const { getCombos } = require('../../service/helper');
 
@@ -126,9 +127,19 @@ async function fetchOrderDetails(req, res) {
   }
 }
 
-async function fetchOrdersDetails(req, res) {
+async function fetchPurchases(req, res) {
   try {
-    const response = await fetchPurchaseOrders();
+    const query = new URLSearchParams(req?.query);
+    const field = query.get('key') || 'fname';
+    const order = query.get('value') || 'asc';
+    const payment_status = query.get('payment') || '10';
+    const storage_id = req.user.storageId;
+    const response = await fetchPurchaseOrders({
+      field,
+      order,
+      storage_id,
+      payment_status,
+    });
     res.json(response);
   } catch (error) {
     res.json({ error });
@@ -145,7 +156,12 @@ async function showPurchaseOrders(req, res) {
 
 async function createPurchase(req, res) {
   try {
-    res.json(await createPurchaseOrder(req.body));
+    res.json(
+      await createPurchaseOrder({
+        ...req.body,
+        storage_id: req?.user?.storageId,
+      })
+    );
   } catch (error) {
     res.json({ error });
   }
@@ -161,7 +177,12 @@ async function updatePurchase(req, res) {
 
 async function createProductPurchase(req, res) {
   try {
-    res.json(await addProductInPurchaseOrder(req.body));
+    res.json(
+      await addProductInPurchaseOrder({
+        ...req.body,
+        storage_id: req?.user?.storageId,
+      })
+    );
   } catch (error) {
     res.json({ error });
   }
@@ -170,7 +191,11 @@ async function createProductPurchase(req, res) {
 async function updateProductPurchase(req, res) {
   try {
     res.json(
-      await updateProductInPurchaseOrder({ ...req.body, id: req.params.id })
+      await updateProductInPurchaseOrder({
+        ...req.body,
+        id: req.params.id,
+        storage_id: req.user.storageId,
+      })
     );
   } catch (error) {
     res.json({ error });
@@ -179,7 +204,24 @@ async function updateProductPurchase(req, res) {
 
 async function deleteProductPurchase(req, res) {
   try {
-    res.json(await deleteProductFromPurchaseOrder(req.params.id));
+    res.json(
+      await deleteProductFromPurchaseOrder({
+        id: req.params.id,
+        storage_id: req.user.storageId,
+      })
+    );
+  } catch (error) {
+    res.json({ error });
+  }
+}
+
+async function deletePurchase(req, res) {
+  try {
+    res.json(
+      await deletePurchaseOrder({
+        id: req.params.id,
+      })
+    );
   } catch (error) {
     res.json({ error });
   }
@@ -231,6 +273,7 @@ module.exports = {
   updateProductPurchase,
   deleteProductPurchase,
   checkValidation,
-  fetchOrdersDetails,
+  fetchPurchases,
   showPurchaseOrders,
+  deletePurchase,
 };
