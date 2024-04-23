@@ -10,16 +10,17 @@ const productInfo = async (req, res) => {
       const [rows] = await getProduct(req.query.id, storage);
       res.render('product/productInfo', { data: req.user });
     } else {
-      res.render('components/404');
+      res.render('components/errorPage');
     }
   } catch (err) {
-    res.render('components/404');
+    res.render('components/errorPage');
   }
 };
 const getApiproduct = async (req, res) => {
   try {
     let id = req.query.id || '';
-    let storage = req.user.storageId;
+    let storage = req.user.storageId|| 1;
+    console.log(storage)
     const [rows] = await getProduct(id, storage);
     res.json(rows);
   } catch (err) {

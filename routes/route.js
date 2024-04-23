@@ -394,38 +394,12 @@ const {
 } = require('../controller/stores/store.js');
 const storeValidation = require('../middleware/store/storeValidation.js');
 
-router.get(
-  '/store',
-  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
-  getStorePage
-);
-router.get(
-  '/api/store',
-  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
-  getStore
-);
-router.get(
-  '/getStore',
-  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
-  getParticularStore
-);
-router.post(
-  '/insertStore',
-  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
-  storeValidation,
-  insertStore
-);
-router.post(
-  '/updateStore',
-  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
-  storeValidation,
-  updateStore
-);
-router.post(
-  '/deleteStore',
-  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
-  deleteStore
-);
+router.get('/store',passport.authenticate('jwt', { session: false, failureRedirect: '/' }), getStorePage);
+router.get('/api/store',passport.authenticate('jwt', { session: false, failureRedirect: '/' }), getStore);
+router.get('/getStore',passport.authenticate('jwt', { session: false, failureRedirect: '/' }), getParticularStore);
+router.post('/insertStore',passport.authenticate('jwt', { session: false, failureRedirect: '/' }),storeValidation, insertStore);
+router.post('/updateStore',passport.authenticate('jwt', { session: false, failureRedirect: '/' }),storeValidation, updateStore);
+router.post('/deleteStore',passport.authenticate('jwt', { session: false, failureRedirect: '/' }), deleteStore);
 // router.post('/filterStore',passport.authenticate('jwt', { session: false, failureRedirect: '/' }), filterStore);
 
 // ------------------- Manage Purchases ---------------------- //

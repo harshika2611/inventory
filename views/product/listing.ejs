@@ -4,10 +4,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Store</title>
+  <title>Product</title>
   <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
   <script src="/js/bootstrap.js"></script>
-  <script src="js/manageCustomers/manageCustomers.js"></script>
+  <script src="js/products/listing.js"></script>
+  <script src="js/products/productInfo.js"></script>
+  <script src="js/components/pagginationComponent.js"></script>
+  <!-- <script src="js/manageCustomers/manageCustomers.js"></script> -->
   <link rel="stylesheet" href="src/css/dashboard/dashboard.css" />
   <link rel="stylesheet" href="src/css/product/listingPageStyle.css">
   <link rel="stylesheet" href="src/css/allpage.css" />
@@ -48,12 +51,20 @@
               <div class="col-sm"><b>Availability</b></div>
               <div class="col-sm"><b>Action</b></div>
             </div>
-
+            <div>
+              <table class="table table-hover">
+                <thead>
+                  <tr id="productHeader"></tr>
+                </thead>
+                <tbody id="productData"></tbody>
+              </table>
+            </div>
           </section>
         </main>
       </div>
     </div>
-    <%- include('../form/storeForm')%>
+    <%- include('../form/productForm')%>
+      <%- include('../components/pagginationComponent')%>
 </body>
 <script>
 
@@ -115,81 +126,6 @@ filter: blur(2px); `;
     document.getElementById("myForm").style.display = "none";
     document.getElementById("childbody").style = "none";
   }
-
-  // delete store
-
-  async function deleteStore(name) {
-    let storeDelete = await fetch(`/deleteStore/${name}`, {
-      method: "post",
-      headers: { "Content-Type": "application/json" },
-    });
-
-    let response = await storeDelete.json();
-    if (response.message == "Store Deleted") {
-      window.location.href = "/store";
-    }
-  }
-
-  // update store
-  // async function updateFormData(){
-  //   document.getElementById("myForm").style.display = "block";
-  //     document.getElementById("insertStore").style.display = "none";
-  //     document.getElementById("updateStore").style.display = "block";
-  //     document.getElementById("childbody").style = `
-  // -webkit-filter: blur(2px);
-  // -moz-filter: blur(2px);
-  // -o-filter: blur(2px);
-  // -ms-filter: blur(2px);
-  // filter: blur(2px); `;
-
-
-  // const response = await fetch('/api/getState', {
-  //       method: 'GET'
-  //     });
-
-  //     try {
-  //       if (!response.ok) {
-  //         throw new Error("Can't get state");
-  //       }
-
-  //       if (response.status === 200) {
-  //         const stateObject = await response.json();
-  //         const stateArray = stateObject.stateArray;
-
-  //         const stateSelectCombo = document.getElementById("stateSelectCombo");
-
-  //         const optionCreate = document.createElement("option");
-  //         optionCreate.innerHTML = "Select State";
-  //         stateSelectCombo.appendChild(optionCreate);
-
-  //         for (let element of stateArray) {
-  //           const option = document.createElement("option");
-  //           option.innerHTML = `${element.state_name}`;
-  //           option.setAttribute("id", `state${element.state_id}`);
-  //           option.setAttribute("value", `${element.state_name}`);
-  //           stateSelectCombo.appendChild(option);
-  //         }
-  //       }
-  //     } catch (error) {
-  //       console.log(error);
-
-  //       if (response.status === 404) {
-  //         console.log("StateArray is empty");
-  //       }
-  //       if (response.status === 500) {
-  //         console.log("Something went wrong");
-  //       }
-  //     }
-
-  // }
-  //   async function updateForm(name) {
-
-  //     let storeUpdate = await fetch(`/updateStore/${name}`, {
-  //       method: "post",
-  //       headers: { "Content-Type": "application/json" },
-  //     });
-  //   }
-
 </script>
 
 </html>
