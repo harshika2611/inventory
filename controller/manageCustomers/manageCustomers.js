@@ -52,21 +52,7 @@ async function getParticularCustomer(req, res) {
     if (customerDetail.length !== 0) {
       return res.status(200).json(customerDetail);
     } else {
-      return res.status(404).json({ message: 'Customer Not Found' });
-    }
-  } catch (error) {
-    res.status(500).json({ message: 'Something Went Wrong' });
-  }
-  try {
-    const queryString = req.query;
-    // logger.info(queryString.customerId);
-    const customerDetail = await checkCustomerExistQuery(
-      queryString.customerId
-    );
-    if (customerDetail.length !== 0) {
-      return res.status(200).json(customerDetail);
-    } else {
-      return res.status(404).json({ message: 'Customer Not Found' });
+      return res.status(404).json({ message: 'Something Went Wrong' });
     }
   } catch (error) {
     res.status(500).json({ message: 'Something Went Wrong' });

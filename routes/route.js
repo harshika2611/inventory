@@ -349,6 +349,9 @@ const {
 
 const manageSuppliersValidation = require('../middleware/manageSuppliers/manageSuppliersValidation.js');
 
+const { supplierUploadFile } = require('../controller/manageSuppliers/manageSuppliersFileUpload.js');
+const { uploadSupplierFile } = require('../middleware/manageSuppliers/manageSupplierFileUpload.js');
+
 router.get(
   '/manageSuppliers',
   passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
@@ -381,6 +384,14 @@ router.get(
   passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
   deleteSupplier
 );
+
+router.post(
+  '/api/suppliersFileUpload',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  uploadSupplierFile.single('suppliersFile'),
+  supplierUploadFile
+);
+
 
 // ---------Store
 const {
