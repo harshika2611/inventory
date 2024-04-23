@@ -1,11 +1,11 @@
 const connection = require('../../config/connection');
 const logger = require('../../logs');
-const getOrderreport = async () => {
+const getOrderreport = async (storage) => {
   // console.log(queryDate);
-  let sql = `SELECT sales_order.id as Order_Id ,sales_name as Order_Name ,customer_master.firstname as Costomer_name,option_master.value as Order_Status,amount as Order_Amount,pay.value as Payment_Status ,order_date,sales_order.created_at as created_Time  FROM sales_order left join customer_master on sales_order.customer_id=customer_master.id left join option_master on sales_order.type=option_master.id left join option_master as pay on sales_order.payment_status=pay.id order by created_Time desc;`;
+  let sql = `SELECT sales_order.id as Order_Id ,sales_name as Order_Name ,customer_master.firstname as Costomer_name,option_master.value as Order_Status,amount as Order_Amount,pay.value as Payment_Status ,order_date,sales_order.created_at as created_Time  FROM sales_order left join customer_master on sales_order.customer_id=customer_master.id left join option_master on sales_order.type=option_master.id left join option_master as pay on sales_order.payment_status=pay.id where storage_id=? order by created_Time desc;`;
 
   // console.log(sql);
-  return await connection.execute(sql);
+  return await connection.execute(sql, [storage]);
 };
 
 const getApiordersProduct = async (id) => {
@@ -16,16 +16,16 @@ const getApiordersProduct = async (id) => {
   return await connection.execute(sql, [id]);
 };
 
-const getOrderreportBydate = async (fromDate, toDate) => {
-  let sql = `	SELECT sales_order.id as Order_Id ,sales_name as Order_Name ,customer_master.firstname as Costomer_name,option_master.value as Order_Status,amount as Order_Amount,pay.value as Payment_Status ,order_date,sales_order.created_at as created_Time  FROM sales_order left join customer_master on sales_order.customer_id=customer_master.id left join option_master on sales_order.type=option_master.id left join option_master as pay on sales_order.payment_status=pay.id where sales_order.created_at BETWEEN ? and ? order by created_Time desc ;`;
+const getOrderreportBydate = async (fromDate, toDate, storage) => {
+  let sql = `	SELECT sales_order.id as Order_Id ,sales_name as Order_Name ,customer_master.firstname as Costomer_name,option_master.value as Order_Status,amount as Order_Amount,pay.value as Payment_Status ,order_date,sales_order.created_at as created_Time  FROM sales_order left join customer_master on sales_order.customer_id=customer_master.id left join option_master on sales_order.type=option_master.id left join option_master as pay on sales_order.payment_status=pay.id where sales_order.created_at BETWEEN ? and ? and storage_id=? order by created_Time desc ;`;
   // console.log(sql);
-  return await connection.execute(sql, [fromDate, toDate]);
+  return await connection.execute(sql, [fromDate, toDate, storage]);
 };
-const getOrderDayreport = async (datetype, date) => {
-  let sql = `SELECT sales_order.id as Order_Id ,sales_name as Order_Name ,customer_master.firstname as Costomer_name,option_master.value as Order_Status,amount as Order_Amount,option_master.value as Payment_Status ,order_date,sales_order.created_at as created_Time  FROM sales_order left join customer_master on sales_order.customer_id=customer_master.id left join option_master on sales_order.type=option_master.id where ${datetype}(sales_order.created_at)=? order by created_Time desc;`;
+const getOrderDayreport = async (datetype, date, storage) => {
+  let sql = `SELECT sales_order.id as Order_Id ,sales_name as Order_Name ,customer_master.firstname as Costomer_name,option_master.value as Order_Status,amount as Order_Amount,pay.value as Payment_Status ,order_date,sales_order.created_at as created_Time  FROM sales_order left join customer_master on sales_order.customer_id=customer_master.id left join option_master on sales_order.type=option_master.id left join option_master as pay on sales_order.payment_status=pay.id where ${datetype}(sales_order.created_at)=? and sales_order.type=8 and sales_order.payment_status=11 and storage_id=? order by created_Time desc;`;
 
   // console.log(sql);
-  return await connection.execute(sql, [date]);
+  return await connection.execute(sql, [date, storage]);
 };
 module.exports = {
   getOrderreport,
