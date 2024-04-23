@@ -32,7 +32,7 @@ async function selectOrders(orderby, order, col, value, storageId) {
     sales_order.shipping_address,
     sales_order.payment_status,
     sales_order.created_at,
-    sales_order.date
+    sales_order.order_date as date
   from sales_order join customer_master
   on sales_order.customer_id = customer_master.id
   where sales_order.is_delete = 0 and ${col} = '${value}' and storage_id = ? order by ${orderby} ${order} ;`;
@@ -58,7 +58,7 @@ async function updateOrder(input) {
     type = ?,
     shipping_address= ?,
     payment_status = ?,
-		date = ?
+		order_date = ?
   where id = ?`;
 
   return await connection.execute(sql, input);
@@ -133,7 +133,7 @@ async function updateStock(req) {
 
 async function getOrderDetail(req) {
   try {
-    sql = `select customer_master.*,(select city_name from city_master where city_id = customer_master.city_id)as city_name,(select state_name from state_master where state_id = customer_master.state_id) as state_name,sales_order.amount,sales_order.shipping_address,(select value from option_master where id = sales_order.type) as type,(select value from option_master where id = sales_order.payment_status) as payment_status,sales_order.date from sales_order join customer_master on sales_order.customer_id = customer_master.id where  sales_order.id = ? and storage_id = ?;`;
+    sql = `select customer_master.*,(select city_name from city_master where city_id = customer_master.city_id)as city_name,(select state_name from state_master where state_id = customer_master.state_id) as state_name,sales_order.amount,sales_order.shipping_address,(select value from option_master where id = sales_order.type) as type,(select value from option_master where id = sales_order.payment_status) as payment_status,sales_order.order_date from sales_order join customer_master on sales_order.customer_id = customer_master.id where  sales_order.id = ? and storage_id = ?;`;
     return connection.execute(sql, [req.query.id,req.user.storageId]);
   } catch (err) {
     logger.logError(err);
