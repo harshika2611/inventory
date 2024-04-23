@@ -4,7 +4,7 @@ const {
 } = require('../../service/report/purchaseReportService');
 
 const getpurchaseReport = (req, res) => {
-  res.render('reports/purcahseReport', { data: req.user });
+  res.render('reports/purchaseReport', { data: req.user });
 };
 const getApiproductPurchasereport = async (req, res) => {
   try {
