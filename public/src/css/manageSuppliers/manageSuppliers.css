@@ -50,7 +50,8 @@ a {
 }
 
 .addnewsupplierbutton,
-.supplierfilterbutton {
+.supplierfilterbutton,
+#fileUploadButton {
   padding: 10px;
   background-color: gray;
   cursor: pointer;
@@ -119,4 +120,36 @@ a {
 /* paggination */
 .pagginationcontainer {
   right: 0;
+}
+
+/* fileupload */
+.importDataDiv {
+  display: flex;
+  gap: 20px;
+  position: relative;
+}
+#supplierFileUploadForm {
+  display: none;
+  margin: 0;
+  width: 350px;
+  position: absolute;
+  top: 80%;
+}
+
+.fileUploadDiv {
+  display: none;
+}
+
+#suppliersFile {
+  padding: 10px;
+}
+
+.importDataButton,
+#fileUploadButton {
+  padding: 10px;
+  background-color: gray;
+  cursor: pointer;
+  border-radius: 10px;
+  text-align: center;
+  width: 150px;
 }

@@ -3,9 +3,6 @@ const logger = require('../../logs.js');
 const { getCityStateId } = require('../commonFunctions/commonFunctions.js');
 
 async function insertSupplierQuery(body) {
-  // return new Promise((resolve, reject) => {
-
-  // });
   try {
     const insertSupplier = `INSERT INTO supplier_master(firstname,lastname,email,phonenumber,companyname,gst,address,zipcode,city_id,state_id) VALUES(?,?,?,?,?,?,?,?,?,?);`
 
@@ -28,6 +25,21 @@ async function insertSupplierQuery(body) {
     throw error;
   }
 }
+
+
+async function insertSupplierFromFileQuery(supplierArray) {
+  try {
+    const insertCustomer = "INSERT INTO supplier_master(firstname,lastname,email,phonenumber,companyname,gst,address,zipcode,city_id,state_id) VALUES (?,?,?,?,?,?,?,?,?,?)";
+
+    for (let element of supplierArray) {
+      const [result] = await connection.execute(insertCustomer, [element[0], element[1], element[2], element[3], element[4], element[5], element[6], element[7], element[8], element[9]]);
+    }
+  } catch (error) {
+    logger.logError("Insert Suppliers: " + error);
+    throw error;
+  }
+}
+
 
 async function getSupplierQuery() {
   try {
@@ -94,6 +106,7 @@ async function deleteSupplierrQuery(supplierId) {
 
 module.exports = {
   insertSupplierQuery,
+  insertSupplierFromFileQuery,
   getSupplierQuery,
   checkSupplierExistQuery,
   updateSupplierQuery,

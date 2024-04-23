@@ -8,7 +8,7 @@ const connection = mysql.createPool({
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
   multipleStatements: true,
-  dateStrings :true
+  dateStrings: true
 });
 
 connection.getConnection((err) => {
