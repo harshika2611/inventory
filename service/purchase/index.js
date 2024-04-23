@@ -111,15 +111,8 @@ async function createPurchaseOrder(data) {
 async function updatePurchaseOrder(data) {
   try {
     const [results] = await connection.execute(
-      'UPDATE purchase_order SET name = ?, date = ?, supplier_id = ?, amount = ?, payment_status = ? WHERE id = ?',
-      [
-        data.name,
-        data.date,
-        data.supplier_id,
-        data.amount,
-        data.payment_status,
-        data.id,
-      ]
+      'UPDATE purchase_order SET name = ?, date = ?, amount = ?, payment_status = ? WHERE id = ?',
+      [data.name, data.date, data.amount, data.payment_status, data.id]
     );
     return results;
   } catch (error) {

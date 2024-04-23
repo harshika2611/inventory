@@ -30,7 +30,15 @@ async function generateForm1(oId = null) {
 		</div>
 		<div class="form-floating mb-3">
 			<input name="date" type="date" class="form-control" id="floatingDate" placeholder="date"
-				${orderDetails?.date ? `value = "${orderDetails?.date.split(' ')[0]}"` : ''}
+				${
+          orderDetails?.date
+            ? `value = "${new Date(orderDetails?.date)
+                .toLocaleDateString()
+                .split('/')
+                .reverse()
+                .join('-')}"`
+            : ''
+        }
 			>
 			<label for="floatingDate">Date</label>
 			<div class="invalid-feedback">
@@ -38,7 +46,9 @@ async function generateForm1(oId = null) {
 			</div>
 		</div>
 		<div class="form-floating mb-3">
-			<select name="supplier_id" class="form-select" aria-label="select" id="floatingSupplier">
+			<select name="supplier_id" class="form-select" aria-label="select" id="floatingSupplier"
+        ${oId ? 'disabled' : ''}
+      >
 				${supplierOptions}
 			</select>
 			<label for="floatingSupplier">Supplier</label>
@@ -370,6 +380,7 @@ async function saveProduct(e, purchaseProductId = null) {
 
       await getOrderDetails(orderId);
       await generateForm2();
+      messagePopUp('Product updated successfully.');
     } catch (error) {
       console.log(error);
     }

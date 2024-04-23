@@ -364,8 +364,12 @@ const {
 
 const manageSuppliersValidation = require('../middleware/manageSuppliers/manageSuppliersValidation.js');
 
-const { supplierUploadFile } = require('../controller/manageSuppliers/manageSuppliersFileUpload.js');
-const { uploadSupplierFile } = require('../middleware/manageSuppliers/manageSupplierFileUpload.js');
+const {
+  supplierUploadFile,
+} = require('../controller/manageSuppliers/manageSuppliersFileUpload.js');
+const {
+  uploadSupplierFile,
+} = require('../middleware/manageSuppliers/manageSupplierFileUpload.js');
 
 router.get(
   '/manageSuppliers',
@@ -406,7 +410,6 @@ router.post(
   uploadSupplierFile.single('suppliersFile'),
   supplierUploadFile
 );
-
 
 // ---------Store
 const {
@@ -515,7 +518,10 @@ router.post(
 router.put(
   '/api/purchase/order/:id',
   passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
-  checkValidation(purchaseValidations.form1),
+  checkValidation({
+    ...purchaseValidations.form1,
+    supplier_id: { required: false },
+  }),
   updatePurchase
 );
 

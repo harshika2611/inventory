@@ -4,7 +4,7 @@ const { getCityStateId } = require('../commonFunctions/commonFunctions.js');
 
 async function insertSupplierQuery(body) {
   try {
-    const insertSupplier = `INSERT INTO supplier_master(firstname,lastname,email,phonenumber,companyname,gst,address,zipcode,city_id,state_id) VALUES(?,?,?,?,?,?,?,?,?,?);`
+    const insertSupplier = `INSERT INTO supplier_master(firstname,lastname,email,phonenumber,companyname,gst,address,zipcode,city_id,state_id) VALUES(?,?,?,?,?,?,?,?,?,?);`;
 
     const cityStateId = await getCityStateId(body.state, body.city); //array contain object
 
@@ -47,12 +47,14 @@ async function getSupplierQuery() {
     FROM supplier_master as s
     LEFT JOIN city_master ON s.city_id = city_master.city_id
     LEFT JOIN state_master ON s.state_id = state_master.state_id
-    WHERE s.is_delete = '0';`
+    WHERE s.is_delete = '0';`;
 
     const [result] = await connection.execute(getSuppliers);
+
+    console.log(result);
     return result; //return array
   } catch (error) {
-    logger.logError("Get Supplier: " + error);
+    logger.logError('Get Supplier: ' + error);
     throw error;
     // return [];
   }
@@ -64,12 +66,12 @@ async function checkSupplierExistQuery(supplierId) {
     FROM supplier_master as s
     LEFT JOIN city_master ON s.city_id = city_master.city_id
     LEFT JOIN state_master ON s.state_id = state_master.state_id
-    WHERE id=?;`
+    WHERE id=?;`;
 
     const [result] = await connection.execute(checkSupplier, [supplierId]);
     return result;
   } catch (error) {
-    logger.logError("Check supplier: " + error);
+    logger.logError('Check supplier: ' + error);
     throw error;
   }
 }
@@ -83,11 +85,23 @@ async function updateSupplierQuery(body) {
     } else {
       const updateSupplier = `UPDATE supplier_master SET firstname = ?, lastname=?, email=?,phonenumber=?,companyname=?,gst=?,address=?,zipcode=?,city_id=?,state_id=? WHERE id=?;`;
 
-      const [result] = await connection.execute(updateSupplier, [body.firstname, body.lastname, body.email, body.phonenumber, body.companyname, body.gst, body.address, body.zipcode, body.city, body.state, supplierId]);
+      const [result] = await connection.execute(updateSupplier, [
+        body.firstname,
+        body.lastname,
+        body.email,
+        body.phonenumber,
+        body.companyname,
+        body.gst,
+        body.address,
+        body.zipcode,
+        body.city,
+        body.state,
+        supplierId,
+      ]);
       return true;
     }
   } catch (error) {
-    logger.logError("Update Supplier: " + error);
+    logger.logError('Update Supplier: ' + error);
     throw error;
   }
 }
