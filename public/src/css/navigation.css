@@ -31,6 +31,7 @@
   width: 232px;
   z-index: 11;
   border: none;
+  overflow: hidden;
 }
 
 .div-h {

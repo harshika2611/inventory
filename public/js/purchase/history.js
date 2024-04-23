@@ -76,7 +76,7 @@ async function dataTableGrid(records) {
     amountTd.innerText = obj.amount;
 
     let dateTd = document.createElement('td');
-    dateTd.innerText = obj.date;
+    dateTd.innerText = new Date(obj.date).toLocaleDateString();
 
     let viewTd = document.createElement('td');
     viewTd.innerHTML = `<button class="btn btn-outline-dark">View</button>`;
