@@ -102,40 +102,40 @@ async function submitStoreDetails() {
   // } else {
   //----backend
   const storeValidation = storeFormValidation(storeFormData);
-    if (Object.keys(storeValidation).length > 0) {
-      //----client side validation error
-      errorShow(storeValidation);
-    } else {
-  const response = await fetch('/insertStore', {
-    method: 'POST',
-    body: JSON.stringify(storeFormData),
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
-  let result = await response.json();
+  if (Object.keys(storeValidation).length > 0) {
+    //----client side validation error
+    errorShow(storeValidation);
+  } else {
+    const response = await fetch('/insertStore', {
+      method: 'POST',
+      body: JSON.stringify(storeFormData),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    let result = await response.json();
 
-  try {
-    console.log(result.status);
-    // if (!result.ok) {
-    //   throw new Error("Error In Backend Validation Manage Store");
-    // }
+    try {
+      console.log(result.status);
+      // if (!result.ok) {
+      //   throw new Error("Error In Backend Validation Manage Store");
+      // }
 
-    if (result.status === 200) {
-      // const responseMessage = await response.json();
-      // console.log(response.status);
-      // console.log(responseMessage.message);
-      window.location.href = '/store';
+      if (result.status === 200) {
+        // const responseMessage = await response.json();
+        // console.log(response.status);
+        // console.log(responseMessage.message);
+        window.location.href = '/store';
+      }
+    } catch (error) {
+      console.log(error);
+
+      if (result.status === 400) {
+        // const errorObject = await response.json();
+        // console.log(errorObject);
+        // errorShow(errorObject);
+      }
     }
-  } catch (error) {
-    console.log(error);
-
-    if (result.status === 400) {
-      // const errorObject = await response.json();
-      // console.log(errorObject);
-      // errorShow(errorObject);
-    }
-  }
   }
 }
 
@@ -163,7 +163,7 @@ async function openUpdateStoreForm(store) {
   -ms-filter: blur(5px);
   filter: blur(5px);
   `;
-  document.getElementById('updateButton').setAttribute("onclick",`updateStoreDetails(${storeId})`);
+  document.getElementById('updateButton').setAttribute("onclick", `updateStoreDetails(${storeId})`);
 
   const response = await fetch(`/getStore/?storeId=${storeId}`, {
     method: 'GET',
@@ -197,7 +197,7 @@ async function openUpdateStoreForm(store) {
 }
 
 async function updateStoreDetails(storeId) {
-  
+
   const storeFormData = formData('storeForm'); //parameter as formname
   storeFormData.storeId = storeId;
   //----backend

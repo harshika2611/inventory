@@ -1,4 +1,4 @@
-var productGridResult;
+let productGridResult;
 async function fetching() {
   let orderId = document.getElementById('productOrderId').value;
   let [result, response] = await commonFetch(
@@ -23,10 +23,10 @@ async function fetching() {
     <td hidden>${data.id}</td>
     <td>${data.product_name}</td>
     <td>${data.Category}</td>
-    <td>${data.quantity}</td>
+    <td> <input type="text" class="form-control editQuantity" name="editQuantity${data.id}" id="editQuantity${data.id}" onkeyup="enableSave(${data.id})" value="${data.quantity}"></td>
 		<td>${data.UnitPrice}</td> 
 		<td>${data.Total}</td>
-    <td><a class='btn btn-success' id="edit${data.id}" onclick="updateOrder('edit', event,'product')">EDIT</a></td>
+    <td><a class='btn btn-secondary' id="edit${data.id}" disabled="true" onclick="">Save</a></td>
     <td><a class="btn btn-danger" id="delete${data.id}" onclick="updateOrder('delete', event,'product')">DELETE</a></td>
     </tr>`;
     totalAmount += data.Total;
@@ -38,6 +38,18 @@ async function fetching() {
   document.getElementById('productListBody').innerHTML = body;
 }
 
+function enableSave(id) {
+  btn = document.getElementById(`edit${id}`);
+  if (btn.value != '') {
+    btn.classList.remove('btn-secondary');
+    btn.classList.add('btn-success');
+    btn.setAttribute('onclick', `updateProduct(${id})`);
+  } else {
+    btn.classList.add('btn-secondary');
+    btn.classList.remove('btn-success');
+    btn.setAttribute('onclick', ``);
+  }
+}
 let allProduct = [];
 async function getallProducts() {
   let [result, response] = await commonFetch(`/getSalesProducts`);
@@ -45,9 +57,8 @@ async function getallProducts() {
   getProducts('');
 }
 
-async function getProducts(type) {
-  let categoryId = document.getElementById(`${type}productCategory`).value;
-  console.log(categoryId);
+async function getProducts() {
+  let categoryId = document.getElementById(`productCategory`).value;
   let filterdResult = allProduct.filter((ele) => {
     console.log(ele.category_id, categoryId);
     if (ele.category_id == categoryId) {
@@ -55,17 +66,17 @@ async function getProducts(type) {
     }
   });
   console.log(filterdResult);
-  generateCombo(filterdResult, `${type}product`);
+  generateCombo(filterdResult, `product`);
 }
 
 async function addProduct() {
   const productFormData = formData('productForm');
   const productValidation = productFormValidation(productFormData);
-  // const productValidation = true;
-  // if (Object.keys(productValidation).length > 0) {
-  //   //----client side validation error
-  //   errorShow(productValidation);
-  // } else {
+
+  if (Object.keys(productValidation).length > 0) {
+    //----client side validation error
+    errorShow(productValidation);
+  } else {
     let form = document.getElementById('productForm');
     let option = {
       method: 'POST',
@@ -79,49 +90,75 @@ async function addProduct() {
       }
 
       if (response.status === 200) {
-        fetching();
+        if (result.msg !== undefined) {
+          // document.getElementById('quantityError').innerHTML = result.msg
+          Swal.fire({
+            title: 'oops!!',
+            text: result.msg,
+            icon: 'success',
+          });
+        } else {
+          fetching();
+        }
       }
     } catch (error) {
       console.log(error);
 
       if (response.status === 400) {
-        
         errorShow(result);
       }
     }
   }
-// }
-
-async function allocateProductEdit(id) {
-  let data;
-  productGridResult.forEach((ele) => {
-    if (ele.id == id) {
-      data = ele;
-    }
-  });
-  let editcategory = document.getElementById('editcategory');
-  for (op of editcategory) {
-    if (op.innerHTML == data.Category) {
-      op.setAttribute('selected', true);
-    }
-  }
-  await getProducts('edit');
-  let editproduct = document.getElementById('editproduct');
-  for (op of editproduct) {
-    if (op.innerHTML == data.name) {
-      op.setAttribute('selected', true);
-    }
-  }
-  document.getElementById('editQuantity').value = data.quantity;
 }
-async function editProduct(id) {
-  const updateProduct = formData('updateProduct');
-  let option = {
-    method: 'POST',
-    body: new URLSearchParams(updateProduct),
-  };
-  let [result, response] = await commonFetch(`/updateSalesProduct`, option);
 
-  modelHide('productEdit');
-  await fetching();
+// async function allocateProductEdit(id) {
+//   let data;
+//   productGridResult.forEach((ele) => {
+//     if (ele.id == id) {
+//       data = ele;
+//     }
+//   });
+//   document.getElementById('editQuantity').value = data.quantity;
+// }
+async function updateProduct(id) {
+  console.log(id);
+  let quantity = document.getElementById(`editQuantity${id}`).value;
+  if (quantity > 0 && quantity !== '' && !isNaN(parseInt(quantity))) {
+    let updateProductobj = {};
+    updateProductobj['quantity'] = quantity;
+    updateProductobj['id'] = id;
+    let option = {
+      method: 'POST',
+      body: new URLSearchParams(updateProductobj),
+    };
+
+    let [result, response] = await commonFetch(`/updateSalesProduct`, option);
+    if (response.status === 200) {
+      try {
+        if (result.flag === true) {
+          Swal.fire({
+            title: '',
+            text: 'Successfully Updated',
+            icon: 'success',
+          });
+        } else {
+          Swal.fire({
+            title: 'Oops!!!',
+            text: `Sorry! Max Available Stock is ${result.stock}`,
+            icon: 'error',
+          });
+        }
+        await fetching();
+      } catch (err) {
+        if (response.status == 400) {
+          errorShow(result);
+        }
+      }
+    }
+  } else {
+    obj = {};
+    console.log(`editQuantity${id}`);
+    obj[`editQuantity${id}`] = '*Enter Valid Input';
+    errorShow(obj);
+  }
 }

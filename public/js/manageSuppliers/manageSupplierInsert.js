@@ -5,6 +5,8 @@ async function addNewSupplier() {
   document.getElementById("submitButton").innerHTML = "Submit";
   document.getElementById("submitButton").setAttribute("onclick", `submitSupplierDetails()`);
 
+  const addNewCustomerButton = document.querySelector(".addnewcustomerbutton");
+
   getAllState("stateSelectCombo");  //second parameter those state we need to selected 
 
   //---old field value clear

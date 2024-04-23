@@ -11,11 +11,14 @@
   <link rel="stylesheet" href="src/css/salesModule/sales.css" />
   <link rel="stylesheet" href="src/css/salesModule/form.css" />
   <link rel="stylesheet" href="src/css/allpage.css" />
-</head>
 
+
+  <link rel="stylesheet" href="sweetalert2/sweetalert2.min.css">
+  <script src="sweetalert2/sweetalert2.min.js"></script>
+</head>
+  
 <body>
   <%- include('deletePopup')%>
-    <%- include('productEdit')%>
       <%- include('../components/navigation')%>
 
         <div class="div-second">
@@ -33,33 +36,34 @@
                   <label for="floatingSupplier">Customer</label>
                 </div>
                 <div class="form-floating mb-3">
-                  <select name="paymentStatus" class="form-select" aria-label="select"  id="paymentStatus"></select>
+                  <select name="paymentStatus" class="form-select" aria-label="select" id="paymentStatus"></select>
                   <label for="floatingPaymentStatus">Payment</label>
                   <div class="invalid-feedback">
                     Please select a valid payment status.
                   </div>
                 </div>
                 <div class="form-floating mb-3">
-                  <textarea class="form-control insertFields" name="shippingAddress" placeholder="Shipping Address" id="shippingAddress"></textarea>
+                  <textarea class="form-control insertFields" name="shippingAddress" placeholder="Shipping Address"
+                    id="shippingAddress"></textarea>
                   <label for="floatingPaymentStatus">Shipping Address</label>
-                  
+
                 </div>
-                <button type="button" class="btn btn-primary"onclick="insertOrder()" id="insertSubmit">
+                <button type="button" class="btn btn-primary" onclick="insertOrder()" id="insertSubmit">
                   Submit
                 </button>
-                
+
               </form>
             </div>
             <div id="productFormDiv">
-                  <%- include('../salesModule/productForm')%>
-                </div>
+              <%- include('../salesModule/productForm')%>
+            </div>
           </div>
-          
-          
+
+
           <script src="js/salesModule/form.js"></script>
           <script src="js/salesModule/insertFormApi.js"></script>
           <script src="js/salesModule/updateOrder.js"></script>
-        
+
           <script src="js/salesModule/product.js"></script>
           <script src="js/salesModule/updateGrid.js"></script>
           <script src="js/commonFunction/commonFunction.js"></script>

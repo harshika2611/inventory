@@ -8,6 +8,8 @@ const {
   deleteQuery,
   updateProduct,
   updateAmount,
+  checkQuanitiy,
+  updateStock,
 } = require('../../service/salesModule/salesService');
 const { selectQuery, selectWhere } = require('../../service/selectQuery');
 // const { getCombos } = require('../../service/helper');
@@ -19,13 +21,12 @@ async function insertSalesOrder(req, res) {
     req.body.orderType,
     `${req.body.shippingAddress}`,
     req.body.paymentStatus,
-		req.body.date,
-		storageId
+    req.body.date,
+    storageId,
   ];
   try {
     let [rows, fields] = await insertOrder(input);
 
-    logger.info(rows);
     res.json({ rows });
   } catch (err) {
     logger.logError(err);
@@ -41,10 +42,14 @@ async function insertSalesProduct(req, res) {
       req.body.ordertype,
       req.body.quantity,
     ];
-    logger.info('input :: ' + input);
-    let [rows, fields] = await insertProduct(input);
-    logger.info(rows);
-    res.json({ rows });
+    const [result] = await checkQuanitiy(req);
+    if (req.body.quantity < result[0].stock) {
+      const [rows, fields] = await insertProduct(input);
+      res.json({ rows });
+      const [updateRow] = await updateStock(req);
+    } else {
+      res.json({ msg: `maximum awailable Quantity is ${result[0].stock}` });
+    }
   } catch (err) {
     logger.logError(err);
   }
@@ -73,8 +78,14 @@ async function getsalesOrder(req, res) {
     let order = req.query.order;
     let orderby = req.query.orderby;
     let col = req.query.col;
-		let value = req.query.colValue;
-    const [rows, fields] = await selectOrders(orderby, order, col, value,req.user.storageId);
+    let value = req.query.colValue;
+    const [rows, fields] = await selectOrders(
+      orderby,
+      order,
+      col,
+      value,
+      req.user.storageId
+    );
 
     const header = [];
     fields.forEach((ele) => {
@@ -93,14 +104,13 @@ async function updateSalesOrder(req, res) {
       req.body.orderType,
       `${req.body.shippingAddress}`,
       req.body.paymentStatus,
-			req.body.date,
-			req.user.storageId,
+      req.body.date,
+      // req.user.storageId,
       req.body.orderid,
     ];
-    logger.info(input);
+
     const [rows, fields] = await updateOrder(input);
 
-    logger.info(rows);
     res.json({ rows });
   } catch (err) {
     logger.logError(err);
@@ -127,7 +137,6 @@ async function getSalesProducts(req, res) {
 // 		let combo = req.params.combo
 // 		let rows = await getCombos(`%${combo}%`);
 // 		res.json({ rows });
-// 		logger.info(rows);
 // 	} catch (err) {
 // 		logger.logError(err);
 // 	}
@@ -168,9 +177,16 @@ async function deleteOrder(req, res) {
 
 async function deleteProduct(req, res) {
   try {
+    req.body.quantity = 0;
+    req.body.id = req.query.id
+    console.log(req.user.storageId,);
     let input = [req.query.id];
-    let [rows] = await deleteQuery('sales_products', input);
-    res.json({ rows });
+    let [flag, stock] = await updateProduct(req);
+
+    if (true) {
+      let [rows] = await deleteQuery('sales_products', input);
+      res.json({ rows });
+    }
   } catch (err) {
     logger.logError(err);
     res.json('not found');
@@ -179,11 +195,8 @@ async function deleteProduct(req, res) {
 
 async function updateSalesProduct(req, res) {
   try {
-    let input = [req.body.product, req.body.quantity, req.body.rowId];
-    console.log('input', input);
-    let [rows, fields] = await updateProduct(input);
-    logger.info(rows);
-    res.json({ rows });
+    let [flag, stock] = await updateProduct(req);
+    res.json({'flag': flag,'stock': stock});
   } catch (err) {
     logger.logError(err);
   }

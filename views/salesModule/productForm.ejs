@@ -6,7 +6,7 @@
       </td>
       <td>
         <!-- <label for="category">Category : </label> -->
-        <select name="category" id="productCategory" tabindex="1" onchange="getProducts('')"
+        <select name="category" id="productCategory" tabindex="1" onchange="getProducts()"
           class="productField category me-5 btn btn-secondary dropdown-toggle">
           <option value="" selected hidden>Select Category</option>
         </select>
@@ -36,6 +36,9 @@
     </tr>
   </table>
 </form>
+<div class="showError">
+  <p id="quantityError"></p>
+</div>
 <div class="productTableDiv">
   <table id="productList" class="table table-hover">
     <thead id="productListHead" class="table-light"></thead>
