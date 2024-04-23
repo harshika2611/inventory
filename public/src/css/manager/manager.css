@@ -5,15 +5,23 @@
   left: 30%;
 }
 
-.filter {
+.filter1 {
   justify-content: end;
   display: flex;
+  gap: 15px;
 }
-.filter1 {
-  margin-left: 1%;
+.filter {
+  padding-top: 2%;
 }
-.fillter2 {
-  padding: 5px;
+#status {
+  margin: 10px 10px;
+}
+.filter2 {
+  width: 11%;
+  margin: -7px;
+}
+.newAdd {
+  width: 9%;
 }
 .grid {
   margin-top: 3%;
@@ -25,11 +33,14 @@
 }
 th,
 td {
-  padding: 12px;
+  padding: 10px;
 }
 .deleteButton {
   cursor: pointer;
 }
 .editButton {
   cursor: pointer;
+}
+span {
+  display: flex;
 }

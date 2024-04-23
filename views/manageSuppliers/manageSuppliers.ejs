@@ -16,6 +16,7 @@
   <script src="js/manageSuppliers/manageSuppliersFormValidation.js"></script>
   <script src="js/manageSuppliers/manageSuppliersFilter.js"></script>
   <script src="js/components/messagePopUp.js"></script>
+  <script src="js/manageSuppliers/manageSupplierFileUpload.js"></script>
 </head>
 
 <body onload="getSuppliers()">
@@ -28,6 +29,14 @@
             <p class="addnewsupplierbutton" onclick="addNewSupplier()">Add New</p>
             <p class="supplierfilterbutton" onclick="supplierFilterShow()">Filter</p>
           </div>
+          <div class="importDataDiv">
+            <p class="importDataButton" onclick="showFileUpload()">Import Data</p>
+            <form enctype="multipart/form-data" id="supplierFileUploadForm" name="supplierFileUploadForm">
+              <input type="file" id="suppliersFile" name="suppliersFile" accept=".csv">
+              <p id="fileUploadButton" onclick="supplierFileUpload()">Upload File</p>
+            </form>
+          </div>
+
       </div>
       <%- include('../form/supplierForm')%>
         <%- include('../components/pagginationComponent')%>
