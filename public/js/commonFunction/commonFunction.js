@@ -158,23 +158,7 @@ async function getCity(stateSelectCombo, selectedStateName, selectedCityName) {
 }
 
 function renderTimestamp(databaseDate) {
-  let offSetValue = new Date().getTimezoneOffset() * -1;
   const storedDate = new Date(databaseDate);
 
-  const UTCDate = new Date(storedDate.toUTCString().concat('+0530'));
-
-  if (Number(offSetValue) != 0) {
-    if (offSetValue > 59) {
-      let hours = Math.floor(offSetValue / 60);
-      UTCDate.setHours(UTCDate.getHours() + hours);
-
-      offSetValue = offSetValue / 60;
-      offSetValue = (offSetValue - Math.floor(offSetValue)) * 60;
-      UTCDate.setMinutes(UTCDate.getMinutes() + offSetValue);
-    } else {
-      UTCDate.setMinutes(UTCDate.getMinutes() + offSetValue);
-    }
-  }
-
-  return UTCDate.toLocaleString();
+  return storedDate.toLocaleString();
 }
