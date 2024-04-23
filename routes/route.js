@@ -588,6 +588,9 @@ const {
   productListing,
   productInfo,
   getApiproduct,
+  productInfoPost,
+  productValid,
+  productInfoValid,
 } = require('../controller/product/productListing.js');
 router.get(
   '/products',
@@ -603,6 +606,12 @@ router.get(
   '/productInfo',
   passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
   productInfo
+);
+router.post(
+  '/productInfo',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  productInfoValid(productValid),
+  productInfoPost
 );
 router.get(
   '/api/products',

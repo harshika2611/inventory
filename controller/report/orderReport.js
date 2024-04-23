@@ -18,17 +18,22 @@ const getorderProducts = (req, res) => {
 const getApiorderRreport = async (req, res) => {
   try {
     let queryLength = Object.keys(req.query).length;
+    let storage = req.user.storageId || 1;
     if (queryLength === 0) {
-      const [rows] = await getOrderreport();
+      const [rows] = await getOrderreport(storage);
       res.json(rows);
     } else if (queryLength == 1) {
       let query = Object.keys(req.query);
-      const [rows] = await getOrderDayreport(query[0], req.query[query[0]]);
+      const [rows] = await getOrderDayreport(
+        query[0],
+        req.query[query[0]],
+        storage
+      );
       res.json(rows);
     } else {
       let fromDate = req.query.fromDate;
       let toDate = req.query.toDate;
-      const [rows] = await getOrderreportBydate(fromDate, toDate);
+      const [rows] = await getOrderreportBydate(fromDate, toDate, storage);
       res.json(rows);
     }
   } catch (err) {
