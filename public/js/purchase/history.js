@@ -45,7 +45,7 @@ async function initial() {
 
   document.getElementById('thead').innerHTML = head;
 
-  const paymentOptions = await generateDropDown('paymentStatus', 10);
+  const paymentOptions = (await generateDropDown('paymentStatus', 10)).content;
 
   document.getElementById('floatingPaymentStatus').innerHTML = paymentOptions;
 }
@@ -58,7 +58,7 @@ async function dataTableGrid(records) {
     let tr = document.createElement('tr');
 
     let noTd = document.createElement('td');
-    noTd.innerText = index + 1;
+    noTd.innerText = startIndex + index + 1;
 
     let suppTd = document.createElement('td');
     suppTd.innerText = obj.fname;
@@ -82,10 +82,14 @@ async function dataTableGrid(records) {
     viewTd.innerHTML = `<button class="btn btn-outline-dark">View</button>`;
 
     let editTd = document.createElement('td');
-    editTd.innerHTML = `<button class="btn btn-secondary" onclick="window.location.href = '/purchaseOrder?orderId=${obj?.id}'">Edit</button>`;
+    editTd.innerHTML = `<button class="btn" onclick="window.location.href = '/purchaseOrder?orderId=${obj?.id}'">
+      <img src="src/assets/manageCustomer/edit.svg" width="25" height="25">
+    </button>`;
 
     let deleteTd = document.createElement('td');
-    deleteTd.innerHTML = `<button class="btn btn-danger" onclick="deletePurchaseOrder(${obj.id})">Delete</button>`;
+    deleteTd.innerHTML = `<button class="btn" onclick="deletePurchaseOrder(${obj.id})">
+      <img src="src/assets/manageCustomer/delete.svg" width="25" height="25">
+    </button>`;
 
     [
       noTd,
@@ -95,7 +99,7 @@ async function dataTableGrid(records) {
       gstTd,
       amountTd,
       dateTd,
-      viewTd,
+      // viewTd,
       editTd,
       deleteTd,
     ].forEach((e) => tr.appendChild(e));
