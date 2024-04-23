@@ -54,12 +54,25 @@ function dataTableGrid(supplierArray, startIndex) {
       const createTr = document.createElement("tr");
       for (let key in element) {
         const createTd = document.createElement("td");
-        if (key === "SupplierId") {
-          createTd.textContent = ++startIndex;
-          createTr.appendChild(createTd);
-        } else {
-          createTd.textContent = element[key];
-          createTr.appendChild(createTd);
+        switch (key) {
+          case "SupplierId":
+            createTd.textContent = ++startIndex;
+            createTr.appendChild(createTd);
+            break;
+
+          case "Created":
+            createTd.textContent = renderTimestamp(element[key]);
+            createTr.appendChild(createTd);
+            break;
+
+          case "Updated":
+            createTd.textContent = renderTimestamp(element[key]);
+            createTr.appendChild(createTd);
+            break;
+
+          default:
+            createTd.textContent = element[key];
+            createTr.appendChild(createTd);
         }
       }
       const createActionTd = document.createElement("td");
