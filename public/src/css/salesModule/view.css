@@ -3,6 +3,13 @@
   background-color: #31384f;
   color: white;
 }
+body{
+  padding: 0 19%;
+  background-color: #ffffff00 !important;
+}
+#download{
+  float: right;
+}
 * {
   border: 0;
   box-sizing: content-box;
@@ -71,14 +78,14 @@ html {
   cursor: default;
 }
 
-body {
+.page {
   box-sizing: border-box;
   margin: 0 auto;
   overflow: hidden;
   padding: 0.3in;
   width: 8.5in;
 }
-body {
+.page {
   margin: 0 auto !important;
   background: #fff;
   border-radius: 1px;
@@ -104,7 +111,7 @@ aside h1 {
     background: none;
     padding: 0;
   }
-  body {
+  .page {
     margin: 0 auto;
     box-shadow: none;
     margin: 0;

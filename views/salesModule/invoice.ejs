@@ -16,69 +16,99 @@
     <header>
       <h1>Invoice</h1>
       <address>
-        <p>Jonathan Neal</p>
-        <p>101 E. Chapman Ave<br>Orange, CA 92866</p>
-        <p>(800) 555-1234</p>
+        <p>
+          <%=data.firstname%>
+            <%=data.lastname%>
+        </p>
+        <p>
+          <%=data.shipping_address%><br>
+            <%=data.city_name%>,<br>
+              <%=data.state_name%>
+        </p>
+        <p>
+          <%=data.phonenumber%>
+        </p>
       </address>
     </header>
     <article>
       <h1>Recipient</h1>
-      <address contenteditable>
+      <address>
         <p>Some Company<br>c/o Some Guy</p>
       </address>
       <table class="meta">
         <tr>
           <th><span>Invoice #</span></th>
-          <td><span>101138</span></td>
+          <td><span>
+              <%=data.id%>
+            </span></td>
         </tr>
         <tr>
           <th><span>Date</span></th>
-          <td><span>January 1, 2012</span></td>
+          <td><span>
+              <%=data.order_date%>
+            </span></td>
         </tr>
         <tr>
           <th><span>Amount Due</span></th>
-          <td><span id="prefix">$</span><span>600.00</span></td>
+          <td><span id="prefix">$</span><span>
+              <%=data.amount%>
+            </span></td>
         </tr>
       </table>
       <table class="inventory">
         <thead>
           <tr>
             <th><span>Item</span></th>
-            <th><span>Description</span></th>
+            <th><span>SKU</span></th>
             <th><span>Rate</span></th>
             <th><span>Quantity</span></th>
             <th><span>Price</span></th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td><span>Front End Consultation</span></td>
-            <td><span>Experience Review</span></td>
-            <td><span data-prefix>$</span><span>150.00</span></td>
-            <td><span>4</span></td>
-            <td><span data-prefix>$</span><span>600.00</span></td>
-          </tr>
+          <%for(ele of products){%>
+            <tr>
+              <td><span>
+                  <%=ele.product_name%>
+                </span></td>
+              <td><span>
+                  <%=ele.sku_id%>
+                </span></td>
+              <td><span data-prefix>$</span><span>
+                  <%=ele.cost%>
+                </span></td>
+              <td><span>
+                  <%=ele.quantity%>
+                </span></td>
+              <td><span data-prefix>$</span><span>
+                  <%=ele.cost*ele.quantity%>
+                </span></td>
+            </tr>
+            <%}%>
         </tbody>
       </table>
     </article>
     <table class="balance">
       <tr>
         <th><span>Total</span></th>
-        <td><span data-prefix>$</span><span>600.00</span></td>
+        <td><span data-prefix>$</span><span>
+            <%=data.amount%>
+          </span></td>
       </tr>
       <tr>
         <th><span>Amount Paid</span></th>
-        <td><span data-prefix>$</span><span>0.00</span></td>
+        <td><span data-prefix>$</span><span>
+            <%=(data.payment_status=='Pending'?0:data.amount)%>
+          </span></td>
       </tr>
       <tr>
         <th><span>Balance Due</span></th>
-        <td><span data-prefix>$</span><span>600.00</span></td>
+        <td><span data-prefix>$</span><span>
+            <%=(data.payment_status=='Pending'?data.amount:0)%>
+          </span></td>
       </tr>
-
     </table>
-
   </div>
-  <hr>
 </body>
 
 </html>

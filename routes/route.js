@@ -207,11 +207,12 @@ const {
 const {
   orderHistory,
   newOrder,
-  invoicePdf,
+  invoicePdf,invoiceview
 } = require('../controller/salesModule/salesRender.js');
 
 const {
   invoiceGenerator,
+  pdfTokenVerify,
 } = require('../controller/salesModule/pdfGeneration.js');
 
 router.get(
@@ -286,8 +287,15 @@ router.get(
 );
 router.get(
   '/invoice',
-  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  pdfTokenVerify,
+  // passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
   invoicePdf
+);
+
+router.get(
+  '/salesOrderView',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  invoiceview
 );
 
 //------------------------------------------------------
