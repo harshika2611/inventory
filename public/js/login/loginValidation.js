@@ -14,7 +14,7 @@ function loginFormValidation(data) {
         }
         break;
       case 'password':
-        console.log(data[key], 'aaaaa');
+  
         if (data[key].length === 0) {
           loginError[key] = '* require';
         } else if (data[key].length < 8 && data[key] !== '') {

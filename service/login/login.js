@@ -47,7 +47,7 @@ const logUnsuccessService = async (id) => {
 
 const checkUserService = async (body) => {
   try {
-    const sql4 = `select email from users where email=?`;
+    const sql4 = `select email,id from users where email=?`;
     const [result4] = await connection.execute(sql4, [body.email]);
     return result4;
   } catch (error) {

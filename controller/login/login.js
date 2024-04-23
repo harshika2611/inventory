@@ -99,7 +99,8 @@ const checkUser = async (req, res) => {
       if (result4[0].email == req.body.email) {
         const otp = Math.floor(Math.random() * 1000000000000 + 1);
         const user = await userService(otp, req.body);
-        res.render('login/user', { otp: otp });
+        res.render('login/user', { otp: otp, id: result4[0].id });
+        // res.status(200).redirect('login/user').send({ otp, id: result4[0].id });
       }
     } else if (result4.length === 0) {
       const error = 'user not valid';
@@ -113,6 +114,8 @@ const checkUser = async (req, res) => {
 const getLink = async (req, res) => {
   try {
     const link = req.params.link;
+    const id = req.params.id;
+    console.log(req.params, 'giveeeeeeeee');
     const user = await expireService(link);
     const timer = user[0][0].updated_at;
     const expeireTimer = new Date(

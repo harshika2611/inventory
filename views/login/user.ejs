@@ -11,26 +11,31 @@
 <body>
 
   <div class="main">
-    <h2>Validate Email</h2>
-    <form method="post" id="myForm">
-      <label for="email"></label>
-      <input type="email" name="email" id="email">
-      <%if(locals.error){%>
-        <div class="main_err" style="color: red;">
-          <%=error%>
-        </div>
-        <%}%>
-          <button type="submit" id="button">Generate Link</button>
+    <div id="form-s">
+      <h2>Validate Email</h2>
+      <form method="post" id="form">
+        <label for="email"></label>
+        <input type="email" name="email" id="email">
+        <%if(locals.error){%>
+          <div class="main_err" style="color: red;">
+            <%=error%>
+          </div>
+          <%}%>
+            <button type="submit" id="button">Generate Link</button>
 
-    </form>
-
+      </form>
+    </div>
     <div class="main-2">
       <%if(locals.otp){%>
         <h2>Kindly go through this link</h2>
-        <a href="http://localhost:8000/activelink/<%=otp%>">http://localhost:8000/activelink/<%=otp%></a>
+        <a href="http://localhost:8000/activelink/<%=otp%>/<%=id%>">http://localhost:8000/activelink/<%=otp%>/<%=id%>
+        </a>
         <%}%>
     </div>
   </div>
+  <script src="js/login/user.js"></script>
+  <script src="js/commonFunction/commonFunction.js"></script>
 </body>
+
 
 </html>

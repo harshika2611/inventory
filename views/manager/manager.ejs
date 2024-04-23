@@ -17,18 +17,25 @@
     <%- include('./deletePopup')%>
       <section class="div-second manager-section">
         <div class="manager-container" id="managerGrid">
-          <div class="filter">
-            <p class="btn btn-outline-dark filter1" onclick="addManager()">Add New</p>
+          <div id="filter" class="filter">
 
             <div class="filter1">
-              <select onchange="managerFilter()" name="status" class="btn btn-secondary dropdown-toggle filter1"
-                id="status">
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                  <option value="Active" selected>Active</option>
-                  <option value="Inactive">Inactive</option>
-                </div>
-              </select>
+              <div class="newAdd">
+                <p class="btn btn-outline-dark filter1" onclick="addManager()">Add New</p>
+              </div>
+              <div class="filter2"> <select onchange="managerFilter()" name="status"
+                  class="btn btn-secondary dropdown-toggle filter1" id="status">
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                    <option value="Active" selected>Active</option>
+                    <option value="Inactive">Inactive</option>
+                  </div>
+                </select></div>
 
+
+            </div>
+            <div class="filter3">
+              <input class="form-control form2 mr-sm-2 w-50" type="search" style="margin-left: 280px;" id="input"
+                placeholder="Search" onkeyup="search(this.value)" aria-label="Search" />
             </div>
           </div>
           <div class="grid" id="grid">
