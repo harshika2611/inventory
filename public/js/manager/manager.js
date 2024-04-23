@@ -3,12 +3,16 @@ let url = new URL(window.location.href);
 function addManager() {
   const customerForm = document.getElementById('myForm');
   customerForm.style.display = 'block';
-
+  document.getElementById('submitBtn').innerHTML = 'Submit';
+  document.getElementById('filter').style = `filter: blur(2px);`;
+  document.getElementById('grid').style = `filter: blur(2px);`;
   getAllStore();
 }
+
 function closeForm() {
   document.getElementById('myForm').style.display = 'none';
-  // document.getElementById("childbody").style = "none";
+  document.getElementById('filter').style = 'none';
+  document.getElementById('grid').style = 'none';
 }
 
 async function submitbtn() {
@@ -68,6 +72,9 @@ function dataTableGrid(manager, startIndex) {
   table.innerHTML = '';
   tableBody.innerHTML = '';
   for (let key in manager[0]) {
+    if (key === 'id') {
+      key = 'No.';
+    }
     const createTh = document.createElement('th');
     createTh.textContent = key;
     table.appendChild(createTh);
@@ -90,7 +97,8 @@ function dataTableGrid(manager, startIndex) {
     achor2.appendChild(img2);
     achor.appendChild(img);
     span.appendChild(achor);
-    if (key == 'id') {
+
+    if (key == 'No.' || key == 'Status') {
       span.remove();
     }
   }
@@ -143,22 +151,23 @@ function dataTableGrid(manager, startIndex) {
 async function updateManager(manager) {
   const id = manager.id;
   url = `/api/getmanager/${id}`;
-  console.log(id, 'asssperrrrr');
+
   document.getElementById('myForm').style.display = 'block';
   document.getElementById('submitBtn').innerHTML = 'Update';
+  document.getElementById('filter').style = `filter: blur(2px);`;
+  document.getElementById('grid').style = `filter: blur(2px);`;
   document
     .getElementById('submitBtn')
     .setAttribute('onclick', `updateDeails(${id})`);
   const response = await fetch(url);
   const managerDetails = await response.json();
-  console.log(managerDetails, 'also');
+
   try {
     if (!response.ok) {
       throw new Error('Error In Get Customer Details');
     }
     if (response.status == 200) {
       for (const key in managerDetails[0]) {
-        console.log(key, 'abc');
         let element = document.querySelector(`[name="${key}"]`);
         switch (key) {
           case 'firstname':
@@ -184,7 +193,7 @@ async function updateDeails(id) {
     const data = formData('form');
     data.id = id;
     url = `/updatemanager`;
-    console.log(data, 'heress');
+
     const managerValidation = manageManagerFormValidation(data);
     if (Object.keys(managerValidation).length > 0) {
       //----client side validation error
@@ -218,7 +227,7 @@ async function updateDeails(id) {
 
 async function deleteManager(manager) {
   const id = manager.id;
-  console.log(id, 'what');
+
   let modal = new bootstrap.Modal(document.getElementById('deleteModal'));
   modal.show();
   let confirm = document.getElementById('confirm');
@@ -248,16 +257,41 @@ function modelHide() {
 
 function managerFilter() {
   let status = document.getElementById('status').value;
-  console.log(status, 'givesss');
   url = `/api/getmanagers?status=${status}`;
   paggination(url);
 }
 managerFilter();
 
 function filterUp(event, order) {
+  let status = document.getElementById('status').value;
   const key = event.target.getAttribute('id');
-  console.log(key);
-
-  url = `/api/getmanagers?field=id&order=${order}`;
+  url = `/api/getmanagers?status=${status}&field=id&order=${order}`;
   paggination(url);
 }
+
+const search = (key) => {
+  // Declare variables
+  let input, filter, table, tr, td, i, txtValue;
+  input = key;
+
+  filter = input;
+  table = document.getElementById('table');
+  tr = table.getElementsByTagName('tr');
+  console.log(tr, 'aaaaa');
+  // Loop through all table rows, and hide those who don't match the search query
+  for (i = 0; i < tr.length; i++) {
+    for (let j = 0; j < 5; j++) {
+      console.log(tr[i], 'heer');
+      td = tr[i].getElementsByTagName('td')[j];
+      if (td) {
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.indexOf(filter) > -1) {
+          tr[i].style.display = '';
+          break;
+        } else {
+          tr[i].style.display = 'none';
+        }
+      }
+    }
+  }
+};

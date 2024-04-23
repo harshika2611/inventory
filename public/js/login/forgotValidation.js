@@ -15,7 +15,7 @@ function forgotFormValidation(data) {
         break;
 
       case 'confirm_pass':
-        console.log(data[key], 'aaaaa');
+
         if (data[key].length === 0) {
           forgotError[key] = '* require';
         } else if (data[key].length < 8 && data[key] !== '') {

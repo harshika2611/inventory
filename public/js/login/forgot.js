@@ -60,6 +60,11 @@ async function submitbtn() {
 
           errorShow(errorObject);
         }
+        if (response.status == 404) {
+          //unauthorized
+          error = 'User not valid';
+          document.getElementById('error_forgot').innerHTML = error;
+        }
       }
     } catch (error) {
       console.log(error);

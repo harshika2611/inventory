@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>product</title>
+  <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
+  <script src="/js/bootstrap.js"></script>
+  <link rel="stylesheet" href="src/css/allpage.css" />
+  <link rel="stylesheet" href="src/css/manager/manager.css" />
+</head>
+
+<body>
+  <%- include('../components/navigation', {data})%>
+    <section class="div-second manager-section">
+      <div class="manager-container" id="managerGrid">
+        <div id="filter" class="filter">
+
+          <div class="filter1">
+            <div class="newAdd">
+              <p class="btn btn-outline-dark filter1" onclick="addProduct()">Add New</p>
+            </div>
+          </div>
+          <div class="filter3">
+            <input class="form-control form2 mr-sm-2 w-50" type="search" style="margin-left: 280px;" id="input"
+              placeholder="Search" onkeyup="search(this.value)" aria-label="Search" />
+          </div>
+        </div>
+        <div class="grid" id="grid">
+          <table class="table table-hover" id="table">
+            <thead class="table-light" id="thead">
+            </thead>
+            <tbody id="tbody"></tbody>
+          </table>
+        </div>
+      </div>
+      <%- include('../form/productForm')%>
+        <%- include('../components/pagginationComponent')%>
+    </section>
+    <script src="js/commonFunction/commonFunction.js"></script>
+    <script src="js/products/product.js"></script>
+</body>
+
+</html>

@@ -18,8 +18,8 @@ const passport = require('passport');
 router.use(passport.initialize());
 auth(passport);
 const { checkLogin } = require('../controller/login/login.js');
-const loginFormValidation = require('../controller/login/loginValidation.js');
-const forgotFormValidation = require('../controller/login/forgotValidation.js');
+const loginFormValidation = require('../middleware/login/loginValidation.js');
+const forgotFormValidation = require('../middleware/login/forgotValidation.js');
 router.get('/checkLogin', checkLogin);
 router.get('/', getLogin);
 router.post('/', loginFormValidation, userLogin);
@@ -30,7 +30,7 @@ router.get(
 );
 router.get('/user', getUserName);
 router.post('/user', checkUser);
-router.get('/activelink/:link', getLink);
+router.get('/activelink/:link/:id', getLink);
 router.get('/forgot', getForgot);
 router.post('/forgot', forgotFormValidation, forgotPass);
 router.get(
@@ -38,8 +38,6 @@ router.get(
   passport.authenticate('jwt', { session: false }),
   userLogout
 );
-
-//----------------------
 
 //store combo
 const { getStoreCombo } = require('../controller/manager/manager.js');
@@ -55,7 +53,7 @@ const {
   listManagers,
   updateManager,
 } = require('../controller/manager/manager');
-const manageManagerFormValidation = require('../controller/manager/managerValidation.js');
+const manageManagerFormValidation = require('../middleware/manager/managerValidation.js');
 router.get(
   '/manager',
   passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
@@ -67,10 +65,27 @@ router.post(
   manageManagerFormValidation,
   manageManager
 );
-router.get('/api/getmanagers', listManagers);
-router.get('/api/getmanager/:id', getPerticularManager);
-router.post('/updatemanager', manageManagerFormValidation, updateManager);
-router.get('/api/deleteManager/:id', deleteManager);
+router.get(
+  '/api/getmanagers',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  listManagers
+);
+router.get(
+  '/api/getmanager/:id',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  getPerticularManager
+);
+router.post(
+  '/updatemanager',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  manageManagerFormValidation,
+  updateManager
+);
+router.get(
+  '/api/deleteManager/:id',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  deleteManager
+);
 
 //----getCity and getState
 const {
@@ -394,12 +409,38 @@ const {
 } = require('../controller/stores/store.js');
 const storeValidation = require('../middleware/store/storeValidation.js');
 
-router.get('/store',passport.authenticate('jwt', { session: false, failureRedirect: '/' }), getStorePage);
-router.get('/api/store',passport.authenticate('jwt', { session: false, failureRedirect: '/' }), getStore);
-router.get('/getStore',passport.authenticate('jwt', { session: false, failureRedirect: '/' }), getParticularStore);
-router.post('/insertStore',passport.authenticate('jwt', { session: false, failureRedirect: '/' }),storeValidation, insertStore);
-router.post('/updateStore',passport.authenticate('jwt', { session: false, failureRedirect: '/' }),storeValidation, updateStore);
-router.post('/deleteStore',passport.authenticate('jwt', { session: false, failureRedirect: '/' }), deleteStore);
+router.get(
+  '/store',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  getStorePage
+);
+router.get(
+  '/api/store',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  getStore
+);
+router.get(
+  '/getStore',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  getParticularStore
+);
+router.post(
+  '/insertStore',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  storeValidation,
+  insertStore
+);
+router.post(
+  '/updateStore',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  storeValidation,
+  updateStore
+);
+router.post(
+  '/deleteStore',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  deleteStore
+);
 // router.post('/filterStore',passport.authenticate('jwt', { session: false, failureRedirect: '/' }), filterStore);
 
 // ------------------- Manage Purchases ---------------------- //
@@ -518,6 +559,7 @@ router.get(
 
 //---------------------Products Module---------------------
 const {
+  manageProduct,
   productListing,
   productInfo,
   getApiproduct,
@@ -526,6 +568,11 @@ router.get(
   '/products',
   passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
   productListing
+);
+router.post(
+  '/products',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  manageProduct
 );
 router.get(
   '/productInfo',

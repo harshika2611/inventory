@@ -6,7 +6,12 @@ const connection = require('../../config/connection');
 
 const storeComboServices = async () => {
   try {
-    const sql4 = `SELECT storage_space_master.id,city_master.city_name FROM storage_space_master join city_master on storage_space_master.location_id=city_master.city_id;`;
+    const sql4 = `SELECT DISTINCT
+    city_master.city_name
+FROM
+    storage_space_master
+        JOIN
+    city_master ON storage_space_master.location_id = city_master.city_id;`;
     const [result4] = await connection.execute(sql4);
     return result4;
   } catch (error) {
@@ -38,10 +43,10 @@ FROM
         JOIN
     option_master ON option_master.id = users.status
 WHERE
-  option_master.value =?
+  option_master.key =?
         AND manager_details.is_delete = ?
 ORDER BY ${field} ${order}`;
-    console.log(status, 'con');
+
     const [ans] = await connection.execute(sql0, [status, 0]);
     return ans;
   } catch (error) {
@@ -101,7 +106,7 @@ const updateManagerService = async (otp, body) => {
       body.email,
       body.id,
     ]);
-    console.log(result);
+
     return result;
   } catch (error) {
     logger.logError(`Error`, error);
