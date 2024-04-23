@@ -548,7 +548,11 @@ const {
   productInfo,
   getApiproduct,
 } = require('../controller/product/productListing.js');
-router.get('/products', productListing);
+router.get(
+  '/products',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  productListing
+);
 router.get(
   '/productInfo',
   passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
