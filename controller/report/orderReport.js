@@ -8,11 +8,11 @@ const {
 } = require('../../service/report/orderReportService');
 
 const getorderReport = (req, res) => {
-  res.render('reports/orderReport');
+  res.render('reports/orderReport', { data: req.user });
 };
 
 const getorderProducts = (req, res) => {
-  res.render('reports/orderProduct');
+  res.render('reports/orderProduct', { data: req.user });
 };
 
 const getApiorderRreport = async (req, res) => {

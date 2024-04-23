@@ -25,7 +25,7 @@ async function insertCustomer(req, res) {
 }
 
 async function getCustomersPage(req, res) {
-  return res.render('manageCustomers/manageCustomers');
+  return res.render('manageCustomers/manageCustomers', { data: req.user });
 }
 
 async function getAllCustomers(req, res) {

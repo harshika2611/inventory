@@ -25,3 +25,7 @@ td {
 .pagenumber p {
   font-size: unset !important;
 }
+
+.outer-div {
+  padding-left: 20px;
+}

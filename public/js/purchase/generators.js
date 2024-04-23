@@ -10,7 +10,7 @@ function generateDropDown(value, selectedId) {
             ${o.value}
           </option>`;
       });
-      return content;
+      return { content, data };
     })
     .catch(() => '');
 }

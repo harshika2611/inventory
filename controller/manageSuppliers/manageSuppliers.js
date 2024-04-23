@@ -7,11 +7,12 @@ const {
   deleteSupplierrQuery,
 } = require('../../service/manageSuppliers/manageSuppliers.js');
 
-const { getCityStateId } = require('../../service/commonFunctions/commonFunctions.js');
-
+const {
+  getCityStateId,
+} = require('../../service/commonFunctions/commonFunctions.js');
 
 async function getSuppliersPage(req, res) {
-  return res.render('manageSuppliers/manageSuppliers');
+  return res.render('manageSuppliers/manageSuppliers', { data: req.user });
 }
 
 async function insertSupplier(req, res) {
@@ -29,7 +30,6 @@ async function insertSupplier(req, res) {
 
 async function getAllSuppliers(req, res) {
   try {
-
     const supplierDetails = await getSupplierQuery();
     return res.status(200).json(supplierDetails);
   } catch (error) {
@@ -39,18 +39,19 @@ async function getAllSuppliers(req, res) {
   }
 }
 
-
 async function getParticularSupplier(req, res) {
   try {
     const queryString = req.query;
-    const supplierDetail = await checkSupplierExistQuery(queryString.supplierId);
+    const supplierDetail = await checkSupplierExistQuery(
+      queryString.supplierId
+    );
     if (supplierDetail.length !== 0) {
       return res.status(200).json(supplierDetail);
     } else {
-      return res.status(404).json({ message: "Supplier Not Found" });
+      return res.status(404).json({ message: 'Supplier Not Found' });
     }
   } catch (error) {
-    res.status(500).json({ message: "Something Went Wrong" });
+    res.status(500).json({ message: 'Something Went Wrong' });
   }
 }
 
@@ -58,7 +59,10 @@ async function updateSupplier(req, res) {
   try {
     const supplierDetails = req.body;
 
-    const cityStateIdArray = await getCityStateId(supplierDetails.state, supplierDetails.city);
+    const cityStateIdArray = await getCityStateId(
+      supplierDetails.state,
+      supplierDetails.city
+    );
 
     //----city, state id store
     let cityId = cityStateIdArray[0].city_id;
@@ -98,5 +102,5 @@ module.exports = {
   getSuppliersPage,
   getAllSuppliers,
   getParticularSupplier,
-  deleteSupplier
-}
+  deleteSupplier,
+};

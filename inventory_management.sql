@@ -99,7 +99,7 @@ CREATE TABLE `logs` (
   KEY `fk_logs_2_idx` (`type_id`),
   CONSTRAINT `fk_logs_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
   CONSTRAINT `fk_logs_2` FOREIGN KEY (`type_id`) REFERENCES `option_master` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -108,7 +108,7 @@ CREATE TABLE `logs` (
 
 LOCK TABLES `logs` WRITE;
 /*!40000 ALTER TABLE `logs` DISABLE KEYS */;
-INSERT INTO `logs` VALUES (1,1,13,NULL,'2024-04-11 04:51:07'),(2,1,12,NULL,'2024-04-11 04:53:55'),(3,1,13,NULL,'2024-04-11 05:29:15'),(4,1,12,NULL,'2024-04-11 09:14:44'),(5,1,12,NULL,'2024-04-11 12:35:49'),(6,1,12,NULL,'2024-04-18 04:44:35'),(7,1,12,NULL,'2024-04-18 04:45:34'),(8,1,13,NULL,'2024-04-19 05:05:59'),(9,1,12,NULL,'2024-04-19 05:07:03'),(10,1,12,NULL,'2024-04-19 05:08:44'),(11,1,12,NULL,'2024-04-19 05:39:46'),(12,1,12,NULL,'2024-04-19 05:40:43'),(13,1,12,NULL,'2024-04-19 05:41:50'),(14,1,12,NULL,'2024-04-19 07:35:22'),(15,1,12,NULL,'2024-04-19 09:52:32'),(16,1,12,NULL,'2024-04-19 11:54:30'),(17,1,12,NULL,'2024-04-19 11:54:45'),(18,1,12,NULL,'2024-04-20 04:43:14'),(19,1,12,NULL,'2024-04-20 06:46:21'),(20,1,12,NULL,'2024-04-20 09:39:21'),(21,1,12,NULL,'2024-04-20 12:10:58'),(22,1,12,NULL,'2024-04-20 12:56:59'),(23,1,12,NULL,'2024-04-22 04:27:03'),(24,1,12,NULL,'2024-04-22 04:39:08');
+INSERT INTO `logs` VALUES (1,1,13,NULL,'2024-04-11 04:51:07'),(2,1,12,NULL,'2024-04-11 04:53:55'),(3,1,13,NULL,'2024-04-11 05:29:15'),(4,1,12,NULL,'2024-04-11 09:14:44'),(5,1,12,NULL,'2024-04-11 12:35:49'),(6,1,12,NULL,'2024-04-18 04:44:35'),(7,1,12,NULL,'2024-04-18 04:45:34'),(8,1,13,NULL,'2024-04-19 05:05:59'),(9,1,12,NULL,'2024-04-19 05:07:03'),(10,1,12,NULL,'2024-04-19 05:08:44'),(11,1,12,NULL,'2024-04-19 05:39:46'),(12,1,12,NULL,'2024-04-19 05:40:43'),(13,1,12,NULL,'2024-04-19 05:41:50'),(14,1,12,NULL,'2024-04-19 07:35:22'),(15,1,12,NULL,'2024-04-19 09:52:32'),(16,1,12,NULL,'2024-04-19 11:54:30'),(17,1,12,NULL,'2024-04-19 11:54:45'),(18,1,12,NULL,'2024-04-20 04:43:14'),(19,1,12,NULL,'2024-04-20 06:46:21'),(20,1,12,NULL,'2024-04-20 09:39:21'),(21,1,12,NULL,'2024-04-20 12:10:58'),(22,1,12,NULL,'2024-04-20 12:56:59'),(23,1,12,NULL,'2024-04-22 04:27:03'),(24,1,12,NULL,'2024-04-22 04:39:08'),(25,8,13,NULL,'2024-04-23 05:35:06'),(26,1,13,NULL,'2024-04-23 07:25:58'),(27,1,13,NULL,'2024-04-23 07:26:04'),(28,1,13,NULL,'2024-04-23 07:26:06'),(29,1,13,NULL,'2024-04-23 07:26:11'),(30,1,13,NULL,'2024-04-23 07:26:32'),(31,1,13,NULL,'2024-04-23 07:26:34'),(32,1,12,NULL,'2024-04-23 07:26:54'),(33,1,12,NULL,'2024-04-23 08:52:38');
 /*!40000 ALTER TABLE `logs` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -166,7 +166,7 @@ CREATE TABLE `option_master` (
 
 LOCK TABLES `option_master` WRITE;
 /*!40000 ALTER TABLE `option_master` DISABLE KEYS */;
-INSERT INTO `option_master` VALUES (4,1,'admin','Admin'),(5,1,'manager','Manager'),(6,2,'active','Active'),(7,2,'inactive.','Inactive.'),(8,3,'sales','Sales'),(9,3,'returned','Returned'),(10,4,'pending','Pending'),(11,4,'paid','Paid'),(12,5,'successful_logged_in','Successful Logged In'),(13,5,'unsuccessful_logged_in','Unsuccessful Logged In'),(15,7,'stationary','Stationary'),(16,8,'warehouses','Warehouses'),(17,8,'stores','Stores'),(18,8,'distribution_centers','Distribution Centers'),(19,7,'home','Home');
+INSERT INTO `option_master` VALUES (4,1,'admin','Admin'),(5,1,'manager','Manager'),(6,2,'active','Active'),(7,2,'inactive','Inactive'),(8,3,'sales','Sales'),(9,3,'returned','Returned'),(10,4,'pending','Pending'),(11,4,'paid','Paid'),(12,5,'successful_logged_in','Successful Logged In'),(13,5,'unsuccessful_logged_in','Unsuccessful Logged In'),(15,7,'stationary','Stationary'),(16,8,'warehouses','Warehouses'),(17,8,'stores','Stores'),(18,8,'distribution_centers','Distribution Centers'),(19,7,'home','Home');
 /*!40000 ALTER TABLE `option_master` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -353,7 +353,7 @@ CREATE TABLE `sales_products` (
   `order_type` int NOT NULL,
   `quantity` int NOT NULL,
   `is_delete` tinyint NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
+  PRIMARY KEY (`id`,`product_id`,`order_id`),
   KEY `fk_order_details_1_idx` (`order_id`),
   KEY `fk_order_details_2_idx` (`product_id`),
   KEY `fk_order_details_3_idx` (`order_type`),
@@ -530,7 +530,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,4,'admin',NULL,'admin@gmail.com','2000-03-01','$2b$10$.yRYCiLmcow/XVSj3rFgjeBuSv3qua9o0lvnWwOElj2CYwQq.Pt8q','49681768366','2024-04-19 10:36:59',6,'2024-04-08 11:04:58','2024-04-19 05:06:58',0),(8,5,'test User','abc','abc@abc.com',NULL,'$2b$10$UvvBv4rxBPBDWlmuv.xXu.cznBuH9KIxZFuuiuXgl.xJyGVLys2aC','370401405824','2024-04-20 18:03:37',6,'2024-04-20 12:16:21','2024-04-20 12:33:36',0),(9,5,'manager1','test','manager1@gmail.com',NULL,'$2b$10$VJJ4aqwMx09gdM8VKitDiO.bXVZnLbYgu4B5Un0Rfr2.k4EpfEwwK','597466283565','2024-04-23 09:53:11',6,'2024-04-23 04:22:38','2024-04-23 04:23:11',0),(10,5,'manager2','test','manager2@gmail.com',NULL,'$2b$10$tjL/TVYG2.9zj6nD2J14Repb5K6Mm54952seMtf8sjtD3gX8MP5JW','760061829902','2024-04-23 09:54:07',6,'2024-04-23 04:23:41','2024-04-23 04:24:07',0);
+INSERT INTO `users` VALUES (1,4,'admin',NULL,'admin@gmail.com','2000-03-01','$2b$10$Z0Rr0n5dVC5Hi7H1fgncAu.aI.GPpZnMFvJ1oOL5qduVR9/hZN9Zu','833070327625','2024-04-23 12:56:46',6,'2024-04-08 11:04:58','2024-04-23 07:26:46',0),(8,5,'test User','abc','abc@abc.com',NULL,'$2b$10$UvvBv4rxBPBDWlmuv.xXu.cznBuH9KIxZFuuiuXgl.xJyGVLys2aC','342095021714','2024-04-20 18:03:37',6,'2024-04-20 12:16:21','2024-04-23 05:33:41',0),(9,5,'manager1','test','manager1@gmail.com',NULL,'$2b$10$VJJ4aqwMx09gdM8VKitDiO.bXVZnLbYgu4B5Un0Rfr2.k4EpfEwwK','597466283565','2024-04-23 09:53:11',6,'2024-04-23 04:22:38','2024-04-23 04:23:11',0),(10,5,'manager2','test','manager2@gmail.com',NULL,'$2b$10$tjL/TVYG2.9zj6nD2J14Repb5K6Mm54952seMtf8sjtD3gX8MP5JW','760061829902','2024-04-23 09:54:07',6,'2024-04-23 04:23:41','2024-04-23 04:24:07',0);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -543,4 +543,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-04-23 10:52:30
+-- Dump completed on 2024-04-23 14:34:31

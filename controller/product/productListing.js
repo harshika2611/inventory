@@ -2,13 +2,13 @@ const { getProduct } = require('../../service/products/product');
 const logger = require('../../logs');
 
 const productListing = (req, res) => {
-  res.render('product/listing');
+  res.render('product/listing', { data: req.user });
 };
 const productInfo = async (req, res) => {
   try {
     if (req.query.id) {
       const [rows] = await getProduct(req.query.id, storage);
-      res.render('product/productInfo');
+      res.render('product/productInfo', { data: req.user });
     } else {
       res.render('components/404');
     }

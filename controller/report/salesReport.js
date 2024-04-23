@@ -5,10 +5,10 @@ const {
 } = require('../../service/report/selesReportService');
 
 const getsalesReport = (req, res) => {
-  res.render('reports/salesReport');
+  res.render('reports/salesReport', { data: req.user });
 };
 const getReportallProducts = (req, res) => {
-  res.render('reports/allProducts');
+  res.render('reports/allProducts', { data: req.user });
 };
 const getApiproductreport = async (req, res) => {
   try {

@@ -26,7 +26,7 @@ const getStoreCombo = async (req, res) => {
 };
 
 const getManager = async (req, res) => {
-  res.render('manager/manager');
+  res.render('manager/manager', { data: req.user });
 };
 
 const manageManager = async (req, res) => {

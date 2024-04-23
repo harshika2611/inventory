@@ -8,7 +8,7 @@ const logger = require('../../logs');
 async function viewProfile(req, res) {
   try {
     const profileDetails = await viewProfileQuery(req, res);
-    return res.render('./profile/view', { profileDetails });
+    return res.render('./profile/view', { profileDetails, data: req.user });
   } catch (error) {
     return res.json({ message: "Can't get profile details" });
   }
@@ -17,7 +17,7 @@ async function viewProfile(req, res) {
 async function editProfile(req, res) {
   try {
     const profileDetails = await viewProfileQuery(req, res);
-    res.render('./profile/edit', { profileDetails });
+    res.render('./profile/edit', { profileDetails, data: req.user });
   } catch (err) {
     logger.logError(err);
   }
@@ -26,7 +26,7 @@ async function editProfile(req, res) {
 async function updateProfile(req, res) {
   try {
     updateProfileQuery();
-    res.render('./profile/profile', {});
+    res.render('./profile/profile', { data: req.user });
   } catch (err) {
     logger.logError(err);
   }

@@ -12,7 +12,7 @@
 </head>
 
 <body>
-  <%- include('../components/navigation.ejs') %>
+  <%- include('../components/navigation.ejs', {data}) %>
     <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModal" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -32,15 +32,11 @@
       </div>
     </div>
     <div class="div-second pt-3">
-      <!-- <div class="d-flex mb-5 justify-content-end">
-        <button type="button" id="newForm" class="btn btn-outline-dark"
-          onclick="document.getElementById('newForm').disabled = true; generateForm1(8)">
-          + New
-        </button>
-      </div> -->
-      <div class="mt-5" id="root">
+      <div class="outer-div">
+        <div class="mt-5" id="root">
+        </div>
+        <%- include('../components/pagginationComponent')%>
       </div>
-      <%- include('../components/pagginationComponent')%>
     </div>
 </body>
 <script src="/js/purchase/pagination.js"></script>
