@@ -1,6 +1,5 @@
 <link rel="stylesheet" href="src/css/navigation.css" />
 <script src="js/components/navbar.js"></script>
-
 <div id="navdiv1">
   <div class="position-absolute top-0 start-0 d-flex z-1 main-div">
     <div class="nav-costom1">
@@ -23,121 +22,127 @@
                   <span class="fs-6 mx-2 text-light">Products</span>
                 </a>
               </div>
-              <div class="btn my-2 width-100">
-                <a href="/manager" class="d-flex align-items-center justify-content-start nav-link"><img
-                    src="icons/manager.svg" alt="img" width="30" height="20" />
-                  <span class="fs-6 mx-2 text-light">Managers</span>
-                </a>
-              </div>
-              <div class="btn my-2 width-100">
-                <a href="/manageCustomers" class="d-flex align-items-center justify-content-start nav-link"><img
-                    src="icons/customer.svg" alt="img" width="30" height="20" />
-                  <span class="fs-6 mx-2 text-light">Customers</span>
-                </a>
-              </div>
-              <div class="btn my-2 width-100">
-                <a href="/manageSuppliers" class="d-flex align-items-center justify-content-start nav-link"><img
-                    src="icons/supplier.svg" alt="img" width="30" height="20" />
-                  <span class="fs-6 mx-2 text-light">Suppliers</span>
-                </a>
-              </div>
-              <div class="btn my-2 width-100">
-                <a href="/store" class="d-flex align-items-center justify-content-start nav-link"><img
-                    src="icons/warehouses.svg" alt="img" width="30" height="20" />
-                  <span class="fs-6 mx-2 text-light">Warehouses</span>
-                </a>
-              </div>
-              <div class="btn my-2 width-100" data-bs-toggle="collapse" data-bs-target="#submenu1" aria-expanded="false"
-                aria-controls="submenu1">
-                <div class="d-flex">
-                  <a class="d-flex align-items-center justify-content-start nav-link">
-                    <img src="icons/purchase.svg" alt="img" width="30" height="20" />
-                    <span class="fs-6 mx-2 text-light">Purchase</span>
+              <% if(data?.roleId==4){ %>
+                <div class="btn my-2 width-100">
+                  <a href="/manager" class="d-flex align-items-center justify-content-start nav-link"><img
+                      src="icons/manager.svg" alt="img" width="30" height="20" />
+                    <span class="fs-6 mx-2 text-light">Managers</span>
                   </a>
-                  <img src="icons/downarrow.svg" alt="img" class="float-end mt-1" width="25" height="15" />
                 </div>
-                <div class="collapse collapse-horizontal" id="submenu1">
-                  <ul class="dis-flex nav flex-row ms-1">
-                    <li>
-                      <a href="/purchaseOrder"
-                        class="d-flex align-items-center justify-content-start nav-link text-dark"><img
-                          src="icons/order.svg" alt="img" width="30" height="20" />
-                        <span class="fs-6 mx-2 text-light">Order</span>
+                <% } %>
+                  <div class="btn my-2 width-100">
+                    <a href="/manageCustomers" class="d-flex align-items-center justify-content-start nav-link"><img
+                        src="icons/customer.svg" alt="img" width="30" height="20" />
+                      <span class="fs-6 mx-2 text-light">Customers</span>
+                    </a>
+                  </div>
+                  <div class="btn my-2 width-100">
+                    <a href="/manageSuppliers" class="d-flex align-items-center justify-content-start nav-link"><img
+                        src="icons/supplier.svg" alt="img" width="30" height="20" />
+                      <span class="fs-6 mx-2 text-light">Suppliers</span>
+                    </a>
+                  </div>
+                  <% if(data?.roleId==4){ %>
+                    <div class="btn my-2 width-100">
+                      <a href="/store" class="d-flex align-items-center justify-content-start nav-link"><img
+                          src="icons/warehouses.svg" alt="img" width="30" height="20" />
+                        <span class="fs-6 mx-2 text-light">Warehouses</span>
                       </a>
-                    </li>
-                    <li>
-                      <a href="/purchaseHistory"
-                        class="d-flex align-items-center justify-content-start nav-link text-dark"><img
-                          src="icons/history.svg" alt="img" width="30" height="20" />
-                        <span class="fs-6 mx-2 text-light">History</span>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              <div class="btn my-2 width-100" data-bs-toggle="collapse" data-bs-target="#submenu2"
-                aria-expanded="false">
-                <div class="d-flex">
+                    </div>
+                    <% } %>
+                      <div class="btn my-2 width-100" data-bs-toggle="collapse" data-bs-target="#submenu1"
+                        aria-expanded="false" aria-controls="submenu1">
+                        <div class="d-flex">
+                          <a class="d-flex align-items-center justify-content-start nav-link">
+                            <img src="icons/purchase.svg" alt="img" width="30" height="20" />
+                            <span class="fs-6 mx-2 text-light">Purchase</span>
+                          </a>
+                          <img src="icons/downarrow.svg" alt="img" class="float-end mt-1" width="25" height="15" />
+                        </div>
+                        <div class="collapse collapse-horizontal" id="submenu1">
+                          <ul class="dis-flex nav flex-row ms-1">
+                            <li>
+                              <a href="/purchaseOrder"
+                                class="d-flex align-items-center justify-content-start nav-link text-dark"><img
+                                  src="icons/order.svg" alt="img" width="30" height="20" />
+                                <span class="fs-6 mx-2 text-light">Order</span>
+                              </a>
+                            </li>
+                            <li>
+                              <a href="/purchaseHistory"
+                                class="d-flex align-items-center justify-content-start nav-link text-dark"><img
+                                  src="icons/history.svg" alt="img" width="30" height="20" />
+                                <span class="fs-6 mx-2 text-light">History</span>
+                              </a>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                      <div class="btn my-2 width-100" data-bs-toggle="collapse" data-bs-target="#submenu2"
+                        aria-expanded="false">
+                        <div class="d-flex">
 
-                  <a class="d-flex align-items-center justify-content-start nav-link">
-                    <img src="icons/sales.svg" alt="img" width="30" height="20" />
-                    <span class="fs-6 mx-2 text-light">Sales</span>
-                    <img src="icons/downarrow.svg" alt="img" class="float-end mt-1" width="25" height="15" />
-                  </a>
-                </div>
-                <div class="collapse collapse-horizontal" id="submenu2">
-                  <ul class="dis-flex nav flex-row ms-1">
-                    <li>
-                      <a href="/" class="d-flex align-items-center justify-content-start nav-link text-dark"><img
-                          src="icons/order.svg" alt="img" width="30" height="20" />
-                        <span class="fs-6 mx-2 text-light">Order</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="/" class="d-flex align-items-center justify-content-start nav-link text-dark"><img
-                          src="icons/history.svg" alt="img" width="30" height="20" />
-                        <span class="fs-6 mx-2 text-light">History</span>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              <div class="btn my-2 width-100" data-bs-toggle="collapse" data-bs-target="#submenu3"
-                aria-expanded="false">
-                <div class="d-flex">
+                          <a class="d-flex align-items-center justify-content-start nav-link">
+                            <img src="icons/sales.svg" alt="img" width="30" height="20" />
+                            <span class="fs-6 mx-2 text-light">Sales</span>
+                            <img src="icons/downarrow.svg" alt="img" class="float-end mt-1" width="25" height="15" />
+                          </a>
+                        </div>
+                        <div class="collapse collapse-horizontal" id="submenu2">
+                          <ul class="dis-flex nav flex-row ms-1">
+                            <li>
+                              <a href="/salesNewOrder"
+                                class="d-flex align-items-center justify-content-start nav-link text-dark"><img
+                                  src="icons/order.svg" alt="img" width="30" height="20" />
+                                <span class="fs-6 mx-2 text-light">Order</span>
+                              </a>
+                            </li>
+                            <li>
+                              <a href="/salesHistory"
+                                class="d-flex align-items-center justify-content-start nav-link text-dark"><img
+                                  src="icons/history.svg" alt="img" width="30" height="20" />
+                                <span class="fs-6 mx-2 text-light">History</span>
+                              </a>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                      <div class="btn my-2 width-100" data-bs-toggle="collapse" data-bs-target="#submenu3"
+                        aria-expanded="false">
+                        <div class="d-flex">
 
-                  <a class="d-flex align-items-center justify-content-start nav-link">
-                    <img src="icons/sales.svg" alt="img" width="30" height="20" />
-                    <span class="fs-6 mx-2 text-light">Reports</span>
-                  </a>
-                  <img src="icons/downarrow.svg" alt="img" class="float-end mt-1" width="25" height="15" />
-                </div>
-                <div class="collapse collapse-horizontal" id="submenu3">
-                  <ul class="dis-flex nav flex-row ms-1">
-                    <li>
-                      <a href="/purchaseReport"
-                        class="d-flex align-items-center justify-content-start nav-link text-dark"><img
-                          src="icons/purchase.svg" alt="img" width="30" height="20" />
-                        <span class="fs-6 mx-2 text-light">Purchase </span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="/salesReport"
-                        class="d-flex align-items-center justify-content-start nav-link text-dark"><img
-                          src="icons/history.svg" alt="img" width="30" height="20" />
-                        <span class="fs-6 mx-2 text-light">Sales</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="/orderReport"
-                        class="d-flex align-items-center justify-content-start nav-link text-dark"><img
-                          src="icons/purchase.svg" alt="img" width="30" height="20" />
-                        <span class="fs-6 mx-2 text-light">Orders</span>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
+                          <a class="d-flex align-items-center justify-content-start nav-link">
+                            <img src="icons/sales.svg" alt="img" width="30" height="20" />
+                            <span class="fs-6 mx-2 text-light">Reports</span>
+                          </a>
+                          <img src="icons/downarrow.svg" alt="img" class="float-end mt-1" width="25" height="15" />
+                        </div>
+                        <div class="collapse collapse-horizontal" id="submenu3">
+                          <ul class="dis-flex nav flex-row ms-1">
+                            <li>
+                              <a href="/purchaseReport"
+                                class="d-flex align-items-center justify-content-start nav-link text-dark"><img
+                                  src="icons/purchase.svg" alt="img" width="30" height="20" />
+                                <span class="fs-6 mx-2 text-light">Purchase </span>
+                              </a>
+                            </li>
+                            <li>
+                              <a href="/salesReport"
+                                class="d-flex align-items-center justify-content-start nav-link text-dark"><img
+                                  src="icons/history.svg" alt="img" width="30" height="20" />
+                                <span class="fs-6 mx-2 text-light">Sales</span>
+                              </a>
+                            </li>
+                            <li>
+                              <a href="/orderReport"
+                                class="d-flex align-items-center justify-content-start nav-link text-dark"><img
+                                  src="icons/purchase.svg" alt="img" width="30" height="20" />
+                                <span class="fs-6 mx-2 text-light">Orders</span>
+                              </a>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
             </div>
           </div>
         </div>

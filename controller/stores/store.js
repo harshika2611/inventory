@@ -5,8 +5,7 @@ const {
   getStoreQuery,
   updateStoreQuery,
   deleteStoreQuery,
-  checkStoreExistQuery
-
+  checkStoreExistQuery,
 } = require('../../service/stores/store');
 
 async function insertStore(req, res) {
@@ -14,14 +13,14 @@ async function insertStore(req, res) {
     const storeDetails = req.body;
     // console.log(storeDetails);
     await insertStoreQuery(storeDetails);
-    return res.json({ status: 200 })
+    return res.json({ status: 200 });
   } catch (error) {
     // return res.status(500).json({ message: 'Unable to insert' });
   }
 }
 
 async function getStorePage(req, res) {
-  res.render('stores/store');
+  res.render('stores/store', { data: req.user });
 }
 
 async function getStore(req, res) {
@@ -42,15 +41,13 @@ async function getParticularStore(req, res) {
     if (storeDetail.length !== 0) {
       return res.status(200).json(storeDetail);
     } else {
-      return res.status(404).json({ message: "Store Not Found" });
+      return res.status(404).json({ message: 'Store Not Found' });
     }
   } catch (error) {
     // console.log(error)
-    res.status(500).json({ message: "Something Went Wrong" });
+    res.status(500).json({ message: 'Something Went Wrong' });
   }
 }
-
-
 
 async function updateStore(req, res) {
   try {
@@ -64,7 +61,10 @@ async function updateStore(req, res) {
     // let stateId = cityStateIdArray[0].state_id;
     // storeDetails.city = cityId.toString();
     // storeDetails.state = stateId.toString();
-    const updateStoreStatus = await updateStoreQuery(storeDetails, storeDetails.storeId);
+    const updateStoreStatus = await updateStoreQuery(
+      storeDetails,
+      storeDetails.storeId
+    );
 
     if (updateStoreStatus) {
       return res.status(200).json({ message: 'Store Updated' });
@@ -80,15 +80,22 @@ async function deleteStore(req, res) {
   try {
     const storeId = req.query.storeId;
     await deleteStoreQuery(storeId);
-    window.location.reload('/store')
+    window.location.reload('/store');
   } catch (error) {
     return res.status(500).json({ message: 'Unable to delete' });
   }
 }
 
-
 async function filterStore(req, res) {
   try {
-  } catch (error) { }
+  } catch (error) {}
 }
-module.exports = { insertStore, getStore, getStorePage, updateStore, deleteStore, getParticularStore, filterStore };
+module.exports = {
+  insertStore,
+  getStore,
+  getStorePage,
+  updateStore,
+  deleteStore,
+  getParticularStore,
+  filterStore,
+};

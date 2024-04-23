@@ -147,11 +147,11 @@ async function fetchPurchases(req, res) {
 }
 
 async function showPurchaseOrder(req, res) {
-  res.render('purchase');
+  res.render('purchase', { data: req.user });
 }
 
 async function showPurchaseOrders(req, res) {
-  res.render('purchase/history');
+  res.render('purchase/history', { data: req.user });
 }
 
 async function createPurchase(req, res) {

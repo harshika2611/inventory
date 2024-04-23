@@ -7,10 +7,9 @@ const modal = new bootstrap.Modal('#deleteModal');
 async function generateForm1(oId = null) {
   await getOrderDetails(oId);
 
-  const paymentOptions = await generateDropDown(
-    'paymentStatus',
-    orderDetails?.paymentStatus
-  );
+  const paymentOptions = (
+    await generateDropDown('paymentStatus', orderDetails?.paymentStatus)
+  ).content;
 
   const supplierOptions = await generateSuppliersDropDown(
     orderDetails?.supplierId
@@ -161,7 +160,7 @@ async function submitForm1(update = false) {
 }
 
 async function generateForm2() {
-  const categoryOptions = await generateDropDown('productCategory');
+  const categoryOptions = (await generateDropDown('productCategory')).content;
 
   const root = document.getElementById('root');
 
@@ -284,7 +283,9 @@ function generateAddProductRows(
 				</div>
 			</div>
 			<div class="w-auto">
-				<button type="button" class="btn btn-success custom-disabled" onclick="saveProduct(event,${purchaseProductId})">Save</button>
+				<button type="button" class="btn btn-success custom-disabled" onclick="saveProduct(event,${purchaseProductId})">
+          ${purchaseProductId ? 'Update' : 'Save'}
+        </button>
 			</div>
 			<div class="w-auto">
 				<button type="button" class="btn btn-danger custom-disabled" onclick="deleteProduct(event,${purchaseProductId})">Delete</button>
