@@ -207,7 +207,8 @@ const {
 const {
   orderHistory,
   newOrder,
-  invoicePdf,invoiceview
+  invoicePdf,
+  invoiceview,
 } = require('../controller/salesModule/salesRender.js');
 
 const {
@@ -431,38 +432,12 @@ const {
 } = require('../controller/stores/store.js');
 const storeValidation = require('../middleware/store/storeValidation.js');
 
-router.get(
-  '/store',
-  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
-  getStorePage
-);
-router.get(
-  '/api/store',
-  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
-  getStore
-);
-router.get(
-  '/getStore',
-  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
-  getParticularStore
-);
-router.post(
-  '/insertStore',
-  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
-  storeValidation,
-  insertStore
-);
-router.post(
-  '/updateStore',
-  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
-  storeValidation,
-  updateStore
-);
-router.post(
-  '/deleteStore',
-  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
-  deleteStore
-);
+router.get('/store',passport.authenticate('jwt', { session: false, failureRedirect: '/' }), getStorePage);
+router.get('/api/store',passport.authenticate('jwt', { session: false, failureRedirect: '/' }), getStore);
+router.get('/getStore',passport.authenticate('jwt', { session: false, failureRedirect: '/' }), getParticularStore);
+router.post('/insertStore',passport.authenticate('jwt', { session: false, failureRedirect: '/' }),storeValidation, insertStore);
+router.post('/updateStore',passport.authenticate('jwt', { session: false, failureRedirect: '/' }),storeValidation, updateStore);
+router.post('/deleteStore',passport.authenticate('jwt', { session: false, failureRedirect: '/' }), deleteStore);
 // router.post('/filterStore',passport.authenticate('jwt', { session: false, failureRedirect: '/' }), filterStore);
 
 // ------------------- Manage Purchases ---------------------- //
@@ -592,6 +567,7 @@ const {
   productValid,
   productInfoValid,
 } = require('../controller/product/productListing.js');
+const manageProductFormValidation = require('../middleware/product/productValidation.js');
 router.get(
   '/products',
   passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
@@ -600,6 +576,7 @@ router.get(
 router.post(
   '/products',
   passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  manageProductFormValidation,
   manageProduct
 );
 router.get(
@@ -628,6 +605,8 @@ const {
 } = require('../controller/profile/profile.js');
 const { storeImage } = require('../controller/profile/uploadImage.js');
 const { getOrderreport } = require('../service/report/orderReportService.js');
+const { userProfileStorage } = require('../middleware/multer/multer.js');
+const upload = multer({ storage: userProfileStorage });
 
 router.get(
   '/profile',
@@ -635,7 +614,7 @@ router.get(
   viewProfile
 );
 router.get('/profileEdit', editProfile);
-router.post('/profileEdit', updateProfile);
-router.post('/imageUpload', storeImage);
+router.post('/profileEdit',upload.single("newImage"),  updateProfile);
+// router.post('/imageUpload',storeImage);
 
 module.exports = router;

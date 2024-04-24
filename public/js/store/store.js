@@ -163,7 +163,9 @@ async function openUpdateStoreForm(store) {
   -ms-filter: blur(5px);
   filter: blur(5px);
   `;
-  document.getElementById('updateButton').setAttribute("onclick", `updateStoreDetails(${storeId})`);
+  document
+    .getElementById('updateButton')
+    .setAttribute('onclick', `updateStoreDetails(${storeId})`);
 
   const response = await fetch(`/getStore/?storeId=${storeId}`, {
     method: 'GET',
@@ -197,7 +199,6 @@ async function openUpdateStoreForm(store) {
 }
 
 async function updateStoreDetails(storeId) {
-
   const storeFormData = formData('storeForm'); //parameter as formname
   storeFormData.storeId = storeId;
   //----backend
@@ -328,7 +329,7 @@ const search = (key) => {
   filter = input;
   table = document.getElementById('store__table');
   tr = table.getElementsByTagName('tr');
-
+  console.log(tr);
   // Loop through all table rows, and hide those who don't match the search query
   for (i = 0; i < tr.length; i++) {
     for (let j = 0; j < 5; j++) {

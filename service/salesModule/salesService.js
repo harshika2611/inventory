@@ -41,7 +41,7 @@ async function selectOrders(orderby, order, col, value, storageId) {
 }
 
 async function insertOrder(input) {
-  sql = `insert into sales_order (id, customer_id, type, shipping_address, payment_status, date,storage_id) values (default,?,?,?,?,?,?);`;
+  sql = `insert into sales_order (id, customer_id, type, shipping_address, payment_status, order_date,storage_id) values (default,?,?,?,?,?,?);`;
 
   return await connection.execute(sql, input);
 }
