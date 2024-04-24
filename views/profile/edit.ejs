@@ -18,14 +18,14 @@
     <div class="container div-second">
       <div class="main-container">
         <div class="profile-details">
-          <form class="g-3 edit-profile-form" id="form" method="post">
+          <form class="g-3 edit-profile-form" enctype="multipart/form-data" id="form" method="post" action="/profileEdit">
             <div class="container edit-img-container">
               <div class="img-container">
                 <img class="currentProfileImage" src="icons/profile.png" alt="">
               </div>
-              <div class="edit-link" onclick="addManager()">
-                <a href="#">Change</a>
-                <img src="/icons/edit.svg" alt="" width="20" height="20">
+              <div class="edit-link">
+                <input name="newImage" type="file" class="form-control" id="choose-file"
+                accept="image/png, image/jpg, image/jpeg" style="width: 150px;" required>
               </div>
             </div>
             <div>
@@ -53,12 +53,11 @@
 
             </div>
             <div class="edit-btn-container">
-              <button type="button" class="edit-profile-btn" onclick="submitbtn();">Save</button>
+              <button type="submit" class="edit-profile-btn">Save</button>
             </div>
           </form>
         </div>
       </div>
-      <%- include('../form/imageUploadForm')%>
     </div>
     <script src="js/commonFunction/commonFunction.js"></script>
     <script src="js/manager/manager.js"></script>
