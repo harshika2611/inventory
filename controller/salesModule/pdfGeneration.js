@@ -3,35 +3,15 @@ const logger = require('../../logs');
 const jwt = require('jsonwebtoken');
 async function invoiceGenerator(req, res) {
   const puppeteer = require('puppeteer');
- 
-  const token = req.cookies.token;
-  const id = req.query.id;
   // let obj = {}
   // obj["token"] = req.cookies.token;
   // obj["id"] = req.query.id;
-  try {
+
+  // try {
     const browser = await puppeteer.launch({ headless: true });
     const page = await browser.newPage();
 
-    // await page.setRequestInterception(true);
-    // page.on('request', (interceptedRequest) => {
-    //   // Here, is where you change the request method and
-    //   // add your post data
-    //   var data = {
-    //     method: 'POST',
-    //     body: new URLSearchParams(obj),
-    //   };
-
-    //   // Request modified... finish sending!
-    //   interceptedRequest.continue(data);
-    // });
-
-    // // Navigate, trigger the intercept, and resolve the response
-    // const response = await page.goto('http://localhost:8000/invoice');
-    // const responseBody = await response.text();
-    // // console.log(responseBody);
-
-    await page.goto(`http://localhost:8000/invoice?token=${token}&invoiceId=${id}`, {
+    await page.goto(`http://localhost:8000/invoice?token=${req.cookies.token}&invoiceId=${req.query.id}&type=${req.query.type}`, {
       waitUntil: 'networkidle0',
       // timeout: 0,
     });
@@ -42,11 +22,11 @@ async function invoiceGenerator(req, res) {
       format: 'A4',
     });
     await browser.close();
-    res.setHeader('Content-Disposition', `attachment; filename=invoice${id}.pdf`);
+    res.setHeader('Content-Disposition', `attachment; filename=invoice${req.query.id}.pdf`);
     res.send(pdf);
-  } catch (err) {
-    logger.logError(err);
-  }
+  // } catch (err) {
+  //   logger.logError(err);
+  // }
 }
 
 const { SECRET_KEY } = process.env;
