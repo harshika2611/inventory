@@ -104,8 +104,9 @@ async function addProduct() {
           Swal.fire({
             title: 'oops!!',
             text: result.msg,
-            icon: 'success',
+            icon: 'error',
           });
+
         } else {
           fetching();
         }
