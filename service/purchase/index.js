@@ -306,6 +306,19 @@ async function deletePurchaseOrder(data) {
   }
 }
 
+async function fetchPurchaseOrderView(req) {
+  try {
+    const [results] = await connection.execute(
+      'select supplier_master.*,purchase_order.id as order_id,(select city_name from city_master where city_id = supplier_master.city_id)as city_name,(select state_name from state_master where state_id = supplier_master.state_id) as state_name,purchase_order.amount,(select value from option_master where id = purchase_order.payment_status) as payment_status,purchase_order.date as order_date from purchase_order join supplier_master on purchase_order.supplier_id = supplier_master.id where  purchase_order.id = ? and storage_id = ?;',
+      [req.query.invoiceId, req.user.storageId]
+    );
+    const [products] = await connection.execute('select purchase_products.id,purchase_products.quantity,product_master.product_name,product_master.sku_id,product_master.cost from purchase_products join product_master on purchase_products.product_id = product_master.id where purchase_products.purchase_id= 1 and purchase_products.is_delete =0;', [req.query.invoiceId,]);
+    return [results,products];
+  } catch (error) {
+    logError(error);
+  }
+}
+
 module.exports = {
   getAllSuppliers,
   createPurchaseOrder,
@@ -319,4 +332,5 @@ module.exports = {
   getProductsByCategory,
   fetchPurchaseOrders,
   deletePurchaseOrder,
+  fetchPurchaseOrderView
 };

@@ -18,6 +18,6 @@ function updateOrderForm(result, id) {
       op.setAttribute('selected', true);
     }
   }
-  date.value = result[0].date;
+  date.value = result[0].date.split('T')[0];
 }
 // we will use grid fetch function for edit and delete

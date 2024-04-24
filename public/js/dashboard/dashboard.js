@@ -93,21 +93,6 @@ const showQuantityData = async (lowvalue) => {
   document.getElementById('totalStock').innerText = productData.length;
   document.getElementById('outStock').innerText = lowStock.length;
 
-  // var options = {
-  // 	chart: {
-  // 		height: 350,
-  // 		width: 350,
-  // 		type: 'donut',
-  // 	},
-  // 	series: [productData.length, lowStock.length],
-  // 	chartOptions: {
-  // 		labels: ['Products', 'Low Products'],
-  // 	},
-  // };
-
-  // var chart = new ApexCharts(document.getElementById('outStock'), options);
-  // chart.render();
-
   lowStock = lowStock.slice(0, 5);
 
   document.getElementById('lowQuantityStockTableHead').innerHTML = header
@@ -145,7 +130,9 @@ const showData = () => {
   document.getElementById('orderTableBody').innerHTML = orderData
     .map(
       (e) => `<tr onclick="productlist('${e.Order_Id}')">
-	      ${header2.map((h) => `<td>${e[h]}</td>`).join('')}</tr>`
+	      ${header2
+          .map((h) => `<td>${e[h] == null ? '-' : e[h]}</td>`)
+          .join('')}</tr>`
     )
     .join('');
 };

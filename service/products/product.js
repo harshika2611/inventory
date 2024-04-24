@@ -27,28 +27,60 @@ const updateProduct = async (body, storage) => {
     [rows.insertId, storage, body.stock]
   );
 };
-module.exports = { getProduct, updateProduct };
 
 const checkProductSevice = async (body) => {
   try {
     console.log(body);
-    const sql = `select product_name from product_master where product_name=?`;
-    const [ans] = await connection.execute(sql, [body.productname]);
+    const sql = `select product_name,sku_id from product_master where product_name=? and sku_id=?`;
+    const [ans] = await connection.execute(sql, [body.productname, body.skuid]);
     console.log(ans);
     return ans;
   } catch (error) {
+    console.log(error);
     logger.logError(`Error`, error);
     throw error;
   }
 };
 
-const insertProductService = async (req, res) => {
+const insertProductService = async (body) => {
   try {
-    const sql = `insert into product_master(product_name,sku_id,cost)`;
+    const sql = `insert into product_master(product_name,sku_id,category_id,cost,description) values (?,?,?,?,?)`;
+    const [ans] = await connection.execute(sql, [
+      body.productname,
+      body.skuid,
+      body.category,
+      body.cost,
+      body.description,
+    ]);
+    console.log(ans.insertId, 'insert');
+    return ans.insertId;
   } catch (error) {
+    console.log(error);
     logger.logError(`Error`, error);
     throw error;
   }
 };
-
-module.exports = { checkProductSevice, getProduct, insertProductService };
+const insertProductDetailService = async (result, body, payload) => {
+  try {
+    console.log(payload.storageId, 'what');
+    const sql1 = `insert into products_details(product_id,storage_id,
+      stock) values (?,?,?)`;
+    const [ans1] = await connection.execute(sql1, [
+      result,
+      payload.storageId,
+      body.Stock,
+    ]);
+    return ans1;
+  } catch (error) {
+    console.log(error);
+    logger.logError(`Error`, error);
+    throw error;
+  }
+};
+module.exports = {
+  getProduct,
+  updateProduct,
+  checkProductSevice,
+  insertProductDetailService,
+  insertProductService,
+};

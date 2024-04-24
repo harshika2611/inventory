@@ -35,24 +35,25 @@ async function insertSalesOrder(req, res) {
 }
 
 async function insertSalesProduct(req, res) {
-  try {
-    let input = [
-      req.body.orderid,
-      req.body.product,
-      req.body.ordertype,
-      req.body.quantity,
-    ];
-    const [result] = await checkQuanitiy(req);
-    if (req.body.quantity < result[0].stock) {
-      const [rows, fields] = await insertProduct(input);
-      res.json({ rows });
-      const [updateRow] = await updateStock(req);
-    } else {
-      res.json({ msg: `maximum awailable Quantity is ${result[0].stock}` });
-    }
-  } catch (err) {
-    logger.logError(err);
+  // try {
+  let input = [
+    req.body.orderid,
+    req.body.product,
+    req.body.ordertype,
+    req.body.quantity,
+  ];
+
+  const stock = await checkQuanitiy(req);
+  if (req.body.quantity <= stock) {
+    const [rows, fields] = await insertProduct(input);
+    res.json({ rows });
+    const updateRow = await updateStock(req, stock);
+  } else {
+    res.json({ msg: `maximum awailable Quantity is ${stock}` });
   }
+  // } catch (err) {
+  //   logger.logError(err);
+  // }
 }
 
 async function getSalesCustomer(req, res) {
@@ -146,7 +147,7 @@ async function productGrid(req, res) {
   try {
     let input = [req.query.orderId];
     let [rows, fields] = await productList(input);
-    console.log(rows, fields);
+
     let header = [];
     fields.forEach((ele) => {
       header.push(ele.name);
@@ -168,6 +169,17 @@ async function deleteOrder(req, res) {
   try {
     let input = [req.query.id];
     let [rows] = await deleteQuery('sales_order', input);
+    let [data] = await productList(input);
+  for(ele of data){
+      req.body.id = ele.id;
+      req.body.quantity = 0;
+    
+      let [flag, stock] = await updateProduct(req);
+      if (flag == true) {
+        let [rows] = await deleteQuery('sales_products', [ele.id]);
+        // res.json({ rows });
+      }
+    }
     res.json({ rows });
   } catch (err) {
     logger.logError(err);
@@ -178,13 +190,11 @@ async function deleteOrder(req, res) {
 async function deleteProduct(req, res) {
   try {
     req.body.quantity = 0;
-    req.body.id = req.query.id
-    console.log(req.user.storageId,);
-    let input = [req.query.id];
+    req.body.id = req.query.id;
     let [flag, stock] = await updateProduct(req);
 
-    if (true) {
-      let [rows] = await deleteQuery('sales_products', input);
+    if (flag == true) {
+      let [rows] = await deleteQuery('sales_products', [req.query.id]);
       res.json({ rows });
     }
   } catch (err) {
@@ -196,7 +206,7 @@ async function deleteProduct(req, res) {
 async function updateSalesProduct(req, res) {
   try {
     let [flag, stock] = await updateProduct(req);
-    res.json({'flag': flag,'stock': stock});
+    res.json({ flag: flag, stock: stock });
   } catch (err) {
     logger.logError(err);
   }

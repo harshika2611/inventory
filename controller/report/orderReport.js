@@ -1,4 +1,3 @@
-const { query } = require('../../config/connection');
 const logger = require('../../logs');
 const {
   getOrderreport,

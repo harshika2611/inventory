@@ -43,7 +43,7 @@
           <tr>
             <th><span>Invoice #</span></th>
             <td><span>
-                <%=data.id%>
+                <%=data.order_id%>
               </span></td>
           </tr>
           <tr>
@@ -117,9 +117,11 @@
 </body>
 <script>
   function downloadPdf(){
-    url = window.location.href;
+    let url = window.location.href;
+    let type = "<%=type%>"
+    console.log(type);
     id=url.split('=')[1];
-    window.location.href = `/getPdf?id=${id}`;
+    window.location.href = `/getPdf?id=${id}&type=${type}`;
   }
 </script>
 </html>

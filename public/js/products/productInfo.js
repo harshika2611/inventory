@@ -4,7 +4,7 @@ let validation = {
 };
 const searchParams = new URLSearchParams(window.location.search);
 let id = searchParams.get('id');
-const productformData = new FormData(document.getElementById('productForm'));
+const productformData = new FormData(document.getElementById('productForm1'));
 let fData = Object.fromEntries(productformData);
 let formtitles = Object.keys(fData);
 console.log(fData);
@@ -57,37 +57,45 @@ const submitData = async () => {
     Object.entries(Newdata.product).forEach((arr) => {
       body.append(arr[0], arr[1].trim());
     });
-    let response = await fetch(`/productInfo?id=${id}`, {
-      method: 'Post',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: body,
-    });
-    if (response.status != 200) {
-      let res = await response.json();
-      document.getElementById(
-        `error${res.field}`
-      ).innerHTML = `<div class="alert alert-danger my-2">Please enter valid ${res.field}</div> `;
-      document.getElementById(res.field).focus();
-    } else {
-      formtitles.forEach((e) => {
-        document.getElementById(e).disabled = true;
+    try {
+      let response = await fetch(`/productInfo?id=${id}`, {
+        method: 'Post',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: body,
       });
-      document.getElementById('submit').disabled = true;
-      document.getElementById('edit').disabled = false;
+      let res = await response.json();
+      if (response.status != 200) {
+        if (response.status == 500) {
+          messagePopUp(res.message);
+        } else {
+          document.getElementById(
+            `error${res.field}`
+          ).innerHTML = `<div class="alert alert-danger my-2">Please enter valid ${res.field}</div> `;
+          document.getElementById(res.field).focus();
+        }
+      } else {
+        messagePopUp(res.message);
+        formtitles.forEach((e) => {
+          document.getElementById(e).disabled = true;
+        });
+        document.getElementById('submit').disabled = true;
+        document.getElementById('edit').disabled = false;
+      }
+    } catch (err) {
+      messagePopUp('Product not updated...');
     }
   }
 };
 
 const loadData = async () => {
-  console.log(id);
   let product = await fetchApi(`api/products?id=${id}`);
   let combo = await fetchApi(`api/combos/productCategory`);
   let title = Object.keys(product[0]);
-
+  title.shift();
   for (let e in title) {
-    if (title[e] != 'category') {
+    if (title[e] != 'Category') {
       document.getElementById(formtitles[e]).value = product[0][title[e]];
     }
   }
