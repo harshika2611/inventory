@@ -65,7 +65,7 @@ function dataTableGrid(result) {
 // }
 function viewOrder(id) {
   console.log(id);
-  window.location.href = `/salesOrderView?invoiceId=${id}`;
+  window.location.href = `/salesOrderView?invoiceId=${id}&type=invoice`;
 }
 
 function searchFilter() {
