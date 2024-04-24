@@ -54,12 +54,12 @@ const getAllStore = async () => {
   try {
     const response = await fetch('/storeCombo');
     const data = await response.json();
-
+    console.log(data);
     const store = data.result;
+    let option = document.getElementById('state');
+    option.innerHTML = '';
     store.forEach((element) => {
-      const option = (document.getElementById(
-        'state'
-      ).innerHTML += `<option value="${element.id}">${element.city_name}</option>`);
+      option.innerHTML += `<option value="${element.id}">${element.name}</option>`;
     });
   } catch (error) {
     console.log(error);
@@ -277,11 +277,10 @@ const search = (key) => {
   filter = input;
   table = document.getElementById('table');
   tr = table.getElementsByTagName('tr');
-  console.log(tr, 'aaaaa');
+
   // Loop through all table rows, and hide those who don't match the search query
   for (i = 0; i < tr.length; i++) {
     for (let j = 0; j < 5; j++) {
-      console.log(tr[i], 'heer');
       td = tr[i].getElementsByTagName('td')[j];
       if (td) {
         txtValue = td.textContent || td.innerText;

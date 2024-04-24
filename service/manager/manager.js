@@ -7,11 +7,11 @@ const connection = require('../../config/connection');
 const storeComboServices = async () => {
   try {
     const sql4 = `SELECT DISTINCT
-    city_master.city_name
+    storage_space_master.id, storage_space_master.name
 FROM
     storage_space_master
         JOIN
-    city_master ON storage_space_master.location_id = city_master.city_id;`;
+    city_master ON storage_space_master.location_id = city_master.city_id`;
     const [result4] = await connection.execute(sql4);
     return result4;
   } catch (error) {

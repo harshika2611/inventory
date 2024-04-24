@@ -19,6 +19,7 @@
           <p onclick="closeForm()" id="closeCustomerForm">close</p>
           <fieldset>
 
+
             <div class="form-floating mb-3 customerform__errordiv">
               <input name="productname" type="text" class="form-control customerInput" id="floatingInput"
                 placeholder="name@example.com">
@@ -26,25 +27,40 @@
             </div>
 
             <div class="form-floating mb-3 customerform__errordiv">
-              <input name="quantity" type="number" class="form-control customerInput" id="floatingInput"
+              <input name="skuid" type="text" class="form-control customerInput" id="floatingInput"
                 placeholder="name@example.com">
-              <label for="floatingInput">Quantity </label>
+              <label for="floatingInput">SKU id</label>
+            </div>
+
+            <div class="form-floating customerform__errordiv">
+              <select name="category" id="category">
+                <option value="select here">select category</option>
+              </select>
+
             </div>
 
             <div class="form-floating mb-3 customerform__errordiv">
-              <input name="cost" type="number" class="form-control customerInput" id="floatingInput"
+              <input name="cost" type="text" class="form-control customerInput" id="floatingInput"
                 placeholder="name@example.com">
               <label for="floatingInput">Cost</label>
             </div>
+
             <div class="form-floating mb-3 customerform__errordiv">
-              <input name="availability" type="number" class="form-control customerInput" id="floatingInput"
+              <input name="Stock" type="text" class="form-control customerInput" id="floatingInput"
                 placeholder="name@example.com">
-              <label for="floatingInput">Availability</label>
+              <label for="floatingInput">Stock </label>
+            </div>
+
+            <div class="form-floating mb-3 customerform__errordiv">
+              <input name="description" type="text" class="form-control customerInput" id="floatingInput"
+                placeholder="name@example.com">
+              <label for="floatingInput">Description</label>
             </div>
 
           </fieldset>
           <div id="error"></div>
-          <p id="submitBtn" class="btn btn-outline-primary" onclick="submitbtn()">Submit</p>
+          <button type="button" id="submitBtn" class="btn btn-outline-primary" onclick="submitbtn()">Submit</button>
+          <button type="reset" class="btn btn-outline-danger">Reset</button>
         </div>
       </form>
     </div>

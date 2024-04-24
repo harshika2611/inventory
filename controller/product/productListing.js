@@ -3,6 +3,7 @@ const {
   checkProductSevice,
   insertProductService,
   updateProduct,
+  insertProductDetailService,
 } = require('../../service/products/product');
 const logger = require('../../logs');
 
@@ -42,13 +43,17 @@ const productListing = (req, res) => {
 
 const manageProduct = async (req, res) => {
   try {
+    console.log(req.user, 'aaa');
     const result0 = await checkProductSevice(req.body);
+    console.log(result0, 'aa');
     if (result0.length) {
       return res.status(409).send('product already exist');
     } else {
       try {
         const result = await insertProductService(req.body);
-        return res.status(200).send('product added');
+        console.log(result, 'id');
+        const result1 = await insertProductDetailService(result, req.body,req.user);
+        return res.status(200).send('product successfully added');
       } catch (error) {
         logger.logError(error);
         return res.status(500).json({ message: 'can`t fetch user controller' });

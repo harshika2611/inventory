@@ -85,7 +85,7 @@ const loadData = async () => {
   let product = await fetchApi(`api/products?id=${id}`);
   let combo = await fetchApi(`api/combos/productCategory`);
   let title = Object.keys(product[0]);
-
+  title.shift();  
   for (let e in title) {
     if (title[e] != 'category') {
       document.getElementById(formtitles[e]).value = product[0][title[e]];
