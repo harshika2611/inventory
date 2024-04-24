@@ -25,8 +25,7 @@ function dataTableGrid(result) {
       head += `<th scope="col">${key}</th>`;
     }
   }
-  head += `<th scope="col">Edit</th>
-  <th scope="col">Delete</th>`;
+  head += `<th scope="col" style="text-align: center;">Actions</th>`;
   head += `</tr>`;
   document.getElementById('thead').innerHTML = head;
 
@@ -40,18 +39,18 @@ function dataTableGrid(result) {
 				<td>${data.OrderType == 8 ? 'Sales' : 'Return'}</td>
         <td>${data.shipping_address}</td>
         <td>${data.payment_status == 10 ? 'Pending' : 'Paid'}</td>
-        <td>${data.date.split(' ')[0]}</td>
+        <td>${data.date.split('T')[0]}</td>
         
         <td><a class="btn btn-outline-primary" onclick="viewOrder(${
           data.ID
-        })">View</a></td>
+        })">View</a>
 
-        <td><a class='btn btn-success' id=edit${
-          data.ID
-        } onclick="updateOrder('edit',event,'order')">EDIT</a></td>
-        <td><a class="btn btn-danger" id=delete${
-          data.ID
-        } onclick="updateOrder('delete',event,'order')">DELETE</a></td>
+      <a class='btn btn-success' id=edit${
+        data.ID
+      } onclick="updateOrder('edit',event,'order')">EDIT</a>
+       <a class="btn btn-danger" id=delete${
+         data.ID
+       } onclick="updateOrder('delete',event,'order')">DELETE</a></td>
         </tr>`;
     count++;
   });
