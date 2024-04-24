@@ -78,13 +78,11 @@ async function updateProduct(req) {
     `select sales_products.product_id,(sales_products.quantity+ products_details.stock) as total_stock from sales_products join products_details on sales_products.product_id = products_details.product_id where sales_products.id = ? and products_details.storage_id = ?;`,
     [req.body.id, req.user.storageId]
   );
-
   if (prevQuantity[0].total_stock > req.body.quantity) {
     const [result] = await connection.execute(
-      `update products_details set stock = ( ?-?) where product_id = ? and storage_id = ?;`,
+      `update products_details set stock = ? where product_id = ? and storage_id = ?;`,
       [
-        prevQuantity[0].total_stock,
-        req.body.quantity,
+        prevQuantity[0].total_stock - req.body.quantity,
         prevQuantity[0].product_id,
         req.user.storageId,
       ]
@@ -112,31 +110,37 @@ async function updateAmount(input) {
 }
 
 async function checkQuanitiy(req, type) {
-  try {
-    const [result] = await connection.execute(
-      `select stock from products_details where product_id = ? and storage_id = ?`,
-      [req.body.product, req.user.storageId]
-    );
-    return result[0].stock;
-  } catch (e) {
-    logger.logError(e);
-  }
+  // try {
+  const [result] = await connection.execute(
+    `select stock from products_details where product_id = ? and storage_id = ?`,
+    [req.body.product, req.user.storageId]
+  );
+  return result[0].stock;
+  // } catch (e) {
+  //   logger.logError(e);
+  // }
 }
 
-async function updateStock(req) {
+async function updateStock(req, stock) {
   const [data] = await connection.execute(
     `update products_details set stock = ? where product_id = ? and storage_id = ?`,
-    [result[0].stock - req.body.quantity, req.body.product, req.user.storageId]
+    [stock - req.body.quantity, req.body.product, req.user.storageId]
   );
-  logger.info(data);
+  return data;
 }
 
 async function getOrderDetail(req) {
   try {
-    sql = `select customer_master.*,(select city_name from city_master where city_id = customer_master.city_id)as city_name,(select state_name from state_master where state_id = customer_master.state_id) as state_name,sales_order.amount,sales_order.shipping_address,(select value from option_master where id = sales_order.type) as type,(select value from option_master where id = sales_order.payment_status) as payment_status,sales_order.order_date from sales_order join customer_master on sales_order.customer_id = customer_master.id where  sales_order.id = ? and storage_id = ?;`;
-    let productQuery = `SELECT sales_products.id,sales_products.order_type,sales_products.quantity,product_master.product_name,product_master.sku_id,product_master.cost FROM sales_products join product_master on sales_products.product_id = product_master.id where order_id = ? and sales_products.is_delete = 0`
-    const [result] = await connection.execute(sql, [req.query.invoiceId, req.user.storageId]);
-    const [products] = await connection.execute(productQuery, [req.query.invoiceId]);
+    sql = `select customer_master.*,sales_order.id as order_id,(select city_name from city_master where city_id = customer_master.city_id)as city_name,(select state_name from state_master where state_id = customer_master.state_id) as state_name,sales_order.amount,sales_order.shipping_address,(select value from option_master where id = sales_order.type) as type,(select value from option_master where id = sales_order.payment_status) as payment_status,sales_order.order_date from sales_order join customer_master on sales_order.customer_id = customer_master.id where  sales_order.id = ? and storage_id = ?;`;
+
+    let productQuery = `SELECT sales_products.id,sales_products.order_type,sales_products.quantity,product_master.product_name,product_master.sku_id,product_master.cost FROM sales_products join product_master on sales_products.product_id = product_master.id where order_id = ? and sales_products.is_delete = 0`;
+    const [result] = await connection.execute(sql, [
+      req.query.invoiceId,
+      req.user.storageId,
+    ]);
+    const [products] = await connection.execute(productQuery, [
+      req.query.invoiceId,
+    ]);
     return [result, products];
   } catch (err) {
     logger.logError(err);

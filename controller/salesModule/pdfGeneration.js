@@ -42,7 +42,7 @@ async function invoiceGenerator(req, res) {
       format: 'A4',
     });
     await browser.close();
-    res.setHeader('Content-Disposition', `attachment; filename=invoice123.pdf`);
+    res.setHeader('Content-Disposition', `attachment; filename=invoice${id}.pdf`);
     res.send(pdf);
   } catch (err) {
     logger.logError(err);
@@ -51,7 +51,7 @@ async function invoiceGenerator(req, res) {
 
 const { SECRET_KEY } = process.env;
 
-// async function pdfTokenVerify(req,res,next) {
+
 function pdfTokenVerify(req, res, next) {
   // const token = req.body.token;
   const token = req.query.token;
@@ -60,7 +60,6 @@ function pdfTokenVerify(req, res, next) {
     const verified = jwt.verify(token, secretKey);
     if (verified) {
       req.user = verified;
-      console.log(123456);
       next();
     } else {
       // Access Denied
