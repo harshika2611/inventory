@@ -30,12 +30,21 @@ async function fetching() {
     <td><a class="btn btn-danger" id="delete${data.id}" onclick="updateOrder('delete', event,'product')">DELETE</a></td>
     </tr>`;
     totalAmount += data.Total;
+    if (totalAmount > 0) {
+      document.getElementById('generatePdf').setAttribute('onclick',`generatePdf(${orderId})`)
+    }
   });
   document.getElementById(
     'totalAmount'
   ).innerHTML = `Total Amount Is ${totalAmount}`;
 
   document.getElementById('productListBody').innerHTML = body;
+}
+
+
+function generatePdf(id) {
+  console.log(id);
+  window.location.href = `/getPdf?id=${id}`
 }
 
 function enableSave(id) {
@@ -111,15 +120,7 @@ async function addProduct() {
   }
 }
 
-// async function allocateProductEdit(id) {
-//   let data;
-//   productGridResult.forEach((ele) => {
-//     if (ele.id == id) {
-//       data = ele;
-//     }
-//   });
-//   document.getElementById('editQuantity').value = data.quantity;
-// }
+
 async function updateProduct(id) {
   console.log(id);
   let quantity = document.getElementById(`editQuantity${id}`).value;

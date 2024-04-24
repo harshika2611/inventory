@@ -9,7 +9,7 @@ const getpurchaseReport = (req, res) => {
 const getApiproductPurchasereport = async (req, res) => {
   try {
     let product = req.query.product || '';
-    let storage = req.user.storageId;
+    let storage = req.user.storageId || 1;
     const [rows] = await getpurchaseProductreport(storage, product);
     res.json(rows);
   } catch (err) {

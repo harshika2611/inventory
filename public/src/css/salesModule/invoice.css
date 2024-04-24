@@ -44,20 +44,19 @@ table {
 }
 th,
 td {
-  border-width: 1px;
+  border-width: 8px;
   padding: 0.5em;
   position: relative;
   text-align: left;
-}
-th,
-td {
   border-radius: 0.25em;
   border-style: solid;
 }
 th {
   background: #eee;
   border-color: #bbb;
+ 
 }
+
 td {
   border-color: #ddd;
 }
@@ -74,10 +73,9 @@ html {
 
 body {
   box-sizing: border-box;
-  height: 11in;
   margin: 0 auto;
   overflow: hidden;
-  padding: 0.5in;
+  padding: 0.3in;
   width: 8.5in;
 }
 body {
@@ -221,4 +219,8 @@ table.meta th {
 }
 table.meta td {
   width: 60%;
+}
+
+th{
+  border: 6px solid #0000 !important;
 }
