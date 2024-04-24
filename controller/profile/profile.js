@@ -23,10 +23,12 @@ async function editProfile(req, res) {
   }
 }
 
-async function updateProfile(req, res) {
+ function updateProfile(req, res) {
   try {
-    updateProfileQuery();
-    res.render('./profile/profile', { data: req.user });
+    // updateProfileQuery();
+    // res.render('./profile/profile', { data: req.user });
+    res.end("Hiii")
+    // console.log("hIIIII????");
   } catch (err) {
     logger.logError(err);
   }
