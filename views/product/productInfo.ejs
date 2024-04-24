@@ -13,47 +13,49 @@
 <body>
   <%- include("../components/navigation", {data})%>
     <div class="div-second">
-      <div class="container">
-        <div class="row">
-          <div class="col p-5">
-            <form id="productForm">
-              <label for="productname">Product Name : </label>
-              <input type="text" class="form-control" name="productname" id="productname">
-              <span id="errorproductname">
-              </span><br>
-              <label for="skuid">Sku Id : </label>
-              <input type="text" class="form-control" name="skuid" id="skuid">
-              <span id="errorskuid">
-              </span><br>
-              <label for="category">Product category : </label>
-              <select class="form-select" name="category" id="category">
-                <option value="1">hii</option>
-              </select>
-              <span id="errorcategory">
-              </span><br>
-              <label for="cost">Product Cost : </label>
-              <input type="text" class="form-control" name="cost" id="cost">
-              <span id="errorcost">
-              </span><br>
-              <label for="stock">Product Stock : </label>
-              <input type="text" class="form-control" name="stock" id="stock">
-              <sapn id="errorstock">
-              </sapn><br>
-              <label for="description">Product Description: </label>
-              <input type="text" class="form-control" name="description" id="description">
-              <span class="errordescription">
-              </span><br>
-              <input type="button" value="Edit" id="edit" class="btn btn-dark" onclick="editData()">
-              <input type="button" value="Submit" class="btn btn-dark" id="submit" onclick="submitData()" disabled>
-            </form>
+      <div class="container p-3">
+        <%- include('../components/messagePopUp')%>
+          <div class="row ">
+            <div class="col p-5">
+              <form id="productForm1">
+                <label for="productname">Product Name : </label>
+                <input type="text" class="form-control" name="productname" id="productname">
+                <span id="errorproductname">
+                </span><br>
+                <label for="skuid">Sku Id : </label>
+                <input type="text" class="form-control" name="skuid" id="skuid">
+                <span id="errorskuid">
+                </span><br>
+                <label for="category">Product category : </label>
+                <select class="form-select" name="category" id="category">
+                  <option value="1">hii</option>
+                </select>
+                <span id="errorcategory">
+                </span><br>
+                <label for="cost">Product Cost : </label>
+                <input type="text" class="form-control" name="cost" id="cost">
+                <span id="errorcost">
+                </span><br>
+                <label for="stock">Product Stock : </label>
+                <input type="text" class="form-control" name="stock" id="stock">
+                <sapn id="errorstock">
+                </sapn><br>
+                <label for="description">Product Description: </label>
+                <input type="text" class="form-control" name="description" id="description">
+                <span class="errordescription">
+                </span><br>
+                <input type="button" value="Edit" id="edit" class="btn btn-dark" onclick="editData()">
+                <input type="button" value="Submit" class="btn btn-dark" id="submit" onclick="submitData()" disabled>
+              </form>
+            </div>
+            <div class="col d-flex align-items-center p-5">
+              <img src="icons/productInfo.svg" alt="img" width="300" height="300">
+            </div>
           </div>
-          <div class="col d-flex align-items-center p-5">
-            <img src="icons/productInfo.svg" alt="img" width="300" height="300">
-          </div>
-        </div>
       </div>
     </div>
     <script src="/js/products/productInfo.js"></script>
+    <script src="/js/components/messagePopUp.js"></script>
 </body>
 
 </html>

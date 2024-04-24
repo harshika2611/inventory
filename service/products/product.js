@@ -27,7 +27,6 @@ const updateProduct = async (body, storage) => {
     [rows.insertId, storage, body.stock]
   );
 };
-module.exports = { getProduct, updateProduct };
 
 const checkProductSevice = async (body) => {
   try {
@@ -61,7 +60,6 @@ const insertProductService = async (body) => {
     throw error;
   }
 };
-
 const insertProductDetailService = async (result, body, payload) => {
   try {
     console.log(payload.storageId, 'what');
@@ -79,10 +77,10 @@ const insertProductDetailService = async (result, body, payload) => {
     throw error;
   }
 };
-
 module.exports = {
-  insertProductDetailService,
-  checkProductSevice,
   getProduct,
+  updateProduct,
+  checkProductSevice,
+  insertProductDetailService,
   insertProductService,
 };

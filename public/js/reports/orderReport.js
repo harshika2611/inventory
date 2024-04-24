@@ -10,27 +10,18 @@ const dataTableGrid = (pagginationArray, startIndex) => {
     productData.innerHTML = `<h6 class='text-center'>Error</h6>`;
   } else {
     let header = Object.keys(pagginationArray[0]);
-    let data = changesInApi(pagginationArray);
     productHeader.innerHTML = header
       .map((e) => `<th>${e.replace('_', ' ')} </th>`)
       .join('');
-    productData.innerHTML = data
+    productData.innerHTML = pagginationArray
       .map(
         (e) => `<tr onclick="productlist('${e.Order_Id}')">
-      ${header.map((h) => `<td>${e[h]}</td>`).join('')}</tr>`
+      ${header
+        .map((h) => `<td>${e[h] == null ? '-' : e[h]}</td>`)
+        .join('')}</tr>`
       )
       .join('');
   }
-};
-const changesInApi = (array) => {
-  array.map((e) => {
-    if (e.Payment_Status == 0) {
-      e.Payment_Status = 'Pending';
-    } else if (e.Payment_Status == 1) {
-      e.Payment_Status = 'Pead';
-    }
-  });
-  return array;
 };
 
 const productlist = (id) => {
