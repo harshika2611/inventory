@@ -19,7 +19,9 @@ function messagePopUp(responseMessage) {
 
   const removeMessagePopUp = setTimeout(() => {
     const messagePopUp = document.getElementById("messagePopUp");
-    messagePopUp.remove();
+    if (messagePopUp) {
+      messagePopUp.remove();
+    }
     clearTimeout(removeMessagePopUp);
   }, 6000);
 }
