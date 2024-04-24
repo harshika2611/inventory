@@ -16,22 +16,11 @@ async function updateOrder(type, event, page) {
   let id = event.target.getAttribute('id').split(`${type}`)[1];
   let modal = new bootstrap.Modal(document.getElementById(`${deleteModal}`));
 
-  if (type == 'edit') {
-    if (page == 'order') {
+  if (type == 'edit' && page == 'order') {
+   
       window.location.href = `/${url}?id=${id}`;
       fetching();
-		}
-		// else {
-    //   let editModal = new bootstrap.Modal(
-    //     document.getElementById(`${editModalName}`)
-    //   );
-    //   editModal.show();
-    //   let confirmEdit = document.getElementById('confirmEdit');
-    //   let rowId = document.getElementById('rowId');
-    //   rowId.value = id;
-    //   confirmEdit.setAttribute('onclick', `editProduct(${id})`);
-    //   allocateProductEdit(id);
-    // }
+		
   } else if (type == 'delete') {
     // deleteId.innerHTML = id;
     let confirm = document.getElementById('confirm'); //confirm btn id
@@ -51,7 +40,9 @@ async function fetchDelete(id, page) {
       url = 'deleteSalesProduct';
       break;
   }
-  let [result, response] = await commonFetch(`/${url}?id=${id}`);
+  const response = await fetch(`/${url}?id=${id}`);
+  const result = await response.json();
+  return;
 }
 function modelHide(modelName) {
   bootstrap.Modal.getInstance(document.getElementById(`${modelName}`)).hide();
