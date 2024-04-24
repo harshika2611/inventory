@@ -26,6 +26,12 @@ async function editProfile(req, res) {
  function updateProfile(req, res) {
   try {
     // updateProfileQuery();
+    if (req.file == undefined) {
+      
+    } else {
+      
+      console.log('/assets/userprofile/',req.file.filename);
+    }
     // res.render('./profile/profile', { data: req.user });
     res.end("Hiii")
     // console.log("hIIIII????");
