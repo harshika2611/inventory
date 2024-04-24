@@ -6,7 +6,7 @@ function addProduct() {
   document.getElementById('submitBtn').innerHTML = 'Submit';
   document.getElementById('filter').style = `filter: blur(2px);`;
   document.getElementById('grid').style = `filter: blur(2px);`;
-  // getAllStore();
+  getAllStore();
 }
 function closeForm() {
   document.getElementById('myForm').style.display = 'none';
@@ -16,34 +16,34 @@ function closeForm() {
 async function submitbtn() {
   try {
     const data = formData('productForm');
-    // const managerValidation = manageManagerFormValidation(data);
+    const productValidation = manageProductFormValidation(data);
     console.log(data, 'aaa');
-    // if (Object.keys(managerValidation).length > 0) {
-    //   //----client side validation error
-    //   errorShow(managerValidation);
-    // } else {
-    url = `/products`;
-    const response = await fetch(url, {
-      method: 'post',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-      body: JSON.stringify(data),
-    });
-    if (response.status == 200) {
-      alert('product added');
-      window.location = `/products`;
+    if (Object.keys(productValidation).length > 0) {
+      //----client side validation error
+      errorShow(productValidation);
+    } else {
+      url = `/products`;
+      const response = await fetch(url, {
+        method: 'post',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+      if (response.status == 200) {
+        alert('product added');
+        window.location = `/products`;
+      }
+      if (response.status === 409) {
+        document.getElementById('error').innerHTML = 'product already exist';
+        document.getElementById('error').style.color = 'red';
+      }
+      if (response.status === 400) {
+        const errorObject = await response.json();
+        errorShow(errorObject);
+      }
     }
-    if (response.status === 409) {
-      document.getElementById('error').innerHTML = 'product already exist';
-      document.getElementById('error').style.color = 'red';
-    }
-    if (response.status === 400) {
-      const errorObject = await response.json();
-      errorShow(errorObject);
-    }
-    // }
   } catch (error) {
     console.log(error);
   }
@@ -125,7 +125,48 @@ function dataTableGrid(product, startIndex) {
 }
 function filterUp(event, order) {
   const key = event.target.getAttribute('id');
-  console.log(key, 'ssssssssssss');
+
   url = `/api/products?field=${key}&order=${order}`;
   paggination(url);
 }
+const search = (key) => {
+  // Declare variables
+  let input, filter, table, tr, td, i, txtValue;
+  input = key;
+
+  filter = input;
+  table = document.getElementById('table');
+  tr = table.getElementsByTagName('tr');
+
+  // Loop through all table rows, and hide those who don't match the search query
+  for (i = 0; i < tr.length; i++) {
+    for (let j = 0; j < 5; j++) {
+      td = tr[i].getElementsByTagName('td')[j];
+      if (td) {
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.indexOf(filter) > -1) {
+          tr[i].style.display = '';
+          break;
+        } else {
+          tr[i].style.display = 'none';
+        }
+      }
+    }
+  }
+};
+
+const getAllStore = async () => {
+  try {
+    const response = await fetch('api/combos/productCategory');
+    const data = await response.json();
+
+    const store = data;
+    let option = document.getElementById('category');
+    option.innerHTML = '';
+    store.forEach((element) => {
+      option.innerHTML += `<option value="${element.opt_id}">${element.value}</option>`;
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};

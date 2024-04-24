@@ -207,7 +207,8 @@ const {
 const {
   orderHistory,
   newOrder,
-  invoicePdf,invoiceview
+  invoicePdf,
+  invoiceview,
 } = require('../controller/salesModule/salesRender.js');
 
 const {
@@ -566,6 +567,7 @@ const {
   productValid,
   productInfoValid,
 } = require('../controller/product/productListing.js');
+const manageProductFormValidation = require('../middleware/product/productValidation.js');
 router.get(
   '/products',
   passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
@@ -574,6 +576,7 @@ router.get(
 router.post(
   '/products',
   passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  manageProductFormValidation,
   manageProduct
 );
 router.get(
