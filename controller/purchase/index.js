@@ -232,8 +232,10 @@ function checkValidation(validation) {
     for (let arr of Object.entries(validation)) {
       const field = arr[0];
       const obj = arr[1];
+
+      const value = body[field]?.trim();
       if (obj.required) {
-        if (!body[field]) {
+        if (!value) {
           res.json({
             status: 'error',
             message: `${field} is required!`,
@@ -244,8 +246,8 @@ function checkValidation(validation) {
       }
 
       // Note pattern is optional property
-      if (obj?.pattern && body[field]) {
-        if (!new RegExp(obj.pattern, 'i').test(body[field])) {
+      if (obj?.pattern && value) {
+        if (!new RegExp(obj.pattern, 'i').test(value)) {
           res.json({
             status: 'error',
             message: `Invalid input for ${field}!`,
