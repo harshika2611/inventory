@@ -11,7 +11,7 @@
 <body class="body">
   <div class="row form-popup" id="myForm">
     <div class="col-md-12 " data-bs-spy="scroll">
-      <form method="post" id="form" enctype="multipart/form-data">
+      <form method="post" id="form" enctype="multipart/form-data" action="/imageUpload">
         <h6 onclick="closeForm()" class="text-danger" style="margin-left: 390px; margin-top: 5px; cursor: pointer;">
           Close</h6>
         <div class="container">
@@ -26,13 +26,14 @@
           </fieldset>
           <div id="preview">
           </div>
-          <button type="button" id="UploadImage" class="btn btn-outline-primary" onclick="s">Upload<img
-              class="upload-logo" src="/icons/upload.svg" alt="" height="20" width="20"></button>
+          <!-- <button type="submit" id="UploadImage" class="btn btn-outline-primary">Upload<img
+              class="upload-logo" src="/icons/upload.svg" alt="" height="20" width="20"></button> -->
         </div>
       </form>
     </div>
   </div>
   <script src="js/profile/imageUploadForm.js"></script>
+
 </body>
 
 </html>
