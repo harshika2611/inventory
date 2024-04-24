@@ -1,0 +1,47 @@
+:root {
+  --reportpdfsection: #f0f1f3;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+}
+
+.reportPdf-section {
+  max-width: 1300px;
+  min-height: 850px;
+  background-color: var(--reportpdfsection);
+}
+
+.reportPdf-container {
+  max-width: 1300px;
+  padding: 20px;
+  margin: 0 auto;
+  overflow-x: auto;
+}
+
+.reportPdfTitle {
+  padding: 20px 0;
+  font-size: 30px;
+  font-weight: 400;
+  width: 400px;
+}
+
+.managecustomer-container__button {
+  display: flex;
+  gap: 20px;
+}
+
+.addnewcustomerbutton,
+.customerfilterbutton,
+#fileUploadButton {
+  padding: 10px;
+  background-color: gray;
+  cursor: pointer;
+  border-radius: 10px;
+}
