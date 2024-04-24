@@ -219,4 +219,8 @@
       socket.emit('markAsRead');
     }
   </script>
-  <% } %>
+  <% } else { %>
+    <script>
+      function displayNotifications() { }
+    </script>
+    <% } %>
