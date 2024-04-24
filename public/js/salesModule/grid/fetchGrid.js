@@ -12,7 +12,7 @@ async function fetching() {
   // grid(result);
 }
 fetching();
- let count = 1;
+let count = 1;
 function dataTableGrid(result) {
   allRecords = result;
   console.log(result);
@@ -29,7 +29,7 @@ function dataTableGrid(result) {
   <th scope="col">Delete</th>`;
   head += `</tr>`;
   document.getElementById('thead').innerHTML = head;
- 
+
   let body = ``;
   result.forEach((data) => {
     body += `<tr>
@@ -41,6 +41,11 @@ function dataTableGrid(result) {
         <td>${data.shipping_address}</td>
         <td>${data.payment_status == 10 ? 'Pending' : 'Paid'}</td>
         <td>${data.date.split(' ')[0]}</td>
+        
+        <td><a class="btn btn-outline-primary" onclick="viewOrder(${
+          data.ID
+        })">View</a></td>
+
         <td><a class='btn btn-success' id=edit${
           data.ID
         } onclick="updateOrder('edit',event,'order')">EDIT</a></td>
@@ -51,6 +56,17 @@ function dataTableGrid(result) {
     count++;
   });
   document.getElementById('tbody').innerHTML = body;
+}
+
+/* <td><a class="btn btn-outline-primary" onclick="generatePdf(${data.ID})">Invoice</a></td> */
+
+// function generatePdf(id) {
+//   console.log(id);
+//   window.location.href = `/getPdf?id=${id}`
+// }
+function viewOrder(id) {
+  console.log(id);
+  window.location.href = `/salesOrderView?invoiceId=${id}`;
 }
 
 function searchFilter() {

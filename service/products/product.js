@@ -13,6 +13,21 @@ const getProduct = async (product, order, field, storage) => {
     return await connection.execute(sql, [storage]);
   }
 };
+const updateProduct = async (body, storage) => {
+  await connection.execute(
+    `update product_master set is_delete=1 where id=?;`,
+    [body.id]
+  );
+  let [rows] = await connection.execute(
+    'INSERT INTO product_master(product_name,sku_id,category_id,cost,description) values(?,?,?,?,?)',
+    [body.productname, body.skuid, body.category, body.cost, body.description]
+  );
+  await connection.execute(
+    'INSERT INTO products_details(product_id,storage_id,stock) values(?,?,?)',
+    [rows.insertId, storage, body.stock]
+  );
+};
+module.exports = { getProduct, updateProduct };
 
 const checkProductSevice = async (body) => {
   try {

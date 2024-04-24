@@ -207,11 +207,12 @@ const {
 const {
   orderHistory,
   newOrder,
-  invoicePdf,
+  invoicePdf,invoiceview
 } = require('../controller/salesModule/salesRender.js');
 
 const {
   invoiceGenerator,
+  pdfTokenVerify,
 } = require('../controller/salesModule/pdfGeneration.js');
 
 router.get(
@@ -286,8 +287,15 @@ router.get(
 );
 router.get(
   '/invoice',
-  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  pdfTokenVerify,
+  // passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
   invoicePdf
+);
+
+router.get(
+  '/salesOrderView',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  invoiceview
 );
 
 //------------------------------------------------------
@@ -580,6 +588,9 @@ const {
   productListing,
   productInfo,
   getApiproduct,
+  productInfoPost,
+  productValid,
+  productInfoValid,
 } = require('../controller/product/productListing.js');
 router.get(
   '/products',
@@ -595,6 +606,12 @@ router.get(
   '/productInfo',
   passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
   productInfo
+);
+router.post(
+  '/productInfo',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  productInfoValid(productValid),
+  productInfoPost
 );
 router.get(
   '/api/products',
