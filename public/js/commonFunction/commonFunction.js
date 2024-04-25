@@ -175,7 +175,7 @@ function generateWarehousesDropDown(id = null) {
           arr[1].forEach((o) => {
             content += `<option value="${o.id}" ${
               o.id == id ? 'selected="selected"' : ''
-            }>${o.name}</option>`;
+            }>${o.name} (${o.city_name})</option>`;
           });
           content += `</optgroup>`;
         }
