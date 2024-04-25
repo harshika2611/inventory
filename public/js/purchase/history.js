@@ -50,7 +50,7 @@ async function dataTableGrid(records) {
     </th>`;
   }
 
-  head += `<th scope="col" colspan="3">Action</th>`;
+  head += `<th scope="col" colspan="3" class="align-middle">Action</th>`;
 
   head += `</tr>`;
 
@@ -86,16 +86,6 @@ async function dataTableGrid(records) {
     let viewTd = document.createElement('td');
     viewTd.innerHTML = `<button class="btn btn-outline-dark">View</button>`;
 
-    let editTd = document.createElement('td');
-    editTd.innerHTML = `<button class="btn" onclick="window.location.href = '/purchaseOrder?orderId=${obj?.id}'">
-      <img src="src/assets/manageCustomer/edit.svg" width="25" height="25">
-    </button>`;
-
-    let deleteTd = document.createElement('td');
-    deleteTd.innerHTML = `<button class="btn" onclick="deletePurchaseOrder(${obj.id})">
-      <img src="src/assets/manageCustomer/delete.svg" width="25" height="25">
-    </button>`;
-
     [
       noTd,
       suppTd,
@@ -105,9 +95,21 @@ async function dataTableGrid(records) {
       amountTd,
       dateTd,
       // viewTd,
-      editTd,
-      deleteTd,
     ].forEach((e) => tr.appendChild(e));
+
+    if (!obj.is_delete) {
+      let editTd = document.createElement('td');
+      editTd.innerHTML = `<button class="btn" onclick="window.location.href = '/purchaseOrder?orderId=${obj?.id}'">
+        <img src="src/assets/manageCustomer/edit.svg" width="25" height="25">
+      </button>`;
+
+      let deleteTd = document.createElement('td');
+      deleteTd.innerHTML = `<button class="btn" onclick="deletePurchaseOrder(${obj.id})">
+        <img src="src/assets/manageCustomer/delete.svg" width="25" height="25">
+      </button>`;
+
+      [editTd, deleteTd].forEach((e) => tr.appendChild(e));
+    }
 
     tbody.append(tr);
   });
