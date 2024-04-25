@@ -46,26 +46,3 @@ function generateProductsDropDown(id, selectedId) {
         .catch(() => '')
     : '';
 }
-
-function generateWarehousesDropDown(id = null) {
-  return fetch('api/purchase/warehouses')
-    .then((res) => res.json())
-    .then((data) => {
-      let content = '';
-
-      Object.entries(Object.groupBy(data, ({ value }) => value)).forEach(
-        (arr) => {
-          content += `<optgroup label="${arr[0]}">`;
-          arr[1].forEach((o) => {
-            content += `<option value="${o.id}" ${
-              o.id == id ? 'selected="selected"' : ''
-            }>${o.name}</option>`;
-          });
-          content += `</optgroup>`;
-        }
-      );
-
-      return content;
-    })
-    .catch(() => '');
-}
