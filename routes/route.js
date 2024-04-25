@@ -15,7 +15,6 @@ const { getHome } = require('../controller/home/homeController');
 const { auth } = require('../middleware/auth');
 const { getForgot, forgotPass } = require('../controller/login/forgot');
 const passport = require('passport');
-router.use(passport.initialize());
 auth(passport);
 const { checkLogin } = require('../controller/login/login.js');
 const loginFormValidation = require('../middleware/login/loginValidation.js');
@@ -41,9 +40,14 @@ router.get(
 
 //check role
 const { checkRole } = require('../middleware/checkRole/checkRole.js');
-//store combo
-const { getStoreCombo } = require('../controller/manager/manager.js');
-router.get('/storeCombo', getStoreCombo);
+
+//store with city combo
+const {
+  getStoreCombo,
+  getCityCombo,
+} = require('../controller/manager/manager.js');
+router.get('/storeCombo/:id', getStoreCombo);
+router.get('/cityCombo', getCityCombo);
 
 //manage manager
 
@@ -622,6 +626,7 @@ router.get(
 
 //---------------------Products Module---------------------
 const {
+  deleteMainProduct,
   manageProduct,
   productListing,
   getApiproduct,
@@ -659,6 +664,11 @@ router.get(
   '/api/products',
   passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
   getApiproduct
+);
+router.get(
+  '/api/deleteProduct/:id',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  deleteMainProduct
 );
 
 //---------------------Profile Module---------------------

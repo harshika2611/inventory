@@ -34,9 +34,7 @@ async function paggination(apiName = null, records = []) {
   dataTableGrid(pagginationArray, startIndex);
 
   if (pageSize < arrayForPaggination.length) {
-    document.getElementById(
-      'currentpageshow'
-    ).innerHTML = `Page ${currentPage}`;
+    document.getElementById('currentpageshow').innerHTML = ` ${currentPage}`;
     document.querySelector('.pagginationsection').style.display = 'block';
     //----paggination button style
     document.getElementById('firstPage').style.opacity = '0.5';
@@ -46,11 +44,11 @@ async function paggination(apiName = null, records = []) {
     document.getElementById('prevPage').style.cursor = 'not-allowed';
 
     //-----right
-    document.getElementById("lastPage").style.opacity = "1.0";
-    document.getElementById("lastPage").style.cursor = "pointer";
+    document.getElementById('lastPage').style.opacity = '1.0';
+    document.getElementById('lastPage').style.cursor = 'pointer';
 
-    document.getElementById("nextPage").style.opacity = "1.0";
-    document.getElementById("nextPage").style.cursor = "pointer";
+    document.getElementById('nextPage').style.opacity = '1.0';
+    document.getElementById('nextPage').style.cursor = 'pointer';
   } else {
     document.querySelector('.pagginationsection').style.display = 'none';
   }
@@ -64,7 +62,7 @@ function firstPageButton() {
     const pagginationArray = arrayForPaggination.slice(startIndex, endIndex);
     dataTableGrid(pagginationArray, startIndex);
   }
-  document.getElementById('currentpageshow').innerHTML = `Page ${currentPage}`;
+  document.getElementById('currentpageshow').innerHTML = ` ${currentPage}`;
   document.getElementById('firstPage').style.opacity = '0.5';
   document.getElementById('firstPage').style.cursor = 'not-allowed';
 
@@ -95,7 +93,7 @@ function prevPageButton() {
     document.getElementById('prevPage').style.cursor = 'not-allowed';
   }
 
-  document.getElementById('currentpageshow').innerHTML = `Page ${currentPage}`;
+  document.getElementById('currentpageshow').innerHTML = ` ${currentPage}`;
 
   document.getElementById('nextPage').style.opacity = '1.0';
   document.getElementById('nextPage').style.cursor = 'pointer';
@@ -121,7 +119,7 @@ function nextPageButton() {
     document.getElementById('lastPage').style.cursor = 'not-allowed';
   }
 
-  document.getElementById('currentpageshow').innerHTML = `Page ${currentPage}`;
+  document.getElementById('currentpageshow').innerHTML = ` ${currentPage}`;
 
   document.getElementById('firstPage').style.opacity = '1.0';
   document.getElementById('firstPage').style.cursor = 'pointer';
@@ -138,7 +136,7 @@ function lastPageButton() {
     const pagginationArray = arrayForPaggination.slice(startIndex, endIndex);
     dataTableGrid(pagginationArray, startIndex);
   }
-  document.getElementById('currentpageshow').innerHTML = `Page ${currentPage}`;
+  document.getElementById('currentpageshow').innerHTML = ` ${currentPage}`;
 
   document.getElementById('firstPage').style.opacity = '1.0';
   document.getElementById('firstPage').style.cursor = 'pointer';

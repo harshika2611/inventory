@@ -92,6 +92,11 @@ const showQuantityData = async (lowvalue) => {
 
   document.getElementById('totalStock').innerText = productData.length;
   document.getElementById('outStock').innerText = lowStock.length;
+  console.log(lowStock.length);
+  document.getElementById('totalStock').style.color =
+    productData.length <= 30 ? 'rgb(255, 185, 0)' : 'black';
+  document.getElementById('totalStock').style.color =
+    productData.length <= 6 ? 'red' : 'black';
 
   lowStock = lowStock.slice(0, 5);
 

@@ -1,4 +1,5 @@
 const {
+  deleteMainProductService,
   getProduct,
   checkProductSevice,
   insertProductService,
@@ -12,15 +13,14 @@ const productListing = (req, res) => {
 
 const manageProduct = async (req, res) => {
   try {
-    console.log(req.user, 'aaa');
     const result0 = await checkProductSevice(req.body);
-    console.log(result0, 'aa');
+
     if (result0.length) {
       return res.status(409).send('product already exist');
     } else {
       try {
         const result = await insertProductService(req.body);
-        console.log(result, 'id');
+
         const result1 = await insertProductDetailService(
           result,
           req.body,
@@ -44,7 +44,7 @@ const getApiproduct = async (req, res) => {
     let order = req.query.order || 'asc';
     let field = req.query.field || 'id';
     let storage = req.user.storageId || 1;
-    console.log(storage);
+
     const [rows] = await getProduct(id, order, field, storage);
     return res.json(rows);
   } catch (err) {
@@ -52,7 +52,24 @@ const getApiproduct = async (req, res) => {
   }
 };
 
+const deleteMainProduct = async (req, res) => {
+  try {
+    const id = req.params.id;
+    console.log(id, 'get');
+    const result = await deleteMainProductService(id);
+    if (result.affectedRows > 0) {
+      return res.status(200).json({ message: 'Product is deleted' });
+    } else {
+      return res.status(404).json({ message: 'error' });
+    }
+  } catch (error) {
+    logger.logError(error);
+    res.status(500).json({ message: 'can`t fetch user controller' });
+  }
+};
+
 module.exports = {
+  deleteMainProduct,
   productListing,
   getApiproduct,
   manageProduct,

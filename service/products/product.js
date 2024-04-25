@@ -9,8 +9,8 @@ const getProduct = async (product, order, field, storage) => {
     let sql = `${Query} product_master.id=? and storage_id=? `;
     return await connection.execute(sql, [product, storage]);
   } else {
-    let sql = `${Query}  storage_id= ? ORDER BY ${field} ${order};`;
-    return await connection.execute(sql, [storage]);
+    let sql = `${Query}  storage_id= ? and product_master.is_delete=? ORDER BY ${field} ${order};`;
+    return await connection.execute(sql, [storage, 0]);
   }
 };
 const updateProduct = async (body, storage) => {
@@ -77,7 +77,24 @@ const insertProductDetailService = async (result, body, payload) => {
     throw error;
   }
 };
+
+const deleteMainProductService = async (id) => {
+  try {
+    const sql = `UPDATE product_master 
+    SET 
+        is_delete = ?
+    WHERE
+        id = ?`;
+    const [result] = await connection.execute(sql, [1, id]);
+    return result;
+  } catch (error) {
+    logger.logError(`Error`, error);
+    throw error;
+  }
+};
+
 module.exports = {
+  deleteMainProductService,
   getProduct,
   updateProduct,
   checkProductSevice,
