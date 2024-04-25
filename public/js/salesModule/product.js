@@ -44,7 +44,7 @@ async function fetching() {
 
 function generatePdf(id) {
   console.log(id);
-  window.location.href = `/getPdf?id=${id}`
+  window.location.href = `/getPdf?id=${id}&type=invoice`
 }
 
 function enableSave(id) {

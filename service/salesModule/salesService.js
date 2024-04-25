@@ -5,9 +5,6 @@ async function selectOrders(orderby, order, col, value, storageId) {
   if (order == undefined) {
     order = 'asc';
   }
-  if (storageId == null) {
-    storageId = '*';
-  }
   if (orderby == undefined) {
     orderby = 'id';
   }
@@ -36,8 +33,11 @@ async function selectOrders(orderby, order, col, value, storageId) {
   from sales_order join customer_master
   on sales_order.customer_id = customer_master.id
   where sales_order.is_delete = 0 and ${col} = '${value}' and storage_id = ? order by ${orderby} ${order} ;`;
-
-  return await connection.execute(sql, [storageId]);
+  try {
+    return await connection.execute(sql,[storageId]);
+  } catch (error) {
+    logger.logError(error)
+  }
 }
 
 async function insertOrder(input) {
@@ -131,12 +131,11 @@ async function updateStock(req, stock) {
 
 async function getOrderDetail(req) {
   try {
-    sql = `select customer_master.*,sales_order.id as order_id,(select city_name from city_master where city_id = customer_master.city_id)as city_name,(select state_name from state_master where state_id = customer_master.state_id) as state_name,sales_order.amount,sales_order.shipping_address,(select value from option_master where id = sales_order.type) as type,(select value from option_master where id = sales_order.payment_status) as payment_status,sales_order.order_date from sales_order join customer_master on sales_order.customer_id = customer_master.id where  sales_order.id = ? and storage_id = ?;`;
+    sql = `select customer_master.*,sales_order.id as order_id,(select city_name from city_master where city_id = customer_master.city_id)as city_name,(select state_name from state_master where state_id = customer_master.state_id) as state_name,sales_order.amount,sales_order.shipping_address,(select value from option_master where id = sales_order.type) as type,(select value from option_master where id = sales_order.payment_status) as payment_status,sales_order.order_date from sales_order join customer_master on sales_order.customer_id = customer_master.id where  sales_order.id = ?;`;
 
     let productQuery = `SELECT sales_products.id,sales_products.order_type,sales_products.quantity,product_master.product_name,product_master.sku_id,product_master.cost FROM sales_products join product_master on sales_products.product_id = product_master.id where order_id = ? and sales_products.is_delete = 0`;
     const [result] = await connection.execute(sql, [
-      req.query.invoiceId,
-      req.user.storageId,
+      req.query.invoiceId
     ]);
     const [products] = await connection.execute(productQuery, [
       req.query.invoiceId,
