@@ -116,12 +116,13 @@
   </div>
 </body>
 <script>
-  function downloadPdf(){
+  function downloadPdf() {
     let url = window.location.href;
     let type = "<%=type%>"
     console.log(type);
-    id=url.split('=')[1];
+    id = url.split('=')[1];
     window.location.href = `/getPdf?id=${id}&type=${type}`;
   }
 </script>
+
 </html>
