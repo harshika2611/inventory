@@ -80,12 +80,16 @@ async function getsalesOrder(req, res) {
     let orderby = req.query.orderby;
     let col = req.query.col;
     let value = req.query.colValue;
+    let storageId = req.user.storageId
+    if (storageId == null) {
+      storageId = req.query.storage;
+    }
     const [rows, fields] = await selectOrders(
       orderby,
       order,
       col,
       value,
-      req.user.storageId
+      storageId
     );
 
     const header = [];

@@ -17,10 +17,18 @@ async function updateOrder(type, event, page) {
   let modal = new bootstrap.Modal(document.getElementById(`${deleteModal}`));
 
   if (type == 'edit' && page == 'order') {
-   
-      window.location.href = `/${url}?id=${id}`;
-      fetching();
-		
+    // let roleId = `<%data.roleId%>`
+    // console.log(roleId);
+    // if ('<%=data.roleId%>' == 4) {
+    // if (document.getElementById('storageCombo') != null) {
+    //   let storage = document.getElementById('storageCombo').value;
+    // } else {
+    //   storage = 0;
+    // }
+    // window.location.href = `/${url}?id=${id}&storage=${storage}`;
+    // } else {
+    window.location.href = `/${url}?id=${id}`;
+    // }
   } else if (type == 'delete') {
     // deleteId.innerHTML = id;
     let confirm = document.getElementById('confirm'); //confirm btn id

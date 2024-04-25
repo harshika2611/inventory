@@ -2,17 +2,27 @@
 	width: 95%;
 	display: flex;
 	justify-content: center;
+	flex-direction: column;
 }
 
 #insertFormDiv {
 	width: 100%;
+<<<<<<< HEAD
+	padding: 3rem 0;
+=======
 	margin-top: 100px;
+>>>>>>> main
 }
 #insertForm {
 	width: 100%;
 }
 #productFormDiv {
 	display: none;
+}
+
+.title {
+  padding: 27px 0;
+
 }
 
 .productTableDiv{

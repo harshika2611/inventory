@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="src/css/dashboard/dashboard.css" />
   <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
   <script src="/js/bootstrap.js"></script>
-  <link rel="stylesheet" href="src/css/salesModule/sales.css" />
+  <!-- <link rel="stylesheet" href="src/css/salesModule/sales.css" /> -->
   <link rel="stylesheet" href="src/css/salesModule/form.css" />
   <link rel="stylesheet" href="src/css/allpage.css" />
 
@@ -18,14 +18,19 @@
 </head>
 
 <body>
+
   <%- include('deletePopup')%>
     <%- include('../components/navigation', {data})%>
 
       <div class="div-second">
         <div class="container">
+          <div class="title">
+            <img src="icons/sales.png" alt="img" width="50" height="50" style="margin-top: -61px; " />
+            <h2 >Sales Order</h2><br>
+
+          </div>
           <div id="insertFormDiv">
-            <img src="icons/sales.png" alt="img" width="50" height="50" style="margin-top: -61px; "/>
-            <h2 style="margin-left: 56px; margin-top: -61px;">Sales Order</h2><br>
+
             <form name="insertSalesData" id="insertSalesData" onsubmit="return false">
               <input type="text" name="orderid" hidden id="orderid" />
               <div class="form-floating mb-3">
@@ -40,19 +45,22 @@
               <div class="form-floating mb-3">
                 <select name="paymentStatus" class="form-select" aria-label="select" id="paymentStatus"></select>
                 <label for="floatingPaymentStatus">Payment</label>
-                <div class="invalid-feedback">
-                  Please select a valid payment status.
-                </div>
               </div>
               <div class="form-floating mb-3">
                 <textarea class="form-control insertFields" name="shippingAddress" placeholder="Shipping Address"
                   id="shippingAddress"></textarea>
                 <label for="floatingPaymentStatus">Shipping Address</label>
-
               </div>
-              <button type="button" class="btn btn-primary" onclick="insertOrder()" id="insertSubmit">
-                Submit
-              </button>
+              <%if(data.roleId==4){%>
+                <div class="form-floating mb-3">
+                  <select name="storage" class="form-select" aria-label="select" id="storageCombo"></select>
+                  <label for="storageCombo">Storage</label>
+
+                </div>
+                <%}%>
+                  <button type="button" class="btn btn-primary" onclick="insertOrder()" id="insertSubmit">
+                    Submit
+                  </button>
 
             </form>
           </div>
