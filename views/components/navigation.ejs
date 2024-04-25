@@ -182,7 +182,6 @@
     let notifications = [];
 
     socket.on('notifications', (obj) => {
-      console.log(obj);
       notifications = obj;
       if (notifications.some(obj => !obj.seen)) {
         showBadge();

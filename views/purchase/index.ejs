@@ -35,9 +35,11 @@
       <div class="outer-div">
         <%- include('../components/messagePopUp')%>
           <h3>Purchase Order</h3>
-          <div class="mt-5" id="root">
-          </div>
-          <%- include('../components/pagginationComponent')%>
+          <% if(!data?.storageId) { %>
+            <input type="hidden" id="admin" />
+            <% } %>
+              <div class="mt-5" id="root"></div>
+              <%- include('../components/pagginationComponent')%>
       </div>
     </div>
 </body>

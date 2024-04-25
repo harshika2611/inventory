@@ -15,6 +15,14 @@ const validation = {
     date: {
       required: true,
       pattern: patterns.date,
+      validator: (d) => {
+        if (new Date(d) <= new Date()) return true;
+        return false;
+      },
+    },
+    storage_id: {
+      required: true,
+      pattern: patterns.numberOnly,
     },
     supplier_id: {
       required: true,
@@ -71,6 +79,14 @@ function checkValidation(body, validation, special = false) {
           message: `Invalid input for ${field}!`,
         });
       }
+    }
+
+    if (obj?.validator && !obj?.validator(value)) {
+      result.push({
+        status: 'error',
+        field,
+        message: `Invalid input for ${field}!`,
+      });
     }
   }
 
