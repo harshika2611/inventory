@@ -1,5 +1,5 @@
 :root {
-  --managecustomersection: #f0f1f3;
+  --managecustomersection: #e5ebf4;
 }
 
 * {
@@ -53,7 +53,8 @@ a {
 .customerfilterbutton,
 #fileUploadButton {
   padding: 10px;
-  background-color: gray;
+  background-color: #002f4b;
+  color: white;
   cursor: pointer;
   border-radius: 10px;
 }
@@ -68,8 +69,8 @@ a {
 
 /* Style for table header */
 .managecustomer__table th {
-  background-color: #f2f2f2;
-  color: #333;
+  background-color: #002f4b;
+  color: white;
   font-weight: bold;
   padding: 12px;
   text-align: left;
@@ -88,7 +89,7 @@ a {
 
 /* Hover effect for rows */
 .managecustomer__table tr:hover {
-  background-color: #f2f2f2;
+  background-color: #e5ebf4;
 }
 
 .managecustomer__actionbutton {
@@ -147,7 +148,8 @@ a {
 .importDataButton,
 #fileUploadButton {
   padding: 10px;
-  background-color: gray;
+  background-color: #002f4b;
+  color: white;
   cursor: pointer;
   border-radius: 10px;
   text-align: center;
