@@ -9,7 +9,6 @@ const getForgot = async (req, res) => {
 const forgotPass = async (req, res) => {
   try {
     const result4 = await checkUserService(req.body);
-    console.log(result4, 'giveeeeee');
     if (result4.length > 0) {
       const result = await forgotPassService(req.body);
       if (!result == 0) {

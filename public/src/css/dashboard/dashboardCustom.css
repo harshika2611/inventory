@@ -1,35 +1,35 @@
 :root {
-	--dashboardsection: #f0f1f3;
+  --dashboardsection: #f0f1f3;
 }
 
 * {
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 a {
-	text-decoration: none;
+  text-decoration: none;
 }
 
 .dashboard-section {
-	max-width: 1200px;
-	background-color: var(--dashboardsection);
+  max-width: 1200px;
+  background-color: var(--dashboardsection);
 }
 
 .dashboard-container {
-	padding: 20px;
-	margin: 0 auto;
+  padding: 20px;
+  margin: 0 auto;
 }
 
 .dashboard-container p {
-	margin: 0;
+  margin: 0;
 }
 
 .div-container__grid {
-	display: grid;
-	grid-template-columns: auto auto auto;
-	gap: 20px;
+  display: grid;
+  grid-template-columns: auto auto auto;
+  gap: 20px;
 }
 
 .div-container__grid__salesoverview,
@@ -37,83 +37,88 @@ a {
 .div-container__grid__purchaseoverview,
 .div-container__grid__latestpurchase,
 .div-container__grid__lowquantitystock {
-	background-color: white;
-	padding: 20px;
-	border-radius: 20px;
+  background-color: white;
+  padding: 20px;
+  border-radius: 20px;
 }
 
 .div-container__grid__name {
-	font-weight: bold;
-	font-size: 25px;
-	padding-bottom: 20px;
+  font-weight: bold;
+  font-size: 25px;
+  padding-bottom: 20px;
 }
 .salesoverview__todaysales,
 .inventorysummary__totalproducts,
 .purchaseoverview__totalpurchase {
-	display: flex;
-	gap: 20px;
+  display: flex;
+  gap: 20px;
 }
 .todaysales_div,
 .totalproducts_div,
 .outofstock_div,
 .totalpurchase_div {
-	display: flex;
-	flex-direction: column;
-	gap: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .salesoverview__p,
 .inventorysummary__p,
 .purchaseoverview__p {
-	margin: 0;
-	font-weight: bold;
+  margin: 0;
+  font-weight: bold;
+  font-size: 18px;
 }
 
 .todaysales_div_div,
 .totalproducts_div_div,
 .outofstock_div_div,
 .totalpurchase_div_div {
-	display: flex;
+  display: flex;
 }
 
 /* latest purchase and low quantity stock */
 .div-container__grid__latestpurchase {
-	grid-column-start: 1;
-	grid-column-end: 2;
+  grid-column-start: 1;
+  grid-column-end: 2;
 }
 
 .div-container__grid__lowquantitystock {
-	grid-column-start: 2;
-	grid-column-end: 4;
+  grid-column-start: 2;
+  grid-column-end: 4;
 }
 
 .latestpurchase__div {
-	display: flex;
-	/* align-items: center; */
-	justify-content: space-between;
+  display: flex;
+  /* align-items: center; */
+  justify-content: space-between;
 }
 
 .latestpurchase__div a {
-	color: black;
+  color: black;
 }
 
 .latestpurchase__table th,
 td {
-	padding: 10px;
-	text-align: center;
-	padding: 20px;
+  padding: 10px;
+  text-align: center;
+  padding: 20px;
 }
 
 .latestpurchase__table tr:nth-child(even) {
-	background-color: rgb(233, 232, 232);
+  background-color: rgb(233, 232, 232);
 }
 
 .lowquantitystock__table th,
 td {
-	padding: 10px;
-	text-align: center;
+  padding: 10px;
+  text-align: center;
 }
 
 .lowquantitystock__table tr:nth-child(even) {
-	background-color: rgb(233, 232, 232);
+  background-color: rgb(233, 232, 232);
+}
+.totalnumber {
+  font-size: 35px;
+  font-weight: 500;
 }

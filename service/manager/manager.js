@@ -4,17 +4,34 @@ const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const connection = require('../../config/connection');
 
-const storeComboServices = async () => {
+const cityComboService = async () => {
+  try {
+    const sql = `SELECT DISTINCT
+    city_master.city_id,city_master.city_name
+FROM
+    storage_space_master
+        JOIN
+    city_master ON storage_space_master.location_id = city_master.city_id and is_delete=?;`;
+    const [result] = await connection.execute(sql, [0]);
+    return result;
+  } catch (error) {
+    logger.logError(`Error`, error);
+    throw error;
+  }
+};
+
+const storeComboServices = async (id) => {
   try {
     const sql4 = `SELECT DISTINCT
     storage_space_master.id, storage_space_master.name
 FROM
     storage_space_master
         JOIN
-    city_master ON storage_space_master.location_id = city_master.city_id`;
-    const [result4] = await connection.execute(sql4);
+    city_master ON storage_space_master.location_id = city_master.city_id where city_master.city_id=? and is_delete=?`;
+    const [result4] = await connection.execute(sql4, [id, 0]);
     return result4;
   } catch (error) {
+    console.log(error);
     logger.logError(`Error`, error);
     throw error;
   }
@@ -30,7 +47,7 @@ const listManagersService = async (status, order, field) => {
     name AS Place,
     city_name AS Location,
     option_master.value as Status,
-    users.created_at AS Created,
+    date(users.created_at) as Created,
     users.updated_at AS Updated
 FROM
     users
@@ -48,6 +65,7 @@ WHERE
 ORDER BY ${field} ${order}`;
 
     const [ans] = await connection.execute(sql0, [status, 0]);
+    console.log(ans);
     return ans;
   } catch (error) {
     logger.logError(`Error`, error);
@@ -145,13 +163,14 @@ const insertManagerService = async (otp, body) => {
     throw error;
   }
 };
-const insertManagerDetail = async (result2, body) => {
+const insertManagerDetail = async (result2, body, data) => {
   try {
     const sql3 = `INSERT INTO manager_details (user_id,storage_id)
 		values(?,?)`;
-    const [ans2] = await connection.execute(sql3, [result2, body.state]);
+    const [ans2] = await connection.execute(sql3, [result2, body.place]);
     return ans2;
   } catch (error) {
+    console.log(error);
     logger.logError(`Error`, error);
     throw error;
   }
@@ -173,6 +192,7 @@ const deleteManagerService = async (id) => {
 };
 
 module.exports = {
+  cityComboService,
   deleteManagerService,
   checkUpdateManagerService,
   getPerticularManagerService,

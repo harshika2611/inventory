@@ -1,6 +1,5 @@
 function manageProductFormValidation(req, res, next) {
   const productDetails = req.body;
-  console.log(productDetails, 'got');
   let productFormError = {};
   const numberregex = /^[0-9]+$/;
   for (let key in productDetails) {
@@ -27,6 +26,8 @@ function manageProductFormValidation(req, res, next) {
           productDetails[key] !== ''
         ) {
           productFormError[key] = '* Please Enter valid SKUid';
+        } else if (productDetails[key].length !== 6) {
+          productFormError[key] = '* Please Enter 6 digit SKUid';
         } else {
           delete productFormError[key];
         }

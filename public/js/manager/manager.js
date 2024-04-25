@@ -6,7 +6,8 @@ function addManager() {
   document.getElementById('submitBtn').innerHTML = 'Submit';
   document.getElementById('filter').style = `filter: blur(2px);`;
   document.getElementById('grid').style = `filter: blur(2px);`;
-  getAllStore();
+  // getAllStore();
+  getAllCity();
 }
 
 function closeForm() {
@@ -50,13 +51,29 @@ async function submitbtn() {
   }
 }
 
-const getAllStore = async () => {
+const getAllCity = async () => {
   try {
-    const response = await fetch('/storeCombo');
+    const response = await fetch('/cityCombo');
     const data = await response.json();
-    console.log(data);
     const store = data.result;
     let option = document.getElementById('state');
+    option.innerHTML = '';
+    option.innerHTML = `<option value="select here">Select here</option>`;
+    store.forEach((element) => {
+      option.innerHTML += `<option value="${element.city_id}">${element.city_name}</option>`;
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const getAllStore = async (data) => {
+  try {
+    let index = document.getElementById('state').value;
+    let option = document.getElementById('place');
+    const response = await fetch(`/storeCombo/${index}`);
+    const data = await response.json();
+    const store = data.result;
     option.innerHTML = '';
     store.forEach((element) => {
       option.innerHTML += `<option value="${element.id}">${element.name}</option>`;
@@ -69,17 +86,20 @@ const getAllStore = async () => {
 function dataTableGrid(manager, startIndex) {
   const table = document.getElementById('thead');
   const tableBody = document.getElementById('tbody');
+  let createTh = document.createElement('th');
   table.innerHTML = '';
   tableBody.innerHTML = '';
+  createTh.innerHTML = '';
   for (let key in manager[0]) {
     if (key === 'id') {
       key = 'No.';
     }
-    const createTh = document.createElement('th');
+    createTh = document.createElement('th');
     createTh.textContent = key;
     table.appendChild(createTh);
     const span = document.createElement('span');
     span.setAttribute('class', `${key}`);
+    span.setAttribute('width', '45px');
     createTh.appendChild(span);
     const achor = document.createElement('span');
     achor.setAttribute('onclick', `filterUp(event,'ASC')`);
@@ -102,7 +122,7 @@ function dataTableGrid(manager, startIndex) {
       span.remove();
     }
   }
-  const createTh = document.createElement('th');
+  createTh = document.createElement('th');
   createTh.textContent = 'Action';
   createTh.colSpan = '2';
   table.appendChild(createTh);
@@ -117,7 +137,7 @@ function dataTableGrid(manager, startIndex) {
         createTd.textContent = ++startIndex;
         createTr.appendChild(createTd);
       } else {
-        createTd.textContent = element[key];
+        createTd.textContent = element[key] == null ? '-' : element[key];
         createTr.appendChild(createTd);
       }
     }
@@ -126,22 +146,19 @@ function dataTableGrid(manager, startIndex) {
     createEditTd.setAttribute('class', 'editButton');
     createEditTd.setAttribute('id', `${element.id}`);
     createEditTd.setAttribute('onclick', 'updateManager(this)');
-    const createEditButton = document.createElement('img');
-    createEditButton.setAttribute('src', 'src/assets/manageCustomer/edit.svg');
-    createEditButton.setAttribute('width', '25');
-    createEditButton.setAttribute('height', '25');
+    const createEditButton = document.createElement('button');
+    createEditButton.setAttribute('type', 'button');
+    createEditButton.textContent = 'Edit';
+    createEditButton.setAttribute('class', 'btn btn-outline-primary');
     createEditTd.appendChild(createEditButton);
     const createDeleteTd = document.createElement('td');
     createDeleteTd.setAttribute('id', `${element.id}`);
     createDeleteTd.setAttribute('class', 'deleteButton');
     createDeleteTd.setAttribute('onclick', 'deleteManager(this)');
-    const createDeleteButton = document.createElement('img');
-    createDeleteButton.setAttribute(
-      'src',
-      'src/assets/manageCustomer/delete.svg'
-    );
-    createDeleteButton.setAttribute('width', '25');
-    createDeleteButton.setAttribute('height', '25');
+    const createDeleteButton = document.createElement('button');
+    createDeleteButton.setAttribute('type', 'button');
+    createDeleteButton.textContent = 'Delete';
+    createDeleteButton.setAttribute('class', 'btn btn-outline-danger');
     createDeleteTd.appendChild(createDeleteButton);
     createTr.appendChild(createEditTd);
     createTr.appendChild(createDeleteTd);
@@ -181,7 +198,7 @@ async function updateManager(manager) {
             break;
         }
       }
-      getAllStore();
+      getAllCity();
     }
   } catch (error) {
     console.log(error);
@@ -277,10 +294,9 @@ const search = (key) => {
   filter = input;
   table = document.getElementById('table');
   tr = table.getElementsByTagName('tr');
-
   // Loop through all table rows, and hide those who don't match the search query
   for (i = 0; i < tr.length; i++) {
-    for (let j = 0; j < 5; j++) {
+    for (let j = 0; j < 7; j++) {
       td = tr[i].getElementsByTagName('td')[j];
       if (td) {
         txtValue = td.textContent || td.innerText;

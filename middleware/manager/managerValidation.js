@@ -1,6 +1,5 @@
 function manageManagerFormValidation(req, res, next) {
   const managerDetails = req.body;
-  console.log(managerDetails, 'heere');
   let managerFormError = {};
   for (let key in managerDetails) {
     switch (key) {

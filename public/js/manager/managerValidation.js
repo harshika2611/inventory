@@ -2,42 +2,42 @@ function manageManagerFormValidation(data) {
   let managerFormError = {};
   for (let key in data) {
     switch (key) {
-      case "firstname":
+      case 'firstname':
         if (data[key].length === 0) {
-          managerFormError[key] = "* require";
-        } else if (data[key].trim().length === 0 && data[key] !== "") {
-          managerFormError[key] = "* Please Enter Firstname";
+          managerFormError[key] = '* require';
+        } else if (data[key].trim().length === 0 && data[key] !== '') {
+          managerFormError[key] = '* Please Enter Firstname';
         } else {
           delete managerFormError[key];
         }
         break;
 
-      case "lastname":
+      case 'lastname':
         if (data[key].length === 0) {
-          managerFormError[key] = "* require";
-        } else if (data[key].trim().length === 0 && data[key] !== "") {
-          managerFormError[key] = "* Please Enter Lastname";
+          managerFormError[key] = '* require';
+        } else if (data[key].trim().length === 0 && data[key] !== '') {
+          managerFormError[key] = '* Please Enter Lastname';
         } else {
           delete managerFormError[key];
         }
         break;
 
-      case "email":
+      case 'email':
         const regexemail = /^[a-z0-9]+@[a-z]+\.[a-z]{2,3}$/;
 
         if (data[key].length === 0) {
-          managerFormError[key] = "* require";
-        } else if (!regexemail.test(data[key]) && data[key] !== "") {
-          managerFormError[key] = "* Please Enter Valid Email";
+          managerFormError[key] = '* require';
+        } else if (!regexemail.test(data[key]) && data[key] !== '') {
+          managerFormError[key] = '* Please Enter Valid Email';
         } else {
           delete managerFormError[key];
         }
         break;
 
-      case "state":
-        const stateSelectCombo = document.getElementById("state");
+      case 'state':
+        const stateSelectCombo = document.getElementById('state');
         if (stateSelectCombo.selectedIndex < 1) {
-          managerFormError[key] = "* require";
+          managerFormError[key] = '* require';
         } else {
           delete managerFormError[key];
         }
