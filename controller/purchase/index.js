@@ -31,6 +31,14 @@ const purchaseValidations = {
     date: {
       required: true,
       pattern: patterns.date,
+      validator: (d) => {
+        if (new Date(d) <= new Date()) return true;
+        return false;
+      },
+    },
+    storage_id: {
+      requried: true,
+      pattern: patterns.numberOnly,
     },
     supplier_id: {
       required: true,
@@ -107,6 +115,7 @@ async function fetchOrderDetails(req, res) {
       finalResponse.supplierId = response[0].supplier_id;
       finalResponse.amount = response[0].amount;
       finalResponse.paymentStatus = response[0].payment_status;
+      finalResponse.storageId = response[0].storage_id;
       finalResponse.products = [];
 
       response.forEach((obj) => {
@@ -133,7 +142,7 @@ async function fetchPurchases(req, res) {
     const field = query.get('key') || 'fname';
     const order = query.get('value') || 'asc';
     const payment_status = query.get('payment') || '10';
-    const storage_id = req.user.storageId;
+    const storage_id = req.user.storageId || query.get('storage') || 1;
     const response = await fetchPurchaseOrders({
       field,
       order,
@@ -159,7 +168,7 @@ async function createPurchase(req, res) {
     res.json(
       await createPurchaseOrder({
         ...req.body,
-        storage_id: req?.user?.storageId,
+        ...(req?.user?.storageId ? { storage_id: req?.user?.storageId } : {}),
       })
     );
   } catch (error) {
@@ -255,6 +264,15 @@ function checkValidation(validation) {
           });
           return false;
         }
+      }
+
+      if (obj?.validator && !obj?.validator(value)) {
+        res.json({
+          status: 'error',
+          message: `Invalid input for ${field}!`,
+          field,
+        });
+        return false;
       }
     }
     next();

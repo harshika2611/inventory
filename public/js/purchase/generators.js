@@ -46,16 +46,3 @@ function generateProductsDropDown(id, selectedId) {
         .catch(() => '')
     : '';
 }
-
-function generateWarehousesDropDown() {
-  return fetch('api/purchase/warehouses')
-    .then((res) => res.json())
-    .then((data) => {
-      let content = '';
-      data.forEach((o) => {
-        content += `<option value="${o.id}">${o.name}</option>`;
-      });
-      return content;
-    })
-    .catch(() => '');
-}
