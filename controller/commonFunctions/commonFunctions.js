@@ -1,5 +1,6 @@
 const logger = require('../../logs.js');
 const { getStateQuery, getCityQuery } = require('../../service/commonFunctions/commonFunctions.js');
+const { getCombos } = require('../../service/helper.js');
 
 async function getState(req, res) {
   try {
@@ -30,4 +31,19 @@ async function getCity(req, res) {
   }
 }
 
-module.exports = { getState, getCity }
+async function getCombosDetails(req, res) {
+  try {
+    const name = req.body.key;
+    const comboDetailsArray = await getCombos(name);
+    if (comboDetailsArray.length > 0) {
+      return res.status(200).json(comboDetailsArray);
+    } else {
+      return res.status(404).json({ message: "Something Went Wrong" });
+    }
+  } catch (error) {
+    logger.logError(error);
+    return res.status(500).json({ message: "Something Went Wrong" });
+  }
+}
+
+module.exports = { getState, getCity, getCombosDetails }

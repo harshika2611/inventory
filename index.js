@@ -11,6 +11,30 @@ const route = require('./routes/route.js');
 const passport = require('passport');
 const { auth } = require('./middleware/auth.js');
 
+// Socket IO
+const http = require('http');
+const { Server } = require('socket.io');
+const {
+  getAllNotifications,
+  readNotifications,
+} = require('./service/notification/index.js');
+const server = http.createServer(app);
+const io = new Server(server);
+
+io.on('connection', async (socket) => {
+  const results = await getAllNotifications();
+  io.emit('notifications', results);
+
+  socket.on('readyForNotifications', async () => {
+    const results = await getAllNotifications();
+    io.emit('notifications', results);
+  });
+
+  socket.on('markAsRead', async () => {
+    const results = await readNotifications();
+  });
+});
+
 app.use(passport.initialize());
 auth(passport);
 
@@ -42,7 +66,7 @@ app.use(route);
 portFinder.getPort(function (err, port) {
   try {
     if (err) throw err;
-    app.listen(port, (error) => {
+    server.listen(port, (error) => {
       logger.info('Server Listen At ' + port);
     });
   } catch (err) {
