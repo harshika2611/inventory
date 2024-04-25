@@ -126,10 +126,7 @@ const {
   getApiordersProductRreport,
 } = require('../controller/report/orderReport.js');
 
-const {
-  reportPdfPage,
-  productReportGenerate,
-} = require('../controller/report/reportPdf.js');
+const { reportPdfPage, productReportGenerate, generatePdf } = require('../controller/report/reportPdf.js');
 
 const {
   getCombosDetails,
@@ -188,12 +185,10 @@ router.get(
   getApiordersProductRreport
 );
 
+// passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
 router.post('/api/combos', getCombosDetails);
-router.get(
-  '/reportGenerate',
-  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
-  reportPdfPage
-);
+router.post('/api/pdfTemplate', generatePdf);
+router.get('/reportGenerate', passport.authenticate('jwt', { session: false, failureRedirect: '/' }), reportPdfPage);
 
 router.post(
   '/reportGenerate',

@@ -8,22 +8,22 @@ async function invoiceGenerator(req, res) {
   // obj["id"] = req.query.id;
 
   // try {
-    const browser = await puppeteer.launch({ headless: true });
-    const page = await browser.newPage();
+  const browser = await puppeteer.launch({ headless: true });
+  const page = await browser.newPage();
 
-    await page.goto(`http://localhost:8000/invoice?token=${req.cookies.token}&invoiceId=${req.query.id}&type=${req.query.type}`, {
-      waitUntil: 'networkidle0',
-      // timeout: 0,
-    });
-    const pdf = await page.pdf({
-      printBackground: true,
-      displayHeaderFooter: false,
-      // timeout: 0,
-      format: 'A4',
-    });
-    await browser.close();
-    res.setHeader('Content-Disposition', `attachment; filename=invoice${req.query.id}.pdf`);
-    res.send(pdf);
+  await page.goto(`http://localhost:8000/invoice?token=${req.cookies.token}&invoiceId=${req.query.id}&type=${req.query.type}`, {
+    waitUntil: 'networkidle0',
+    // timeout: 0,
+  });
+  const pdf = await page.pdf({
+    printBackground: true,
+    displayHeaderFooter: false,
+    // timeout: 0,
+    format: 'A4',
+  });
+  await browser.close();
+  res.setHeader('Content-Disposition', `attachment; filename=invoice${req.query.id}.pdf`);
+  res.send(pdf);
   // } catch (err) {
   //   logger.logError(err);
   // }

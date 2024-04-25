@@ -1,0 +1,28 @@
+:root {
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: aqua;
+}
+
+/* Style for table header */
+.productdetails__table th {
+  background-color: #f2f2f2;
+  color: #333;
+  font-weight: bold;
+  padding: 12px;
+  text-align: left;
+  border: 1px solid black;
+}
+
+Style for table rows .productdetails__table tr {
+  border: 1px solid black;
+}
+
+/* Alternate row color
+.productdetails__table tr:nth-child(even) {
+  background-color: #f9f9f9;
+} */
