@@ -130,9 +130,7 @@ const showData = () => {
   document.getElementById('orderTableBody').innerHTML = orderData
     .map(
       (e) => `<tr onclick="productlist('${e.Order_Id}')">
-	      ${header2
-          .map((h) => `<td>${e[h] == null ? '-' : e[h]}</td>`)
-          .join('')}</tr>`
+	      ${header2.map((h) => `<td>${e[h] ? e[h] : '-'}</td>`).join('')}</tr>`
     )
     .join('');
 };

@@ -6,7 +6,7 @@ async function dashboard(req, res) {
 }
 const getApiproductStock = async (req, res) => {
   try {
-    console.log(req.user, 'alll');
+    // console.log(req.user, 'alll');
     let storage = req.user.storageId;
     const [rows] = await getProductStock(storage);
     res.json(rows);

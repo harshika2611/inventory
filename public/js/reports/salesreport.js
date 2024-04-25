@@ -66,7 +66,7 @@ const getData = async (
   tableData.innerHTML = letestdata
     .map(
       (e) => `<tr>
-        ${header.map((h) => `<td>${e[h]}</td>`).join('')}</tr>`
+        ${header.map((h) => `<td>${e[h] ? e[h] : '-'}</td>`).join('')}</tr>`
     )
     .join('');
 };
@@ -90,9 +90,6 @@ const changesInApi = (array) => {
     }
     if (e.Product_Cost == null) {
       e.Product_Cost = 0;
-    }
-    if (e.Product_Salles == null) {
-      e.Product_Salles = 0;
     }
   });
   return array;
