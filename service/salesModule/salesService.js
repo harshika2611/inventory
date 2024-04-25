@@ -110,15 +110,15 @@ async function updateAmount(input) {
 }
 
 async function checkQuanitiy(req, type) {
-  // try {
+  try {
   const [result] = await connection.execute(
     `select stock from products_details where product_id = ? and storage_id = ?`,
     [req.body.product, req.user.storageId]
   );
   return result[0].stock;
-  // } catch (e) {
-  //   logger.logError(e);
-  // }
+  } catch (e) {
+    logger.logError(e);
+  }
 }
 
 async function updateStock(req, stock) {

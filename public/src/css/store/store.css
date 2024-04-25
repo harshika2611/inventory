@@ -63,7 +63,7 @@ a {
 
 /* Style for table header */
 .store__table th {
-  background-color: #31384f;
+  background-color: #002f4b;
   color: white;
   font-weight: bold;
   padding: 12px;
@@ -83,7 +83,7 @@ a {
 
 /* Hover effect for rows */
 .store__table tr:hover {
-  background-color: #d9e2ff;
+  background-color: #eaf1fa;
   color: #31384f;
 }
 
