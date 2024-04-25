@@ -155,7 +155,7 @@
         <p class="navbar-brand fs-3 b" style="margin-left: 20px;"><b> Inventory Management </b></p>
         <div class="m-1">
           <div>
-            <img src="icons/notification.svg" alt="img" width="25" height="25" id="notification"
+            <img src="icons/notification.svg" alt="img" width="35" height="35" id="notification"
               onmouseover="displayNotifications()" />
             <div class="notifications-box" id="notifications-box" style="display: none;">
             </div>
@@ -184,6 +184,9 @@
     socket.on('notifications', (obj) => {
       console.log(obj);
       notifications = obj;
+      if (notifications.some(obj => !obj.seen)) {
+        showBadge();
+      }
     })
 
     setInterval(() => {
@@ -215,8 +218,22 @@
         box.innerHTML += html;
       })
 
-      box.style.display = 'block';
+      if (notifications.length > 0) {
+        box.style.display = 'block';
+      }
       socket.emit('markAsRead');
+      notifications.forEach(obj => obj.seen = 1)
+      hideBadge();
+    }
+
+    function showBadge() {
+      const imgEle = document.getElementById('notification');
+      imgEle.src = 'icons/notification-badge.svg';
+    }
+
+    function hideBadge() {
+      const imgEle = document.getElementById('notification');
+      imgEle.src = 'icons/notification.svg';
     }
   </script>
   <% } else { %>

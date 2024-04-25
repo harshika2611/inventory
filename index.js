@@ -31,7 +31,7 @@ io.on('connection', async (socket) => {
   });
 
   socket.on('markAsRead', async () => {
-    const results = await readNotifications();
+    await readNotifications();
   });
 });
 
