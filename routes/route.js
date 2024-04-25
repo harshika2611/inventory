@@ -58,34 +58,40 @@ const {
 const manageManagerFormValidation = require('../middleware/manager/managerValidation.js');
 router.get(
   '/manager',
-  passport.authenticate('jwt', { session: false, failureRedirect: '/' }), checkRole,
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  checkRole,
   getManager
 );
 router.post(
   '/manager',
-  passport.authenticate('jwt', { session: false, failureRedirect: '/' }), checkRole,
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  checkRole,
   manageManagerFormValidation,
   manageManager
 );
 router.get(
   '/api/getmanagers',
-  passport.authenticate('jwt', { session: false, failureRedirect: '/' }), checkRole,
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  checkRole,
   listManagers
 );
 router.get(
   '/api/getmanager/:id',
-  passport.authenticate('jwt', { session: false, failureRedirect: '/' }), checkRole,
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  checkRole,
   getPerticularManager
 );
 router.post(
   '/updatemanager',
-  passport.authenticate('jwt', { session: false, failureRedirect: '/' }), checkRole,
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  checkRole,
   manageManagerFormValidation,
   updateManager
 );
 router.get(
   '/api/deleteManager/:id',
-  passport.authenticate('jwt', { session: false, failureRedirect: '/' }), checkRole,
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  checkRole,
   deleteManager
 );
 
@@ -116,9 +122,14 @@ const {
   getApiordersProductRreport,
 } = require('../controller/report/orderReport.js');
 
-const { reportPdfPage, productReportGenerate } = require('../controller/report/reportPdf.js');
+const {
+  reportPdfPage,
+  productReportGenerate,
+} = require('../controller/report/reportPdf.js');
 
-const { getCombosDetails } = require('../controller/commonFunctions/commonFunctions.js');
+const {
+  getCombosDetails,
+} = require('../controller/commonFunctions/commonFunctions.js');
 
 router.get(
   '/salesReport',
@@ -174,9 +185,17 @@ router.get(
 );
 
 router.post('/api/combos', getCombosDetails);
-router.get('/reportGenerate', passport.authenticate('jwt', { session: false, failureRedirect: '/' }), reportPdfPage);
+router.get(
+  '/reportGenerate',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  reportPdfPage
+);
 
-router.post('/reportGenerate', passport.authenticate('jwt', { session: false, failureRedirect: '/' }), productReportGenerate);
+router.post(
+  '/reportGenerate',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  productReportGenerate
+);
 
 //----Dashboard
 const {
@@ -445,34 +464,40 @@ const storeValidation = require('../middleware/store/storeValidation.js');
 
 router.get(
   '/store',
-  passport.authenticate('jwt', { session: false, failureRedirect: '/' }), checkRole,
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  checkRole,
   getStorePage
 );
 router.get(
   '/api/store',
-  passport.authenticate('jwt', { session: false, failureRedirect: '/' }), checkRole,
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  checkRole,
   getStore
 );
 router.get(
   '/getStore',
-  passport.authenticate('jwt', { session: false, failureRedirect: '/' }), checkRole,
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  checkRole,
   getParticularStore
 );
 router.post(
   '/insertStore',
-  passport.authenticate('jwt', { session: false, failureRedirect: '/' }), checkRole,
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  checkRole,
   storeValidation,
   insertStore
 );
 router.post(
   '/updateStore',
-  passport.authenticate('jwt', { session: false, failureRedirect: '/' }), checkRole,
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  checkRole,
   storeValidation,
   updateStore
 );
 router.post(
   '/deleteStore',
-  passport.authenticate('jwt', { session: false, failureRedirect: '/' }), checkRole,
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  checkRole,
   deleteStore
 );
 // router.post('/filterStore',passport.authenticate('jwt', { session: false, failureRedirect: '/' }), filterStore);
@@ -541,6 +566,7 @@ router.put(
   checkValidation({
     ...purchaseValidations.form1,
     supplier_id: { required: false },
+    storage_id: { requried: false },
   }),
   updatePurchase
 );

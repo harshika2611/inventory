@@ -1,4 +1,5 @@
 pageSize = 4;
+let queryString = '';
 
 const modal = new bootstrap.Modal('#deleteModal');
 
@@ -12,6 +13,16 @@ const mapping = {
 };
 
 async function initial() {
+  const paymentOptions = (await generateDropDown('paymentStatus', 10)).content;
+
+  document.getElementById('floatingPaymentStatus').innerHTML = paymentOptions;
+
+  const storageOptions = await generateWarehousesDropDown(1);
+
+  document.getElementById('floatingStorageId').innerHTML = storageOptions;
+}
+
+async function dataTableGrid(records) {
   let head = `<tr>`;
   for (let key of [
     'No.',
@@ -29,8 +40,8 @@ async function initial() {
           mapping[key]
             ? `
         <span class="d-inline-flex flex-column align-items-center ms-2">
-          <span style="cursor: pointer" onclick="paggination('api/purchases?key=${mapping[key]}&value=asc')">^</span>
-          <span style="rotate: 180deg; cursor: pointer" onclick="paggination('api/purchases?key=${mapping[key]}&value=desc')">^</span>
+          <span style="cursor: pointer" onclick="paggination('api/purchases?key=${mapping[key]}&value=asc&${queryString}')">^</span>
+          <span style="rotate: 180deg; cursor: pointer" onclick="paggination('api/purchases?key=${mapping[key]}&value=desc&${queryString}')">^</span>
         </span>
         `
             : ``
@@ -45,12 +56,6 @@ async function initial() {
 
   document.getElementById('thead').innerHTML = head;
 
-  const paymentOptions = (await generateDropDown('paymentStatus', 10)).content;
-
-  document.getElementById('floatingPaymentStatus').innerHTML = paymentOptions;
-}
-
-async function dataTableGrid(records) {
   const tbody = document.querySelector('tbody');
   tbody.innerHTML = '';
 
@@ -109,9 +114,17 @@ async function dataTableGrid(records) {
 }
 
 function triggerPaymentStatus(e) {
-  const query = new URLSearchParams(location?.search);
+  const query = new URLSearchParams(queryString);
   query.set('payment', e.target.value);
-  paggination(`api/purchases?${query.toString()}`);
+  queryString = query.toString();
+  paggination(`api/purchases?${queryString}`);
+}
+
+function triggerStorageStatus(e) {
+  const query = new URLSearchParams(queryString);
+  query.set('storage', e.target.value);
+  queryString = query.toString();
+  paggination(`api/purchases?${queryString}`);
 }
 
 function searchAnything(e) {
