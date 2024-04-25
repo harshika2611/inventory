@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Manage Customers</title>
+  <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
+  <script src="/js/bootstrap.js"></script>
+  <link rel="stylesheet" href="src/css/allpage.css" />
+  <link rel="stylesheet" href="src/css/reports/reportPdf.css" />
+  <script src="js/reports/pdfGenerate/reportPdf.js"></script>
+  <script src="js/commonFunction/commonFunction.js"></script>
+  <script src="js/components/messagePopUp.js"></script>
+</head>
+
+<body onload="reportGenerateOption()">
+  <%- include('../components/navigation', {data})%>
+    <section class="div-second reportPdf-section">
+      <div class="reportPdf-container" id="reportPdf-container">
+        <p class="reportPdfTitle">Report</p>
+        <%- include('../components/messagePopUp')%>
+          <div class="reportGenerate-div">
+          </div>
+    </section>
+</body>
+
+</html>
