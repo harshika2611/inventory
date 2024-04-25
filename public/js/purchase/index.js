@@ -2,6 +2,8 @@ let orderId =
   Number(new URLSearchParams(location.search)?.get('orderId')) ?? undefined;
 let orderDetails;
 
+const admin = document.getElementById('admin');
+
 const modal = new bootstrap.Modal('#deleteModal');
 
 async function generateForm1(oId = null) {
@@ -13,6 +15,10 @@ async function generateForm1(oId = null) {
 
   const supplierOptions = await generateSuppliersDropDown(
     orderDetails?.supplierId
+  );
+
+  const storageOptions = await generateWarehousesDropDown(
+    orderDetails?.storageId
   );
 
   const root = document.getElementById('root');
@@ -45,6 +51,21 @@ async function generateForm1(oId = null) {
 				Please enter a valid date.
 			</div>
 		</div>
+    ${
+      admin
+        ? `<div class="form-floating mb-3">
+            <select name="storage_id" class="form-select" aria-label="select" id="floatingStorage"
+              ${oId ? 'disabled' : ''}
+            >
+              ${storageOptions}
+            </select>
+            <label for="floatingStorage">Storage</label>
+            <div class="invalid-feedback">
+              Please select a valid storage space.
+            </div>
+          </div>`
+        : ''
+    }
 		<div class="form-floating mb-3">
 			<select name="supplier_id" class="form-select" aria-label="select" id="floatingSupplier"
         ${oId ? 'disabled' : ''}
@@ -111,6 +132,9 @@ async function submitForm1(update = false) {
   document.getElementsByTagName('form')[0].classList.add('was-validated');
   const nameElement = document.getElementsByName('name')[0];
   const dateElement = document.getElementsByName('date')[0];
+  const storageElement = admin
+    ? document.getElementsByName('storage_id')[0]
+    : {};
   const supplierElement = document.getElementsByName('supplier_id')[0];
   const amountElement = document.getElementsByName('amount')[0];
   const paymentElement = document.getElementsByName('payment_status')[0];
@@ -119,6 +143,7 @@ async function submitForm1(update = false) {
   Array([
     nameElement,
     dateElement,
+    storageElement,
     supplierElement,
     amountElement,
     paymentElement,
@@ -130,9 +155,15 @@ async function submitForm1(update = false) {
     supplier_id: supplierElement.value,
     amount: amountElement.value,
     payment_status: paymentElement.value,
+    ...(admin ? { storage_id: storageElement.value } : {}),
   };
 
-  if (checkValidation(data, validation.form1)) {
+  if (
+    checkValidation(data, {
+      ...validation.form1,
+      ...(!admin ? { storage_id: { required: false } } : {}),
+    })
+  ) {
     try {
       const body = new URLSearchParams();
 
@@ -170,7 +201,7 @@ async function submitForm1(update = false) {
 }
 
 async function generateForm2() {
-  const categoryOptions = (await generateDropDown('productCategory')).content;
+  const categoryData = await generateDropDown('productCategory');
 
   const root = document.getElementById('root');
 
@@ -207,18 +238,22 @@ async function generateForm2() {
 	</div>`;
 
   root.innerHTML = content;
-  document.getElementById('addProducts').addEventListener('click', () => {
+  document.getElementById('addProducts').addEventListener('click', async () => {
     document.getElementById('addProducts').disabled = true;
     Array.from(document.getElementsByClassName('custom-disabled')).forEach(
       (ele) => (ele.disabled = true)
     );
-    generateAddProductRows('', categoryOptions);
+    generateAddProductRows(
+      await generateProductsDropDown(categoryData.data[0].opt_id),
+      categoryData.content
+    );
   });
 
-  paggination(
-    null,
-    orderDetails?.products?.length ? orderDetails?.products : [{}]
-  );
+  if (!orderDetails?.products.length) {
+    document.getElementById('addProducts').click();
+  } else {
+    paggination(null, orderDetails?.products);
+  }
 }
 
 async function getOrderDetails(id) {
