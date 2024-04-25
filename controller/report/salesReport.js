@@ -12,7 +12,7 @@ const getReportallProducts = (req, res) => {
 };
 const getApiproductreport = async (req, res) => {
   try {
-    let storage = req.user.storageId || 1;
+    let storage = req.user.storageId;
     const [rows] = await getProductreport(storage);
     res.json(rows);
   } catch (err) {
@@ -22,7 +22,7 @@ const getApiproductreport = async (req, res) => {
 
 const getApicategoryreport = async (req, res) => {
   try {
-    let storage = req.user.storageId || 1;
+    let storage = req.user.storageId;
     const [rows] = await getCategotyreport(storage);
     res.json(rows);
   } catch (err) {

@@ -13,6 +13,7 @@ const productValid = {
   skuid: {
     required: true,
     pattern: patterns.numberOnly,
+    length: 6,
   },
   category: {
     required: true,
@@ -71,9 +72,19 @@ function productInfoValid(valid) {
         }
       }
 
-      // Note pattern is optional property
       if (obj?.pattern && body[field]) {
         if (!body[field].match(obj?.pattern)) {
+          res.status(404).json({
+            status: 'error',
+            message: `Invalid input for ${field}!`,
+            field,
+          });
+          return false;
+        }
+      }
+
+      if (obj?.length && body[field]) {
+        if (body[field].length != obj.length) {
           res.status(404).json({
             status: 'error',
             message: `Invalid input for ${field}!`,
