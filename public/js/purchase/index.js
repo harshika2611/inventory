@@ -55,7 +55,7 @@ async function generateForm1(oId = null) {
       admin
         ? `<div class="form-floating mb-3">
             <select name="storage_id" class="form-select" aria-label="select" id="floatingStorage"
-              ${oId ? 'disabled' : ''}
+              ${orderDetails?.purchaseId ? 'disabled' : ''}
             >
               ${storageOptions}
             </select>
@@ -68,7 +68,7 @@ async function generateForm1(oId = null) {
     }
 		<div class="form-floating mb-3">
 			<select name="supplier_id" class="form-select" aria-label="select" id="floatingSupplier"
-        ${oId ? 'disabled' : ''}
+        ${orderDetails?.purchaseId ? 'disabled' : ''}
       >
 				${supplierOptions}
 			</select>

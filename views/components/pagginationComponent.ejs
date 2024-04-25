@@ -5,22 +5,20 @@
         <div class="pagginationcontainer">
             <div class="rowpaggination">
                 <div class="colpaggination" id="leftbutton">
-                    <a class="pagginationbutton firstPage" id="firstPage" onclick="firstPageButton()"><img
-                            src="src/assets/paggination/left-arrow-double.svg" width="30" height="30">
-                    </a>
-                    <a class="pagginationbutton prevPage" id="prevPage" onclick="prevPageButton()"><img
-                            src="src/assets/paggination/left-arrow.svg" width="30" height="30"></a>
-                </div>
-                <div class="pagenumber">
-                    <p id="currentpageshow" class="currentpageshow">Page</p>
-                </div>
-                <div class="colpaggination">
-                    <a class="pagginationbutton nextPage" id="nextPage" onclick="nextPageButton()"><img
-                            src="src/assets/paggination/right-arrow.svg" width="30" height="30"></a>
-                    <a class=" pagginationbutton lastPage" id="lastPage" onclick="lastPageButton()"><img
-                            src="src/assets/paggination/right-arrow-double.svg" width="30" height="30"></a>
-                </div>
-            </div>
-        </div>
+                    <div class="pagginationbutton firstPage arrowPage" id="firstPage" onclick="firstPageButton()">
+                        << </div>
+                            <div class="pagginationbutton prevPage arrowPage" id="prevPage" onclick="prevPageButton()">
+                                < </div>
+                                    <div class="pagenumber">
+                                        <p id="currentpageshow" class="currentpageshow"></p>
+                                    </div>
+                                    <div class="colpaggination">
+                                        <div class="pagginationbutton nextPage arrowPage" id="nextPage"
+                                            onclick="nextPageButton()"> > </div>
+                                        <div class=" pagginationbutton lastPage arrowPage" id="lastPage"
+                                            onclick="lastPageButton()"> >> </div>
+                                    </div>
+                            </div>
+                    </div>
     </section>
 </body>

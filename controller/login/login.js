@@ -115,7 +115,6 @@ const getLink = async (req, res) => {
   try {
     const link = req.params.link;
     const id = req.params.id;
-    console.log(req.params, 'giveeeeeeeee');
     const user = await expireService(link);
     const timer = user[0][0].updated_at;
     const expeireTimer = new Date(

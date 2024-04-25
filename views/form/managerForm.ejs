@@ -35,10 +35,15 @@
 
               <label for="floatingInput">Email address</label>
             </div>
-
             <div class="form-floating customerform__errordiv">
-              <select name="state" id="state">
-                <option value="select here" selected>select location</option>
+              <select name="state" id="state" onchange="getAllStore(this.value)">
+
+              </select>
+
+            </div>
+            <div class="form-floating customerform__errordiv">
+              <select name="place" id="place">
+                <option value="select here" selected>Select here</option>
               </select>
 
             </div>

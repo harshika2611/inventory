@@ -47,20 +47,20 @@
                                     onclick="window.location.href = '/purchaseOrder'">
                                     + New
                                 </button>
-
-                                <div class="form-floating me-3">
-                                    <select name="storage_id" class="form-select" aria-label="select"
-                                        id="floatingStorageId" onchange="triggerStorageStatus(event)">
-                                    </select>
-                                    <label for="floatingStorageId">Storage</label>
-                                </div>
-
-                                <div class="form-floating">
-                                    <select name="payment_status" class="form-select" aria-label="select"
-                                        id="floatingPaymentStatus" onchange="triggerPaymentStatus(event)">
-                                    </select>
-                                    <label for="floatingPaymentStatus">Payment</label>
-                                </div>
+                                <% if(!data?.storageId) { %>
+                                    <div class="form-floating me-3">
+                                        <select name="storage_id" class="form-select" aria-label="select"
+                                            id="floatingStorageId" onchange="triggerStorageStatus(event)">
+                                        </select>
+                                        <label for="floatingStorageId">Storage</label>
+                                    </div>
+                                    <% } %>
+                                        <div class="form-floating">
+                                            <select name="payment_status" class="form-select" aria-label="select"
+                                                id="floatingPaymentStatus" onchange="triggerPaymentStatus(event)">
+                                            </select>
+                                            <label for="floatingPaymentStatus">Payment</label>
+                                        </div>
                             </div>
                 </div>
                 <div class="mt-5" id="root">

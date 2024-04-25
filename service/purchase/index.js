@@ -83,7 +83,9 @@ async function fetchPurchaseOrder(data) {
           product_master as pm
             ON pp.product_id = pm.id
         WHERE
-          po.id = ?          
+          po.id = ?
+            AND
+          po.is_delete != 1
 		`,
       [data.id]
     );
@@ -287,15 +289,14 @@ async function fetchPurchaseOrders(data) {
         supplier.gst as gst,
         purchase.amount as amount,
         payment_status,
+        purchase.\`is_delete\`,
         purchase.\`date\` as date
       FROM
         purchase_order AS purchase
             JOIN
         supplier_master AS supplier ON purchase.supplier_id = supplier.id
       WHERE
-        purchase.is_delete != 1
-          AND
-          purchase.storage_id = ${data.storage_id}
+        purchase.storage_id = ${data.storage_id}
           AND
         payment_status = ${data.payment_status}
       ORDER BY

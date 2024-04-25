@@ -10,13 +10,14 @@
   <link rel="stylesheet" href="src/css/allpage.css" />
 </head>
 
-<body>
+<body onload="loadData()">
   <%- include("../components/navigation", {data})%>
     <div class="div-second">
       <div class="container p-3">
         <%- include('../components/messagePopUp')%>
           <div class="row ">
             <div class="col p-5">
+              <h3>Product :</h3>
               <form id="productForm1">
                 <label for="productname">Product Name : </label>
                 <input type="text" class="form-control" name="productname" id="productname">
@@ -42,9 +43,9 @@
                 </sapn><br>
                 <label for="description">Product Description: </label>
                 <input type="text" class="form-control" name="description" id="description">
-                <span class="errordescription">
+                <span id="errordescription">
                 </span><br>
-                <input type="button" value="Edit" id="edit" class="btn btn-dark" onclick="editData()">
+                <input type="button" value="Update" id="edit" class="btn btn-dark" onclick="editData()">
                 <input type="button" value="Submit" class="btn btn-dark" id="submit" onclick="submitData()" disabled>
               </form>
             </div>

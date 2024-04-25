@@ -22,6 +22,8 @@ function manageProductFormValidation(data) {
           productFormError[key] = '* require';
         } else if (!numberregex.test(data[key]) && data[key] !== '') {
           productFormError[key] = '* Please Enter valid SKUid';
+        } else if (data[key].length !== 6) {
+          productFormError[key] = '* Please Enter 6 digit SKUid';
         } else {
           delete productFormError[key];
         }

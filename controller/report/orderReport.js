@@ -17,7 +17,7 @@ const getorderProducts = (req, res) => {
 const getApiorderRreport = async (req, res) => {
   try {
     let queryLength = Object.keys(req.query).length;
-    let storage = req.user.storageId || 1;
+    let storage = req.user.storageId;
     if (queryLength === 0) {
       const [rows] = await getOrderreport(storage);
       res.json(rows);

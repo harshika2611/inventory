@@ -16,9 +16,7 @@ const dataTableGrid = (pagginationArray, startIndex) => {
     productData.innerHTML = pagginationArray
       .map(
         (e) => `<tr onclick="productlist('${e.Order_Id}')">
-      ${header
-        .map((h) => `<td>${e[h] == null ? '-' : e[h]}</td>`)
-        .join('')}</tr>`
+      ${header.map((h) => `<td>${e[h] ? e[h] : '-'}</td>`).join('')}</tr>`
       )
       .join('');
   }

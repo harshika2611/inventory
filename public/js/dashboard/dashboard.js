@@ -92,6 +92,11 @@ const showQuantityData = async (lowvalue) => {
 
   document.getElementById('totalStock').innerText = productData.length;
   document.getElementById('outStock').innerText = lowStock.length;
+  console.log(lowStock.length);
+  document.getElementById('totalStock').style.color =
+    productData.length <= 30 ? 'rgb(255, 185, 0)' : 'black';
+  document.getElementById('totalStock').style.color =
+    productData.length <= 6 ? 'red' : 'black';
 
   lowStock = lowStock.slice(0, 5);
 
@@ -130,9 +135,7 @@ const showData = () => {
   document.getElementById('orderTableBody').innerHTML = orderData
     .map(
       (e) => `<tr onclick="productlist('${e.Order_Id}')">
-	      ${header2
-          .map((h) => `<td>${e[h] == null ? '-' : e[h]}</td>`)
-          .join('')}</tr>`
+	      ${header2.map((h) => `<td>${e[h] ? e[h] : '-'}</td>`).join('')}</tr>`
     )
     .join('');
 };

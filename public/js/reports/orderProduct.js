@@ -11,7 +11,7 @@ const fetchData = async () => {
 const dataTableGrid = (pagginationArray, startIndex) => {
   if (pagginationArray.length == 0) {
     productHeader.innerHTML = `<h1  class='text-center'>NO Data </h1>`;
-    productData.innerHTML = `<h6 class='text-center'>found...</h6>`;
+    productData.innerHTML = `<h6 class='text-center'>...</h6>`;
   } else {
     let header = Object.keys(pagginationArray[0]);
     productHeader.innerHTML = header
@@ -20,9 +20,7 @@ const dataTableGrid = (pagginationArray, startIndex) => {
     productData.innerHTML = pagginationArray
       .map(
         (e) => `<tr>
-      ${header
-        .map((h) => `<td>${e[h] == null ? '-' : e[h]}</td>`)
-        .join('')}</tr>`
+      ${header.map((h) => `<td>${e[h] ? e[h] : '-'}</td>`).join('')}</tr>`
       )
       .join('');
   }
