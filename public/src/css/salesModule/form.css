@@ -3,21 +3,18 @@
 	display: flex;
 	justify-content: center;
 	flex-direction: column;
+	padding-top: 64px;
 }
 
 #insertFormDiv {
 	width: 100%;
-	padding: 3rem 0;
+	padding: 2rem 0;
 }
 #insertForm {
 	width: 100%;
 }
 #productFormDiv {
 	display: none;
-}
-
-.title {
-  padding: 27px 0;
 }
 
 .productTableDiv{

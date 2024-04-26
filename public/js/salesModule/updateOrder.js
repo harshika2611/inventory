@@ -24,12 +24,12 @@ function updateOrderForm(result, id) {
       op.setAttribute('selected', true);
     }
   }
-  shippingAddress.innerHTML = result[0].shipping_address;
+  shippingAddress.innerHTML = result[0].ShippingAddress;
   for (op of paymentStatus) {
-    if (op.value == result[0].payment_status) {
+    if (op.value == result[0].PaymentStatus) {
       op.setAttribute('selected', true);
     }
   }
-  date.value = result[0].date.split('T')[0];
+  date.value = result[0].Date.split('T')[0];
 }
 // we will use grid fetch function for edit and delete
