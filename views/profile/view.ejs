@@ -8,7 +8,7 @@
   <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
   <script src="/js/bootstrap.js"></script>
   <link rel="stylesheet" href="src/css/allpage.css" />
-  <link rel="stylesheet" href="src/css/dashboardCustom.css" />
+  <link rel="stylesheet" href="src/css/dashboard/dashboardCustom.css" />
   <link rel="stylesheet" href="src/css/profile/profileStyle.css" />
 </head>
 
@@ -17,7 +17,7 @@
     <div class="container div-second">
       <div class="main-container">
         <div class="profile-details">
-          <% if(profileDetails[0][0].Role !=4) { %>
+          <% if(profileDetails[0][0].role !=4) { %>
             <div><span>Name : <%= profileDetails[0][0].firstname%></span><br />
               <% } else {%>
                 <div><span>Name : <%= profileDetails[0][0].firstname + " " + profileDetails[0][0].lastname%>
@@ -26,7 +26,7 @@
                 </div>
                 <div><span>Date of Birth : <%= profileDetails[0][0].dob %></span><br /></div>
                 <div>
-                  <div><span>Role : <%= profileDetails[0][0].Role %></span></div><br />
+                  <div><span>Role : <%= profileDetails[0][0].role %></span></div><br />
                 </div>
                 <div>
                   <span>Email : <%= profileDetails[0][0].email %></span>
@@ -36,7 +36,7 @@
                 </div>
             </div>
             <div class="img-container view-img">
-              <img src="icons/profile.png" alt="" srcset="">
+              <img src="assets/userprofile/<%=profileDetails[0][0].img_path%>" alt="Image">
             </div>
         </div>
       </div>

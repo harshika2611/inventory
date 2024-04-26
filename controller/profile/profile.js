@@ -5,38 +5,45 @@ const {
 
 const logger = require('../../logs');
 
+function renderTimestamp(databaseDate) {
+  const storedDate = new Date(databaseDate);
+
+  return storedDate.toDateString();
+}
+
 async function viewProfile(req, res) {
   try {
-    const profileDetails = await viewProfileQuery(req, res);
+    const profileDetails = await viewProfileQuery(req?.user?.id);
+    profileDetails[0][0].dob = renderTimestamp(profileDetails[0][0].dob);
     return res.render('./profile/view', { profileDetails, data: req.user });
   } catch (error) {
+    logger.logError(err);
     return res.json({ message: "Can't get profile details" });
   }
 }
 
 async function editProfile(req, res) {
   try {
-    const profileDetails = await viewProfileQuery(req, res);
+    const profileDetails = await viewProfileQuery(req?.user?.id);
+    profileDetails[0][0].dob = renderTimestamp(profileDetails[0][0].dob);
     res.render('./profile/edit', { profileDetails, data: req.user });
   } catch (err) {
     logger.logError(err);
+    return res.json({ message: "Can't get profile details" });
   }
 }
 
- function updateProfile(req, res) {
+async function updateProfile(req, res) {
   try {
-    // updateProfileQuery();
-    if (req.file == undefined) {
-      
-    } else {
-      
-      console.log('/assets/userprofile/',req.file.filename);
-    }
-    // res.render('./profile/profile', { data: req.user });
-    res.end("Hiii")
-    // console.log("hIIIII????");
-  } catch (err) {
+    await updateProfileQuery({
+      ...req.body,
+      id: req?.user?.id,
+      filename: req?.file?.filename,
+    });
+    await viewProfile(req, res);
+  } catch (error) {
     logger.logError(err);
+    return res.json({ message: "Can't get profile details" });
   }
 }
 

@@ -681,8 +681,6 @@ const {
   editProfile,
   updateProfile,
 } = require('../controller/profile/profile.js');
-const { storeImage } = require('../controller/profile/uploadImage.js');
-const { getOrderreport } = require('../service/report/orderReportService.js');
 const { userProfileStorage } = require('../middleware/multer/multer.js');
 const upload = multer({ storage: userProfileStorage });
 
@@ -691,8 +689,17 @@ router.get(
   passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
   viewProfile
 );
-router.get('/profileEdit', editProfile);
-router.post('/profileEdit', upload.single('newImage'), updateProfile);
+router.get(
+  '/profileEdit',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  editProfile
+);
+router.post(
+  '/profileEdit',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  upload.single('newImage'),
+  updateProfile
+);
 // router.post('/imageUpload',storeImage);
 
 module.exports = router;
