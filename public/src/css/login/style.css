@@ -12,7 +12,7 @@ body {
 .main {
 	background-color: #fff;
 	border-radius: 15px;
-	box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+	box-shadow: 0 5px 20px .15px rgba(14, 0, 145, 0.2);
 	padding: 20px;
 	width: 300px;
 }
@@ -22,7 +22,7 @@ body {
 	margin-bottom: 7px;
 }
 
-.main h2 {
+.main h2,h1 {
 	color: #001e72;
 	margin-bottom: 20px;
 }
