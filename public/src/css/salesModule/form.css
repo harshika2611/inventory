@@ -7,7 +7,7 @@
 
 #insertFormDiv {
 	width: 100%;
-	margin-top: 100px;
+	padding: 3rem 0;
 }
 #insertForm {
 	width: 100%;
@@ -18,7 +18,6 @@
 
 .title {
   padding: 27px 0;
-
 }
 
 .productTableDiv{
