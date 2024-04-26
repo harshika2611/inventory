@@ -1,8 +1,17 @@
 function manageProductFormValidation(data) {
   let productFormError = {};
   const numberregex = /^[0-9]+$/;
+  console.log(data);
   for (let key in data) {
     switch (key) {
+      case 'storageIn':
+        const storageCombo = document.getElementById('storageComboIn');
+        if (storageCombo.selectedIndex < 1) {
+          productFormError[key] = '* require';
+        } else {
+          delete productFormError[key];
+        }
+        break;
       case 'productname':
         if (data[key].length === 0) {
           productFormError[key] = '* require';

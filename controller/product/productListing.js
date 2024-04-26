@@ -43,9 +43,9 @@ const getApiproduct = async (req, res) => {
     let id = req.query.id || '';
     let order = req.query.order || 'asc';
     let field = req.query.field || 'id';
-    let storage = req.user.storageId || 1;
-
-    const [rows] = await getProduct(id, order, field, storage);
+    let storage = req.query.storage || 1;
+    let payload = req.user;
+    const [rows] = await getProduct(id, order, field, storage, payload);
     return res.json(rows);
   } catch (err) {
     logger.logError(err);

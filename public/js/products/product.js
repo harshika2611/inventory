@@ -1,13 +1,16 @@
 let url = new URL(window.location.href);
 
-function addProduct() {
+async function addProduct() {
+  getAllStore();
+  const storageOptionosIn = await generateWarehousesDropDown(1);
+  if (document.getElementById('storageComboIn') != null) {
+    document.getElementById('storageComboIn').innerHTML = storageOptionosIn;
+  }
   const customerForm = document.getElementById('myForm');
   customerForm.style.display = 'block';
   document.getElementById('submitBtn').innerHTML = 'Submit';
   document.getElementById('filter').style = `filter: blur(2px);`;
   document.getElementById('grid').style = `filter: blur(2px);`;
-  getAllStore();
-  v;
 }
 function closeForm() {
   document.getElementById('myForm').style.display = 'none';
@@ -76,8 +79,20 @@ async function submitbtn() {
   }
 }
 
-function getProducts() {
+async function allFetch() {
+  let storage = document.getElementById('storageCombo').value;
+  console.log(storage, 'aaaaa');
+  url = `/api/products?storage=${storage}`;
+  paggination(url);
+}
+
+async function getProducts() {
+  const storageOptionos = await generateWarehousesDropDown(1);
+  if (document.getElementById('storageCombo') != null) {
+    document.getElementById('storageCombo').innerHTML = storageOptionos;
+  }
   paggination('/api/products');
+  allFetch();
 }
 getProducts();
 
@@ -195,8 +210,9 @@ function modelHide() {
 
 function filterUp(event, order) {
   const key = event.target.getAttribute('id');
-
-  url = `/api/products?field=${key}&order=${order}`;
+  let storage = document.getElementById('storageCombo').value;
+  console.log(storage, 'aaaaa');
+  url = `/api/products?field=${key}&order=${order}&storage=${storage}`;
   paggination(url);
 }
 const search = (key) => {
@@ -233,7 +249,7 @@ const getAllStore = async () => {
     const store = data;
     let option = document.getElementById('category');
     option.innerHTML = '';
-    option.innerHTML = `<option value="select here">Select here</option>`;
+    option.innerHTML = `<option value="select here">Select Category</option>`;
     store.forEach((element) => {
       option.innerHTML += `<option value="${element.opt_id}">${element.value}</option>`;
     });
