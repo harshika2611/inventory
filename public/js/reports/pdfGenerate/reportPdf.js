@@ -141,14 +141,16 @@ function addCustomizeOption() {
     name: "productCustomizeOption",
     value: "cost",
     textContent: "Selling Cost"
-  }, {
-    type: "checkbox",
-    id: "productCustomizeOption5",
-    class: "productCustomizeOption",
-    name: "productCustomizeOption",
-    value: "unit_price",
-    textContent: "Purchase Price"
   }]
+
+  // , {
+  //   type: "checkbox",
+  //   id: "productCustomizeOption5",
+  //   class: "productCustomizeOption",
+  //   name: "productCustomizeOption",
+  //   value: "unit_price",
+  //   textContent: "Purchase Price"
+  // }
 
   for (let element of customizeOptionArray) {
     const checkBox = document.createElement('input');
@@ -200,9 +202,9 @@ async function generateReport() {
           case "stock":
             productDetails.push("stock");
             break;
-          case "unit_price":
-            purchaseProducts.push("unit_price");
-            break;
+          // case "unit_price":
+          //   purchaseProducts.push("unit_price");
+          //   break;
         }
       }
     }
@@ -243,8 +245,18 @@ async function generateReport() {
       }
 
       if (response.status === 200) {
-        const responseMessage = await response.json();
-        messagePopUp(responseMessage.message);
+        const responseObject = await response.json();
+        // console.log(responseMessage);
+        const responsePdfGenerate = await fetch('/api/pdfTemplate', {
+          method: 'POST',
+          body: JSON.stringify(responseObject),
+          headers: {
+            "Content-Type": "application/json"
+          }
+        });
+
+        const pdfResponse = await responsePdfGenerate.json();
+        console.log(pdfResponse.message);
       }
     } catch (error) {
       console.log(error);

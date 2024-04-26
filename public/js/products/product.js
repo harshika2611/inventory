@@ -7,6 +7,7 @@ function addProduct() {
   document.getElementById('filter').style = `filter: blur(2px);`;
   document.getElementById('grid').style = `filter: blur(2px);`;
   getAllStore();
+  v;
 }
 function closeForm() {
   document.getElementById('myForm').style.display = 'none';

@@ -6,6 +6,8 @@ const admin = document.getElementById('admin');
 
 const modal = new bootstrap.Modal('#deleteModal');
 
+const maxDate = new Date().toISOString().split('T')[0];
+
 async function generateForm1(oId = null) {
   await getOrderDetails(oId);
 
@@ -36,6 +38,7 @@ async function generateForm1(oId = null) {
 		</div>
 		<div class="form-floating mb-3">
 			<input name="date" type="date" class="form-control" id="floatingDate" placeholder="date"
+      max="${maxDate}"
 				${
           orderDetails?.date
             ? `value = "${new Date(orderDetails?.date)

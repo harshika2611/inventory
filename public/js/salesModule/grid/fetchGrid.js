@@ -1,7 +1,8 @@
 async function fetching() {
   let orderby = document.getElementById('orderby').value;
   let order = document.getElementById('order').value;
-  url = `/salesorder?order=${order}`;
+  let storage = document.getElementById('storageCombo').value;
+  url = `/salesorder?order=${order}&storage=${storage}`;
   if (orderby != '') {
     url = url + `&orderby=${orderby}`;
   }
@@ -11,7 +12,7 @@ async function fetching() {
   // let result = await response.json();
   // grid(result);
 }
-fetching();
+
 let count = 1;
 function dataTableGrid(result) {
   allRecords = result;
@@ -32,7 +33,7 @@ function dataTableGrid(result) {
   let body = ``;
   result.forEach((data) => {
     body += `<tr>
-        <th scope="row">${count}</th>
+        <th scope="row">${data.ID}</th>
         <td>${data.firstname}</td>
         <td>${data.lastname}</td>
         <td>${data.amount}</td>
@@ -85,4 +86,34 @@ function searchFilter() {
     console.log(filteredResult);
     paggination(null, filteredResult);
   }
+}
+
+async function onLoad() {
+  const storageOptionos = await generateWarehousesDropDown(1);
+  document.getElementById('storageCombo').innerHTML = storageOptionos;
+  fetching();
+}
+onLoad();
+
+function generateWarehousesDropDown(id = null) {
+  return fetch('api/purchase/warehouses')
+    .then((res) => res.json())
+    .then((data) => {
+      let content = '';
+
+      Object.entries(Object.groupBy(data, ({ value }) => value)).forEach(
+        (arr) => {
+          content += `<optgroup label="${arr[0]}">`;
+          arr[1].forEach((o) => {
+            content += `<option value="${o.id}" ${
+              o.id == id ? 'selected="selected"' : ''
+            }>${o.name} (${o.city_name})</option>`;
+          });
+          content += `</optgroup>`;
+        }
+      );
+
+      return content;
+    })
+    .catch(() => '');
 }

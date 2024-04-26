@@ -83,21 +83,16 @@ async function dataTableGrid(records) {
     let dateTd = document.createElement('td');
     dateTd.innerText = new Date(obj.date).toLocaleDateString();
 
-    let viewTd = document.createElement('td');
-    viewTd.innerHTML = `<button class="btn btn-outline-dark">View</button>`;
-
-    [
-      noTd,
-      suppTd,
-      comTd,
-      phTd,
-      gstTd,
-      amountTd,
-      dateTd,
-      // viewTd,
-    ].forEach((e) => tr.appendChild(e));
+    [noTd, suppTd, comTd, phTd, gstTd, amountTd, dateTd].forEach((e) =>
+      tr.appendChild(e)
+    );
 
     if (!obj.is_delete) {
+      let viewTd = document.createElement('td');
+      viewTd.innerHTML = `<button class="btn" onclick="window.location.href = '/salesOrderView?invoiceId=${obj?.id}&type=purchase'">
+        <img src="icons/book.svg" width="25" height="25">
+      </button>`;
+
       let editTd = document.createElement('td');
       editTd.innerHTML = `<button class="btn" onclick="window.location.href = '/purchaseOrder?orderId=${obj?.id}'">
         <img src="src/assets/manageCustomer/edit.svg" width="25" height="25">
@@ -108,7 +103,12 @@ async function dataTableGrid(records) {
         <img src="src/assets/manageCustomer/delete.svg" width="25" height="25">
       </button>`;
 
-      [editTd, deleteTd].forEach((e) => tr.appendChild(e));
+      [viewTd, editTd, deleteTd].forEach((e) => tr.appendChild(e));
+    } else {
+      let actionTd = document.createElement('td');
+      actionTd.setAttribute('colspan', 3);
+      actionTd.innerHTML = `<b><i>DELETED</i></b>`;
+      [actionTd].forEach((e) => tr.appendChild(e));
     }
 
     tbody.append(tr);
