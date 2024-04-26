@@ -16,6 +16,9 @@ const { selectQuery, selectWhere } = require('../../service/selectQuery');
 
 async function insertSalesOrder(req, res) {
   let storageId = req.user.storageId;
+  if (storageId == null || isNaN(parseInt(storageId))) {
+    storageId = req.body.storage;
+  }
   let input = [
     req.body.customer,
     req.body.orderType,
@@ -42,7 +45,9 @@ async function insertSalesProduct(req, res) {
     req.body.ordertype,
     req.body.quantity,
   ];
-
+  if (req.user.storageId == null) {
+    req.user['storageId'] = req.body.storage;
+  }
   const stock = await checkQuanitiy(req);
   if (req.body.quantity <= stock) {
     const [rows, fields] = await insertProduct(input);
@@ -81,7 +86,11 @@ async function getsalesOrder(req, res) {
     let col = req.query.col;
     let value = req.query.colValue;
     let storageId = req.user.storageId
+<<<<<<< HEAD
+    if (storageId == null || isNaN(parseInt(storageId))) {
+=======
     if (storageId == null) {
+>>>>>>> main
       storageId = req.query.storage;
     }
     const [rows, fields] = await selectOrders(
@@ -195,6 +204,9 @@ async function deleteProduct(req, res) {
   try {
     req.body.quantity = 0;
     req.body.id = req.query.id;
+    if (req.user.storageId == null) {
+      req.user['storageId'] = req.query.storage;
+    }
     let [flag, stock] = await updateProduct(req);
 
     if (flag == true) {
@@ -209,6 +221,9 @@ async function deleteProduct(req, res) {
 
 async function updateSalesProduct(req, res) {
   try {
+    if (req.user.storageId == null) {
+      req.user['storageId'] = req.body.storage;
+    }
     let [flag, stock] = await updateProduct(req);
     res.json({ flag: flag, stock: stock });
   } catch (err) {

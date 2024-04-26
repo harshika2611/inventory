@@ -28,21 +28,22 @@ async function selectOrders(orderby, order, col, value, storageId) {
 		sales_order.type as OrderType,
     sales_order.shipping_address,
     sales_order.payment_status,
+    sales_order.storage_id,
     sales_order.created_at,
     sales_order.order_date as date
   from sales_order join customer_master
   on sales_order.customer_id = customer_master.id
   where sales_order.is_delete = 0 and ${col} = '${value}' and storage_id = ? order by ${orderby} ${order} ;`;
   try {
-    return await connection.execute(sql,[storageId]);
+    return await connection.execute(sql, [storageId]);
   } catch (error) {
-    logger.logError(error)
+    logger.logError(error);
   }
 }
 
 async function insertOrder(input) {
   sql = `insert into sales_order (id, customer_id, type, shipping_address, payment_status, order_date,storage_id) values (default,?,?,?,?,?,?);`;
-
+  logger.info(input);
   return await connection.execute(sql, input);
 }
 
@@ -73,11 +74,12 @@ async function deleteQuery(table, input) {
 
   return await connection.execute(sql, input);
 }
-async function updateProduct(req) {
+async function updateProduct(req) { 
   const [prevQuantity] = await connection.execute(
     `select sales_products.product_id,(sales_products.quantity+ products_details.stock) as total_stock from sales_products join products_details on sales_products.product_id = products_details.product_id where sales_products.id = ? and products_details.storage_id = ?;`,
     [req.body.id, req.user.storageId]
   );
+  console.log(req.body);
   if (prevQuantity[0].total_stock > req.body.quantity) {
     const [result] = await connection.execute(
       `update products_details set stock = ? where product_id = ? and storage_id = ?;`,
@@ -111,11 +113,26 @@ async function updateAmount(input) {
 
 async function checkQuanitiy(req, type) {
   try {
-  const [result] = await connection.execute(
-    `select stock from products_details where product_id = ? and storage_id = ?`,
-    [req.body.product, req.user.storageId]
-  );
-  return result[0].stock;
+  //   let storageId = req.user.storageId;
+  // if (storageId == null) {
+  //   switch (req.method) {
+  //     case 'POST':
+  //       storageId = req.body.storage;
+  //       break;
+  //     case 'POST':
+  //       storageId = req.query.storage;
+  //       break;
+  //   }
+  // }
+    const [result] = await connection.execute(
+      `select stock from products_details where product_id = ? and storage_id = ?`,
+      [req.body.product, req.user.storageId]
+    );
+    if (result[0] == undefined) {
+      return 0;
+    } else {
+      return result[0].stock;
+    }
   } catch (e) {
     logger.logError(e);
   }
@@ -134,9 +151,7 @@ async function getOrderDetail(req) {
     sql = `select customer_master.*,sales_order.id as order_id,(select city_name from city_master where city_id = customer_master.city_id)as city_name,(select state_name from state_master where state_id = customer_master.state_id) as state_name,sales_order.amount,sales_order.shipping_address,(select value from option_master where id = sales_order.type) as type,(select value from option_master where id = sales_order.payment_status) as payment_status,sales_order.order_date from sales_order join customer_master on sales_order.customer_id = customer_master.id where  sales_order.id = ?;`;
 
     let productQuery = `SELECT sales_products.id,sales_products.order_type,sales_products.quantity,product_master.product_name,product_master.sku_id,product_master.cost FROM sales_products join product_master on sales_products.product_id = product_master.id where order_id = ? and sales_products.is_delete = 0`;
-    const [result] = await connection.execute(sql, [
-      req.query.invoiceId
-    ]);
+    const [result] = await connection.execute(sql, [req.query.invoiceId]);
     const [products] = await connection.execute(productQuery, [
       req.query.invoiceId,
     ]);

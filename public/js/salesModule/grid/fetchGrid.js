@@ -1,7 +1,10 @@
 async function fetching() {
   let orderby = document.getElementById('orderby').value;
   let order = document.getElementById('order').value;
-  let storage = document.getElementById('storageCombo').value;
+  let storage = '';
+  if (document.getElementById('storageCombo') != null) {
+    storage = document.getElementById('storageCombo').value;
+  }
   url = `/salesorder?order=${order}&storage=${storage}`;
   if (orderby != '') {
     url = url + `&orderby=${orderby}`;
@@ -22,7 +25,7 @@ function dataTableGrid(result) {
     if (key == 'ID') {
       key = '#';
     }
-    if (key != 'created_at' && key != 'customer_id') {
+    if (key != 'created_at' && key != 'customer_id' && key != 'storage_id') {
       head += `<th scope="col">${key}</th>`;
     }
   }
@@ -46,10 +49,10 @@ function dataTableGrid(result) {
           data.ID
         })">View</a>
 
-      <a class='btn btn-success' id=edit${
+      <a class='btn btn-success' id=${data.storage_id}edit${
         data.ID
       } onclick="updateOrder('edit',event,'order')">EDIT</a>
-       <a class="btn btn-danger" id=delete${
+       <a class="btn btn-danger" id=${data.storage_id}delete${
          data.ID
        } onclick="updateOrder('delete',event,'order')">DELETE</a></td>
         </tr>`;
@@ -89,8 +92,10 @@ function searchFilter() {
 }
 
 async function onLoad() {
-  const storageOptionos = await generateWarehousesDropDown(1);
-  document.getElementById('storageCombo').innerHTML = storageOptionos;
+  if (document.getElementById('storageCombo') != null) {
+    const storageOptionos = await generateWarehousesDropDown(1);
+    document.getElementById('storageCombo').innerHTML = storageOptionos;
+  }
   fetching();
 }
 onLoad();
