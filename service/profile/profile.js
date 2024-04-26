@@ -1,32 +1,59 @@
 const connection = require('../../config/connection.js');
 const logger = require('../../logs.js');
 
-async function viewProfileQuery(req, res) {
+async function viewProfileQuery(id) {
   try {
-    const getUser = `select firstname,lastname,dob,email,option_master.value as Role from users inner join option_master on users.role_id = option_master.id where users.email = 'admin@gmail.com';`;
-    const [result] = await connection.execute(getUser);
+    const getUser = `
+      select
+        firstname,
+        lastname,
+        dob,
+        email,
+        option_master.value as role,
+        img_path
+      from
+        users
+          inner join
+        option_master
+          on
+        users.role_id = option_master.id
+      where
+        users.id = ?;
+    `;
+    const [result] = await connection.execute(getUser, [id]);
     return [result];
   } catch (error) {
-    console.log(error);
+    logger.logError(error);
     return [];
   }
 }
 
-async function editProfileCurrentData(req, res) {
+async function updateProfileQuery(data) {
   try {
-    const getUser = `select firstname,lastname,dob,email,option_master.id as Role from users inner join option_master on users.role_id = option_master.id where users.email = 'admin@gmail.com';`;
-    const [result] = await connection.execute(getUser);
+    const updateUser = `
+      update
+        users
+      set
+        firstname = ?,
+        lastname = ?,
+        dob = ?,
+        email = ?
+        ${data?.filename ? `,img_path = '${data.filename}'` : ''}
+      where
+        id = ?
+    `;
+    const [result] = await connection.execute(updateUser, [
+      data.firstname,
+      data.lastname,
+      data.dob,
+      data.email,
+      data.id,
+    ]);
     return [result];
   } catch (error) {
+    logger.logError(error);
     return [];
   }
 }
 
-async function editProfileQuery() {
-  try {
-    const updateUser = `update users set firstname = ?, lastname = ?, dob = ?;`;
-  } catch (error) {
-    return [];
-  }
-}
-module.exports = { viewProfileQuery };
+module.exports = { viewProfileQuery, updateProfileQuery };

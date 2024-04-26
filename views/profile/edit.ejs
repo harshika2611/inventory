@@ -8,9 +8,8 @@
   <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
   <script src="/js/bootstrap.js"></script>
   <link rel="stylesheet" href="src/css/allpage.css" />
-  <link rel="stylesheet" href="src/css/dashboardCustom.css" />
+  <link rel="stylesheet" href="src/css/dashboard/dashboardCustom.css" />
   <link rel="stylesheet" href="src/css/profile/profileStyle.css" />
-  <link rel="stylesheet" href="src/css/manager/manager.css" />
 </head>
 
 <body>
@@ -18,39 +17,41 @@
     <div class="container div-second">
       <div class="main-container">
         <div class="profile-details">
-          <form class="g-3 edit-profile-form" enctype="multipart/form-data" id="form" method="post" action="/profileEdit">
+          <form class="g-3 edit-profile-form" enctype="multipart/form-data" id="form" method="post"
+            action="/profileEdit" onsubmit="return validator(event)">
             <div class="container edit-img-container">
               <div class="img-container">
                 <img class="currentProfileImage" src="icons/profile.png" alt="">
               </div>
               <div class="edit-link">
                 <input name="newImage" type="file" class="form-control" id="choose-file"
-                accept="image/png, image/jpg, image/jpeg" style="width: 250px;" required>
+                  accept="image/png, image/jpg, image/jpeg" style="width: 250px;">
               </div>
             </div>
+            <br>
             <div>
               <label class="form-label">First Name</label>
-              <input name="firstname" type="text" class="form-control" value="<%= profileDetails[0][0].firstname  %>">
-
+              <input name="firstname" type="text" class="form-control" value="<%= profileDetails[0][0].firstname%>">
             </div>
+            <br>
             <div>
               <label class="form-label">Last Name</label>
-              <input name="lastname" type="text" class="form-control" value="<%= profileDetails[0][0].lastname %>">
+              <input name="lastname" type="text" class="form-control" value="<%= profileDetails[0][0].lastname%>">
             </div>
+            <br>
             <div class="col-12">
               <label class="form-label">Date of Birth</label>
-              <input name="dob" type="date" class="form-control" placeholder="1234 Main St"
-                value="<%= profileDetails[0][0].dob %>">
-
+              <input name="dob" type="date" class="form-control" max="<%= new Date().toISOString().split('T')[0]%>"
+                value="<%= new Date(profileDetails[0][0].dob).toISOString().split('T')[0]%>">
             </div>
+            <br>
             <div class="col-12">
               <label class="form-label">Email</label>
-              <% if(profileDetails[0][0].Role==4) { %>
+              <% if(profileDetails[0][0].role==4) { %>
                 <input name="email" type="text" class="form-control" value="<%= profileDetails[0][0].email%>" disabled>
                 <% } else{ %>
                   <input name="email" type="text" class="form-control" value="<%= profileDetails[0][0].email%>">
                   <% } %>
-
             </div>
             <div class="edit-btn-container">
               <button type="submit" class="edit-profile-btn">Save</button>
@@ -60,8 +61,7 @@
       </div>
     </div>
     <script src="js/commonFunction/commonFunction.js"></script>
-    <script src="js/manager/manager.js"></script>
-    <script src="js/manager/managerValidation.js"></script>
+    <script src="js/profile/profile.js"></script>
 </body>
 
 </html>
