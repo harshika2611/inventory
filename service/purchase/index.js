@@ -330,7 +330,23 @@ async function fetchPurchaseOrderView(req) {
       [req.query.invoiceId, req.user.storageId]
     );
     const [products] = await connection.execute(
-      'select purchase_products.id,purchase_products.quantity,product_master.product_name,product_master.sku_id,product_master.cost from purchase_products join product_master on purchase_products.product_id = product_master.id where purchase_products.purchase_id= 1 and purchase_products.is_delete =0;',
+      `select
+        purchase_products.id,
+        purchase_products.quantity,
+        product_master.product_name,
+        product_master.sku_id,
+        product_master.cost
+      from
+        purchase_products
+          join
+        product_master
+          on
+        purchase_products.product_id = product_master.id
+      where
+        purchase_products.purchase_id = ?
+          and
+        purchase_products.is_delete = 0;
+      `,
       [req.query.invoiceId]
     );
     return [results, products];
