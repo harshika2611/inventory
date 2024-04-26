@@ -85,12 +85,8 @@ async function getsalesOrder(req, res) {
     let orderby = req.query.orderby;
     let col = req.query.col;
     let value = req.query.colValue;
-    let storageId = req.user.storageId
-<<<<<<< HEAD
+    let storageId = req.user.storageId;
     if (storageId == null || isNaN(parseInt(storageId))) {
-=======
-    if (storageId == null) {
->>>>>>> main
       storageId = req.query.storage;
     }
     const [rows, fields] = await selectOrders(
@@ -183,10 +179,10 @@ async function deleteOrder(req, res) {
     let input = [req.query.id];
     let [rows] = await deleteQuery('sales_order', input);
     let [data] = await productList(input);
-  for(ele of data){
+    for (ele of data) {
       req.body.id = ele.id;
       req.body.quantity = 0;
-    
+
       let [flag, stock] = await updateProduct(req);
       if (flag == true) {
         let [rows] = await deleteQuery('sales_products', [ele.id]);
