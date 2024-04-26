@@ -22,7 +22,7 @@ const getData = async (
     totalProcuctcost = totalSalles - totalProcuctcost;
     let options = {
       series: [totalSalles, totalProcuctcost],
-      colors: ['#1E0342', '#0E46A3'],
+      colors: ['#9896f1', '#2c786c'],
       labels: ['Total Sales', 'Total Profit'],
       dataLabels: {
         dropShadow: {
