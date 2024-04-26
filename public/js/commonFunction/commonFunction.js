@@ -61,7 +61,7 @@ async function getAllState(selectComboId, selectStateName) {
       const stateArray = stateObject.stateArray;
 
       const stateSelectCombo = document.getElementById(`${selectComboId}`);
-
+      console.log(selectComboId, selectStateName);
       const optionCreate = document.createElement('option');
       optionCreate.innerHTML = 'Select State';
       stateSelectCombo.appendChild(optionCreate);
@@ -96,10 +96,11 @@ async function getAllState(selectComboId, selectStateName) {
 //----in this statename and cityname show
 
 async function getCity(stateSelectCombo, selectedStateName, selectedCityName) {
+  console.log(stateSelectCombo, selectedStateName, selectedCityName);
   const stateSelectComboId = stateSelectCombo.id;
   let stateName = document.getElementById(`${stateSelectComboId}`).value;
   // console.log(stateSelectComboId);
-  // console.log(stateName);
+  console.log(stateName);
 
   if (selectedStateName && selectedCityName) {
     stateName = selectedStateName;
@@ -143,6 +144,7 @@ async function getCity(stateSelectCombo, selectedStateName, selectedCityName) {
           element.city_name === selectedCityName
         ) {
           citySelectCombo.selectedIndex = index + 1;
+          console.log(citySelectCombo.selectedIndex);
         }
       });
     }
