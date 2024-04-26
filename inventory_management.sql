@@ -1,13 +1,13 @@
 -- MySQL dump 10.13  Distrib 8.0.36, for Linux (x86_64)
 --
--- Host: localhost    Database: intemp
+-- Host: localhost    Database: inventory_management
 -- ------------------------------------------------------
--- Server version	8.0.36-0ubuntu0.20.04.1
+-- Server version	8.0.36
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!50503 SET NAMES utf8 */;
+/*!50503 SET NAMES utf8mb4 */;
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -230,6 +230,218 @@ LOCK TABLES `products_details` WRITE;
 INSERT INTO `products_details` VALUES (1,1,847),(1,3,1000),(1,5,500),(1,9,545),(2,1,21),(2,5,405),(2,9,545),(3,1,179),(3,5,900),(3,9,745),(4,1,504),(4,5,800),(5,1,355),(6,1,256),(7,1,503),(8,1,723),(9,1,941),(10,1,320),(11,1,559),(12,1,367),(12,5,700),(13,1,337),(13,5,708),(14,1,846),(14,9,745),(15,1,237),(16,1,994),(17,1,542),(18,1,478),(19,1,193),(20,1,320),(20,5,400),(21,1,700),(21,5,456),(22,1,794),(23,1,364),(24,1,619),(25,1,378),(26,1,179),(27,1,846),(28,1,26),(29,1,585),(30,1,489),(31,1,496),(32,1,450),(32,9,587),(33,1,2),(34,1,346),(35,1,207),(36,1,700),(37,1,285),(38,1,949),(39,1,183),(40,1,862),(41,1,800),(41,5,987),(41,9,245),(42,1,486),(43,5,697),(44,1,238),(45,1,845),(46,5,538),(47,5,997),(48,1,488),(49,1,473),(50,1,144),(50,5,876),(51,1,314),(52,1,801),(52,9,36),(53,1,545),(54,1,775),(55,9,1000),(56,1,710),(57,1,538),(58,1,342),(59,9,878),(60,1,736),(60,5,545),(61,1,981),(62,1,481),(62,9,745),(63,1,413),(64,9,144),(65,1,978),(65,5,6543),(66,5,805),(67,1,445),(68,1,873),(69,9,601),(70,1,256),(71,5,314),(72,1,768),(73,1,751),(74,1,795),(74,9,654),(75,1,313),(75,9,4514),(76,5,873),(77,1,934),(78,2,406),(79,1,588),(80,1,771),(81,1,458),(82,1,233),(83,1,525),(84,1,828),(85,1,995),(85,9,541),(86,1,913),(87,1,784),(87,9,547),(88,1,975),(89,2,52),(90,1,1824),(91,1,812),(92,1,80),(93,1,118),(94,1,630),(95,1,707),(96,1,324),(97,2,932),(98,2,80),(99,1,783),(99,9,587),(100,1,843),(101,1,458);
 /*!40000 ALTER TABLE `products_details` ENABLE KEYS */;
 UNLOCK TABLES;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `sales_ins_stock_out_log` AFTER INSERT ON `products_details` FOR EACH ROW begin
+if new.stock = 0 then
+insert into logs
+(user_id, type_id, `description`, `notify`)
+SELECT
+(SELECT
+users.id as id
+FROM
+option_master as opt
+JOIN
+select_master as sel
+ON
+opt.select_id = sel.id
+JOIN
+users
+ON
+users.role_id = opt.id
+WHERE
+sel.key = 'roles'
+AND
+opt.key = 'admin'
+),
+            (SELECT
+opt.id as id
+FROM
+option_master as opt
+JOIN
+select_master as sel
+ON
+opt.select_id = sel.id
+WHERE
+sel.key = 'logType'
+AND
+opt.key = 'stock_out_item'
+),
+            CONCAT_WS("-", new.product_id, new.storage_id),
+            1;
+end if;
+end */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `sales_ins_near_stock_out_log` AFTER INSERT ON `products_details` FOR EACH ROW begin
+if new.stock <= 5 and new.stock > 0 then
+insert into logs
+(user_id, type_id, `description`, `notify`)
+SELECT
+(SELECT
+users.id as id
+FROM
+option_master as opt
+JOIN
+select_master as sel
+ON
+opt.select_id = sel.id
+JOIN
+users
+ON
+users.role_id = opt.id
+WHERE
+sel.key = 'roles'
+AND
+opt.key = 'admin'
+),
+            (SELECT
+opt.id as id
+FROM
+option_master as opt
+JOIN
+select_master as sel
+ON
+opt.select_id = sel.id
+WHERE
+sel.key = 'logType'
+AND
+opt.key = 'near_stock_out'
+),
+            CONCAT_WS("-", new.product_id, new.storage_id),
+            1;
+end if;
+end */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `sales_update_stock_out_log` BEFORE UPDATE ON `products_details` FOR EACH ROW begin
+if new.stock = 0 then
+insert into logs
+(user_id, type_id, `description`, `notify`)
+SELECT
+(SELECT
+users.id as id
+FROM
+option_master as opt
+JOIN
+select_master as sel
+ON
+opt.select_id = sel.id
+JOIN
+users
+ON
+users.role_id = opt.id
+WHERE
+sel.key = 'roles'
+AND
+opt.key = 'admin'
+),
+            (SELECT
+opt.id as id
+FROM
+option_master as opt
+JOIN
+select_master as sel
+ON
+opt.select_id = sel.id
+WHERE
+sel.key = 'logType'
+AND
+opt.key = 'stock_out_item'
+),
+            CONCAT_WS("-", new.product_id, new.storage_id),
+            1;
+end if;
+end */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `sales_update_near_stock_out_log` BEFORE UPDATE ON `products_details` FOR EACH ROW begin
+if new.stock <= 5 and new.stock > 0 then
+insert into logs
+(user_id, type_id, `description`, `notify`)
+SELECT
+(SELECT
+users.id as id
+FROM
+option_master as opt
+JOIN
+select_master as sel
+ON
+opt.select_id = sel.id
+JOIN
+users
+ON
+users.role_id = opt.id
+WHERE
+sel.key = 'roles'
+AND
+opt.key = 'admin'
+),
+            (SELECT
+opt.id as id
+FROM
+option_master as opt
+JOIN
+select_master as sel
+ON
+opt.select_id = sel.id
+WHERE
+sel.key = 'logType'
+AND
+opt.key = 'near_stock_out'
+),
+            CONCAT_WS("-", new.product_id, new.storage_id),
+            1;
+end if;
+end */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Table structure for table `purchase_order`
@@ -256,7 +468,7 @@ CREATE TABLE `purchase_order` (
   CONSTRAINT `fk_purchase_order_1` FOREIGN KEY (`supplier_id`) REFERENCES `supplier_master` (`id`),
   CONSTRAINT `fk_purchase_order_2` FOREIGN KEY (`payment_status`) REFERENCES `option_master` (`id`),
   CONSTRAINT `fk_purchase_order_3` FOREIGN KEY (`storage_id`) REFERENCES `storage_space_master` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=212 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=210 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -492,7 +704,7 @@ CREATE TABLE `supplier_master` (
 
 LOCK TABLES `supplier_master` WRITE;
 /*!40000 ALTER TABLE `supplier_master` DISABLE KEYS */;
-INSERT INTO `supplier_master` VALUES (1,'Bharat','Makawana','bharat@gmail.com','1234569870','Apsara','','362640',213,2,'36DBOPA9199A1ZF','2024-04-11 11:16:12','2024-04-19 05:38:10',0),(2,'Cordi','ABC','abc@gmail.com','1234569870','LG','','362640',101,1,'38DBOPA9199A1ZC','2024-04-18 07:23:30','2024-04-24 10:55:13',0),(3,'Dotty','Parsaniya','dotty@gmail.com','9876543210','OPRT','','362640',101,1,'40DBOZA9199A1ZE','2024-04-18 07:23:30','2024-04-19 13:23:24',0),(4,'Giustina','Savani','giustina@gmail.com','9876543210','TPOP','','362640',1508,15,'96DBOPA9099A2AQ','2024-04-18 07:23:30','2024-04-19 13:23:34',0),(5,'Kathi','','','','Samsung',NULL,'362640',101,1,'96DBOPA9099A2DS','2024-04-18 07:23:30','2024-04-25 03:36:01',1),(6,'Daphne','Test','test@gmail.com','9876541230','Nataraj','','362640',112,1,'98DBOPA9199A2WE','2024-04-18 07:23:30','2024-04-24 10:55:13',0),(7,'Imojean','Parsaniya','imojean@gmail.com','7894561230','Akai','','362640',1405,14,'23AAAAA0000A1W4','2024-04-18 07:23:30','2024-04-24 10:55:13',0),(8,'Kittie','parsaniya','kunj@gmail.com','6549873210','Yuva','','362640',101,1,'38DBOPA9199A1QW','2024-04-18 07:23:30','2024-04-24 10:55:13',0),(9,'Kimmy','Parsaniya','kimmy@gmail.com','9876543210','Classmate','','362640',101,1,'87DBOPA9199A1ZC','2024-04-18 07:23:30','2024-04-24 10:55:13',0),(10,'Steffane','Savani','steffane@gmail.com','3216549870','Mi','','362640',101,1,'39DBOPA9199A1TE','2024-04-18 07:23:30','2024-04-24 10:55:13',0),(11,'Melanie','Savani','sm@gmail.com','9586606868','Nokai','','362640',101,1,'38DBOPA9187A1ZC','2024-04-18 07:23:30','2024-04-24 10:55:13',0),(12,'Wendi','Parsaniya','kunjwendi@gmail.com','1234569870','Siska','','362640',101,1,'38DBOPA9199A1ER','2024-04-18 07:23:30','2024-04-24 10:55:13',0),(13,'Lory','parsaniya','lory@gmail.com','9638527410','Cello','','362640',101,1,'21DBOPA9199A1ER','2024-04-18 07:23:30','2024-04-24 10:55:13',0),(14,'Daryl','Shah','daryl@gmail.com','9876543211','LG-lap','','362640',101,1,'87DBITA9199A1ZC','2024-04-18 07:23:30','2024-04-24 10:55:13',0),(15,'Florie','Shah','florie@gmail.com','6543219870','New dash','','362640',101,1,'38ABCDA9199A1ZC','2024-04-18 07:23:30','2024-04-24 10:55:13',0),(16,'Leeanne','Parsaniya','leeanne@gmail.com','9586606855','Infotech','','362640',1713,17,'87AQOPA9199A1ZC','2024-04-18 07:23:30','2024-04-24 10:55:13',0),(17,'Cyndie','Sharma','cyndiesharma@gmail.com','9638527410','Esparkbiz','','362640',1812,18,'56EYOPA9199A1ZC','2024-04-18 07:23:30','2024-04-24 10:55:13',0),(18,'Sheree','dfsf','sheree@gmail.com','7896543210','Newesparkbiz','','362640',1509,15,'87DBOPA9199A1ZC','2024-04-18 07:23:30','2024-04-24 10:55:13',0),(19,'Veda','Shah','veda@gmail.com','9638527410','Toyota','','362640',1408,14,'87DBOPA9199A1ED','2024-04-18 07:23:30','2024-04-24 10:55:13',0),(20,'Chastity','Savani','vasu123@gmail.com','9638527410','Audi','','362640',1713,17,'37DBOPA9089A1ZC','2024-04-18 07:23:30','2024-04-24 10:55:13',0),(21,'Nicoli','Shah','nicolishah@gmail.com','9876543215','Logitech','','362640',1508,15,'21GTOPA9199A1ZC','2024-04-18 07:23:30','2024-04-24 10:55:13',0),(22,'Merle','scscs','scscsmerle@gmail.com','9638527410','genral','','362640',1615,16,'74AQOPA9199A1ZC','2024-04-18 07:23:30','2024-04-24 10:55:13',0),(23,'Sashenka','ABCTEST','abcsashenka@gmail.com','9876543210','Hitachi','','362640',1714,17,'88WTOPA9199A1ZC','2024-04-18 07:23:30','2024-04-24 10:55:13',0),(24,'Orsola','dfsf','orsoladfsf@gmail.com','9638527410','Oneplus','','362640',1611,16,'38DBOOA9199A1ZC','2024-04-18 07:23:30','2024-04-24 10:55:13',0),(25,'Ida','ideateat','ida@gmail.com','9638527410','reamle','','362640',1313,13,'89YTOPA9199A1ZC','2024-04-18 07:23:30','2024-04-24 10:55:13',0),(26,'Dulce','parsaniya','dulceparsaniya@gmail.com','9876543210','TRYF','','362640',1816,18,'74DBOPA9199A1RT','2024-04-18 07:23:30','2024-04-19 13:24:11',0),(27,'Elena','Parsaniya','dfgdfga21@gmail.com','9586606859','dfg','','362640',101,1,'38ETOPA9199A1ZC','2024-04-18 07:23:30','2024-04-19 13:18:54',0),(28,'Vasu','Parsaniya','vasuparsaniya21@gmail.com','9586606859','asaa','','362640',1212,12,'22AAAAA0000A1Z5','2024-04-18 13:07:07','2024-04-18 13:25:31',0),(29,'Vasu','Parsaniya','fdsya21@gmail.com','9586606859','asaa','','362640',1408,14,'22AAAAA0000A1Z5','2024-04-19 09:01:53','2024-04-19 09:01:53',0),(30,'dfg','sdf','dgdganiya21@gmail.com','9586606859','asaa','','362640',1408,14,'22AAAAA0000A1Z5','2024-04-19 09:02:43','2024-04-19 09:02:43',0),(31,'werr','Parsaniya','werraniya21@gmail.com','9586606859','asaa','','362640',813,8,'22AAAAA0000A1W6','2024-04-19 09:05:22','2024-04-25 03:35:47',1),(32,'sf','Parsaniya','sdgdgya21@gmail.com','9586606857','asaa','','362640',1404,14,'22AAAAA0000A1W8','2024-04-19 09:20:07','2024-04-19 09:20:07',0),(33,'sfg','df','dfgdniya21@gmail.com','9586606880','asaa','','362640',1511,15,'98DBOPA9199A2QW','2024-04-19 09:21:41','2024-04-19 09:21:41',0),(34,'ete','Parsaniya','eeeaniya21@gmail.com','9586606859','ABC','','362640',1506,15,'22AAAAA0000A1W3','2024-04-19 09:35:34','2024-04-19 09:35:34',0),(35,'sdf','Parsaniya','fsfsdaniya21@gmail.com','9586606859','asaa','','362640',1713,17,'98DBOPA9199A2AW','2024-04-19 10:24:13','2024-04-19 10:24:13',0),(36,'ergrg','rgg','gergeriya21@gmail.com','9638527412','asaa','','362640',1211,12,'22AAAAA0000A1W8','2024-04-19 10:26:25','2024-04-19 10:26:25',0),(37,'swfef','sdfsdf','sdfsdfiya21@gmail.com','9586606887','asaa','','362640',1005,10,'22AAAAA0000A15O','2024-04-19 11:45:53','2024-04-19 11:46:10',0),(38,'Vasukumar','Parsaniya','vasup23@gmail.com','9876543210','ABC','','362640',1409,14,'22AAAAA0000A1Z5','2024-04-19 11:50:11','2024-04-19 11:51:29',0),(39,'Vasu','Parsaniya','vasutest21@gmail.com','9586606878','asaa','','362644',1002,10,'22AAAAA0000A1Q5','2024-04-19 12:47:45','2024-04-19 12:47:45',0);
+INSERT INTO `supplier_master` VALUES (1,'Bharat','Makawana','bharat@gmail.com','1234569870','Apsara','','362640',213,2,'36DBOPA9199A1ZF','2024-04-11 11:16:12','2024-04-19 05:38:10',0),(2,'Cordi','ABC','abc@gmail.com','1234569870','LG','','362640',101,1,'38DBOPA9199A1ZC','2024-04-18 07:23:30','2024-04-24 10:55:13',0),(3,'Dotty','Parsaniya','dotty@gmail.com','9876543210','OPRT','','362640',101,1,'40DBOZA9199A1ZE','2024-04-18 07:23:30','2024-04-19 13:23:24',0),(4,'Giustina','Savani','giustina@gmail.com','9876543210','TPOP','','362640',1508,15,'96DBOPA9099A2AQ','2024-04-18 07:23:30','2024-04-19 13:23:34',0),(5,'Kathi','','','','Samsung',NULL,'362640',101,1,'63','2024-04-18 07:23:30','2024-04-24 10:55:13',1),(6,'Daphne','Test','test@gmail.com','9876541230','Nataraj','','362640',112,1,'98DBOPA9199A2WE','2024-04-18 07:23:30','2024-04-24 10:55:13',0),(7,'Imojean','Parsaniya','imojean@gmail.com','7894561230','Akai','','362640',1405,14,'23AAAAA0000A1W4','2024-04-18 07:23:30','2024-04-24 10:55:13',0),(8,'Kittie','parsaniya','kunj@gmail.com','6549873210','Yuva','','362640',101,1,'38DBOPA9199A1QW','2024-04-18 07:23:30','2024-04-24 10:55:13',0),(9,'Kimmy','Parsaniya','kimmy@gmail.com','9876543210','Classmate','','362640',101,1,'87DBOPA9199A1ZC','2024-04-18 07:23:30','2024-04-24 10:55:13',0),(10,'Steffane','Savani','steffane@gmail.com','3216549870','Mi','','362640',101,1,'39DBOPA9199A1TE','2024-04-18 07:23:30','2024-04-24 10:55:13',0),(11,'Melanie','Savani','sm@gmail.com','9586606868','Nokai','','362640',101,1,'38DBOPA9187A1ZC','2024-04-18 07:23:30','2024-04-24 10:55:13',0),(12,'Wendi','Parsaniya','kunjwendi@gmail.com','1234569870','Siska','','362640',101,1,'38DBOPA9199A1ER','2024-04-18 07:23:30','2024-04-24 10:55:13',0),(13,'Lory','parsaniya','lory@gmail.com','9638527410','Cello','','362640',101,1,'21DBOPA9199A1ER','2024-04-18 07:23:30','2024-04-24 10:55:13',0),(14,'Daryl','Shah','daryl@gmail.com','9876543211','LG-lap','','362640',101,1,'87DBITA9199A1ZC','2024-04-18 07:23:30','2024-04-24 10:55:13',0),(15,'Florie','Shah','florie@gmail.com','6543219870','New dash','','362640',101,1,'38ABCDA9199A1ZC','2024-04-18 07:23:30','2024-04-24 10:55:13',0),(16,'Leeanne','Parsaniya','leeanne@gmail.com','9586606855','Infotech','','362640',1713,17,'87AQOPA9199A1ZC','2024-04-18 07:23:30','2024-04-24 10:55:13',0),(17,'Cyndie','Sharma','cyndiesharma@gmail.com','9638527410','Esparkbiz','','362640',1812,18,'56EYOPA9199A1ZC','2024-04-18 07:23:30','2024-04-24 10:55:13',0),(18,'Sheree','dfsf','sheree@gmail.com','7896543210','Newesparkbiz','','362640',1509,15,'87DBOPA9199A1ZC','2024-04-18 07:23:30','2024-04-24 10:55:13',0),(19,'Veda','Shah','veda@gmail.com','9638527410','Toyota','','362640',1408,14,'87DBOPA9199A1ED','2024-04-18 07:23:30','2024-04-24 10:55:13',0),(20,'Chastity','Savani','vasu123@gmail.com','9638527410','Audi','','362640',1713,17,'37DBOPA9089A1ZC','2024-04-18 07:23:30','2024-04-24 10:55:13',0),(21,'Nicoli','Shah','nicolishah@gmail.com','9876543215','Logitech','','362640',1508,15,'21GTOPA9199A1ZC','2024-04-18 07:23:30','2024-04-24 10:55:13',0),(22,'Merle','scscs','scscsmerle@gmail.com','9638527410','genral','','362640',1615,16,'74AQOPA9199A1ZC','2024-04-18 07:23:30','2024-04-24 10:55:13',0),(23,'Sashenka','ABCTEST','abcsashenka@gmail.com','9876543210','Hitachi','','362640',1714,17,'88WTOPA9199A1ZC','2024-04-18 07:23:30','2024-04-24 10:55:13',0),(24,'Orsola','dfsf','orsoladfsf@gmail.com','9638527410','Oneplus','','362640',1611,16,'38DBOOA9199A1ZC','2024-04-18 07:23:30','2024-04-24 10:55:13',0),(25,'Ida','ideateat','ida@gmail.com','9638527410','reamle','','362640',1313,13,'89YTOPA9199A1ZC','2024-04-18 07:23:30','2024-04-24 10:55:13',0),(26,'Dulce','parsaniya','dulceparsaniya@gmail.com','9876543210','TRYF','','362640',1816,18,'74DBOPA9199A1RT','2024-04-18 07:23:30','2024-04-19 13:24:11',0),(27,'Elena','Parsaniya','dfgdfga21@gmail.com','9586606859','dfg','','362640',101,1,'38ETOPA9199A1ZC','2024-04-18 07:23:30','2024-04-19 13:18:54',0),(28,'Vasu','Parsaniya','vasuparsaniya21@gmail.com','9586606859','asaa','','362640',1212,12,'22AAAAA0000A1Z5','2024-04-18 13:07:07','2024-04-18 13:25:31',0),(29,'Vasu','Parsaniya','fdsya21@gmail.com','9586606859','asaa','','362640',1408,14,'22AAAAA0000A1Z5','2024-04-19 09:01:53','2024-04-19 09:01:53',0),(30,'dfg','sdf','dgdganiya21@gmail.com','9586606859','asaa','','362640',1408,14,'22AAAAA0000A1Z5','2024-04-19 09:02:43','2024-04-19 09:02:43',0),(31,'werr','Parsaniya','werraniya21@gmail.com','9586606859','asaa','','362640',813,8,'rryrtr','2024-04-19 09:05:22','2024-04-19 09:05:29',1),(32,'sf','Parsaniya','sdgdgya21@gmail.com','9586606857','asaa','','362640',1404,14,'22AAAAA0000A1W8','2024-04-19 09:20:07','2024-04-19 09:20:07',0),(33,'sfg','df','dfgdniya21@gmail.com','9586606880','asaa','','362640',1511,15,'98DBOPA9199A2QW','2024-04-19 09:21:41','2024-04-19 09:21:41',0),(34,'ete','Parsaniya','eeeaniya21@gmail.com','9586606859','ABC','','362640',1506,15,'22AAAAA0000A1W3','2024-04-19 09:35:34','2024-04-19 09:35:34',0),(35,'sdf','Parsaniya','fsfsdaniya21@gmail.com','9586606859','asaa','','362640',1713,17,'98DBOPA9199A2AW','2024-04-19 10:24:13','2024-04-19 10:24:13',0),(36,'ergrg','rgg','gergeriya21@gmail.com','9638527412','asaa','','362640',1211,12,'22AAAAA0000A1W8','2024-04-19 10:26:25','2024-04-19 10:26:25',0),(37,'swfef','sdfsdf','sdfsdfiya21@gmail.com','9586606887','asaa','','362640',1005,10,'22AAAAA0000A15O','2024-04-19 11:45:53','2024-04-19 11:46:10',0),(38,'Vasukumar','Parsaniya','vasup23@gmail.com','9876543210','ABC','','362640',1409,14,'22AAAAA0000A1Z5','2024-04-19 11:50:11','2024-04-19 11:51:29',0),(39,'Vasu','Parsaniya','vasutest21@gmail.com','9586606878','asaa','','362644',1002,10,'22AAAAA0000A1Q5','2024-04-19 12:47:45','2024-04-19 12:47:45',0);
 /*!40000 ALTER TABLE `supplier_master` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -533,7 +745,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,4,'admin',NULL,'admin@gmail.com','2000-03-01','$2b$10$Z0Rr0n5dVC5Hi7H1fgncAu.aI.GPpZnMFvJ1oOL5qduVR9/hZN9Zu','833070327625','2024-04-23 12:56:46',6,'2024-04-08 11:04:58','2024-04-23 07:26:46',0),(8,5,'test User','abc','abc@abc.com',NULL,'$2b$10$UvvBv4rxBPBDWlmuv.xXu.cznBuH9KIxZFuuiuXgl.xJyGVLys2aC','342095021714','2024-04-20 18:03:37',6,'2024-04-20 12:16:21','2024-04-23 05:33:41',0),(9,5,'manager1','test','manager1@gmail.com',NULL,'$2b$10$VJJ4aqwMx09gdM8VKitDiO.bXVZnLbYgu4B5Un0Rfr2.k4EpfEwwK','597466283565','2024-04-23 09:53:11',6,'2024-04-23 04:22:38','2024-04-23 04:23:11',0),(10,5,'manager2','test','manager2@gmail.com',NULL,'$2b$10$tjL/TVYG2.9zj6nD2J14Repb5K6Mm54952seMtf8sjtD3gX8MP5JW','760061829902','2024-04-23 09:54:07',6,'2024-04-23 04:23:41','2024-04-23 04:24:07',0);
+INSERT INTO `users` VALUES (1,4,'admin',NULL,'admin@gmail.com','2000-03-01','$2b$10$Z0Rr0n5dVC5Hi7H1fgncAu.aI.GPpZnMFvJ1oOL5qduVR9/hZN9Zu','833070327625','2024-04-23 12:56:46',6,'2024-04-08 11:04:58','2024-04-23 07:26:46',0,NULL),(8,5,'test User','abc','abc@abc.com',NULL,'$2b$10$UvvBv4rxBPBDWlmuv.xXu.cznBuH9KIxZFuuiuXgl.xJyGVLys2aC','342095021714','2024-04-20 18:03:37',6,'2024-04-20 12:16:21','2024-04-23 05:33:41',0,NULL),(9,5,'manager1','test','manager1@gmail.com',NULL,'$2b$10$VJJ4aqwMx09gdM8VKitDiO.bXVZnLbYgu4B5Un0Rfr2.k4EpfEwwK','597466283565','2024-04-23 09:53:11',6,'2024-04-23 04:22:38','2024-04-23 04:23:11',0,NULL),(10,5,'manager2','test','manager2@gmail.com',NULL,'$2b$10$tjL/TVYG2.9zj6nD2J14Repb5K6Mm54952seMtf8sjtD3gX8MP5JW','760061829902','2024-04-23 09:54:07',6,'2024-04-23 04:23:41','2024-04-23 04:24:07',0,NULL);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -546,4 +758,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-04-25  9:14:38
+-- Dump completed on 2024-04-24 18:56:14
