@@ -42,6 +42,8 @@
   background-color: #002f4b;
   border-radius: 0 37px 0 0;
   position: fixed;
+  left: 0;
+  height: 100vh;
 }
 
 img {
