@@ -1,19 +1,15 @@
-async function fetching() {
-  let orderby = document.getElementById('orderby').value;
-  let order = document.getElementById('order').value;
+async function fetching(offset) {
+  // let orderby = document.getElementById('orderby').value;
+  // let order = document.getElementById('order').value;
   let storage = '';
   if (document.getElementById('storageCombo') != null) {
     storage = document.getElementById('storageCombo').value;
   }
-  url = `/salesorder?order=${order}&storage=${storage}`;
-  if (orderby != '') {
-    url = url + `&orderby=${orderby}`;
-  }
+  url = `/salesorder?storage=${storage}`;
+  // if (offset != ''||offset) {
+    url = url + offset;
+  // }
   paggination(url);
-
-  // let response = await fetch(url);
-  // let result = await response.json();
-  // grid(result);
 }
 
 let count = 1;
@@ -22,11 +18,16 @@ function dataTableGrid(result) {
   console.log(result);
   let head = `<tr>`;
   for (let key in result[0]) {
-    if (key == 'ID') {
-      key = '#';
-    }
-    if (key != 'created_at' && key != 'customer_id' && key != 'storage_id') {
-      head += `<th scope="col">${key}</th>`;
+    if (
+      key != 'created_at' &&
+      key != 'customer_id' &&
+      key != 'storage_id' &&
+      key != 'is_delete'
+    ) {
+      head += `<th scope="col"> <span class="d-inline-flex flex-row align-items-center">${key} <span class="d-inline-flex flex-column align-items-center ms-2">
+      <span style="cursor: pointer" onclick="onclickOrderby('${key}','asc')">^</span>
+      <span style="rotate: 180deg; cursor: pointer" onclick="onclickOrderby('${key}','desc')">^</span></span>
+    </span></th>`;
     }
   }
   head += `<th scope="col" style="text-align: center;">Actions</th>`;
@@ -36,26 +37,22 @@ function dataTableGrid(result) {
   let body = ``;
   result.forEach((data) => {
     body += `<tr>
-        <th scope="row">${data.ID}</th>
-        <td>${data.firstname}</td>
-        <td>${data.lastname}</td>
-        <td>${data.amount}</td>
+        <td scope="row">${data.ID}</td>
+        <td>${data.FirstName}</td>
+        <td>${data.LastName}</td>
+        <td>${data.Amount}</td>
 				<td>${data.OrderType == 8 ? 'Sales' : 'Return'}</td>
-        <td>${data.shipping_address}</td>
-        <td>${data.payment_status == 10 ? 'Pending' : 'Paid'}</td>
-        <td>${data.date.split('T')[0]}</td>
-        
-        <td><a class="btn btn-outline-primary" onclick="viewOrder(${
-          data.ID
-        })">View</a>
-
-      <a class='btn btn-success' id=${data.storage_id}edit${
-        data.ID
-      } onclick="updateOrder('edit',event,'order')">EDIT</a>
-       <a class="btn btn-danger" id=${data.storage_id}delete${
-         data.ID
-       } onclick="updateOrder('delete',event,'order')">DELETE</a></td>
-        </tr>`;
+        <td>${data.ShippingAddress}</td>
+        <td>${data.PaymentStatus == 10 ? 'Pending' : 'Paid'}</td>
+        <td>${data.Date.split('T')[0]}</td>
+        ${
+          data.is_delete == 0
+            ? `<td><a class="btn btn-outline-primary" onclick="viewOrder(${data.ID})">View</a>
+      <a class='btn btn-success' id=${data.storage_id}edit${data.ID} onclick="updateOrder('edit',event,'order')">EDIT</a>
+       <a class="btn btn-danger" id=${data.storage_id}delete${data.ID} onclick="updateOrder('delete',event,'order')">DELETE</a></td>
+        `
+            : `<td><p class="deleted">DELETED</p></td>`
+        }</tr>`;
     count++;
   });
   document.getElementById('tbody').innerHTML = body;
@@ -79,16 +76,20 @@ function searchFilter() {
   } else {
     filteredResult = dataArray.filter((ele) => {
       return (
-        ele.firstname.toLowerCase().includes(searchbar) ||
-        ele.lastname.toLowerCase().includes(searchbar) ||
-        ele.shipping_address.toLowerCase().includes(searchbar) ||
+        ele.FirstName.toLowerCase().includes(searchbar) ||
+        ele.LastName.toLowerCase().includes(searchbar) ||
+        ele.ShippingAddress.toLowerCase().includes(searchbar) ||
         // ele.amount.toString().includes(searchbar) ||
-        ele.date.includes(searchbar)
+        ele.Date.includes(searchbar)
       );
     });
     console.log(filteredResult);
     paggination(null, filteredResult);
   }
+}
+
+function onclickOrderby(col, type) {
+  fetching(`&orderby=${col}&order=${type}`);
 }
 
 async function onLoad() {
