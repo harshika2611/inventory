@@ -15,7 +15,7 @@ const onloadData = async () => {
   monthData.forEach((e) => (monthSales += e.Order_Amount));
   let options = {
     series: [daySales, monthSales],
-    colors: ['#38812F', '#004B95'],
+    colors: ['#5e63b6', '#004B95'],
     labels: ['Day Sales', 'Month Sales'],
     dataLabels: {
       dropShadow: {

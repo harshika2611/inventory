@@ -38,7 +38,7 @@ const invoicePdf = async (req, res) => {
 const invoiceview = async (req, res) => {
   if (req.query.type == 'invoice') {
     try {
-      console.log(req.params);
+      // console.log(req.params);
       const [result, products] = await getOrderDetail(req);
       data = result[0];
       let date = new Date(data.order_date);
@@ -54,7 +54,7 @@ const invoiceview = async (req, res) => {
     }
   } else {
     try {
-      console.log(req.params);
+      // console.log(req.params);
       const [result, products] = await fetchPurchaseOrderView(req);
       data = result[0];
       let date = new Date(data.order_date);

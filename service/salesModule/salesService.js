@@ -22,18 +22,19 @@ async function selectOrders(orderby, order, col, value, storageId) {
   sql = `select 
     sales_order.id as ID,
     sales_order.customer_id,
-    customer_master.firstname,
-    customer_master.lastname,
-    sales_order.amount,
+    customer_master.FirstName,
+    customer_master.LastName,
+    sales_order.Amount,
 		sales_order.type as OrderType,
-    sales_order.shipping_address,
-    sales_order.payment_status,
+    sales_order.shipping_address as ShippingAddress,
+    sales_order.payment_status as PaymentStatus,
     sales_order.storage_id,
     sales_order.created_at,
-    sales_order.order_date as date
+    sales_order.is_delete,
+    sales_order.order_date as Date
   from sales_order join customer_master
   on sales_order.customer_id = customer_master.id
-  where sales_order.is_delete = 0 and ${col} = '${value}' and storage_id = ? order by ${orderby} ${order} ;`;
+  where ${col} = '${value}' and storage_id = ? order by ${orderby} ${order} ;`;
   try {
     return await connection.execute(sql, [storageId]);
   } catch (error) {

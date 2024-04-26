@@ -7,7 +7,7 @@ function addManager() {
   document.getElementById('filter').style = `filter: blur(2px);`;
   document.getElementById('grid').style = `filter: blur(2px);`;
   // getAllStore();
-  getAllCity();
+  getAllCity('state');
 }
 
 function closeForm() {
@@ -51,24 +51,30 @@ async function submitbtn() {
   }
 }
 
-const getAllCity = async () => {
+const getAllCity = async (id, name) => {
   try {
+    console.log(id, name);
     const response = await fetch('/cityCombo');
     const data = await response.json();
     const store = data.result;
-    let option = document.getElementById('state');
+    let option = document.getElementById(`${id}`);
     option.innerHTML = '';
     option.innerHTML = `<option value="select here">Select here</option>`;
-    store.forEach((element) => {
+    store.forEach((element, index) => {
       option.innerHTML += `<option value="${element.city_id}">${element.city_name}</option>`;
+
+      if (name && element.city_name === name) {
+        option.selectedIndex = index + 1;
+      }
     });
   } catch (error) {
     console.log(error);
   }
 };
 
-const getAllStore = async (data) => {
+const getAllStore = async (state, name, cityName) => {
   try {
+    console.log(state, name, cityName, 'ehat');
     let index = document.getElementById('state').value;
     let option = document.getElementById('place');
     const response = await fetch(`/storeCombo/${index}`);
@@ -178,7 +184,7 @@ async function updateManager(manager) {
     .setAttribute('onclick', `updateDeails(${id})`);
   const response = await fetch(url);
   const managerDetails = await response.json();
-
+  console.log(managerDetails, 'aaaaa');
   try {
     if (!response.ok) {
       throw new Error('Error In Get Customer Details');
@@ -198,7 +204,10 @@ async function updateManager(manager) {
             break;
         }
       }
-      getAllCity();
+
+      getAllCity('state', managerDetails[0].city_name);
+      const state = { id: 'state' };
+      getAllStore(state, managerDetails[0].name, managerDetails[0].city_name);
     }
   } catch (error) {
     console.log(error);
@@ -309,4 +318,5 @@ const search = (key) => {
       }
     }
   }
+  paggination(null, filter);
 };
