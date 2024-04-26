@@ -3,8 +3,13 @@ async function insertOrder() {
   let flag = false;
   let isInsert = false;
   let id;
+  let storage = '';
+  if (document.getElementById('storageCombo') != null) {
+    storage = document.getElementById('storageCombo').value;
+  }
   const insertFormData = formData('insertSalesData');
   insertFormData['orderType'] = '8';
+  insertFormData['storage'] = storage;
   const insertFormErrorValidation = insertSalesFormValidation(insertFormData);
 
   if (Object.keys(insertFormErrorValidation).length > 0) {
@@ -30,9 +35,7 @@ async function insertOrder() {
       }
 
       if (response.status === 200) {
-        // if (result.rows.affectedRows != 0 && result != 'not found') {
         flag = true;
-        // }
         if (isInsert == true) {
           id = result.rows.insertId;
         }

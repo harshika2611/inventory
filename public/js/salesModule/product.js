@@ -1,3 +1,8 @@
+storage
+//   = '';
+// if (document.getElementById('storageCombo') != null) {
+//   storage = document.getElementById('storageCombo').value;
+// }
 let productGridResult;
 async function fetching() {
   let orderId = document.getElementById('productOrderId').value;
@@ -26,12 +31,14 @@ async function fetching() {
     <td> <input type="text" class="form-control editQuantity" name="editQuantity${data.id}" id="editQuantity${data.id}" onkeyup="enableSave(${data.id})" value="${data.quantity}"></td>
 		<td>${data.UnitPrice}</td> 
 		<td>${data.Total}</td>
-    <td><a class='btn btn-secondary' id="edit${data.id}" disabled="true" onclick="">Save</a></td>
-    <td><a class="btn btn-danger" id="delete${data.id}" onclick="updateOrder('delete', event,'product')">DELETE</a></td>
+    <td><a class='btn btn-secondary' id="${storage}edit${data.id}" disabled="true" onclick="">Save</a></td>
+    <td><a class="btn btn-danger" id="${storage}delete${data.id}" onclick="updateOrder('delete', event,'product')">DELETE</a></td>
     </tr>`;
     totalAmount += data.Total;
     if (totalAmount > 0) {
-      document.getElementById('generatePdf').setAttribute('onclick',`generatePdf(${orderId})`)
+      document
+        .getElementById('generatePdf')
+        .setAttribute('onclick', `generatePdf(${orderId})`);
     }
   });
   document.getElementById(
@@ -41,14 +48,13 @@ async function fetching() {
   document.getElementById('productListBody').innerHTML = body;
 }
 
-
 function generatePdf(id) {
   console.log(id);
-  window.location.href = `/getPdf?id=${id}&type=invoice`
+  window.location.href = `/getPdf?id=${id}&type=invoice`;
 }
 
 function enableSave(id) {
-  btn = document.getElementById(`edit${id}`);
+  btn = document.getElementById(`${storage}edit${id}`);
   if (btn.value != '') {
     btn.classList.remove('btn-secondary');
     btn.classList.add('btn-success');
@@ -59,6 +65,7 @@ function enableSave(id) {
     btn.setAttribute('onclick', ``);
   }
 }
+
 let allProduct = [];
 async function getallProducts() {
   let [result, response] = await commonFetch(`/getSalesProducts`);
@@ -82,6 +89,7 @@ async function addProduct() {
   const productFormData = formData('productForm');
   const productValidation = productFormValidation(productFormData);
 
+  productFormData['storage'] = storage;
   if (Object.keys(productValidation).length > 0) {
     //----client side validation error
     errorShow(productValidation);
@@ -106,7 +114,6 @@ async function addProduct() {
             text: result.msg,
             icon: 'error',
           });
-
         } else {
           fetching();
         }
@@ -121,7 +128,6 @@ async function addProduct() {
   }
 }
 
-
 async function updateProduct(id) {
   console.log(id);
   let quantity = document.getElementById(`editQuantity${id}`).value;
@@ -129,6 +135,7 @@ async function updateProduct(id) {
     let updateProductobj = {};
     updateProductobj['quantity'] = quantity;
     updateProductobj['id'] = id;
+    updateProductobj['storage'] = storage;
     let option = {
       method: 'POST',
       body: new URLSearchParams(updateProductobj),
