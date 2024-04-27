@@ -119,35 +119,47 @@ function closeForm() {
 
 //----delete supplier details
 async function deleteSupplierDetails(supplier) {
+  const modal = new bootstrap.Modal('#deleteModal');
 
-  const supplierId = supplier.id;
-  const response = await fetch(`/api/deleteSupplier?supplierId=${supplierId}`, {
-    method: 'GET'
-  });
+  modal.show();
 
-  console.log(response.status);
-  try {
-    if (!response.ok) {
-      throw new Error("Unable To Delete Supplier");
-    }
+  document.getElementById('confirm').onclick = async () => {
+    const supplierId = supplier.id;
+    const response = await fetch(`/api/deleteSupplier?supplierId=${supplierId}`, {
+      method: 'GET'
+    });
 
-    if (response.status === 200) {
+    console.log(response.status);
+    try {
+      if (!response.ok) {
+        throw new Error("Unable To Delete Supplier");
+      }
+
+      if (response.status === 200) {
+        const responseMessage = await response.json();
+        const supplierForm = document.getElementById("myForm");
+        supplierForm.style.display = "none";
+        getSuppliers();
+        messagePopUp(responseMessage.message);
+        // window.location.replace(window.location.protocol + "//" +
+        //   window.location.host + `/manageSuppliers`);
+      }
+    } catch (error) {
       const responseMessage = await response.json();
-      const supplierForm = document.getElementById("myForm");
-      supplierForm.style.display = "none";
-      getSuppliers();
-      messagePopUp(responseMessage.message);
-      // window.location.replace(window.location.protocol + "//" +
-      //   window.location.host + `/manageSuppliers`);
-    }
-  } catch (error) {
-    const responseMessage = await response.json();
-    if (response.status === 404) {
-      messagePopUp(responseMessage.message);
-    }
+      if (response.status === 404) {
+        messagePopUp(responseMessage.message);
+      }
 
-    if (response.status === 500) {
-      messagePopUp(responseMessage.message);
+      if (response.status === 500) {
+        messagePopUp(responseMessage.message);
+      }
     }
-  }
+    modal.hide();
+  };
+}
+
+
+function modelHide() {
+  const modal = new bootstrap.Modal('#deleteModal');
+  modal.hide();
 }

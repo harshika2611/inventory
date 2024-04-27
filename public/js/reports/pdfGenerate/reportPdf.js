@@ -87,10 +87,10 @@ async function addProductCategory() {
         createOption.textContent = `${element.value}`;
         createSelect.appendChild(createOption);
       });
-      const createOptionAll = document.createElement("option");
-      createOptionAll.setAttribute("value", "");
-      createOptionAll.innerHTML = "All Category";
-      createSelect.appendChild(createOptionAll);
+      // const createOptionAll = document.createElement("option");
+      // createOptionAll.setAttribute("value", "");
+      // createOptionAll.innerHTML = "All Category";
+      // createSelect.appendChild(createOptionAll);
 
 
       createDivCategory.appendChild(createSelect);

@@ -21,24 +21,43 @@
 
 <body onload="getCustomers()">
   <%- include('../components/navigation', {data})%>
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModal" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title" id="deleteModal">Delete Customer</h1>
+            <button type="button" class="btn-close" onclick="modelHide()" data-bs-dismiss="modal" aria-label="Close">
+            </button>
+          </div>
+          <div class="modal-body">
+            Are you sure you want to delete this customer ?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" onclick="modelHide()" data-bs-dismiss="modal">No</button>
+            <button type="button" id="confirm" class="btn btn-danger">Yes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- <%- include('../components/messagePopUp')%> -->
+
     <section class="div-second managecustomer-section">
       <div class="managecustomer-container" id="managecustomer-container">
-        <%- include('../components/messagePopUp')%>
         <div class="d-flex">
           <img src="icons/cust.png" alt="" width="40px" height="40px" style="margin-top: 20px;">&emsp;&emsp;
           <p class="managecustomerTitle">Customers</p>
         </div>
-          <div class="managecustomer-container__button">
-            <p class="customerfilterbutton" onclick="customerFilterShow()">Filter</p>
-          </div>
-          <div class="importDataDiv">
-            <p class="importDataButton" onclick="showFileUpload()">Import Data</p>
-            <p class="addnewcustomerbutton" onclick="addNewCustomer()">Add New</p>
-            <form enctype="multipart/form-data" id="customerFileUploadForm" name="customerFileUploadForm">
-              <input type="file" id="customersFile" name="customersFile" accept=".csv">
-              <p id="fileUploadButton" onclick="customerFileUpload()">Upload File</p>
-            </form>
-          </div>
+        <div class="managecustomer-container__button">
+          <p class="addnewcustomerbutton" onclick="addNewCustomer()">Add New</p>
+          <p class="customerfilterbutton" onclick="customerFilterShow()">Filter</p>
+        </div>
+        <div class="importDataDiv">
+          <p class="importDataButton" onclick="showFileUpload()">Import Data</p>
+          <form enctype="multipart/form-data" id="customerFileUploadForm" name="customerFileUploadForm">
+            <input type="file" id="customersFile" name="customersFile" accept=".csv">
+            <p id="fileUploadButton" onclick="customerFileUpload()">Upload File</p>
+          </form>
+        </div>
 
       </div>
       <%- include('../form/customerForm')%>

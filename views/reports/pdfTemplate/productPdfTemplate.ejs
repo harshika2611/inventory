@@ -56,6 +56,11 @@
             State: <%= data.storeDetails && data.storeDetails[0].State ? data.storeDetails[0].State : "-" %>
           </td>
         </tr>
+        <tr>
+          <td colspan="4">
+            Category: <%= data.categoryName ? data.categoryName : "-" %>
+          </td>
+        </tr>
 
         <%if(data.productDetails){%>
           <tr>
