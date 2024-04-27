@@ -5,7 +5,7 @@ const { logError } = require('../../logs');
 const userLoginService = async (body) => {
   try {
     const sql0 = `SELECT 
-    users.id, email, password, created_at, status, role_id, expiry,storage_id
+    users.id, email, password, created_at, status, role_id, expiry,storage_id, users.img_path as \`dp\`
 FROM
     users
        LEFT JOIN

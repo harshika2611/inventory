@@ -45,7 +45,12 @@ const userLogin = async (req, res) => {
           const roleId = user[0].role_id;
           const storageId = user[0].storage_id;
           const token = jwt.sign(
-            { id: userId, roleId: roleId, storageId: storageId },
+            {
+              id: userId,
+              roleId: roleId,
+              storageId: storageId,
+              dp: user[0].dp,
+            },
             SECRET_KEY,
             {
               expiresIn: '2h',
@@ -69,7 +74,12 @@ const userLogin = async (req, res) => {
           const roleId = user[0].role_id;
           const storageId = user[0].storage_id;
           const token = jwt.sign(
-            { id: userId, roleId: roleId, storageId: storageId },
+            {
+              id: userId,
+              roleId: roleId,
+              storageId: storageId,
+              dp: user[0].dp,
+            },
             SECRET_KEY,
             {
               expiresIn: '2h',
