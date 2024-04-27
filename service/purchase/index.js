@@ -1,4 +1,5 @@
 const connection = require('../../config/connection');
+const logger = require('../../logs.js');
 const logError = require('../../logs.js').logError;
 
 async function getAllSuppliers() {
@@ -329,8 +330,8 @@ async function fetchPurchaseOrderView(req) {
       req.user['storageId'] = req.query.storageId;
     }
     const [results] = await connection.execute(
-      'select supplier_master.*,purchase_order.id as order_id,(select city_name from city_master where city_id = supplier_master.city_id)as city_name,(select state_name from state_master where state_id = supplier_master.state_id) as state_name,purchase_order.amount,(select value from option_master where id = purchase_order.payment_status) as payment_status,purchase_order.date as order_date from purchase_order join supplier_master on purchase_order.supplier_id = supplier_master.id where  purchase_order.id = ? and storage_id = ?;',
-      [req.query.invoiceId,req.user.storageId]
+      'select supplier_master.*,purchase_order.id as order_id,(select city_name from city_master where city_id = supplier_master.city_id)as city_name,(select state_name from state_master where state_id = supplier_master.state_id) as state_name,purchase_order.amount,(select value from option_master where id = purchase_order.payment_status) as payment_status,purchase_order.date as order_date from purchase_order join supplier_master on purchase_order.supplier_id = supplier_master.id where  purchase_order.id = ?;',
+      [req.query.invoiceId]
     );
     const [products] = await connection.execute(
       `select

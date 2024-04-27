@@ -245,7 +245,6 @@ const {
   orderHistory,
   newOrder,
   invoicePdf,
-  invoiceview,
 } = require('../controller/salesModule/salesRender.js');
 
 const {
@@ -333,7 +332,7 @@ router.get(
 router.get(
   '/salesOrderView',
   passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
-  invoiceview
+  invoicePdf
 );
 
 //------------------------------------------------------

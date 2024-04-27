@@ -1,5 +1,4 @@
 function updateOrderForm(result, id) {
-
   let customer = document.getElementById('customer');
   let shippingAddress = document.getElementById('shippingAddress');
   let paymentStatus = document.getElementsByName('paymentStatus');
@@ -8,11 +7,10 @@ function updateOrderForm(result, id) {
   orderid.value = id;
 
   if (document.getElementById('storageCombo') != null) {
-  
-    let storageCombo = document.getElementById('storageCombo')
+    let storageCombo = document.getElementById('storageCombo');
     for (op of storageCombo) {
       console.log(123);
-     console.log(op);
+      console.log(op);
       console.log(op.value == result[0].storage_id);
       if (op.value == result[0].storage_id) {
         op.setAttribute('selected', true);
@@ -24,12 +22,12 @@ function updateOrderForm(result, id) {
       op.setAttribute('selected', true);
     }
   }
-  shippingAddress.innerHTML = result[0].ShippingAddress;
+  shippingAddress.innerHTML = result[0].shipping_address;
   for (op of paymentStatus) {
-    if (op.value == result[0].PaymentStatus) {
+    if (op.value == result[0].payment_status) {
       op.setAttribute('selected', true);
     }
   }
-  date.value = result[0].Date.split('T')[0];
+  date.value = result[0].order_date.split('T')[0];
 }
 // we will use grid fetch function for edit and delete

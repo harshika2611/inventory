@@ -18,7 +18,7 @@
   <div class="page">
     <div class="container mt-4">
       <header>
-        <h1>Invoice</h1>
+        <h1><%=(type == 'invoice'?'Invoice':'Purchase')%></h1>
         <address>
           <p>
             <%=data.firstname%>
@@ -52,12 +52,12 @@
                 <%=data.order_date%>
               </span></td>
           </tr>
-          <tr>
+          <!-- <tr>
             <th><span>Amount Due</span></th>
             <td><span id="prefix">$</span><span>
                 <%=data.amount%>
               </span></td>
-          </tr>
+          </tr> -->
         </table>
         <table class="inventory">
           <thead>
@@ -121,7 +121,7 @@
     let type = "<%=type%>"
     console.log(type);
     id = url.split('=')[1];
-    window.location.href = `/getPdf?id=${id}&type=${type}`;
+    window.location.href = `/getPdf?id=${id}=${type}`;
   }
 </script>
 

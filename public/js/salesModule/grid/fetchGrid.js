@@ -1,3 +1,15 @@
+const colmap = new Map([
+  ["id","ID"],
+  ["firstname", "FirstName"],
+  ["lastname", "LastName"],
+  ["id","ID"],
+  ["amount","Amount"],
+  ["shipping_address","ShippingAddress"],
+  ["payment_status","PaymentStatus"],
+  ["order_date","Date"],
+  ["type", "OrderType"]
+]);
+
 async function fetching(offset) {
   // let orderby = document.getElementById('orderby').value;
   // let order = document.getElementById('order').value;
@@ -24,34 +36,34 @@ function dataTableGrid(result) {
       key != 'storage_id' &&
       key != 'is_delete'
     ) {
-      head += `<th scope="col"> <span class="d-inline-flex flex-row align-items-center">${key} <span class="d-inline-flex flex-column align-items-center ms-2">
+      head += `<th scope="col"> <span class="d-inline-flex flex-row align-items-center">${colmap.get(key)} <span class="d-inline-flex flex-column align-items-center ms-2">
       <span style="cursor: pointer" onclick="onclickOrderby('${key}','asc')">^</span>
       <span style="rotate: 180deg; cursor: pointer" onclick="onclickOrderby('${key}','desc')">^</span></span>
     </span></th>`;
     }
   }
-  head += `<th scope="col" style="text-align: center;">Actions</th>`;
+  head += `<th scope="col" colspan="3" style="text-align: center;">Actions</th>`;
   head += `</tr>`;
   document.getElementById('thead').innerHTML = head;
 
   let body = ``;
   result.forEach((data) => {
     body += `<tr>
-        <td scope="row">${data.ID}</td>
-        <td>${data.FirstName}</td>
-        <td>${data.LastName}</td>
-        <td>${data.Amount}</td>
-				<td>${data.OrderType == 8 ? 'Sales' : 'Return'}</td>
-        <td>${data.ShippingAddress}</td>
-        <td>${data.PaymentStatus == 10 ? 'Pending' : 'Paid'}</td>
-        <td>${data.Date.split('T')[0]}</td>
+        <td scope="row">${data.id}</td>
+        <td>${data.firstname}</td>
+        <td>${data.lastname}</td>
+        <td>${data.amount}</td>
+				<td>${data.type == 8 ? 'Sales' : 'Return'}</td>
+        <td>${data.shipping_address}</td>
+        <td>${data.payment_status == 10 ? 'Pending' : 'Paid'}</td>
+        <td>${data.order_date.split('T')[0]}</td>
         ${
           data.is_delete == 0
-            ? `<td><a class="btn btn-outline-primary" onclick="viewOrder(${data.ID})">View</a>
-      <a class='btn btn-success' id=${data.storage_id}edit${data.ID} onclick="updateOrder('edit',event,'order')">EDIT</a>
-       <a class="btn btn-danger" id=${data.storage_id}delete${data.ID} onclick="updateOrder('delete',event,'order')">DELETE</a></td>
+            ? `<td><a class="btn btn-outline-primary" onclick="viewOrder(${data.id})">View</a></td><td>
+      <a class='btn btn-success' id=${data.storage_id}edit${data.id} onclick="updateOrder('edit',event,'order')">EDIT</a></td><td>
+       <a class="btn btn-danger" id=${data.storage_id}delete${data.id} onclick="updateOrder('delete',event,'order')">DELETE</a></td>
         `
-            : `<td><p class="deleted">DELETED</p></td>`
+            : `<td colspan="3"><p  class="deleted">DELETED</p></td>`
         }</tr>`;
     count++;
   });
@@ -76,11 +88,11 @@ function searchFilter() {
   } else {
     filteredResult = dataArray.filter((ele) => {
       return (
-        ele.FirstName.toLowerCase().includes(searchbar) ||
-        ele.LastName.toLowerCase().includes(searchbar) ||
-        ele.ShippingAddress.toLowerCase().includes(searchbar) ||
+        ele.firstname.toLowerCase().includes(searchbar) ||
+        ele.lastname.toLowerCase().includes(searchbar) ||
+        ele.shipping_address.toLowerCase().includes(searchbar) ||
         // ele.amount.toString().includes(searchbar) ||
-        ele.Date.includes(searchbar)
+        ele.order_date.includes(searchbar)
       );
     });
     console.log(filteredResult);
@@ -89,7 +101,7 @@ function searchFilter() {
 }
 
 function onclickOrderby(col, type) {
-  fetching(`&orderby=${col}&order=${type}`);
+  fetching(`&orderby=${col.toLowerCase()}&order=${type}`);
 }
 
 async function onLoad() {

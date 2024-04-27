@@ -7,7 +7,9 @@
   display: flex;
 }
 .filter {
-  margin-left: 1%;
+  margin-right: 1%;
+  display: flex;
+  align-items: center;
 }
 .grid {
   height: 60dvh;
@@ -47,4 +49,8 @@
 th{
   background-color: #002f4b !important;
   color: white !important;
+}
+#paggination {
+  display: flex;
+  justify-content: center;
 }
