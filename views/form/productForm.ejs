@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Customer</title>
+  <title>Product</title>
   <link rel="stylesheet" href="src/css/form.css">
   <link rel="stylesheet" href="src/css/manageCustomers/customerForm.css" />
 
@@ -11,11 +11,11 @@
 
 <body class="body">
   <div class="row form-popup" id="myForm">
-    <div class="col-md-12 " data-bs-spy="scroll">
+    <div class="col-md-12 " data-bs-spy="scroll" style="width: 498px;">
       <form id="productForm" name="productForm">
         <div class="container">
           <h1>Product Details</h1>
-          <p onclick="closeForm()" id="closeCustomerForm">close</p>
+          <h3 onclick="closeForm()" id="closeCustomerForm" class="text-danger">X</h3>
           <fieldset>
 
             <%if(data.roleId==4){%>
@@ -38,7 +38,7 @@
                 </div>
 
                 <div class="form-floating customerform__errordiv">
-                  <select name="category" id="category">
+                  <select name="category" id="category" class="form-select" aria-label="Floating label select example">
                   </select>
 
                 </div>

@@ -15,8 +15,8 @@
       <form id="supplierForm" name="supplierForm">
         <div class="container">
           <h1>Supplier Details</h1>
-          <p onclick="closeForm()" id="closeSupplierForm"><img src="src/assets/manageCustomer/cross.svg" width="30"
-              height="30"></p>
+          <p onclick="closeForm()" id="closeSupplierForm" class="text-danger" style="font-size: 30px;left: 455px;
+          top: 10px;">X</p>
           <fieldset class="manageSupplierFieldset">
 
             <div class="form-floating mb-3 supplierform__errordiv">
@@ -83,7 +83,7 @@
 
           </fieldset>
           <p id="submitButton" class="btn btn-outline-primary" onclick="submitSupplierDetails()">Submit</p>
-          <input type="reset" class="btn btn-outline-danger" value="Reset">
+          <input type="reset" class="btn btn-outline-danger" value="Reset" style="margin-top: -15px;"> 
         </div>
       </form>
     </div>
