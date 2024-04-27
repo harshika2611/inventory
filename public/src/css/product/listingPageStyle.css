@@ -40,3 +40,61 @@
 #btn {
   margin-left: 620px;
 }
+.span2 {
+  rotate: 180deg;
+  cursor: pointer;
+}
+.span1 {
+  cursor: pointer;
+}
+th {
+  background-color: #002f4b !important;
+  color: white !important;
+}
+.table tr {
+  border-bottom: 1px solid #ddd;
+}
+.table tr:nth-child(2n) {
+  background-color: #f9f9f9;
+}
+.table tr:hover {
+  background-color: #e5ebf4;
+}
+.grid {
+  margin-top: 3%;
+}
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+.imgMain {
+  width: 40px;
+  height: 40px;
+}
+.h2 {
+  padding: 20px 0;
+  font-size: 30px;
+  font-weight: 400;
+}
+.header {
+  align-items: center;
+  display: flex;
+  /* padding-top: 25px; */
+}
+.mm2 {
+  margin-left: 20px;
+}
+
+.main1 {
+  display: flex;
+  align-items: center;
+  padding-top: 25px;
+  justify-content: space-between;
+}
+
+.main2 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

@@ -5,6 +5,7 @@ function addManager() {
   customerForm.style.display = 'block';
   document.getElementById('submitBtn').innerHTML = 'Submit';
   document.getElementById('filter').style = `filter: blur(2px);`;
+  document.getElementById('head').style = `filter: blur(2px);`;
   document.getElementById('grid').style = `filter: blur(2px);`;
   // getAllStore();
   getAllCity('state');
@@ -14,6 +15,7 @@ function closeForm() {
   document.getElementById('myForm').style.display = 'none';
   document.getElementById('filter').style = 'none';
   document.getElementById('grid').style = 'none';
+  document.getElementById('head').style = 'none';
 }
 
 async function submitbtn() {
@@ -93,6 +95,8 @@ function dataTableGrid(manager, startIndex) {
   const table = document.getElementById('thead');
   const tableBody = document.getElementById('tbody');
   let createTh = document.createElement('th');
+  let createTr = document.createElement('tr');
+  let span = document.createElement('span');
   table.innerHTML = '';
   tableBody.innerHTML = '';
   createTh.innerHTML = '';
@@ -100,38 +104,44 @@ function dataTableGrid(manager, startIndex) {
     if (key === 'id') {
       key = 'No.';
     }
+    span = document.createElement('span');
+    span.setAttribute('class', 'd-inline-flex flex-row align-items-center');
     createTh = document.createElement('th');
-    createTh.textContent = key;
-    table.appendChild(createTh);
-    const span = document.createElement('span');
-    span.setAttribute('class', `${key}`);
-    span.setAttribute('width', '45px');
+    createTh.setAttribute('class', 'align-middle');
+    span.textContent = key;
+    createTr.appendChild(createTh);
     createTh.appendChild(span);
-    const achor = document.createElement('span');
-    achor.setAttribute('onclick', `filterUp(event,'ASC')`);
-    const img = document.createElement('img');
-    img.setAttribute('src', 'icons/bxs-up-arrow.svg');
-    img.setAttribute('id', `${key}`);
-    const achor2 = document.createElement('span');
-    achor2.setAttribute('onclick', `filterUp(event,'DESC')`);
-    const img2 = document.createElement('img');
-    img2.setAttribute('src', 'icons/bxs-down-arrow.svg');
-    img2.setAttribute('id', `${key}`);
-    img2.setAttribute('width', '15');
-    img.setAttribute('width', '15');
-    span.appendChild(achor2);
-    achor2.appendChild(img2);
-    achor.appendChild(img);
-    span.appendChild(achor);
+    table.appendChild(createTr);
+    let spanMain = document.createElement('span');
+    spanMain.setAttribute(
+      'class',
+      'd-inline-flex flex-column align-items-center ms-3'
+    );
+    let span1 = document.createElement('span');
+    span1.textContent = '^';
+    span1.setAttribute('class', 'span1');
+    span1.setAttribute('onclick', `filterUp(event,'ASC')`);
+    span1.setAttribute('id', `${key}`);
+
+    let span2 = document.createElement('span');
+    span2.textContent = '^';
+    span2.setAttribute('class', 'span2');
+    span2.setAttribute('onclick', `filterUp(event,'DESC')`);
+    span2.setAttribute('id', `${key}`);
+    spanMain.appendChild(span1);
+    spanMain.appendChild(span2);
+    span.appendChild(spanMain);
 
     if (key == 'No.' || key == 'Status') {
-      span.remove();
+      spanMain.remove();
     }
   }
   createTh = document.createElement('th');
+  createTh.setAttribute('class', 'align-middle');
   createTh.textContent = 'Action';
   createTh.colSpan = '2';
-  table.appendChild(createTh);
+  createTr.appendChild(createTh);
+  table.appendChild(createTr);
 
   for (const element of manager) {
     const createTr = document.createElement('tr');
@@ -184,7 +194,6 @@ async function updateManager(manager) {
     .setAttribute('onclick', `updateDeails(${id})`);
   const response = await fetch(url);
   const managerDetails = await response.json();
-  console.log(managerDetails, 'aaaaa');
   try {
     if (!response.ok) {
       throw new Error('Error In Get Customer Details');
@@ -329,5 +338,4 @@ const search = (key) => {
       }
     }
   }
-  paggination(null, filter);
 };

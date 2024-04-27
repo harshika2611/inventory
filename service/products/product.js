@@ -3,7 +3,7 @@ const logger = require('../../logs.js');
 
 const getProduct = async (product, order, field, storage, payload) => {
   let Query =
-    'SELECT product_master.id,product_name as Productname,sku_id as SKUid,option_master.value as Category ,cost as Cost,stock as Quantity,description as Description FROM product_master left join products_details on product_master.id=products_details.product_id left join option_master on product_master.category_id =option_master.id  where';
+    'SELECT product_master.id,product_name as Productname,sku_id as SKUid,option_master.value as Category ,cost as Cost,stock as Quantity,description as Description,is_delete FROM product_master left join products_details on product_master.id=products_details.product_id left join option_master on product_master.category_id =option_master.id  where';
   if (product.length > 0) {
     let sql = `${Query} product_master.id=? and storage_id=? `;
     return await connection.execute(sql, [
@@ -11,10 +11,9 @@ const getProduct = async (product, order, field, storage, payload) => {
       payload.roleId == 4 ? storage : payload.storageId,
     ]);
   } else {
-    let sql = `${Query}  storage_id= ? and product_master.is_delete=? ORDER BY ${field} ${order};`;
+    let sql = `${Query}  storage_id= ? ORDER BY ${field} ${order};`;
     return await connection.execute(sql, [
       payload.roleId == 4 ? storage : payload.storageId,
-      0,
     ]);
   }
 };

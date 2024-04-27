@@ -1,68 +1,107 @@
-#myForm {
+.form-popup {
   display: none;
   position: absolute;
-  top: 0%;
-  left: 30%;
+  bottom: 0;
+  top: 50px;
+  z-index: 9;
+  width: 500px;
+  right: 490px;
 }
 
-.filter1 {
-  justify-content: end;
+/* Add styles to the form container */
+.form-container {
+  max-width: 300px;
+  padding: 10px;
+  background-color: white;
+  /* height: 1000px; */
+}
+
+.form-control {
+  width: 700px;
   display: flex;
-  gap: 15px;
 }
-.filter {
-  padding-top: 2%;
-  padding-right: 34px;
+
+.form-inline {
+  display: flex;
+  margin-left: 200px;
 }
-#status {
-  margin: 10px 10px;
+
+.row2 {
+  margin-top: 26px;
+  margin-left: 100px;
 }
-.filter2 {
-  width: 11%;
-  margin: -7px;
+
+.row1 {
+  margin-top: 33px;
+  margin-left: 110px;
+  display: flex;
 }
-.newAdd {
-  width: 9%;
+
+#btn {
+  margin-left: 620px;
+}
+.span2 {
+  rotate: 180deg;
+  cursor: pointer;
+}
+.span1 {
+  cursor: pointer;
+}
+th {
+  background-color: #002f4b !important;
+  color: white !important;
+}
+.table tr {
+  border-bottom: 1px solid #ddd;
+}
+.table tr:nth-child(2n) {
+  background-color: #f9f9f9;
+}
+.table tr:hover {
+  background-color: #e5ebf4;
 }
 .grid {
   margin-top: 3%;
   overflow: scroll;
 }
-#order {
-  margin: 3px;
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
 }
-th,
-td {
-  padding: 10px;
+.imgMain {
+  width: 40px;
+  height: 40px;
 }
-.deleteButton {
-  cursor: pointer;
-}
-.editButton {
-  cursor: pointer;
-}
-span {
-  display: flex;
-}
-td,
-th {
-  text-align: center;
-}
-.manager-container {
-  padding: 0 10px;
-}
-.manager1 {
-  margin-top: 45px;
-  margin-left: 23px;
-}
-.s1 {
-  text-align: center;
+.h2 {
   font-size: 30px;
-  font-weight: 400;
-  margin-top: 60px;
-  margin-left: 14px;
+  margin-top: 8px;
 }
 .header {
-  text-align: center;
-  gap: 6px;
+  align-items: center;
+  display: flex;
+  /* padding-top: 25px; */
+}
+.mm2 {
+  margin-left: 20px;
+}
+
+.main1 {
+  display: flex;
+  align-items: center;
+  padding-top: 25px;
+  justify-content: space-between;
+}
+
+.main2 {
+  display: flex;
+  align-items: center;
+}
+.filter2 {
+  width: 125px;
+}
+.filter {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
 }
