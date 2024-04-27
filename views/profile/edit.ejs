@@ -8,7 +8,6 @@
   <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
   <script src="/js/bootstrap.js"></script>
   <link rel="stylesheet" href="src/css/allpage.css" />
-  <link rel="stylesheet" href="src/css/dashboard/dashboardCustom.css" />
   <link rel="stylesheet" href="src/css/profile/profileStyle.css" />
 </head>
 
@@ -21,11 +20,11 @@
             action="/profileEdit" onsubmit="return validator(event)">
             <div class="container edit-img-container">
               <div class="img-container">
-                <img class="currentProfileImage" src="icons/profile.png" alt="">
+                <img src="uploads/<%=profileDetails[0][0].img_path%>" alt="Profile Image" id="profileImage">
               </div>
               <div class="edit-link">
                 <input name="newImage" type="file" class="form-control" id="choose-file"
-                  accept="image/png, image/jpg, image/jpeg" style="width: 250px;">
+                  accept="image/png, image/jpg, image/jpeg" style="width: 250px;" oninput="loadPreview(event)">
               </div>
             </div>
             <br>

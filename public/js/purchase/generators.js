@@ -23,7 +23,10 @@ function generateSuppliersDropDown(id = null) {
       data.forEach((o) => {
         content += `<option value="${o.id}" ${
           o.id == id ? 'selected="selected"' : ''
-        }>${o?.firstname.concat(' ', o?.lastname)}</option>`;
+        } ${o.is_delete ? 'disabled="true"' : ''}>${o?.firstname.concat(
+          ' ',
+          o?.lastname
+        )}</option>`;
       });
       return content;
     })
@@ -39,7 +42,9 @@ function generateProductsDropDown(id, selectedId) {
           data.forEach((o) => {
             content += `<option value="${o.id}" ${
               o.id == selectedId ? 'selected="selected"' : ''
-            } >${o.product_name}</option>`;
+            } ${o.deleted ? 'disabled="true"' : ''} >${
+              o.product_name
+            }</option>`;
           });
           return content;
         })

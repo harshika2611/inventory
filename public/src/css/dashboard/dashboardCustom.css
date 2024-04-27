@@ -1,11 +1,5 @@
 :root {
-	--dashboardsection:#f8fbff;
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+  --dashboardsection: #f8fbff;
 }
 
 a {
@@ -37,18 +31,18 @@ a {
 .div-container__grid__purchaseoverview,
 .div-container__grid__latestpurchase,
 .div-container__grid__lowquantitystock {
-	background-color: #ffffff;
-	padding: 20px;
-	border-radius: 20px;
-	box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-	border-right: 6px solid #002F4B
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  border-right: 6px solid #002f4b;
 }
 
 .div-container__grid__name {
-	font-weight: bold;
-	font-size: 20px;
-	/* padding-bottom: 20px; */
-	color: #002F4B;
+  font-weight: bold;
+  font-size: 20px;
+  /* padding-bottom: 20px; */
+  color: #002f4b;
 }
 .salesoverview__todaysales,
 .inventorysummary__totalproducts,

@@ -40,7 +40,7 @@ async function updateProfile(req, res) {
       id: req?.user?.id,
       filename: req?.file?.filename,
     });
-    await viewProfile(req, res);
+    res.redirect('/profile');
   } catch (error) {
     logger.logError(err);
     return res.json({ message: "Can't get profile details" });
