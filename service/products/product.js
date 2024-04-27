@@ -17,19 +17,33 @@ const getProduct = async (product, order, field, storage, payload) => {
     ]);
   }
 };
-const updateProduct = async (body, storage) => {
-  await connection.execute(
-    `update product_master set is_delete=1 where id=?;`,
+const updateProduct = async (body, payload) => {
+  const [result] = await connection.execute(
+    `select * from product_master where id=?;`,
     [body.id]
   );
-  let [rows] = await connection.execute(
-    'INSERT INTO product_master(product_name,sku_id,category_id,cost,description) values(?,?,?,?,?)',
-    [body.productname, body.skuid, body.category, body.cost, body.description]
-  );
-  await connection.execute(
-    'INSERT INTO products_details(product_id,storage_id,stock) values(?,?,?)',
-    [rows.insertId, storage, body.stock]
-  );
+  if (result[0].cost != body.cost) {
+    await connection.execute(
+      `update product_master set is_delete=1 where id=?;`,
+      [body.id]
+    );
+    const insertedId = await insertProductService(body);
+    console.log(insertedId,"harshi");
+    const ans1 = await insertProductDetailService(insertedId, body, payload);
+  } else {
+    let [rows] = await connection.execute(
+      'update product_master set product_name = ?,sku_id=?,category_id=?,cost=?,description=? where id = ?',
+      [body.productname, body.skuid, body.category, body.cost, body.description,body.id]
+    );
+  }  
+  // let [rows] = await connection.execute(
+  //   'INSERT INTO product_master(product_name,sku_id,category_id,cost,description) values(?,?,?,?,?)',
+  //   [body.productname, body.skuid, body.category, body.cost, body.description]
+  // );
+  // await connection.execute(
+  //   'INSERT INTO products_details(product_id,storage_id,stock) values(?,?,?)',
+  //   [rows.insertId, storage, body.stock]
+  // );
 };
 
 const checkProductSevice = async (body) => {

@@ -190,8 +190,8 @@ router.get(
 );
 
 // passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
-router.post('/api/combos', getCombosDetails);
-router.post('/api/pdfTemplate', generatePdf);
+router.post('/api/combos', passport.authenticate('jwt', { session: false, failureRedirect: '/' }), getCombosDetails);
+// router.post('/api/pdfTemplate', generatePdf);
 router.get(
   '/reportGenerate',
   passport.authenticate('jwt', { session: false, failureRedirect: '/' }),

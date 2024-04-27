@@ -3,13 +3,15 @@ function reportGenerateOption() {
 
   const createPTitle = document.createElement('p');
   createPTitle.innerHTML = "Please Select Option For Generate Report";
+  createPTitle.setAttribute("class", "reportGenerateTitle");
+
   reportGenerateDiv.appendChild(createPTitle);
 
   //----now create radio button
   const optionArrayForRadio = [{
     type: "radio",
     id: "productDetails",
-    class: "productDetails",
+    class: "productDetails productRadioButton",
     name: "productDetails",
     value: "product_details",
     textContent: "Product Details",
@@ -17,6 +19,7 @@ function reportGenerateOption() {
   }];
 
   for (let element of optionArrayForRadio) {
+    const createRadioDiv = document.createElement("div");
     const radioButton = document.createElement('input');
     const labelForRadioButton = document.createElement('label');
     radioButton.setAttribute("type", `${element.type}`);
@@ -28,12 +31,20 @@ function reportGenerateOption() {
 
     labelForRadioButton.setAttribute("for", `${element.id}`);
     labelForRadioButton.innerHTML = element.textContent;
-    reportGenerateDiv.appendChild(labelForRadioButton);
-    reportGenerateDiv.appendChild(radioButton);
+
+    createRadioDiv.appendChild(labelForRadioButton);
+    createRadioDiv.appendChild(radioButton);
+    reportGenerateDiv.appendChild(createRadioDiv);
   }
 }
 
 async function addProductCategory() {
+
+  const createDivCategory = document.querySelector(".createDivCategory");
+  if (createDivCategory) {
+    createDivCategory.remove();
+  }
+
   //----fetch all product category available in database
   //database select_master key name pass
   const comboKeyName = { key: "productCategory" };
@@ -52,11 +63,12 @@ async function addProductCategory() {
 
     if (response.status === 200) {
       const responseDataArray = await response.json();
-      console.log(responseDataArray);
+      // console.log(responseDataArray);
 
       //now generate checkbox
       const reportGenerateDiv = document.querySelector('.reportGenerate-div');
       const createDivCategory = document.createElement("div");
+      createDivCategory.setAttribute("class", "createDivCategory");
 
       const createSelect = document.createElement("select");
       createSelect.setAttribute("onchange", "addCustomizeOption()");
@@ -100,10 +112,11 @@ async function addProductCategory() {
 
 
 function addCustomizeOption() {
-  const reportGenerateDiv = document.querySelector(".reportGenerate-div");
+  // const reportGenerateDiv = document.querySelector(".reportGenerate-div");
 
   //before add new customize option clear div
   const customizeDiv = document.getElementById("customizeOptionDiv");
+  const createDivCategory = document.querySelector(".createDivCategory");
 
   if (customizeDiv) {
     customizeDiv.remove();
@@ -143,16 +156,9 @@ function addCustomizeOption() {
     textContent: "Selling Cost"
   }]
 
-  // , {
-  //   type: "checkbox",
-  //   id: "productCustomizeOption5",
-  //   class: "productCustomizeOption",
-  //   name: "productCustomizeOption",
-  //   value: "unit_price",
-  //   textContent: "Purchase Price"
-  // }
 
   for (let element of customizeOptionArray) {
+    const createCheckboxDiv = document.createElement("div");
     const checkBox = document.createElement('input');
     const labelForCheckBox = document.createElement('label');
     checkBox.setAttribute("type", `${element.type}`);
@@ -163,16 +169,17 @@ function addCustomizeOption() {
 
     labelForCheckBox.setAttribute("for", `${element.id}`);
     labelForCheckBox.innerHTML = element.textContent;
-    customizeOptionDiv.appendChild(labelForCheckBox);
-    customizeOptionDiv.appendChild(checkBox);
+    createCheckboxDiv.appendChild(labelForCheckBox);
+    createCheckboxDiv.appendChild(checkBox);
+    customizeOptionDiv.appendChild(createCheckboxDiv);
   }
 
   const generateButton = document.createElement("p");
   generateButton.innerHTML = "Generate PDF";
   generateButton.setAttribute("onclick", "generateReport()");
   generateButton.setAttribute("class", "generatePdfButton");
+  createDivCategory.appendChild(customizeOptionDiv);
   customizeOptionDiv.appendChild(generateButton);
-  reportGenerateDiv.appendChild(customizeOptionDiv);
 }
 
 async function generateReport() {
@@ -245,18 +252,25 @@ async function generateReport() {
       }
 
       if (response.status === 200) {
-        const responseObject = await response.json();
+        const pdfResponse = await response.json();
+        window.open(`${window.location.origin}/uploads/pdfFile/${pdfResponse.pdfName}`, "_blank");
         // console.log(responseMessage);
-        const responsePdfGenerate = await fetch('/api/pdfTemplate', {
-          method: 'POST',
-          body: JSON.stringify(responseObject),
-          headers: {
-            "Content-Type": "application/json"
-          }
-        });
+        // const responsePdfGenerate = await fetch('/api/pdfTemplate', {
+        //   method: 'POST',
+        //   body: JSON.stringify(responseObject),
+        //   headers: {
+        //     "Content-Type": "application/json"
+        //   }
+        // });
 
-        const pdfResponse = await responsePdfGenerate.json();
-        console.log(pdfResponse.message);
+        // if (!responsePdfGenerate.ok) {
+        //   throw error;
+        // }
+
+        // if (responsePdfGenerate.status === 200) {
+        //   const pdfResponse = await responsePdfGenerate.json();
+        //   window.open(`${window.location.origin}/uploads/pdfFile/${pdfResponse.pdfName}`, "_blank");
+        // }
       }
     } catch (error) {
       console.log(error);
