@@ -3,12 +3,12 @@ const logger = require('../../logs');
 
 async function selectOrders(orderby, order, col, value, storageId) {
   if (order == undefined) {
-    order = 'asc';
+    order = 'desc';
   }
   if (orderby == undefined) {
     orderby = 'id';
   }
-  if (orderby == 'name') {
+  if (orderby == 'firstname'||orderby == 'lastname') {
     orderby = 'customer_master.firstname';
   } else {
     orderby = `sales_order.${orderby}`;
@@ -20,18 +20,18 @@ async function selectOrders(orderby, order, col, value, storageId) {
   }
 
   sql = `select 
-    sales_order.id as ID,
+    sales_order.id,
     sales_order.customer_id,
-    customer_master.FirstName,
-    customer_master.LastName,
-    sales_order.Amount,
-		sales_order.type as OrderType,
-    sales_order.shipping_address as ShippingAddress,
-    sales_order.payment_status as PaymentStatus,
+    customer_master.firstname,
+    customer_master.lastname,
+    sales_order.amount,
+		sales_order.type,
+    sales_order.shipping_address,
+    sales_order.payment_status,
     sales_order.storage_id,
     sales_order.created_at,
     sales_order.is_delete,
-    sales_order.order_date as Date
+    sales_order.order_date
   from sales_order join customer_master
   on sales_order.customer_id = customer_master.id
   where ${col} = '${value}' and storage_id = ? order by ${orderby} ${order} ;`;
@@ -148,7 +148,7 @@ async function updateStock(req, stock) {
 }
 
 async function getOrderDetail(req) {
-  try {
+  // try {
     sql = `select customer_master.*,sales_order.id as order_id,(select city_name from city_master where city_id = customer_master.city_id)as city_name,(select state_name from state_master where state_id = customer_master.state_id) as state_name,sales_order.amount,sales_order.shipping_address,(select value from option_master where id = sales_order.type) as type,(select value from option_master where id = sales_order.payment_status) as payment_status,sales_order.order_date from sales_order join customer_master on sales_order.customer_id = customer_master.id where  sales_order.id = ?;`;
 
     let productQuery = `SELECT sales_products.id,sales_products.order_type,sales_products.quantity,product_master.product_name,product_master.sku_id,product_master.cost FROM sales_products join product_master on sales_products.product_id = product_master.id where order_id = ? and sales_products.is_delete = 0`;
@@ -157,9 +157,9 @@ async function getOrderDetail(req) {
       req.query.invoiceId,
     ]);
     return [result, products];
-  } catch (err) {
-    logger.logError(err);
-  }
+  // } catch (err) {
+  //   logger.logError(err);
+  // }
 }
 
 module.exports = {

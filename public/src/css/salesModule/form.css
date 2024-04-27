@@ -33,3 +33,9 @@
 .editQuantity{
 	width: 5rem;
 }
+.formHeader{
+	display: flex;
+}
+.historyBtn{
+	margin-left: auto;
+}

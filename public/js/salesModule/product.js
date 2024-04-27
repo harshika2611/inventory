@@ -1,14 +1,13 @@
-storage
-//   = '';
-// if (document.getElementById('storageCombo') != null) {
-//   storage = document.getElementById('storageCombo').value;
-// }
 let productGridResult;
 async function fetching() {
   let orderId = document.getElementById('productOrderId').value;
   let [result, response] = await commonFetch(
     `/getProductGrid?orderId=${orderId}`
   );
+  let storage = '';
+  if (document.getElementById('storageCombo') != null) {
+    storage = document.getElementById('storageCombo').value;
+  }
   let totalAmount = 0;
   productGridResult = result.rows; //to select one row
   let head = `<tr>`;
@@ -54,6 +53,10 @@ function generatePdf(id) {
 }
 
 function enableSave(id) {
+  let storage = '';
+  if (document.getElementById('storageCombo') != null) {
+    storage = document.getElementById('storageCombo').value;
+  }
   btn = document.getElementById(`${storage}edit${id}`);
   if (btn.value != '') {
     btn.classList.remove('btn-secondary');
@@ -84,11 +87,13 @@ async function getProducts() {
   console.log(filterdResult);
   generateCombo(filterdResult, `product`);
 }
-
 async function addProduct() {
   const productFormData = formData('productForm');
   const productValidation = productFormValidation(productFormData);
-
+  let storage = '';
+  if (document.getElementById('storageCombo') != null) {
+    storage = document.getElementById('storageCombo').value;
+  }
   productFormData['storage'] = storage;
   if (Object.keys(productValidation).length > 0) {
     //----client side validation error
@@ -129,6 +134,10 @@ async function addProduct() {
 }
 
 async function updateProduct(id) {
+  let storage = '';
+  if (document.getElementById('storageCombo') != null) {
+    storage = document.getElementById('storageCombo').value;
+  }
   console.log(id);
   let quantity = document.getElementById(`editQuantity${id}`).value;
   if (quantity > 0 && quantity !== '' && !isNaN(parseInt(quantity))) {

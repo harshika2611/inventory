@@ -202,12 +202,23 @@ async function updateManager(manager) {
           case 'email':
             element.value = managerDetails[0][key];
             break;
+          case 'city_name':
+            const state = { id: 'state' };
+            await getAllCity('state', managerDetails[0].city_name);
+            let stateCombo = document.getElementById('state');
+            console.log(state, managerDetails[0][key]);
+            for (op of stateCombo) {
+              console.log(op);
+              if (op.value === managerDetails[0][key]) {
+                op.setAttribute('selected', true);
+              } else {
+                op.setAttribute('selected', false);
+              }
+            }
+            break;
         }
+        getAllStore(state, managerDetails[0].name, managerDetails[0].city_name);
       }
-
-      getAllCity('state', managerDetails[0].city_name);
-      const state = { id: 'state' };
-      getAllStore(state, managerDetails[0].name, managerDetails[0].city_name);
     }
   } catch (error) {
     console.log(error);
