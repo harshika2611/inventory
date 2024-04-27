@@ -12,7 +12,7 @@ const validation = {
     pattern: patterns.textOnly,
   },
   lastname: {
-    required: true,
+    required: false,
     pattern: patterns.textOnly,
   },
   dob: {
@@ -82,5 +82,12 @@ function validator(e) {
     Object.groupBy(Array.from(e.srcElement), (o) => o.name),
     validation
   );
-  return false;
+}
+
+function loadPreview(e) {
+  let reader = new FileReader();
+  reader.readAsDataURL(e.target.files[0]);
+  reader.onload = () => {
+    document.getElementById('profileImage').src = reader.result;
+  };
 }

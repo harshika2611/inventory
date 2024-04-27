@@ -8,13 +8,12 @@
   <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
   <script src="/js/bootstrap.js"></script>
   <link rel="stylesheet" href="src/css/allpage.css" />
-  <link rel="stylesheet" href="src/css/dashboard/dashboardCustom.css" />
   <link rel="stylesheet" href="src/css/profile/profileStyle.css" />
 </head>
 
 <body>
   <%- include("../components/navigation", {data})%>
-    <div class="container div-second">
+    <div class="div-second">
       <div class="main-container">
         <div class="profile-details">
           <% if(profileDetails[0][0].role !=4) { %>
@@ -36,10 +35,11 @@
                 </div>
             </div>
             <div class="img-container view-img">
-              <img src="assets/userprofile/<%=profileDetails[0][0].img_path%>" alt="Image">
+              <img src="uploads/<%=profileDetails[0][0].img_path%>" alt="Image">
             </div>
         </div>
       </div>
+    </div>
 </body>
 
 </html>

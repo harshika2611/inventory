@@ -15,7 +15,7 @@ async function getAllSuppliers() {
 async function getAllProducts() {
   try {
     const [results] = await connection.execute(
-      'SELECT id, product_name FROM product_master'
+      'SELECT id, product_name, is_delete as deleted FROM product_master'
     );
     return results;
   } catch (error) {
