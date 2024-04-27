@@ -9,12 +9,13 @@ async function addProduct() {
   const customerForm = document.getElementById('myForm');
   customerForm.style.display = 'block';
   document.getElementById('submitBtn').innerHTML = 'Submit';
-  document.getElementById('filter').style = `filter: blur(2px);`;
+  document.getElementById('main2').style = `filter: blur(2px);`;
+  document.getElementById('head').style = `filter: blur(2px);`;
   document.getElementById('grid').style = `filter: blur(2px);`;
 }
 function closeForm() {
   document.getElementById('myForm').style.display = 'none';
-  document.getElementById('filter').style = 'none';
+  document.getElementById('main2').style = 'none';
   document.getElementById('grid').style = 'none';
 }
 async function submitbtn() {
@@ -81,7 +82,7 @@ async function submitbtn() {
 
 async function allFetch() {
   let storage = document.getElementById('storageCombo').value;
-  console.log(storage, 'aaaaa');
+
   url = `/api/products?storage=${storage}`;
   paggination(url);
 }
@@ -100,81 +101,108 @@ function dataTableGrid(product, startIndex) {
   const table = document.getElementById('thead');
   const tableBody = document.getElementById('tbody');
   let createTh = document.createElement('th');
+  let createTr = document.createElement('tr');
+  let span = document.createElement('span');
   table.innerHTML = '';
   tableBody.innerHTML = '';
   createTh.innerHTML = '';
-  for (let key in product[0]) {
+
+  for (let key of [
+    'id',
+    'Productname',
+    'SKUid',
+    'Category',
+    'Cost',
+    'Quantity',
+    'Description',
+  ]) {
     if (key === 'id') {
       key = 'No.';
     }
+    span = document.createElement('span');
+    span.setAttribute('class', 'd-inline-flex flex-row align-items-center');
     createTh = document.createElement('th');
-    createTh.textContent = key;
-    table.appendChild(createTh);
-    const span = document.createElement('span');
-    span.setAttribute('class', `${key}`);
+    createTh.setAttribute('class', 'align-middle');
+    span.textContent = key;
+    createTr.appendChild(createTh);
     createTh.appendChild(span);
-    const achor = document.createElement('span');
-    achor.setAttribute('onclick', `filterUp(event,'ASC')`);
-    const img = document.createElement('img');
-    img.setAttribute('src', 'icons/bxs-up-arrow.svg');
-    img.setAttribute('id', `${key}`);
-    const achor2 = document.createElement('span');
-    achor2.setAttribute('onclick', `filterUp(event,'DESC')`);
-    const img2 = document.createElement('img');
-    img2.setAttribute('src', 'icons/bxs-down-arrow.svg');
-    img2.setAttribute('id', `${key}`);
-    img2.setAttribute('width', '15');
-    img.setAttribute('width', '15');
-    span.appendChild(achor2);
-    achor2.appendChild(img2);
-    achor.appendChild(img);
-    span.appendChild(achor);
+    table.appendChild(createTr);
+    let spanMain = document.createElement('span');
+    spanMain.setAttribute(
+      'class',
+      'd-inline-flex flex-column align-items-center ms-2'
+    );
+    let span1 = document.createElement('span');
+    span1.textContent = '^';
+    span1.setAttribute('class', 'span1');
+    span1.setAttribute('onclick', `filterUp(event,'ASC')`);
+    span1.setAttribute('id', `${key}`);
 
-    if (key == 'No.' || key == 'Status') {
-      span.remove();
+    let span2 = document.createElement('span');
+    span2.textContent = '^';
+    span2.setAttribute('class', 'span2');
+    span2.setAttribute('onclick', `filterUp(event,'DESC')`);
+    span2.setAttribute('id', `${key}`);
+    spanMain.appendChild(span1);
+    spanMain.appendChild(span2);
+    span.appendChild(spanMain);
+    if (key == 'No.') {
+      spanMain.remove();
     }
   }
   createTh = document.createElement('th');
+  createTh.setAttribute('class', 'align-middle');
   createTh.textContent = 'Action';
   createTh.colSpan = '2';
-  table.appendChild(createTh);
-
+  createTr.appendChild(createTh);
+  table.appendChild(createTr);
+  console.log(product, 'aaa');
   for (const element of product) {
-    const createTr = document.createElement('tr');
+    let createTr = document.createElement('tr');
     tableBody.appendChild(createTr);
 
     for (const key in element) {
+      console.log(element.is_delete, 'all');
+
       const createTd = document.createElement('td');
       if (key == 'id') {
         createTd.textContent = ++startIndex;
         createTr.appendChild(createTd);
-      } else {
+      } else if (key !== 'is_delete') {
         createTd.textContent = element[key] == null ? '-' : element[key];
         createTr.appendChild(createTd);
       }
     }
-    const createEditTd = document.createElement('td');
-    const achor = document.createElement('a');
-    achor.setAttribute('href', `/productinfo?id=${element.id}`);
-    createEditTd.setAttribute('class', 'editButton');
-    createEditTd.setAttribute('id', `${element.id}`);
-    const createEditButton = document.createElement('button');
-    createEditButton.setAttribute('type', 'button');
-    createEditButton.textContent = 'View details';
-    createEditButton.setAttribute('class', 'btn btn-outline-primary');
-    const createDeleteTd = document.createElement('td');
-    createDeleteTd.setAttribute('id', `${element.id}`);
-    const createDeleteButton = document.createElement('button');
-    createDeleteButton.textContent = 'Delete';
-    createDeleteButton.setAttribute('class', 'btn btn-outline-danger');
-    createDeleteButton.setAttribute('id', `${element.id}`);
-    createDeleteButton.setAttribute('type', 'button');
-    createDeleteButton.setAttribute('onclick', 'deleteProduct(this)');
-    createDeleteTd.appendChild(createDeleteButton);
-    achor.appendChild(createEditButton);
-    createEditTd.appendChild(achor);
-    createTr.appendChild(createEditTd);
-    createTr.appendChild(createDeleteTd);
+    console.log(element['is_delete'], 'get');
+    if (element['is_delete'] == 0) {
+      const createEditTd = document.createElement('td');
+      const achor = document.createElement('a');
+      achor.setAttribute('href', `/productinfo?id=${element.id}`);
+      createEditTd.setAttribute('class', 'editButton');
+      createEditTd.setAttribute('id', `${element.id}`);
+      const createEditButton = document.createElement('button');
+      createEditButton.setAttribute('type', 'button');
+      createEditButton.textContent = 'View details';
+      createEditButton.setAttribute('class', 'btn btn-outline-primary');
+      const createDeleteTd = document.createElement('td');
+      createDeleteTd.setAttribute('id', `${element.id}`);
+      const createDeleteButton = document.createElement('button');
+      createDeleteButton.textContent = 'Delete';
+      createDeleteButton.setAttribute('class', 'btn btn-outline-danger');
+      createDeleteButton.setAttribute('id', `${element.id}`);
+      createDeleteButton.setAttribute('type', 'button');
+      createDeleteButton.setAttribute('onclick', 'deleteProduct(this)');
+      createDeleteTd.appendChild(createDeleteButton);
+      achor.appendChild(createEditButton);
+      createEditTd.appendChild(achor);
+      createTr.appendChild(createEditTd);
+      createTr.appendChild(createDeleteTd);
+    } else if (element['is_delete'] == 1) {
+      let actionTd = document.createElement('td');
+      actionTd.setAttribute('colspan', 3);
+      actionTd.innerHTML = `<b><i>DELETED</i></b>`;
+      createTr.appendChild(actionTd);
+    }
   }
 }
 
@@ -211,7 +239,6 @@ function modelHide() {
 function filterUp(event, order) {
   const key = event.target.getAttribute('id');
   let storage = document.getElementById('storageCombo').value;
-  console.log(storage, 'aaaaa');
   url = `/api/products?field=${key}&order=${order}&storage=${storage}`;
   paggination(url);
 }

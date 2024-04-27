@@ -8,7 +8,7 @@
   <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
   <script src="/js/bootstrap.js"></script>
   <link rel="stylesheet" href="src/css/allpage.css" />
-  <link rel="stylesheet" href="src/css/manager/manager.css" />
+  <link rel="stylesheet" href="src/css/product/listingPageStyle.css">
 </head>
 
 <body>
@@ -16,34 +16,46 @@
     <%- include('../manager/deletePopup.ejs')%>
       <section class="div-second manager-section">
         <div class="manager-container" id="managerGrid">
-          <div id="filter" class="filter">
+          <div class=" main1">
+            <div class="header" id="head">
+
+              <img style="width: 40px; height: 40px;" src="icons/supply-chain.png" alt="">
+
+              <div class="mm2">
+                <p class="h2">Products</p>
+              </div>
+            </div>
 
             <div class="filter1">
               <div class="newAdd">
                 <p class="btn btn-outline-dark filter1" onclick="addProduct()">Add New</p>
               </div>
             </div>
-
-            <%if(data.roleId==4){%>
-              <div class="form-floating ">
-                <select name="storage" class="form-select" aria-label="select" id="storageCombo"
-                  onchange="allFetch()"></select>
-                <label for="storage">Storage</label>
-              </div>
-              <%}%>
-
-                <div class="filter3">
-                  <input class="form-control form2 mr-sm-2 w-50" type="search" style="margin-left: 280px;" id="input"
-                    placeholder="Search" onkeyup="search(this.value)" aria-label="Search" />
+          </div>
+          <div class="main2" id="main2">
+            <div class="filter3">
+              <input class="form-control form2 mr-sm-2 w-60" type="search" id="input" placeholder="Search"
+                onkeyup="search(this.value)" aria-label="Search" />
+            </div>
+            <div id="filter" class="filter">
+              <%if(data.roleId==4){%>
+                <div class="form-floating ">
+                  <select name="storage" class="form-select" aria-label="select" id="storageCombo"
+                    onchange="allFetch()"></select>
+                  <label for="storage">Storage</label>
                 </div>
+            </div>
+            <%}%>
+
           </div>
-          <div class="grid" id="grid">
-            <table class="table table-hover" id="table">
-              <thead class="table-light" id="thead">
-              </thead>
-              <tbody id="tbody"></tbody>
-            </table>
-          </div>
+        </div>
+        <div class="grid" id="grid">
+          <table class="table table-hover" id="table">
+            <thead class="table-light" id="thead">
+            </thead>
+            <tbody id="tbody"></tbody>
+          </table>
+        </div>
         </div>
         <%- include('../form/productForm')%>
           <%- include('../components/pagginationComponent')%>

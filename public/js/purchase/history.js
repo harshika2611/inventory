@@ -107,7 +107,7 @@ async function dataTableGrid(records) {
     } else {
       let actionTd = document.createElement('td');
       actionTd.setAttribute('colspan', 3);
-      actionTd.innerHTML = `<b><i>DELETED</i></b>`;
+      actionTd.innerHTML = `<b><i>DELETED</i></b>`; 
       [actionTd].forEach((e) => tr.appendChild(e));
     }
 
