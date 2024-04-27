@@ -3,6 +3,7 @@ function getCustomers() {
   paggination('/api/manageCustomers');
 }
 
+
 function dataTableGrid(customerArray, startIndex) {
   // console.log(customerArray);
   //-----div contain table
@@ -118,34 +119,49 @@ function closeForm() {
   });
 }
 
+
 //----delete customer details
 async function deleteCustomerDetails(customer) {
-  const customerId = customer.id;
-  const response = await fetch(`/api/deleteCustomer?customerId=${customerId}`, {
-    method: 'GET',
-  });
+  const modal = new bootstrap.Modal('#deleteModal');
 
-  console.log(response.status);
-  try {
-    if (!response.ok) {
-      throw new Error('Unable To Delete Customer');
-    }
+  modal.show();
 
-    if (response.status === 200) {
+  document.getElementById('confirm').onclick = async () => {
+    const customerId = customer.id;
+    const response = await fetch(`/api/deleteCustomer?customerId=${customerId}`, {
+      method: 'GET',
+    });
+
+    console.log(response.status);
+    try {
+      if (!response.ok) {
+        throw new Error('Unable To Delete Customer');
+      }
+
+      if (response.status === 200) {
+        const responseMessage = await response.json();
+        const customerForm = document.getElementById("myForm");
+        customerForm.style.display = "none";
+        getCustomers();
+        messagePopUp(responseMessage.message);
+      }
+    } catch (error) {
       const responseMessage = await response.json();
-      const customerForm = document.getElementById("myForm");
-      customerForm.style.display = "none";
-      getCustomers();
-      messagePopUp(responseMessage.message);
-    }
-  } catch (error) {
-    const responseMessage = await response.json();
-    if (response.status === 404) {
-      messagePopUp(responseMessage.message);
-    }
+      if (response.status === 404) {
+        messagePopUp(responseMessage.message);
+      }
 
-    if (response.status === 500) {
-      messagePopUp(responseMessage.message);
+      if (response.status === 500) {
+        messagePopUp(responseMessage.message);
+      }
     }
-  }
+    modal.hide();
+  };
+}
+
+
+function modelHide() {
+  const modal = new bootstrap.Modal('#deleteModal');
+
+  modal.hide();
 }

@@ -39,24 +39,22 @@ async function generateForm1(oId = null) {
 		<div class="form-floating mb-3">
 			<input name="date" type="date" class="form-control" id="floatingDate" placeholder="date"
       max="${maxDate}"
-				${
-          orderDetails?.date
-            ? `value = "${new Date(orderDetails?.date)
-                .toLocaleDateString()
-                .split('/')
-                .reverse()
-                .join('-')}"`
-            : ''
-        }
+				${orderDetails?.date
+      ? `value = "${new Date(orderDetails?.date)
+        .toLocaleDateString()
+        .split('/')
+        .reverse()
+        .join('-')}"`
+      : ''
+    }
 			>
 			<label for="floatingDate">Date</label>
 			<div class="invalid-feedback">
 				Please enter a valid date.
 			</div>
 		</div>
-    ${
-      admin
-        ? `<div class="form-floating mb-3">
+    ${admin
+      ? `<div class="form-floating mb-3">
             <select name="storage_id" class="form-select" aria-label="select" id="floatingStorage"
               ${orderDetails?.purchaseId ? 'disabled' : ''}
             >
@@ -67,7 +65,7 @@ async function generateForm1(oId = null) {
               Please select a valid storage space.
             </div>
           </div>`
-        : ''
+      : ''
     }
 		<div class="form-floating mb-3">
 			<select name="supplier_id" class="form-select" aria-label="select" id="floatingSupplier"
@@ -100,9 +98,8 @@ async function generateForm1(oId = null) {
 		</div>
 	</form>
 	<div class="d-flex mt-5 justify-content-center">
-		${
-      orderDetails?.purchaseId
-        ? `<button
+		${orderDetails?.purchaseId
+      ? `<button
 					type="button"
 					class="btn btn-primary me-3"
 					onclick="submitForm1(1)"
@@ -117,7 +114,7 @@ async function generateForm1(oId = null) {
 					>
 						Next
 					</button>`
-        : `<button
+      : `<button
 					type="button"
 					class="btn btn-primary"
 					onclick="submitForm1()"
@@ -279,11 +276,10 @@ function generateAddProductRows(
 			<div class="col">
 				<div class="form-floating">
 					<select class="form-select custom-disabled" aria-label="select" id="floatingCategories" name="category" required
-						${
-              productDetails?.categoryId
-                ? 'disabled'
-                : 'onchange="onCategoryChange(event)"'
-            }
+						${productDetails?.categoryId
+      ? 'disabled'
+      : 'onchange="onCategoryChange(event)"'
+    }
 					>
             ${categoryOptions}
 					</select>
@@ -398,8 +394,7 @@ async function saveProduct(e, purchaseProductId = null) {
       });
 
       const response = await fetch(
-        `api/purchase/product${
-          purchaseProductId ? '/' + purchaseProductId : ''
+        `api/purchase/product${purchaseProductId ? '/' + purchaseProductId : ''
         }`,
         {
           method: purchaseProductId ? 'PUT' : 'POST',

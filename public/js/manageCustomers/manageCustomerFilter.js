@@ -54,14 +54,14 @@ function customerFilterHide() {
   dataTableGrid(pagginationArray, startIndex);
 
   if (pageSize < arrayForPaggination.length) {
-    document.getElementById("currentpageshow").innerHTML = `Page ${currentPage}`;
+    document.getElementById("currentpageshow").innerHTML = `${currentPage}`;
     document.querySelector(".pagginationsection").style.display = "block";
     //----paggination button style
-    document.getElementById("doubleleft").style.opacity = "0.5";
-    document.getElementById("doubleleft").style.cursor = "not-allowed";
+    document.getElementById("firstPage").style.opacity = "0.5";
+    document.getElementById("firstPage").style.cursor = "not-allowed";
 
-    document.getElementById("singleleft").style.opacity = "0.5";
-    document.getElementById("singleleft").style.cursor = "not-allowed";
+    document.getElementById("prevPage").style.opacity = "0.5";
+    document.getElementById("prevPage").style.cursor = "not-allowed";
     //-----right
     document.getElementById("lastPage").style.opacity = "1.0";
     document.getElementById("lastPage").style.cursor = "pointer";
