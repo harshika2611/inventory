@@ -15,8 +15,8 @@
       <form id="customerForm" name="customerForm">
         <div class="container">
           <h1>Customer Details</h1>
-          <p onclick="closeForm()" id="closeCustomerForm"><img src="src/assets/manageCustomer/cross.svg" width="30"
-              height="30"></p>
+          <p onclick="closeForm()" id="closeCustomerForm" class="text-danger" style="font-size: 30px;left: 371px;
+          top: 10px;">X</p>
           <fieldset class="manageCustomerFieldset">
 
             <div class="form-floating mb-3 customerform__errordiv">
@@ -70,7 +70,7 @@
 
           </fieldset>
           <p id="submitButton" class="btn btn-outline-primary" onclick="submitCustomerDetails()">Submit</p>
-          <input type="reset" class="btn btn-outline-danger" value="Reset">
+          <input type="reset" class="btn btn-outline-danger" value="Reset" style="margin-top: -15px;">
         </div>
       </form>
     </div>

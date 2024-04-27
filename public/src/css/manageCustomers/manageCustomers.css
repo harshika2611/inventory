@@ -128,11 +128,12 @@ a {
   display: flex;
   gap: 20px;
   position: relative;
+  margin-left: 792px;
 }
 #customerFileUploadForm {
   display: none;
   margin: 0;
-  width: 350px;
+  width: 254px;
   position: absolute;
   top: 80%;
 }
