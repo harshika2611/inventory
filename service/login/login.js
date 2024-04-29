@@ -21,6 +21,23 @@ WHERE
   }
 };
 
+const getDp = async (id) => {
+  try {
+    const sql0 = `SELECT 
+        users.img_path as \`dp\`
+    FROM
+        users
+    WHERE
+        id =?`;
+    const [result] = await connection.execute(sql0, [id]);
+
+    return result;
+  } catch (error) {
+    logger.logError(`Error`, error);
+    throw error;
+  }
+};
+
 const logsService = async (id) => {
   try {
     const sql1 = `insert into logs(user_id,type_id)
@@ -84,4 +101,5 @@ module.exports = {
   userLoginService,
   logsService,
   logUnsuccessService,
+  getDp,
 };

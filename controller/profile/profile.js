@@ -4,6 +4,7 @@ const {
 } = require('../../service/profile/profile');
 
 const logger = require('../../logs');
+const { refreshToken } = require('../login/login');
 
 function renderTimestamp(databaseDate) {
   const storedDate = new Date(databaseDate);
@@ -40,7 +41,8 @@ async function updateProfile(req, res) {
       id: req?.user?.id,
       filename: req?.file?.filename,
     });
-    res.redirect('/profile');
+
+    await refreshToken(req, res);
   } catch (error) {
     logger.logError(err);
     return res.json({ message: "Can't get profile details" });
