@@ -700,7 +700,7 @@ router.get(
 );
 router.get(
   '/profileEdit',
-  passport.authenticate('jwt', { session: false, failureRedirect: '/' }), 
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
   editProfile
 );
 router.post(
