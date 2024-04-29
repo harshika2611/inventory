@@ -43,6 +43,10 @@ async function submitbtn() {
         error = 'user not exist';
         document.getElementById('main_err').innerHTML = error;
       }
+      if (response.status == 402) {
+        error = 'Sorry!! You are no longer exist';
+        document.getElementById('main_err').innerHTML = error;
+      }
       if (response.status == 403) {
         error = 'Password was expired Kindly go through forgot Password';
         document.getElementById('expire').innerHTML = error;

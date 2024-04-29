@@ -7,6 +7,7 @@
   <title>Log in</title>
   <link rel="stylesheet" href="/src/css/login/style.css">
 </head>
+
 <body>
   <div class="main" style="display: flex; width: 635px;">
     <div class="loginPage">
@@ -16,25 +17,27 @@
       <form method="post" id="form">
         <label for="email">Email</label>
         <div>
-          <input style="width: 290px;" type="email" name="email" id="email" class="form-control" placeholder="xyz@gmail.com">
+          <input style="width: 290px;" type="email" name="email" id="email" class="form-control"
+            placeholder="xyz@gmail.com">
         </div>
-  
+
         <label for="password">Password</label>
         <div class="eyes">
-          <img id="eye_slash" class="eye1" src="icons/hide(1).png"   alt="">
+          <img id="eye_slash" class="eye1" src="icons/hide(1).png" alt="">
           <img src="icons/view.png" style="display: none;" class="eye1" id="eye" alt="">
         </div>
-        
+
         <div>
           <input style="width: 290px;" type="password" name="password" id="password" class="form-control">
+          <span id="text" style="color: red;"></span>
         </div>
-  
+
         <div class="main_err">
           <div><a href="/user">Forgot password?</a></div>
           <div class="main_err" id="main_err" style="color: red;">
           </div>
         </div>
-  
+
         <button style="width: 290px;" type="button" onclick="submitbtn()">Login</button>
       </form>
     </div>

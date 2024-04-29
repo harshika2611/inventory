@@ -38,16 +38,16 @@
           <div id="filter" class="filter">
 
             <div class="filter3">
-              <input class="form-control form2 mr-sm-2 w-40" type="search" id="input" placeholder="Search"
-                onkeyup="search(this.value)" aria-label="Search" />
+              <input class="form-control form2 mr-sm-2 w-40" type="search" id="search" placeholder="Search"
+                onkeyup="search()" aria-label="Search" />
             </div>
-            <div class="filter2"> <select onchange="managerFilter()" name="status"
-                class="btn btn-secondary dropdown-toggle filter1" id="status">
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                  <option value="Active" selected>Active</option>
-                  <option value="Inactive">Inactive</option>
-                </div>
-              </select></div>
+            <div class="form-floating filter2">
+              <select name="status" class="form-select filter1" id="status" onchange="managerFilter()">
+                <option value="Active" selected>Active</option>
+                <option value="Inactive">Inactive</option>
+              </select>
+              <label for="floatingPaymentStatus">Status</label>
+            </div>
           </div>
           <div class="grid" id="grid">
             <table class="table table-hover" id="table">
@@ -58,7 +58,9 @@
           </div>
         </div>
         <%- include('../form/managerForm')%>
-          <%- include('../components/pagginationComponent')%>
+          <section class="d-flex justify-content-center" id="paggination">
+            <%- include('../components/pagginationComponent')%>
+          </section>
       </section>
       <script src="js/commonFunction/commonFunction.js"></script>
       <script src="js/manager/manager.js"></script>

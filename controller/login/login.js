@@ -34,6 +34,7 @@ const getLogin = async (req, res) => {
 
 const userLogin = async (req, res) => {
   const user = await userLoginService(req.body);
+  console.log(user, 'aaa');
   if (user.length > 0 && user[0].status == 6) {
     const result = await bcrypt.compare(req.body.password, user[0].password);
     const expireDatePass = new Date(user[0].expiry);
@@ -67,7 +68,8 @@ const userLogin = async (req, res) => {
         const log = await logUnsuccessService(id);
         res.status(401).send('invalid email or password');
       }
-    } else if (user[0].role_id == 5) {
+    }
+    if (user[0].role_id == 5 && user[0].is_delete == 0) {
       if (result) {
         if (Math.abs((newDatePass - expireDatePass) / 1000 / 3600 / 24) < 10) {
           const userId = user[0].id;
@@ -95,6 +97,8 @@ const userLogin = async (req, res) => {
         const error = 'invalid email or password';
         res.status(401).send('invalid email or password');
       }
+    } else {
+      res.status(402).send('no logner available');
     }
   }
 };

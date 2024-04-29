@@ -46,11 +46,14 @@
   margin-right: auto;
   width: auto;
 }
-th{
+th {
   background-color: #002f4b !important;
   color: white !important;
 }
 #paggination {
   display: flex;
   justify-content: center;
+}
+.fill2 {
+  margin-left: 1%;
 }

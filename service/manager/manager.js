@@ -65,7 +65,7 @@ WHERE
 ORDER BY ${field} ${order}`;
 
     const [ans] = await connection.execute(sql0, [status, 0]);
-    console.log(ans);
+    
     return ans;
   } catch (error) {
     logger.logError(`Error`, error);

@@ -4,11 +4,22 @@ function manageProductFormValidation(req, res, next) {
   const numberregex = /^[0-9]+$/;
   for (let key in productDetails) {
     switch (key) {
+      case 'storageIn':
+        if (productDetails[key] == '') {
+          productFormError[key] = '* require';
+        } else {
+          delete productFormError[key];
+        }
+        break;
       case 'productname':
         if (productDetails[key].length === 0) {
           productFormError[key] = '* require';
         } else if (
           productDetails[key].length < 3 &&
+          productDetails[key] !== ''
+        ) {
+          productFormError[key] = '* Please Enter Productname';
+        } else if (
           productDetails[key].length > 15 &&
           productDetails[key] !== ''
         ) {
@@ -33,7 +44,7 @@ function manageProductFormValidation(req, res, next) {
         }
         break;
 
-      case 'cost':
+      case 'Price':
         if (productDetails[key].length === 0) {
           productFormError[key] = '* require';
         } else if (
@@ -53,24 +64,17 @@ function manageProductFormValidation(req, res, next) {
           delete productFormError[key];
         }
         break;
-      case 'Stock':
-        if (productDetails[key].length === 0) {
-          productFormError[key] = '* require';
-        } else if (
-          !numberregex.test(productDetails[key]) &&
-          productDetails[key] !== ''
-        ) {
-          productFormError[key] = '* Please Enter Valid Stock';
-        } else {
-          delete productFormError[key];
-        }
-        break;
+
       case 'description':
         if (productDetails[key].length === 0) {
           productFormError[key] = '* require';
         } else if (
           productDetails[key] !== '' &&
-          productDetails[key].length < 3 &&
+          productDetails[key].length < 3
+        ) {
+          productFormError[key] = '* Please Enter Valid description';
+        } else if (
+          productDetails[key] !== '' &&
           productDetails[key].length > 35
         ) {
           productFormError[key] = '* Please Enter Valid description';

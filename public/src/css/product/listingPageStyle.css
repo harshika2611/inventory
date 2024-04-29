@@ -98,3 +98,15 @@ th {
   justify-content: space-between;
   align-items: center;
 }
+table,
+th,
+td {
+  margin-left: auto;
+  margin-right: auto;
+  border-collapse: collapse;
+  text-align: center;
+}
+/* #paggination {
+  display: flex;
+  justify-content: center;
+} */

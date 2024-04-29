@@ -11,6 +11,16 @@ function manageManagerFormValidation(req, res, next) {
           managerDetails[key] !== ''
         ) {
           managerFormError[key] = '* Please Enter Firstname';
+        } else if (
+          managerDetails[key].trim().length < 3 &&
+          managerDetails[key] !== ''
+        ) {
+          managerFormError[key] = '* Please valid firstname';
+        } else if (
+          managerDetails[key].trim().length > 15 &&
+          managerDetails[key] !== ''
+        ) {
+          managerFormError[key] = '* Please valid firstname';
         } else {
           delete managerFormError[key];
         }
@@ -24,6 +34,16 @@ function manageManagerFormValidation(req, res, next) {
           managerDetails[key] !== ''
         ) {
           managerFormError[key] = '* Please Enter Lastname';
+        } else if (
+          managerDetails[key].trim().length < 3 &&
+          managerDetails[key] !== ''
+        ) {
+          managerFormError[key] = '* Please valid Lastname';
+        } else if (
+          managerDetails[key].trim().length > 15 &&
+          managerDetails[key] !== ''
+        ) {
+          managerFormError[key] = '* Please valid Lastname';
         } else {
           delete managerFormError[key];
         }

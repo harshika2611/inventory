@@ -59,7 +59,7 @@ const manageManager = async (req, res) => {
           req.body,
           req.user
         );
-        return res.status(200).send('maanger add');
+        return res.status(200).send('manager add');
       } catch (error) {
         logger.logError(error);
         return res.status(500).json({ message: 'can`t fetch user controller' });

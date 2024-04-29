@@ -97,11 +97,18 @@ th {
   display: flex;
   align-items: center;
 }
-.filter2 {
-  width: 125px;
-}
+
 .filter {
   display: flex;
   justify-content: space-between;
   margin-top: 30px;
+  align-items: center;
+}
+table,
+th,
+td {
+  margin-left: auto;
+  margin-right: auto;
+  border-collapse: collapse;
+  text-align: center;
 }
