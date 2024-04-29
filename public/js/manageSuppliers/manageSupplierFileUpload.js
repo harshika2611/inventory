@@ -21,6 +21,10 @@ async function supplierFileUpload() {
   //first check file is select or not
   const suppliersFile = document.getElementById("suppliersFile");
   if (suppliersFile.files.length === 0) {
+    const fileerror = document.getElementById("fileerrorSpan");
+    if (fileerror) {
+      fileerror.remove();
+    }
     const fileerrorSpan = document.createElement("span");
     fileerrorSpan.setAttribute("id", "fileerrorSpan");
     fileerrorSpan.innerHTML = "* please select file";

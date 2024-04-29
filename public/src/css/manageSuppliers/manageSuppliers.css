@@ -128,7 +128,6 @@ a {
   display: flex;
   gap: 20px;
   position: relative;
-  margin-left: 792px;
 }
 #supplierFileUploadForm {
   display: none;

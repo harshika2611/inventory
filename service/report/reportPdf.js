@@ -1,4 +1,3 @@
-const { json } = require('body-parser');
 const connection = require('../../config/connection.js');
 const logger = require('../../logs.js');
 
@@ -29,6 +28,26 @@ async function  productGenerateReport(productReportObject, storageId) {
   }
 }
 
+async function productOutOfStockGenerateReport(productReportObject, storageId) {
+  try {
+    const maximumQunatity = productReportObject.maximumQunatity;
+    const categoryName = productReportObject.categoryName;
+
+    const productReportQuery = `SELECT product_master.product_name,product_master.sku_id,products_details.stock
+      FROM product_master
+      LEFT JOIN products_details ON product_master.id=products_details.product_id
+      LEFT JOIN option_master ON product_master.category_id = option_master.id
+      LEFT JOIN select_master ON option_master.select_id = select_master.id
+      WHERE option_master.value=? AND products_details.storage_id = ? AND products_details.stock <= ? AND product_master.is_delete=?`;
+
+    const [result] = await connection.execute(productReportQuery, [categoryName, storageId, maximumQunatity, 0]);
+    return result;
+  } catch (error) {
+    logger.logError("Product Out Of Stock Report: " + error);
+    throw error;
+  }
+}
+
 
 async function storageDetails(storageId) {
   try {
@@ -45,4 +64,4 @@ async function storageDetails(storageId) {
   }
 }
 
-module.exports = { productGenerateReport, storageDetails };
+module.exports = { productGenerateReport, productOutOfStockGenerateReport, storageDetails };

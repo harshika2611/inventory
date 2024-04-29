@@ -175,11 +175,9 @@ function generateWarehousesDropDown(id = null, renderDeleted = false) {
         (arr) => {
           content += `<optgroup label="${arr[0]}">`;
           arr[1].forEach((o) => {
-            content += `<option value="${o.id}" ${
-              o.id == id ? 'selected="selected"' : ''
-            } ${o.is_delete && !renderDeleted ? 'disabled="true"' : ''}>${
-              o.name
-            } (${o.city_name})</option>`;
+            content += `<option value="${o.id}" ${o.id == id ? 'selected="selected"' : ''
+              } ${o.is_delete && !renderDeleted ? 'disabled="true"' : ''}>${o.name
+              } (${o.city_name})</option>`;
           });
           content += `</optgroup>`;
         }
@@ -210,9 +208,8 @@ function generateDropDown(value, selectedId) {
     .then((data) => {
       let content = '';
       data.forEach((o) => {
-        content += `<option value="${o.opt_id}" ${
-          o.opt_id == selectedId ? 'selected="selected"' : ''
-        }>
+        content += `<option value="${o.opt_id}" ${o.opt_id == selectedId ? 'selected="selected"' : ''
+          }>
             ${o.value}
           </option>`;
       });

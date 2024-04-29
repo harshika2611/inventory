@@ -69,7 +69,14 @@ function dataTableGrid(supplierArray, startIndex) {
             createTd.textContent = renderTimestamp(element[key]);
             createTr.appendChild(createTd);
             break;
-
+          case "Address":
+            if (element[key].length === 0) {
+              createTd.textContent = "-";
+            } else {
+              createTd.textContent = element[key];
+            }
+            createTr.appendChild(createTd);
+            break;
           default:
             createTd.textContent = element[key];
             createTr.appendChild(createTd);
