@@ -62,11 +62,14 @@ function manageSupplierFormValidation(supplierFormData) {
         break;
 
       case "gst":
+        const gstRegex = /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/;
 
         if (supplierFormData[key].length === 0) {
           supplierFormErrorObject[key] = "* require";
         } else if (supplierFormData[key].trim().length === 0 && supplierFormData[key] !== "") {
-          supplierFormErrorObject[key] = "* Please Enter GST";
+          supplierFormErrorObject[key] = "* Please Enter GST Number";
+        } else if (!gstRegex.test(supplierFormData[key]) && supplierFormData[key] !== "") {
+          supplierFormErrorObject[key] = "* Please Enter Valid GST Number";
         } else {
           delete supplierFormErrorObject[key];
         }

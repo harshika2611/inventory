@@ -45,17 +45,27 @@ a {
   margin-left: 10px;
 }
 
+.reportGenerate-div {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
 .reportGenerate-div label {
   font-size: 20px;
 }
 
-.reportGenerate-div + div {
+.reportRadioOption {
   display: flex;
-  gap: 20px;
+  gap: 5px;
   align-items: center;
 }
-#productCategorySelect {
+#productCategorySelect,
+#customizeOptionSelect {
   padding: 10px 0;
+  border-radius: 6px;
+  border: 1px solid #102f4b;
+  background-color: white;
+  cursor: pointer;
 }
 
 .productCustomizeOption {
@@ -67,6 +77,10 @@ a {
   display: flex;
   flex-direction: column;
   gap: 20px;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 20px;
+  width: 800px;
 }
 
 #customizeOptionDiv {
@@ -80,11 +94,12 @@ a {
   align-items: center;
 }
 
-.addnewcustomerbutton,
-.customerfilterbutton,
-#fileUploadButton {
+.generatePdfButton,
+.pdfDownloadButton {
+  margin: 0;
   padding: 10px;
-  background-color: gray;
+  background-color: #102f4b;
+  color: white;
   cursor: pointer;
   border-radius: 10px;
 }

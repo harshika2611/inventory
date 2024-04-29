@@ -29,7 +29,6 @@ async function submitSupplierDetails() {
   const supplierDetailsValidation =
     manageSupplierFormValidation(supplierFormData);
   // const supplierDetailsValidation = true;
-
   if (Object.keys(supplierDetailsValidation).length > 0) {
     //----client side validation error
     errorShow(supplierDetailsValidation);

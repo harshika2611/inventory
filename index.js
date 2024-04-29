@@ -18,10 +18,14 @@ const {
   getAllNotifications,
   readNotifications,
 } = require('./service/notification/index.js');
+
+const { unlinkProductPdf } = require('./controller/report/reportPdf.js');
+
 const server = http.createServer(app);
 const io = new Server(server);
 
 io.on('connection', async (socket) => {
+
   const results = await getAllNotifications();
   io.emit('notifications', results);
   socket.on('readyForNotifications', async () => {
@@ -31,6 +35,9 @@ io.on('connection', async (socket) => {
 
   socket.on('markAsRead', async () => {
     await readNotifications();
+  });
+  socket.on('unlinkProductPdf', (req) => {
+    unlinkProductPdf(req);
   });
 });
 

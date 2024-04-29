@@ -25,6 +25,12 @@
       text-align: left;
       padding: 8px;
     }
+
+    .pdfTitle {
+      text-align: center;
+      font-size: 25px;
+      font-weight: 400;
+    }
   </style>
 </head>
 
@@ -33,10 +39,18 @@
     <div class="productPdf-div">
       <table class="productdetails__table">
         <tr>
-          <td colspan="4">Inventory Management</td>
+          <td colspan="4" class="pdfTitle">Inventory Management</td>
         </tr>
         <tr>
-          <td colspan="4">Product Details</td>
+          <td colspan="<%= data.maximumStockQunatity ? '3' : '4'%>">
+            Report Type: <%= data.reportType ? data.reportType : "-" %>
+          </td>
+          <%if(data.maximumStockQunatity){%>
+            <td colspan="1">
+              Maximum Stock Quantity: <%= data.maximumStockQunatity%>
+            </td>
+            <%}%>
+
         </tr>
         <tr>
           <td colspan="3">

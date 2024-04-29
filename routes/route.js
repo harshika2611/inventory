@@ -129,7 +129,7 @@ const {
 const {
   reportPdfPage,
   productReportGenerate,
-  generatePdf,
+  outOfStockProducts
 } = require('../controller/report/reportPdf.js');
 
 const {
@@ -206,6 +206,12 @@ router.post(
   '/reportGenerate',
   passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
   productReportGenerate
+);
+
+router.post(
+  '/api/outOfStockProductReport',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  outOfStockProducts
 );
 
 //----Dashboard
