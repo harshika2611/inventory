@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -47,17 +47,17 @@
           <img src="icons/cust.png" alt="" width="40px" height="40px" style="margin-top: 20px;">&emsp;&emsp;
           <p class="managecustomerTitle">Customers</p>
         </div>
-        <div class="managecustomer-container__button">
-          <p class="addnewcustomerbutton" onclick="addNewCustomer()">Add New</p>
-          <p class="customerfilterbutton" onclick="customerFilterShow()">Filter</p>
-        </div>
-        <div class="importDataDiv">
-          <p class="importDataButton" onclick="showFileUpload()">Import Data</p>
-          <form enctype="multipart/form-data" id="customerFileUploadForm" name="customerFileUploadForm">
-            <input type="file" id="customersFile" name="customersFile" accept=".csv">
-            <p id="fileUploadButton" onclick="customerFileUpload()">Upload File</p>
-          </form>
-        </div>
+          <div class="managecustomer-container__button">
+            <p class="customerfilterbutton" onclick="customerFilterShow()">Filter</p>
+          </div>
+          <div class="importDataDiv">
+            <p class="importDataButton" onclick="showFileUpload()">Import Data</p>
+            <p class="addnewcustomerbutton" onclick="addNewCustomer()">Add New</p>
+            <form enctype="multipart/form-data" id="customerFileUploadForm" name="customerFileUploadForm">
+              <input type="file" id="customersFile" name="customersFile" accept=".csv">
+              <p id="fileUploadButton" onclick="customerFileUpload()">Upload File</p>
+            </form>
+          </div>
 
       </div>
       <%- include('../form/customerForm')%>

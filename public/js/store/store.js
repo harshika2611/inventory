@@ -116,7 +116,7 @@ async function submitStoreDetails() {
     let result = await response.json();
 
     try {
-      console.log(result.status);
+      // console.log(result.status);
       // if (!result.ok) {
       //   throw new Error("Error In Backend Validation Manage Store");
       // }
@@ -321,29 +321,20 @@ function debounce(cb, interval, immediate) {
   };
 }
 
-const search = (key) => {
-  // Declare variables
-  var input, filter, table, tr, td, i, txtValue;
-  input = key;
-  // console.log(input);
-  filter = input;
-  table = document.getElementById('store__table');
-  tr = table.getElementsByTagName('tr');
-  console.log(tr);
-  // Loop through all table rows, and hide those who don't match the search query
-  for (i = 0; i < tr.length; i++) {
-    for (let j = 0; j < 5; j++) {
-      td = tr[i].getElementsByTagName('td')[j];
-      if (td) {
-        txtValue = td.textContent || td.innerText;
-        if (txtValue.indexOf(filter) > -1) {
-          tr[i].style.display = '';
-          break;
-        } else {
-          tr[i].style.display = 'none';
-        }
-      }
-    }
+function search() {
+  let searchbar = document.getElementById('searchbar').value.toLowerCase().trim();
+  if (searchbar == '') {
+    paggination(null, dataArray);
+  } else {
+    filteredResult = dataArray.filter((ele) => {
+      return (
+        ele.StorageName.toLowerCase().includes(searchbar) ||
+        ele.StorageType.toLowerCase().includes(searchbar) ||
+        ele.Location.toLowerCase().includes(searchbar)
+      );
+    });
+    console.log(filteredResult);
+    paggination(null, filteredResult);
   }
-};
+}
 // document.getElementById('input').onkeyup = debounce(search, 400);
