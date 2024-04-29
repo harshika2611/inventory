@@ -2,7 +2,7 @@ const { json } = require('body-parser');
 const connection = require('../../config/connection.js');
 const logger = require('../../logs.js');
 
-async function productGenerateReport(productReportObject, storageId) {
+async function  productGenerateReport(productReportObject, storageId) {
   try {
     const databaseObject = productReportObject.databaseObject;
     const categoryName = productReportObject.categoryName;

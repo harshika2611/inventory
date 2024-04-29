@@ -15,7 +15,6 @@ function forgotFormValidation(data) {
         break;
 
       case 'confirm_pass':
-
         if (data[key].length === 0) {
           forgotError[key] = '* require';
         } else if (data[key].length < 8 && data[key] !== '') {
@@ -42,3 +41,11 @@ function forgotFormValidation(data) {
 
   return forgotError;
 }
+document.getElementById('new_pass').addEventListener('keyup', (e) => {
+  if (e.getModifierState('CapsLock')) {
+    document.getElementById('text').innerHTML = 'Caps lock is ON';
+  } else {
+    document.getElementById('text').innerHTML = '';
+  }
+
+});

@@ -14,7 +14,6 @@ function loginFormValidation(data) {
         }
         break;
       case 'password':
-  
         if (data[key].length === 0) {
           loginError[key] = '* require';
         } else if (data[key].length < 8 && data[key] !== '') {
@@ -40,3 +39,10 @@ function loginFormValidation(data) {
   }
   return loginError;
 }
+document.getElementById('password').addEventListener('keyup', (e) => {
+  if (e.getModifierState('CapsLock')) {
+    document.getElementById('text').innerHTML = 'Caps lock is ON';
+  } else {
+    document.getElementById('text').innerHTML = '';
+  }
+});

@@ -24,7 +24,6 @@ const io = new Server(server);
 io.on('connection', async (socket) => {
   const results = await getAllNotifications();
   io.emit('notifications', results);
-
   socket.on('readyForNotifications', async () => {
     const results = await getAllNotifications();
     io.emit('notifications', results);

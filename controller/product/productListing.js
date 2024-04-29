@@ -66,7 +66,6 @@ const getProductDetails = async (req, res) => {
 const deleteMainProduct = async (req, res) => {
   try {
     const id = req.params.id;
-    // console.log(id, 'get');
     const result = await deleteMainProductService(id);
     if (result.affectedRows > 0) {
       return res.status(200).json({ message: 'Product is deleted' });

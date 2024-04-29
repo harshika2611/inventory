@@ -34,8 +34,8 @@
           </div>
           <div class="main2" id="main2">
             <div class="filter3">
-              <input class="form-control form2 mr-sm-2 w-60" type="search" id="input" placeholder="Search"
-                onkeyup="search(this.value)" aria-label="Search" />
+              <input class="form-control form2 mr-sm-2 w-60" type="search" id="search" placeholder="Search"
+                onkeyup="search()" aria-label="Search" />
             </div>
             <div id="filter" class="filter">
               <%if(data.roleId==4){%>
@@ -55,10 +55,14 @@
             </thead>
             <tbody id="tbody"></tbody>
           </table>
+          <div id="data"></div>
         </div>
         </div>
         <%- include('../form/productForm')%>
-          <%- include('../components/pagginationComponent')%>
+          <section class="d-flex justify-content-center" id="paggination">
+            <%- include('../components/pagginationComponent')%>
+          </section>
+
       </section>
       <script src="js/commonFunction/commonFunction.js"></script>
       <script src="js/products/product.js"></script>

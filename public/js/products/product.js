@@ -2,7 +2,7 @@ let url = new URL(window.location.href);
 
 async function addProduct() {
   getAllStore();
-  const storageOptionosIn = await generateWarehousesDropDown(1);
+  const storageOptionosIn = await generateWarehousesDropDown();
   if (document.getElementById('storageComboIn') != null) {
     document.getElementById('storageComboIn').innerHTML = storageOptionosIn;
   }
@@ -17,6 +17,7 @@ function closeForm() {
   document.getElementById('myForm').style.display = 'none';
   document.getElementById('main2').style = 'none';
   document.getElementById('grid').style = 'none';
+  document.getElementById('head').style = 'none';
 }
 async function submitbtn() {
   try {
@@ -81,9 +82,11 @@ async function submitbtn() {
 }
 
 async function allFetch() {
-  let storage = document.getElementById('storageCombo').value;
+  if (document.getElementById('storageComboIn') != null) {
+    let storage = document.getElementById('storageCombo').value;
+    url = `/api/products?storage=${storage}`;
+  }
 
-  url = `/api/products?storage=${storage}`;
   paggination(url);
 }
 
@@ -150,31 +153,29 @@ function dataTableGrid(product, startIndex) {
       spanMain.remove();
     }
   }
+
   createTh = document.createElement('th');
   createTh.setAttribute('class', 'align-middle');
   createTh.textContent = 'Action';
   createTh.colSpan = '2';
   createTr.appendChild(createTh);
   table.appendChild(createTr);
-  console.log(product, 'aaa');
+
   for (const element of product) {
     let createTr = document.createElement('tr');
     tableBody.appendChild(createTr);
 
     for (const key in element) {
-      console.log(element.is_delete, 'all');
-
       const createTd = document.createElement('td');
       if (key == 'id') {
         createTd.textContent = ++startIndex;
         createTr.appendChild(createTd);
-      } else if (key !== 'is_delete') {
+      } else if (key !== 'is_delete' && key !== 'store') {
         createTd.textContent = element[key] == null ? '-' : element[key];
         createTr.appendChild(createTd);
       }
     }
-    console.log(element['is_delete'], 'get');
-    if (element['is_delete'] == 0) {
+    if (element['is_delete'] == 0 && element['store'] == 0) {
       const createEditTd = document.createElement('td');
       const achor = document.createElement('a');
       achor.setAttribute('href', `/productinfo?id=${element.id}`);
@@ -197,9 +198,9 @@ function dataTableGrid(product, startIndex) {
       createEditTd.appendChild(achor);
       createTr.appendChild(createEditTd);
       createTr.appendChild(createDeleteTd);
-    } else if (element['is_delete'] == 1) {
+    } else if (element['is_delete'] == 1 || element['store'] == 1) {
       let actionTd = document.createElement('td');
-      actionTd.setAttribute('colspan', 3);
+      actionTd.setAttribute('colspan', 2);
       actionTd.innerHTML = `<b><i>DELETED</i></b>`;
       createTr.appendChild(actionTd);
     }
@@ -238,33 +239,26 @@ function modelHide() {
 
 function filterUp(event, order) {
   const key = event.target.getAttribute('id');
-  let storage = document.getElementById('storageCombo').value;
-  url = `/api/products?field=${key}&order=${order}&storage=${storage}`;
+  if (document.getElementById('storageComboIn') != null) {
+    let storage = document.getElementById('storageCombo').value;
+    url = `/api/products?field=${key}&order=${order}&storage=${storage}`;
+  } else {
+    url = `/api/products?field=${key}&order=${order}`;
+  }
   paggination(url);
 }
-const search = (key) => {
-  // Declare variables
-  let input, filter, table, tr, td, i, txtValue;
-  input = key;
-
-  filter = input;
-  table = document.getElementById('table');
-  tr = table.getElementsByTagName('tr');
-
-  // Loop through all table rows, and hide those who don't match the search query
-  for (i = 0; i < tr.length; i++) {
-    for (let j = 0; j < 7; j++) {
-      td = tr[i].getElementsByTagName('td')[j];
-      if (td) {
-        txtValue = td.textContent || td.innerText;
-        if (txtValue.indexOf(filter) > -1) {
-          tr[i].style.display = '';
-          break;
-        } else {
-          tr[i].style.display = 'none';
-        }
-      }
-    }
+const search = () => {
+  let search = document.getElementById('search').value.toLowerCase().trim();
+  if (search == '') {
+    paggination(null, dataArray);
+  } else {
+    filteredResult = dataArray.filter((ele) => {
+      return (
+        ele.Productname.toLowerCase().includes(search) ||
+        ele.Category.toLowerCase().includes(search)
+      );
+    });
+    paggination(null, filteredResult);
   }
 };
 

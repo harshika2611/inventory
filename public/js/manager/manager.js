@@ -55,7 +55,6 @@ async function submitbtn() {
 
 const getAllCity = async (id, name) => {
   try {
-    console.log(id, name);
     const response = await fetch('/cityCombo');
     const data = await response.json();
     const store = data.result;
@@ -76,7 +75,6 @@ const getAllCity = async (id, name) => {
 
 const getAllStore = async (state, name, cityName) => {
   try {
-    console.log(state, name, cityName, 'ehat');
     let index = document.getElementById('state').value;
     let option = document.getElementById('place');
     const response = await fetch(`/storeCombo/${index}`);
@@ -152,8 +150,12 @@ function dataTableGrid(manager, startIndex) {
       if (key == 'id') {
         createTd.textContent = ++startIndex;
         createTr.appendChild(createTd);
-      } else {
+      } else if (key !== 'Created' && key !== 'Updated') {
         createTd.textContent = element[key] == null ? '-' : element[key];
+        createTr.appendChild(createTd);
+      } else {
+        createTd.textContent =
+          element[key] == null ? '-' : renderTimestamp(element[key]);
         createTr.appendChild(createTd);
       }
     }
@@ -315,27 +317,21 @@ function filterUp(event, order) {
   paggination(url);
 }
 
-const search = (key) => {
-  // Declare variables
-  let input, filter, table, tr, td, i, txtValue;
-  input = key;
-
-  filter = input;
-  table = document.getElementById('table');
-  tr = table.getElementsByTagName('tr');
-  // Loop through all table rows, and hide those who don't match the search query
-  for (i = 0; i < tr.length; i++) {
-    for (let j = 0; j < 7; j++) {
-      td = tr[i].getElementsByTagName('td')[j];
-      if (td) {
-        txtValue = td.textContent || td.innerText;
-        if (txtValue.indexOf(filter) > -1) {
-          tr[i].style.display = '';
-          break;
-        } else {
-          tr[i].style.display = 'none';
-        }
-      }
-    }
+const search = () => {
+  let search = document.getElementById('search').value.toLowerCase().trim();
+  if (search == '') {
+    paggination(null, dataArray);
+  } else {
+    console.log(dataArray);
+    filteredResult = dataArray.filter((ele) => {
+      return (
+        ele.Firstname.toLowerCase().includes(search) ||
+        ele.Lastname.toLowerCase().includes(search) ||
+        ele.Email.toLowerCase().includes(search) ||
+        ele.Place.toLowerCase().includes(search) ||
+        ele.Location.toLowerCase().includes(search)
+      );
+    });
+    paggination(null, filteredResult);
   }
 };
