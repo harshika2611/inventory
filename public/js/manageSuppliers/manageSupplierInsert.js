@@ -1,31 +1,33 @@
 //---------addnew supplier
 async function addNewSupplier() {
-  const supplierForm = document.getElementById("myForm");
-  supplierForm.style.display = "block";
-  document.getElementById("submitButton").innerHTML = "Submit";
-  document.getElementById("submitButton").setAttribute("onclick", `submitSupplierDetails()`);
+  const supplierForm = document.getElementById('myForm');
+  supplierForm.style.display = 'block';
+  document.getElementById('submitButton').innerHTML = 'Submit';
+  document
+    .getElementById('submitButton')
+    .setAttribute('onclick', `submitSupplierDetails()`);
 
-  const addNewCustomerButton = document.querySelector(".addnewcustomerbutton");
+  const addNewCustomerButton = document.querySelector('.addnewcustomerbutton');
 
-  getAllState("stateSelectCombo");  //second parameter those state we need to selected 
+  getAllState('stateSelectCombo'); //second parameter those state we need to selected
 
   //---old field value clear
-  const inputTag = supplierForm.querySelectorAll(".supplierInput");
+  const inputTag = supplierForm.querySelectorAll('.supplierInput');
   for (let element of inputTag) {
-    element.value = "";
+    element.value = '';
   }
 
-  const selectTag = supplierForm.getElementsByTagName("select");
+  const selectTag = supplierForm.getElementsByTagName('select');
   for (let element of selectTag) {
     element.selectedIndex = 0;
   }
 }
 
-
 async function submitSupplierDetails() {
-  const supplierFormData = formData('supplierForm');  //parameter as formname
+  const supplierFormData = formData('supplierForm'); //parameter as formname
 
-  const supplierDetailsValidation = manageSupplierFormValidation(supplierFormData);
+  const supplierDetailsValidation =
+    manageSupplierFormValidation(supplierFormData);
   // const supplierDetailsValidation = true;
 
   if (Object.keys(supplierDetailsValidation).length > 0) {
@@ -37,21 +39,21 @@ async function submitSupplierDetails() {
       method: 'POST',
       body: JSON.stringify(supplierFormData),
       headers: {
-        "Content-Type": "application/json"
-      }
+        'Content-Type': 'application/json',
+      },
     });
 
     try {
       if (!response.ok) {
-        throw new Error("Error In Backend Validation Manage Supplier");
+        throw new Error('Error In Backend Validation Manage Supplier');
       }
 
       if (response.status === 200) {
         const responseMessage = await response.json();
 
         //-----message pop up show
-        const supplierForm = document.getElementById("myForm");
-        supplierForm.style.display = "none";
+        const supplierForm = document.getElementById('myForm');
+        supplierForm.style.display = 'none';
         getSuppliers();
         messagePopUp(responseMessage.message);
 

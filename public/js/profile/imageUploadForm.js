@@ -1,6 +1,14 @@
 const chooseFile = document.getElementById('choose-file');
 const imgPreview = document.getElementById('preview');
 const uploadButton = document.getElementById('UploadImage');
+function validateFilePayload() {
+  if (chooseFile.value == '') {
+    document.getElementById('errorText').innerHTML =
+      '* Please choose file first';
+  } else {
+    document.getElementById('errorText').innerHTML = null;
+  }
+}
 chooseFile.addEventListener('change', function () {
   validateFile();
 });
@@ -11,6 +19,7 @@ function validateFile() {
   const maxSize = maxSizeKB * 1024;
   if (files.size > maxSize) {
     alert('The image exceeded the maximum size of 1 MB');
+    chooseFile.value = '';
   } else {
     getImage();
   }
@@ -32,4 +41,4 @@ function getImage() {
 uploadButton.addEventListener('click', function () {
   uploadImage();
 });
-async function uploadImage() { }
+async function uploadImage() {}
