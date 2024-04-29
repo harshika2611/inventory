@@ -27,7 +27,7 @@ async function getAllProducts() {
 async function getProductsByCategory(id) {
   try {
     const [results] = await connection.execute(
-      'SELECT `id`, `product_name` FROM product_master WHERE `category_id` = ?',
+      'SELECT `id`, `product_name`, is_delete as deleted FROM product_master WHERE `category_id` = ?',
       [id]
     );
     return results;
@@ -45,7 +45,8 @@ async function getAllWarehouses() {
         s.name,
         s.storage_type,
         c.city_name,
-        o.value
+        o.value,
+        s.is_delete
       FROM
         storage_space_master as s
           join
@@ -284,6 +285,7 @@ async function fetchPurchaseOrders(data) {
     const [results] = await connection.execute(
       `SELECT
         purchase.id,
+        purchase.name as oname,
         supplier.firstname as fname,
         supplier.companyname as company,
         supplier.phonenumber as phone,

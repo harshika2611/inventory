@@ -4,6 +4,7 @@ const {
   checkProductSevice,
   insertProductService,
   insertProductDetailService,
+  getProductDetailsService,
 } = require('../../service/products/product');
 const logger = require('../../logs');
 
@@ -52,6 +53,16 @@ const getApiproduct = async (req, res) => {
   }
 };
 
+const getProductDetails = async (req, res) => {
+  try {
+    let id = req.params.id;
+    const [rows] = await getProductDetailsService(id);
+    return res.json(rows);
+  } catch (err) {
+    logger.logError(err);
+  }
+};
+
 const deleteMainProduct = async (req, res) => {
   try {
     const id = req.params.id;
@@ -73,4 +84,5 @@ module.exports = {
   productListing,
   getApiproduct,
   manageProduct,
+  getProductDetails,
 };

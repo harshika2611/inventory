@@ -190,7 +190,11 @@ router.get(
 );
 
 // passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
-router.post('/api/combos', passport.authenticate('jwt', { session: false, failureRedirect: '/' }), getCombosDetails);
+router.post(
+  '/api/combos',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  getCombosDetails
+);
 // router.post('/api/pdfTemplate', generatePdf);
 router.get(
   '/reportGenerate',
@@ -632,6 +636,7 @@ const {
   manageProduct,
   productListing,
   getApiproduct,
+  getProductDetails,
 } = require('../controller/product/productListing.js');
 const {
   productInfo,
@@ -666,6 +671,11 @@ router.get(
   '/api/products',
   passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
   getApiproduct
+);
+router.get(
+  '/api/productDetails/:id',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  getProductDetails
 );
 router.get(
   '/api/deleteProduct/:id',

@@ -23,10 +23,6 @@ const productValid = {
     required: true,
     pattern: patterns.numberOnly,
   },
-  stock: {
-    required: true,
-    pattern: patterns.numberOnly,
-  },
   description: {
     required: false,
     pattern: patterns.textOnly,
@@ -47,7 +43,6 @@ const productInfo = async (req, res) => {
 
 const productInfoPost = async (req, res) => {
   try {
-    let storage = req.user.storageId || '1';
     await updateProduct({ ...req.body, id: req.query.id }, req.user);
     res.status(200).json({ message: 'Product Updated...' });
   } catch (err) {

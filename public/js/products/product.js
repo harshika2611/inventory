@@ -88,7 +88,7 @@ async function allFetch() {
 }
 
 async function getProducts() {
-  const storageOptionos = await generateWarehousesDropDown(1);
+  const storageOptionos = await generateWarehousesDropDown(1, true);
   if (document.getElementById('storageCombo') != null) {
     document.getElementById('storageCombo').innerHTML = storageOptionos;
   }

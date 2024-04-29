@@ -13,8 +13,8 @@ form {
 
 input[type='search'] {
   padding: 5px;
-  border-radius: 50px;
-  outline: none;
+  /* border-radius: 50px;
+  outline: none; */
 }
 
 th,

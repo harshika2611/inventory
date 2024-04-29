@@ -17,7 +17,7 @@ async function initial() {
 
   document.getElementById('floatingPaymentStatus').innerHTML = paymentOptions;
 
-  const storageOptions = await generateWarehousesDropDown(1);
+  const storageOptions = await generateWarehousesDropDown(1, true);
 
   document.getElementById('floatingStorageId').innerHTML = storageOptions;
 }
@@ -107,7 +107,7 @@ async function dataTableGrid(records) {
     } else {
       let actionTd = document.createElement('td');
       actionTd.setAttribute('colspan', 3);
-      actionTd.innerHTML = `<b><i>DELETED</i></b>`; 
+      actionTd.innerHTML = `<b><i>DELETED</i></b>`;
       [actionTd].forEach((e) => tr.appendChild(e));
     }
 
@@ -131,12 +131,7 @@ function triggerStorageStatus(e) {
 
 function searchAnything(e) {
   let filteredOrders = dataArray.filter((obj) =>
-    Object.values({
-      fname: obj.fname,
-      company: obj.company,
-      phone: obj.phone,
-      gst: obj.gst,
-    }).some((v) =>
+    [obj.fname, obj.company, obj.phone, obj.gst, obj.oname].some((v) =>
       new RegExp(`.*${e.target.value.toLowerCase().trim()}.*`).test(
         v.toLowerCase()
       )

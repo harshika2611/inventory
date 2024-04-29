@@ -1,6 +1,28 @@
 const connection = require('../../config/connection.js');
 const logger = require('../../logs.js');
 
+const getProductDetailsService = async (
+  productId,
+  order,
+  field,
+  storage,
+  payload
+) => {
+  const sql = `
+    SELECT
+      id,
+      product_master.product_name as productname,
+      product_master.sku_id as skuid,
+      product_master.category_id as categoryId,
+      cost,
+      description
+    FROM
+      product_master
+    WHERE
+      id = ?`;
+  return await connection.execute(sql, [productId]);
+};
+
 const getProduct = async (product, order, field, storage, payload) => {
   let Query =
     'SELECT product_master.id,product_name as Productname,sku_id as SKUid,option_master.value as Category ,cost as Cost,stock as Quantity,description as Description,is_delete FROM product_master left join products_details on product_master.id=products_details.product_id left join option_master on product_master.category_id =option_master.id  where';
@@ -17,6 +39,7 @@ const getProduct = async (product, order, field, storage, payload) => {
     ]);
   }
 };
+
 const updateProduct = async (body, payload) => {
   const [result] = await connection.execute(
     `select * from product_master where id=?;`,
@@ -28,14 +51,24 @@ const updateProduct = async (body, payload) => {
       [body.id]
     );
     const insertedId = await insertProductService(body);
-    console.log(insertedId,"harshi");
-    const ans1 = await insertProductDetailService(insertedId, body, payload);
+
+    await connection.execute(
+      `UPDATE products_details SET product_id = ? WHERE product_id = ?`,
+      [insertedId, body.id]
+    );
   } else {
     let [rows] = await connection.execute(
       'update product_master set product_name = ?,sku_id=?,category_id=?,cost=?,description=? where id = ?',
-      [body.productname, body.skuid, body.category, body.cost, body.description,body.id]
+      [
+        body.productname,
+        body.skuid,
+        body.category,
+        body.cost,
+        body.description,
+        body.id,
+      ]
     );
-  }  
+  }
   // let [rows] = await connection.execute(
   //   'INSERT INTO product_master(product_name,sku_id,category_id,cost,description) values(?,?,?,?,?)',
   //   [body.productname, body.skuid, body.category, body.cost, body.description]
@@ -118,4 +151,5 @@ module.exports = {
   checkProductSevice,
   insertProductDetailService,
   insertProductService,
+  getProductDetailsService,
 };

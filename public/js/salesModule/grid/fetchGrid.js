@@ -1,13 +1,13 @@
 const colmap = new Map([
-  ["id","ID"],
-  ["firstname", "FirstName"],
-  ["lastname", "LastName"],
-  ["id","ID"],
-  ["amount","Amount"],
-  ["shipping_address","ShippingAddress"],
-  ["payment_status","PaymentStatus"],
-  ["order_date","Date"],
-  ["type", "OrderType"]
+  ['id', 'ID'],
+  ['firstname', 'FirstName'],
+  ['lastname', 'LastName'],
+  ['id', 'ID'],
+  ['amount', 'Amount'],
+  ['shipping_address', 'ShippingAddress'],
+  ['payment_status', 'PaymentStatus'],
+  ['order_date', 'Date'],
+  ['type', 'OrderType'],
 ]);
 
 async function fetching(offset) {
@@ -19,7 +19,7 @@ async function fetching(offset) {
   }
   url = `/salesorder?storage=${storage}`;
   // if (offset != ''||offset) {
-    url = url + offset;
+  url = url + offset;
   // }
   paggination(url);
 }
@@ -36,7 +36,9 @@ function dataTableGrid(result) {
       key != 'storage_id' &&
       key != 'is_delete'
     ) {
-      head += `<th scope="col"> <span class="d-inline-flex flex-row align-items-center">${colmap.get(key)} <span class="d-inline-flex flex-column align-items-center ms-2">
+      head += `<th scope="col"> <span class="d-inline-flex flex-row align-items-center">${colmap.get(
+        key
+      )} <span class="d-inline-flex flex-column align-items-center ms-2">
       <span style="cursor: pointer" onclick="onclickOrderby('${key}','asc')">^</span>
       <span style="rotate: 180deg; cursor: pointer" onclick="onclickOrderby('${key}','desc')">^</span></span>
     </span></th>`;
@@ -106,32 +108,9 @@ function onclickOrderby(col, type) {
 
 async function onLoad() {
   if (document.getElementById('storageCombo') != null) {
-    const storageOptionos = await generateWarehousesDropDown(1);
+    const storageOptionos = await generateWarehousesDropDown(1, true);
     document.getElementById('storageCombo').innerHTML = storageOptionos;
   }
   fetching();
 }
 onLoad();
-
-function generateWarehousesDropDown(id = null) {
-  return fetch('api/purchase/warehouses')
-    .then((res) => res.json())
-    .then((data) => {
-      let content = '';
-
-      Object.entries(Object.groupBy(data, ({ value }) => value)).forEach(
-        (arr) => {
-          content += `<optgroup label="${arr[0]}">`;
-          arr[1].forEach((o) => {
-            content += `<option value="${o.id}" ${
-              o.id == id ? 'selected="selected"' : ''
-            }>${o.name} (${o.city_name})</option>`;
-          });
-          content += `</optgroup>`;
-        }
-      );
-
-      return content;
-    })
-    .catch(() => '');
-}
