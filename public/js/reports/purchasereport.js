@@ -50,26 +50,3 @@ const changesInApi = (array) => {
   });
   return array;
 };
-
-const orderbyField = async (field, order) => {
-  // let api = `api/purchasereport/allproduct?fieldName=${field}&order=${order}`;
-  // let apiData = await fetchapi(api);
-  // showData(apiData);
-};
-
-{
-  /* <span>
-	<span
-	class="btn btn-dark btn-sm float-end mx-1"
-	onclick="orderbyField('${e}','asc')"
-	>
-	&#8593;
-	</span>
-	<span
-	class="btn btn-dark btn-sm float-end mx-1"
-	onclick="orderbyField('${e}','desc')"
-	>
-	&#8595;
-	</span>
-	</span> */
-}

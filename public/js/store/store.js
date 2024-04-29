@@ -36,8 +36,14 @@ function dataTableGrid(storeArray, startIndex) {
         createTd.textContent = ++startIndex;
         createTr.appendChild(createTd);
       } else {
-        createTd.textContent = element[key];
-        createTr.appendChild(createTd);
+        if (key == 'CreatedTime') {
+          let time = renderTimestamp(element[key]);
+          createTd.textContent = time;
+          createTr.appendChild(createTd);
+        } else {
+          createTd.textContent = element[key];
+          createTr.appendChild(createTd);
+        }
       }
     }
     const createActionTd = document.createElement('td');

@@ -131,7 +131,16 @@ const showData = () => {
   document.getElementById('orderTableHead').innerHTML = header2
     .map((e) => `<th class="text-center">${e.replace('_', ' ')}</th>`)
     .join('');
-  // console.log(orderData);
+  // let time = renderTimestamp(orderData[0]['created_Time']);
+  orderData.map((e) => {
+    header2.map((h) => {
+      if (h == 'created_Time' || h == 'order_date') {
+        let time = (e[h] = renderTimestamp(e[h]));
+        e[h] = time;
+      }
+    });
+  });
+  console.log(orderData);
   document.getElementById('orderTableBody').innerHTML = orderData
     .map(
       (e) => `<tr onclick="productlist('${e.Order_Id}')">
