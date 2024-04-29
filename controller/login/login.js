@@ -5,6 +5,7 @@ const {
   logsService,
   logUnsuccessService,
   expireService,
+  getDp,
 } = require('../../service/login/login');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
@@ -154,6 +155,34 @@ const userLogout = async (req, res) => {
     res.status(500).json({ message: 'can`t fetch user controller' });
   }
 };
+
+const refreshToken = async (req, res) => {
+  try {
+    let token = req.cookies?.token;
+    const data = jwt.verify(token, SECRET_KEY);
+
+    const user = await getDp(data.id);
+
+    token = jwt.sign(
+      {
+        id: data.id,
+        roleId: data.roleId,
+        storageId: data.storageId,
+        dp: user[0].dp,
+      },
+      SECRET_KEY,
+      {
+        expiresIn: '2h',
+      }
+    );
+
+    return res.cookie('token', token).status(200).redirect('/');
+  } catch (error) {
+    res.status(500);
+    logger.logError(error);
+  }
+};
+
 module.exports = {
   checkLogin,
   userLogout,
@@ -164,4 +193,5 @@ module.exports = {
   logsService,
   logUnsuccessService,
   getLink,
+  refreshToken,
 };
