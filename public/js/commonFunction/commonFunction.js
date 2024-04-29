@@ -190,6 +190,20 @@ function generateWarehousesDropDown(id = null, renderDeleted = false) {
     .catch(() => '');
 }
 
+const lodder = () => {
+  let img = document.createElement('img');
+  img.setAttribute('src', 'icons/pro.png');
+  img.setAttribute('alt', 'img');
+  img.setAttribute('width', '3000');
+  img.setAttribute('height', '2000');
+  img.setAttribute(
+    'class',
+    'd-flex justify-content-center align-items-center '
+  );
+  document.body.appendChild(img);
+  // document.querySelector('body').style.visibility = 'hidden';
+  img.style.display = 'block';
+};
 function generateDropDown(value, selectedId) {
   return fetch(`api/combos/${value}`)
     .then((res) => res.json())

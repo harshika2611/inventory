@@ -1,7 +1,7 @@
 const showProduct = () => {
-  // console.log("hii");
   window.location = `/salesReportallProducts`;
 };
+console.log(document.readyState);
 const getData = async (
   api,
   tableHeader,
@@ -53,7 +53,6 @@ const getData = async (
   let count = 0;
   let letestdata = [];
   for (let e of rows) {
-    // console.log(e);
     if (count == dataLength) {
       break;
     }
@@ -79,6 +78,7 @@ const fetchData = async () => {
   let api2 = await fetch('api/salesreport/allcategory');
   getData(api, productHeader, productData, 5, true);
   getData(api2, categoryHeader, categoryData, 3, false);
+  monthSales();
 };
 
 const changesInApi = (array) => {
@@ -93,4 +93,138 @@ const changesInApi = (array) => {
     }
   });
   return array;
+};
+const fetchapi = async (apiurl) => {
+  let api = await fetch(apiurl);
+  let apiData = await api.json();
+  return apiData;
+};
+const monthSales = async () => {
+  const monthName = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ];
+  let date = new Date();
+  let monthData = {
+    months: [],
+    Sales: [],
+    totalSales: [],
+  };
+  let month = date.getMonth();
+  for (let i = month - 5; i <= month; i++) {
+    if (i >= 0) {
+      let apiRes = await fetchapi(`/api/orderreport/allorder?month=${i + 1}`);
+      monthData.months.push(monthName[i]);
+      monthData.Sales.push(apiRes);
+    } else {
+      let j = i + 12;
+      let apiRes = await fetchapi(`/api/orderreport/allorder?month=${j + 1}`);
+      monthData.months.push(monthName[j]);
+      monthData.Sales.push(apiRes);
+    }
+  }
+
+  monthData.Sales.map((e) => {
+    let total = 0;
+    if (e.length > 0) {
+      e.map((h) => {
+        total += h.Order_Amount;
+      });
+    }
+    monthData.totalSales.push(total);
+  });
+  var options = {
+    series: [
+      {
+        name: 'Sales',
+        data: monthData.totalSales,
+      },
+    ],
+    chart: {
+      height: 500,
+      type: 'bar',
+    },
+    plotOptions: {
+      bar: {
+        borderRadius: 10,
+        dataLabels: {
+          position: 'top',
+        },
+      },
+    },
+    dataLabels: {
+      enabled: true,
+      formatter: function (val) {
+        return val + '₹';
+      },
+      offsetY: -20,
+      style: {
+        fontSize: '15px',
+        colors: ['#304758'],
+      },
+    },
+
+    xaxis: {
+      categories: monthData.months,
+      position: 'top',
+      axisBorder: {
+        show: false,
+      },
+      axisTicks: {
+        show: false,
+      },
+      crosshairs: {
+        fill: {
+          type: 'gradient',
+          gradient: {
+            colorFrom: '#D8E3F0',
+            colorTo: '#BED1E6',
+            stops: [0, 100],
+            opacityFrom: 0.4,
+            opacityTo: 0.5,
+          },
+        },
+      },
+      tooltip: {
+        enabled: true,
+      },
+    },
+    yaxis: {
+      axisBorder: {
+        show: false,
+      },
+      axisTicks: {
+        show: false,
+      },
+      labels: {
+        show: false,
+        formatter: function (val) {
+          return val + '₹';
+        },
+      },
+    },
+    title: {
+      text: 'Monthly Sales',
+      floating: true,
+      offsetY: 480,
+      align: 'center',
+      style: {
+        color: '#002F4B',
+        fontSize: '15px',
+      },
+    },
+  };
+
+  var chart = new ApexCharts(document.getElementById('monthreport'), options);
+  chart.render();
 };

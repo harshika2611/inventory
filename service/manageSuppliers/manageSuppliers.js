@@ -26,20 +26,30 @@ async function insertSupplierQuery(body) {
   }
 }
 
-
 async function insertSupplierFromFileQuery(supplierArray) {
   try {
-    const insertCustomer = "INSERT INTO supplier_master(firstname,lastname,email,phonenumber,companyname,gst,address,zipcode,city_id,state_id) VALUES (?,?,?,?,?,?,?,?,?,?)";
+    const insertCustomer =
+      'INSERT INTO supplier_master(firstname,lastname,email,phonenumber,companyname,gst,address,zipcode,city_id,state_id) VALUES (?,?,?,?,?,?,?,?,?,?)';
 
     for (let element of supplierArray) {
-      const [result] = await connection.execute(insertCustomer, [element[0], element[1], element[2], element[3], element[4], element[5], element[6], element[7], element[8], element[9]]);
+      const [result] = await connection.execute(insertCustomer, [
+        element[0],
+        element[1],
+        element[2],
+        element[3],
+        element[4],
+        element[5],
+        element[6],
+        element[7],
+        element[8],
+        element[9],
+      ]);
     }
   } catch (error) {
-    logger.logError("Insert Suppliers: " + error);
+    logger.logError('Insert Suppliers: ' + error);
     throw error;
   }
 }
-
 
 async function getSupplierQuery() {
   try {
@@ -51,7 +61,7 @@ async function getSupplierQuery() {
 
     const [result] = await connection.execute(getSuppliers);
 
-    console.log(result);
+    // console.log(result);
     return result; //return array
   } catch (error) {
     logger.logError('Get Supplier: ' + error);

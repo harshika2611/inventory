@@ -10,6 +10,14 @@ const dataTableGrid = (pagginationArray, startIndex) => {
     productData.innerHTML = `<h6 class='text-center'>Error</h6>`;
   } else {
     let header = Object.keys(pagginationArray[0]);
+    pagginationArray.map((e) => {
+      header.map((h) => {
+        if (h == 'created_Time' || h == 'order_date') {
+          let time = (e[h] = renderTimestamp(e[h]));
+          e[h] = time;
+        }
+      });
+    });
     productHeader.innerHTML = header
       .map((e) => `<th>${e.replace('_', ' ')} </th>`)
       .join('');
