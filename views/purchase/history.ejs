@@ -36,15 +36,15 @@
         <div class="div-second pt-3">
             <div class="outer-div">
                 <div class="d-flex mt-3 mb-5 justify-content-between">
-                    <input type="search" name="search"
-                        placeholder="Search by supplier name, company name, phone number or gst"
-                        oninput="searchAnything(event)">
+                    <input type="search"
+                        placeholder="Search by supplier name, company name, phone number, order name or gst"
+                        oninput="searchAnything(event)" aria-label="Search" class="form-control w-50">
                     <% if(!data?.storageId) { %>
                         <input type="hidden" id="admin" />
                         <% } %>
-                            <div class="d-flex justify-content-end">
+                            <div class="d-flex justify-content-end align-items-center">
                                 <button type="button" id="newForm" class="btn btn-outline-dark me-3"
-                                    onclick="window.location.href = '/purchaseOrder'">
+                                    style="height: fit-content;" onclick="window.location.href = '/purchaseOrder'">
                                     + New
                                 </button>
                                 <% if(!data?.storageId) { %>

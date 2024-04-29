@@ -17,17 +17,18 @@
   <%- include('../components/navigation', {data})%>
     <%- include('./deletePopup')%>
 
-     <div class="container div-second">
+      <div class="container div-second">
         <div class="gridComponent" id="gridComponent">
           <div class="allfilters">
             <input type="text" placeholder="Search Here" id="searchbar" onkeyup="searchFilter()" class="form-control">
             <a class="btn btn-outline-dark filter" href="/salesNewOrder">New +</a>
-            <%if(data.roleId == 4){%>
-            <div class="form-floating ">
-              <select name="storage" class="form-select" onchange="fetching()" aria-label="select" id="storageCombo"></select>
-              <label for="storage">Storage</label>
-            </div>
-            <%}%>
+            <%if(data.roleId==4){%>
+              <div class="form-floating ">
+                <select name="storage" class="form-select" onchange="fetching()" aria-label="select"
+                  id="storageCombo"></select>
+                <label for="storage">Storage</label>
+              </div>
+              <%}%>
           </div>
           <div class="grid">
             <table class="table table-hover">
@@ -42,9 +43,8 @@
       </div>
 
 </body>
+<script src="js/commonFunction/commonFunction.js"></script>
 <script src="js/salesModule/grid/fetchGrid.js"></script>
 <script src="js/salesModule/updateGrid.js"></script>
-<script src="js/components/pagginationComponent"></script>
-<script src="js/commonFunction/commonFunction.js"></script>
 
 </html>
