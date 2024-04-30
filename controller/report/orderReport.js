@@ -3,7 +3,8 @@ const {
   getOrderreport,
   getApiordersProduct,
   getOrderreportBydate,
-  getOrderDayreport,
+  getOrderDayreportDay,
+  getOrderDayreportMonth,
 } = require('../../service/report/orderReportService');
 
 const getorderReport = (req, res) => {
@@ -23,12 +24,16 @@ const getApiorderRreport = async (req, res) => {
       res.json(rows);
     } else if (queryLength == 1) {
       let query = Object.keys(req.query);
-      const [rows] = await getOrderDayreport(
-        query[0],
-        req.query[query[0]],
-        storage
-      );
-      res.json(rows);
+      if (query[0] == 'day') {
+        const [rows] = await getOrderDayreportDay(req.query[query[0]], storage);
+        res.json(rows);
+      } else {
+        const [rows] = await getOrderDayreportMonth(
+          req.query[query[0]],
+          storage
+        );
+        res.json(rows);
+      }
     } else {
       let fromDate = req.query.fromDate;
       let toDate = req.query.toDate;

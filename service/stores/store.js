@@ -33,7 +33,7 @@ async function getStoreQuery() {
 
 async function checkStoreExistQuery(storeId) {
   try {
-    const checkStore = `SELECT s.id as storeId ,s.name as Storagename , option_master.value as StorageType , option_master.id as StorageTypeId ,city_master.city_name as location  FROM storage_space_master as s left join option_master on s.storage_type = option_master.id left join city_master on city_master.city_id=s.location_id  WHERE s.id=?;`;
+    const checkStore = `SELECT s.id as storeId ,s.name as Storagename , option_master.value as StorageType ,option_master.id as StorageTypeId ,state_master.state_name as state,city_master.city_name as city FROM storage_space_master as s left join option_master on s.storage_type = option_master.id left join city_master on city_master.city_id=s.location_id left join state_master on state_master.state_id=city_master.state_id WHERE s.id=?;`;
     const [result] = await connection.execute(checkStore, [storeId]);
     // console.log(result);
     // console.log(storeId);

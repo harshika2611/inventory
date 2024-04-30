@@ -1,7 +1,7 @@
 const connection = require('../../config/connection');
 const logger = require('../../logs');
 
-async function selectOrders(payment, orderby, order, col, value, storageId) {
+async function selectOrders(orderby, order, col, value, storageId) {
   if (order == undefined) {
     order = 'desc';
   }
@@ -36,9 +36,9 @@ async function selectOrders(payment, orderby, order, col, value, storageId) {
   on sales_order.customer_id = customer_master.id
   join
     option_master ON  sales_order.payment_status=option_master.id
-  where ${col} = '${value}' and option_master.key=? and storage_id = ? order by ${orderby} ${order} ;`;
+  where ${col} = '${value}' and storage_id = ? order by ${orderby} ${order} ;`;
   try {
-    return await connection.execute(sql, [payment, storageId]);
+    return await connection.execute(sql, [storageId]);
   } catch (error) {
     console.log(error);
     logger.logError(error);
