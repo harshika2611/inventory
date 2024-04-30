@@ -12,7 +12,10 @@ const dataTableGrid = (pagginationArray, startIndex) => {
     let header = Object.keys(pagginationArray[0]);
     pagginationArray.map((e) => {
       header.map((h) => {
-        if (h == 'created_Time' || h == 'order_date') {
+        if (
+          (h == 'created_Time' || h == 'order_date') &&
+          (e[h].includes('T') || e[h].includes('Z'))
+        ) {
           let time = (e[h] = renderTimestamp(e[h]));
           e[h] = time;
         }

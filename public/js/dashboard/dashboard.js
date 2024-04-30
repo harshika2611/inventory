@@ -2,13 +2,8 @@ let productData = [];
 let orderData = [];
 
 const onloadData = async () => {
-  let date = new Date();
-  let dayData = await fetchapi(
-    `/api/orderreport/allorder?day=${date.getDate()}`
-  );
-  let monthData = await fetchapi(
-    `/api/orderreport/allorder?month=${date.getMonth() + 1}`
-  );
+  let dayData = await fetchapi(`/api/orderreport/allorder?day=1`);
+  let monthData = await fetchapi(`/api/orderreport/allorder?day=30`);
   let daySales = 0;
   let monthSales = 0;
   dayData.forEach((e) => (daySales += e.Order_Amount));

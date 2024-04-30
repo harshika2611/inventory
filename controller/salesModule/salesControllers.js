@@ -86,12 +86,11 @@ async function getsalesOrder(req, res) {
     let col = req.query.col;
     let value = req.query.colValue;
     let storageId = req.user.storageId;
-    let payment = req.query.payment || 'pending';
+    // let payment = req.query.payment || 'pending';
     if (storageId == null || isNaN(parseInt(storageId))) {
       storageId = req.query.storage;
     }
     const [rows, fields] = await selectOrders(
-      payment,
       orderby,
       order,
       col,
