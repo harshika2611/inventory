@@ -175,9 +175,11 @@ function generateWarehousesDropDown(id = null, renderDeleted = false) {
         (arr) => {
           content += `<optgroup label="${arr[0]}">`;
           arr[1].forEach((o) => {
-            content += `<option value="${o.id}" ${o.id == id ? 'selected="selected"' : ''
-              } ${o.is_delete && !renderDeleted ? 'disabled="true"' : ''}>${o.name
-              } (${o.city_name})</option>`;
+            content += `<option value="${o.id}" ${
+              o.id == id ? 'selected="selected"' : ''
+            } ${o.is_delete && !renderDeleted ? 'disabled="true"' : ''}>${
+              o.name
+            } (${o.city_name})</option>`;
           });
           content += `</optgroup>`;
         }
@@ -190,17 +192,18 @@ function generateWarehousesDropDown(id = null, renderDeleted = false) {
 
 const lodder = () => {
   let img = document.createElement('img');
-  img.setAttribute('src', 'icons/pro.png');
+  img.setAttribute('src', 'icons/lodder.gif');
   img.setAttribute('alt', 'img');
-  img.setAttribute('width', '3000');
-  img.setAttribute('height', '2000');
+  img.setAttribute('width', '200');
+  img.setAttribute('height', '200');
   img.setAttribute(
     'class',
-    'd-flex justify-content-center align-items-center '
+    'position-absolute top-50 start-50 translate-middle'
   );
-  document.body.appendChild(img);
-  // document.querySelector('body').style.visibility = 'hidden';
-  img.style.display = 'block';
+  // document.body.appendChild(img);
+  console.log(img);
+  document.querySelector('body').innerHTML = '';
+  document.querySelector('body').appendChild(img);
 };
 function generateDropDown(value, selectedId) {
   return fetch(`api/combos/${value}`)
@@ -208,8 +211,9 @@ function generateDropDown(value, selectedId) {
     .then((data) => {
       let content = '';
       data.forEach((o) => {
-        content += `<option value="${o.opt_id}" ${o.opt_id == selectedId ? 'selected="selected"' : ''
-          }>
+        content += `<option value="${o.opt_id}" ${
+          o.opt_id == selectedId ? 'selected="selected"' : ''
+        }>
             ${o.value}
           </option>`;
       });
