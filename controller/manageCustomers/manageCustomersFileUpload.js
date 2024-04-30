@@ -7,9 +7,12 @@ const path = require("path");
 const { getAllCityState } = require("../../service/commonFunctions/commonFunctions.js");
 const { insertCustomerFromFileQuery } = require('../../service/manageCustomers/manageCustomers.js');
 
+const manageCustomerValidation = require('./manageCustomerFileValidation.js');
+
 async function uploadFile(req, res) {
   try {
     let customerDetails = [];
+    let dataErrorStatus = false;
     if (req.fileError) {
       return res.status(400).json({ message: "Please Upload CSV File" });
     }
@@ -29,36 +32,44 @@ async function uploadFile(req, res) {
           return res.status(500).json({ message: "Something Went Wrong.." });
         })
         .on("data", async (row) => {
-
-          let eachCustomerDetails = [];
-          for (let key in row) {
-            switch (key) {
-              case "city":
-                for (let element of allCityState) {
-                  let cityNameInDb = element.city_name;
-                  let fileCity = row.city;
-                  let stateNameInDb = element.state_name;
-                  let fileState = row.state;
-                  if (cityNameInDb.toLowerCase() === fileCity.toLowerCase() && stateNameInDb.includes(fileState)) {
-                    eachCustomerDetails.push(Number(element.city_id));
-                    eachCustomerDetails.push(Number(element.state_id));
+          const dataValidationStatus = manageCustomerValidation(row);
+          if (!dataValidationStatus && !dataErrorStatus) {
+            let eachCustomerDetails = [];
+            for (let key in row) {
+              switch (key) {
+                case "city":
+                  for (let element of allCityState) {
+                    let cityNameInDb = element.city_name;
+                    let fileCity = row.city;
+                    let stateNameInDb = element.state_name;
+                    let fileState = row.state;
+                    if (cityNameInDb.toLowerCase() === fileCity.toLowerCase() && stateNameInDb.includes(fileState)) {
+                      eachCustomerDetails.push(Number(element.city_id));
+                      eachCustomerDetails.push(Number(element.state_id));
+                    }
                   }
-                }
-                break;
+                  break;
 
-              case "state":
-                break;
-              default:
-                eachCustomerDetails.push(row[key]);
+                case "state":
+                  break;
+                default:
+                  eachCustomerDetails.push(row[key]);
+              }
             }
+            customerDetails.push(eachCustomerDetails);
+            // logger.info(eachCustomerDetails);
+          } else {
+            dataErrorStatus = true;
           }
-          customerDetails.push(eachCustomerDetails);
-          // logger.info(eachCustomerDetails);
         })
         .on("end", async () => {
           try {
-            const customerInsert = await insertCustomerFromFileQuery(customerDetails);
-            return res.status(200).json({ message: "Inserted" });
+            if (dataErrorStatus) {
+              return res.status(400).json({ message: "Invalid Data In CSV File" });
+            } else {
+              const customerInsert = await insertCustomerFromFileQuery(customerDetails);
+              return res.status(200).json({ message: "Inserted" });
+            }
           } catch (err) {
             return res.status(500).json({ message: "Something Went Wrong.." });
           }

@@ -1,45 +1,98 @@
-function reportGenerateOption() {
+async function reportGenerateOption() {
   const reportGenerateDiv = document.querySelector('.reportGenerate-div');
+
+  //----generate storage combo----------
+  //this function is implemented in commonFunction.js file
+  /**In this function first parameter is selected option
+   * second parameter is if any storage delete then that storage is disable
+   */
+  const storageOptionos = await generateWarehousesDropDown(1, false);
+  if (document.getElementById('storageDetails') !== null) {
+    document.getElementById('storageDetails').innerHTML = storageOptionos;
+  }
+
+  //----now create report option
+  const optionArrayForRadio = [{
+    type: "radio",
+    id: "productDetails",
+    class: "productDetails productRadioButton",
+    value: "product_details",
+    textContent: "Product",
+    onclick: "addProductCategory()"
+  }, {
+    type: "radio",
+    id: "supplierDetails",
+    class: "supplierDetails supplierRadioButton",
+    value: "supplier_details",
+    textContent: "Supplier",
+    onclick: ""
+  }];
+
+  const createReportOptionDiv = document.createElement("div");
+  createReportOptionDiv.setAttribute("class", "reportOptionDiv");
 
   const createPTitle = document.createElement('p');
   createPTitle.innerHTML = "Please Select Option For Generate Report";
   createPTitle.setAttribute("class", "reportGenerateTitle");
 
-  reportGenerateDiv.appendChild(createPTitle);
+  createReportOptionDiv.appendChild(createPTitle);
 
-  //----now create radio button
-  const optionArrayForRadio = [{
-    type: "radio",
-    id: "productDetails",
-    class: "productDetails productRadioButton",
-    name: "productDetails",
-    value: "product_details",
-    textContent: "Product",
-    onclick: "addProductCategory()"
-  }];
-
+  const createSelect = document.createElement("select");
+  createSelect.setAttribute("id", "selectReportOption");
+  createSelect.setAttribute("onchange", "selectReportOption(this)");
+  const createOption = document.createElement("option");
+  createOption.setAttribute("value", "");
+  createOption.textContent = "Select Report Option";
+  createOption.selected = true;
+  createOption.disabled = true;
+  createSelect.appendChild(createOption);
 
   for (let element of optionArrayForRadio) {
-    const createRadioDiv = document.createElement("div");
-    createRadioDiv.setAttribute("class", "reportRadioOption");
-    const radioButton = document.createElement('input');
-    const labelForRadioButton = document.createElement('label');
-    radioButton.setAttribute("type", `${element.type}`);
-    radioButton.setAttribute("id", `${element.id}`);
-    radioButton.setAttribute("class", `${element.class}`);
-    radioButton.setAttribute("name", `${element.name}`);
-    radioButton.setAttribute("value", `${element.value}`);
-    radioButton.setAttribute("onclick", `${element.onclick}`);
-
-    labelForRadioButton.setAttribute("for", `${element.id}`);
-    labelForRadioButton.innerHTML = element.textContent;
-
-    createRadioDiv.appendChild(labelForRadioButton);
-    createRadioDiv.appendChild(radioButton);
-    reportGenerateDiv.appendChild(createRadioDiv);
+    const createOption = document.createElement("option");
+    createOption.setAttribute("value", `${element.value}`);
+    createOption.textContent = element.textContent;
+    createSelect.appendChild(createOption);
   }
+  createReportOptionDiv.appendChild(createSelect);
+  reportGenerateDiv.appendChild(createReportOptionDiv);
+
+  // for (let element of optionArrayForRadio) {
+  //   const createRadioDiv = document.createElement("div");
+  //   createRadioDiv.setAttribute("class", "reportRadioOption");
+  //   const radioButton = document.createElement('input');
+  //   const labelForRadioButton = document.createElement('label');
+  //   radioButton.setAttribute("type", `${element.type}`);
+  //   radioButton.setAttribute("id", `${element.id}`);
+  //   radioButton.setAttribute("class", `${element.class}`);
+  //   radioButton.setAttribute("value", `${element.value}`);
+  //   radioButton.setAttribute("onclick", `${element.onclick}`);
+
+  //   labelForRadioButton.setAttribute("for", `${element.id}`);
+  //   labelForRadioButton.innerHTML = element.textContent;
+
+  //   createRadioDiv.appendChild(labelForRadioButton);
+  //   createRadioDiv.appendChild(radioButton);
+  //   reportGenerateDiv.appendChild(createRadioDiv);
+  // }
 }
 
+function selectReportOption(optionSelect) {
+  if (optionSelect.selectedIndex === 0) {
+    messagePopUp("Please Select Report Generate Option");
+  } else {
+    switch (optionSelect.value) {
+      case "product_details":
+        addProductCategory();
+        break;
+      case "supplier_details":
+        const createDivCategory = document.querySelector(".createDivCategory");
+        if (createDivCategory) {
+          createDivCategory.innerHTML = "";
+        }
+        break;
+    }
+  }
+}
 async function addProductCategory() {
 
   const createDivCategory = document.querySelector(".createDivCategory");
@@ -291,7 +344,10 @@ async function generateReport() {
       }
     }
   }
-
+  const storageDetails = document.getElementById("storageDetails");
+  if (storageDetails) {
+    productDetailsObject.selectStorageId = storageDetails.value;
+  }
   if (Object.keys(databaseObject).length > 0) {
     const response = await fetch('/reportGenerate', {
       method: 'POST',

@@ -24,6 +24,13 @@
         <p class="reportPdfTitle">Customized Report</p>
         <%- include('../components/messagePopUp')%>
           <div class="reportGenerate-div">
+            <%if(data?.roleId===4){%>
+              <div class="storageSelectDiv">
+                <p>Please Select Storage</p>
+                <select id="storageDetails">
+                </select>
+              </div>
+              <%}%>
           </div>
     </section>
 </body>

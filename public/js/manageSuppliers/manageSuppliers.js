@@ -1,6 +1,11 @@
 function getSuppliers() {
-  currentPage = 1;
-  paggination("/api/manageSuppliers");
+  // currentPage = 1;
+  const supplierStatus = document.getElementById("supplierStatus").value;
+  if (supplierStatus === "active") {
+    paggination("/api/manageSuppliers/0");
+  } else if (supplierStatus === "inactive") {
+    paggination("/api/manageSuppliers/1");
+  }
 }
 
 function dataTableGrid(supplierArray, startIndex) {
@@ -70,7 +75,7 @@ function dataTableGrid(supplierArray, startIndex) {
             createTr.appendChild(createTd);
             break;
           case "Address":
-            if (element[key].length === 0) {
+            if (!element[key]) {
               createTd.textContent = "-";
             } else {
               createTd.textContent = element[key];
@@ -84,27 +89,43 @@ function dataTableGrid(supplierArray, startIndex) {
       }
       const createActionTd = document.createElement("td");
       createActionTd.setAttribute("class", "managesupplier__actioncolumn");
-      const createEditTd = document.createElement("td");
-      createEditTd.setAttribute("id", `${element.SupplierId}`);
-      createEditTd.setAttribute("class", "managesupplier__actionbutton");
-      createEditTd.setAttribute("onclick", "openUpdateSupplierForm(this)");
-      const createEditButton = document.createElement("img");
-      createEditButton.setAttribute("src", "src/assets/manageCustomer/edit.svg");
-      createEditButton.setAttribute("width", "25");
-      createEditButton.setAttribute("height", "25");
-      createEditTd.appendChild(createEditButton);
-      createActionTd.appendChild(createEditTd);
+      const supplierStatus = document.getElementById("supplierStatus");
 
-      const createDeleteTd = document.createElement("td");
-      createDeleteTd.setAttribute("id", `${element.SupplierId}`);
-      createDeleteTd.setAttribute("class", "managesupplier__actionbutton");
-      createDeleteTd.setAttribute("onclick", "deleteSupplierDetails(this)");
-      const createDeleteButton = document.createElement("img");
-      createDeleteButton.setAttribute("src", "src/assets/manageCustomer/delete.svg");
-      createDeleteButton.setAttribute("width", "25");
-      createDeleteButton.setAttribute("height", "25");
-      createDeleteTd.appendChild(createDeleteButton);
-      createActionTd.appendChild(createDeleteTd);
+      if (supplierStatus.selectedIndex === 0) {
+        const createEditTd = document.createElement("td");
+        createEditTd.setAttribute("id", `${element.SupplierId}`);
+        createEditTd.setAttribute("class", "managesupplier__actionbutton");
+        createEditTd.setAttribute("onclick", "openUpdateSupplierForm(this)");
+        const createEditButton = document.createElement("img");
+        createEditButton.setAttribute("src", "src/assets/manageCustomer/edit.svg");
+        createEditButton.setAttribute("width", "25");
+        createEditButton.setAttribute("height", "25");
+        createEditTd.appendChild(createEditButton);
+        createActionTd.appendChild(createEditTd);
+
+        const createDeleteTd = document.createElement("td");
+        createDeleteTd.setAttribute("id", `${element.SupplierId}`);
+        createDeleteTd.setAttribute("class", "managesupplier__actionbutton");
+        createDeleteTd.setAttribute("onclick", "deleteSupplierDetails(this)");
+        const createDeleteButton = document.createElement("img");
+        createDeleteButton.setAttribute("src", "src/assets/manageCustomer/delete.svg");
+        createDeleteButton.setAttribute("width", "25");
+        createDeleteButton.setAttribute("height", "25");
+        createDeleteTd.appendChild(createDeleteButton);
+        createActionTd.appendChild(createDeleteTd);
+      } else {
+        const createReactivateTd = document.createElement("td");
+        createReactivateTd.setAttribute("id", `${element.SupplierId}`);
+        createReactivateTd.setAttribute("class", "managesupplier__actionbutton");
+        createReactivateTd.setAttribute("onclick", "reactivateSupplier(this)");
+        const createActiveButton = document.createElement("img");
+        createActiveButton.setAttribute("src", "src/assets/manageCustomer/account-reactivate.svg");
+        createActiveButton.setAttribute("width", "25");
+        createActiveButton.setAttribute("height", "25");
+        createReactivateTd.appendChild(createActiveButton);
+        createActionTd.appendChild(createReactivateTd);
+      }
+
       createTr.appendChild(createActionTd);
 
       createTable.appendChild(createTr);
@@ -169,4 +190,42 @@ async function deleteSupplierDetails(supplier) {
 function modelHide() {
   const modal = new bootstrap.Modal('#deleteModal');
   modal.hide();
+}
+
+function reactivateSupplier(supplier) {
+  const modal = new bootstrap.Modal('#reactivateModal');
+
+  modal.show();
+
+  document.getElementById('confirmreactivate').onclick = async () => {
+    const supplierId = supplier.id;
+    const response = await fetch(`/api/reactivateSupplier?supplierId=${supplierId}`, {
+      method: 'GET'
+    });
+
+    console.log(response.status);
+    try {
+      if (!response.ok) {
+        throw new Error("Unable To Reactivate Supplier");
+      }
+
+      if (response.status === 200) {
+        const responseMessage = await response.json();
+        getSuppliers();
+        messagePopUp(responseMessage.message);
+        // window.location.replace(window.location.protocol + "//" +
+        //   window.location.host + `/manageSuppliers`);
+      }
+    } catch (error) {
+      const responseMessage = await response.json();
+      if (response.status === 404) {
+        messagePopUp(responseMessage.message);
+      }
+
+      if (response.status === 500) {
+        messagePopUp(responseMessage.message);
+      }
+    }
+    modal.hide();
+  };
 }

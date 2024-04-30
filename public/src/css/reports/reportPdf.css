@@ -1,5 +1,5 @@
 :root {
-  --reportpdfsection: #f0f1f3;
+  --reportpdfsection: #e8ebee;
 }
 
 * {
@@ -39,11 +39,11 @@ a {
   font-size: 20px;
 }
 
-.productRadioButton {
+/* .productRadioButton {
   height: 20px;
   width: 20px;
   margin-left: 10px;
-}
+} */
 
 .reportGenerate-div {
   display: flex;
@@ -54,13 +54,10 @@ a {
   font-size: 20px;
 }
 
-.reportRadioOption {
-  display: flex;
-  gap: 5px;
-  align-items: center;
-}
 #productCategorySelect,
-#customizeOptionSelect {
+#customizeOptionSelect,
+#storageDetails,
+#selectReportOption {
   padding: 10px 0;
   border-radius: 6px;
   border: 1px solid #102f4b;
@@ -73,7 +70,9 @@ a {
   width: 20px;
 }
 
-.createDivCategory {
+.createDivCategory,
+.storageSelectDiv,
+.reportOptionDiv {
   display: flex;
   flex-direction: column;
   gap: 20px;

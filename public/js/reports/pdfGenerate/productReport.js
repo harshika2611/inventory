@@ -45,6 +45,12 @@ async function generateReportOutOfStockProduct() {
       productDetailsObject.maximumQunatity = maximumStock.value;
       productDetailsObject.categoryName = productCategorySelect.value;
       productDetailsObject.reportType = customizeOptionSelect.value;
+
+      const storageDetails = document.getElementById("storageDetails");
+      if (storageDetails) {
+        productDetailsObject.selectStorageId = storageDetails.value;
+      }
+
       const response = await fetch('/api/outOfStockProductReport', {
         method: 'POST',
         body: JSON.stringify(productDetailsObject),

@@ -59,6 +59,14 @@ a {
   border-radius: 10px;
 }
 
+#customerStatus {
+  width: 200px;
+  position: absolute;
+  right: 0;
+  z-index: 4;
+  cursor: pointer;
+}
+
 /* Style for the table */
 
 .managecustomer__table {

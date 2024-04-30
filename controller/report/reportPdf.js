@@ -6,8 +6,10 @@ const ejs = require("ejs");
 
 const { productGenerateReport, productOutOfStockGenerateReport, storageDetails } = require('../../service/report/reportPdf.js');
 
-function reportPdfPage(req, res) {
-  return res.render('reports/reportPdf', { data: req.user });
+async function reportPdfPage(req, res) {
+  return res.render('reports/reportPdf', {
+    data: req.user
+  });
 }
 
 // async function generatePdf(req, res) {
@@ -100,8 +102,13 @@ function unlinkProductPdf(pdfNameObject) {
 
 async function productReportGenerate(req, res) {
   try {
-    const storageId = req.user.storageId;
-
+    const roleId = req.user.roleId;
+    let storageId;
+    if (roleId === 4) {
+      storageId = req.body.selectStorageId;
+    } else {
+      storageId = req.user.storageId;
+    }
     const productDetailsArray = await productGenerateReport(req.body, storageId);
     const storageDetailsArray = await storageDetails(storageId);
 
@@ -130,10 +137,14 @@ async function productReportGenerate(req, res) {
 
 async function outOfStockProducts(req, res) {
   try {
-    const productObject = req.body;
-    const storageId = req.user.storageId;
-
-    const productOutOfStockArray = await productOutOfStockGenerateReport(productObject, storageId);
+    let storageId;
+    const roleId = req.user.roleId;
+    if (roleId === 4) {
+      storageId = req.body.selectStorageId;
+    } else {
+      storageId = req.user.storageId;
+    }
+    const productOutOfStockArray = await productOutOfStockGenerateReport(req.body, storageId);
     const storageDetailsArray = await storageDetails(storageId);
 
     if (productOutOfStockArray.length > 0 && storageDetailsArray.length > 0) {
