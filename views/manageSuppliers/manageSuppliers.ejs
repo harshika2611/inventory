@@ -45,17 +45,17 @@
           <img src="icons/cust.png" alt="" width="40px" height="40px" style="margin-top: 20px;">&emsp;&emsp;
           <p class="managesupplierTitle">Suppliers</p>
         </div>
-        <div class="managesupplier-container__button">
-          <p class="addnewsupplierbutton" onclick="addNewSupplier()">Add New</p>
-          <p class="supplierfilterbutton" onclick="supplierFilterShow()">Filter</p>
-        </div>
-        <div class="importDataDiv">
-          <p class="importDataButton" onclick="showFileUpload()">Import Data</p>
-          <form enctype="multipart/form-data" id="supplierFileUploadForm" name="supplierFileUploadForm">
-            <input type="file" id="suppliersFile" name="suppliersFile" accept=".csv">
-            <p id="fileUploadButton" onclick="supplierFileUpload()">Upload File</p>
-          </form>
-        </div>
+          <div class="managesupplier-container__button">
+            <p class="supplierfilterbutton" onclick="supplierFilterShow()">Filter</p>
+          </div>
+          <div class="importDataDiv">
+            <p class="importDataButton" onclick="showFileUpload()">Import Data</p>
+            <p class="addnewsupplierbutton" onclick="addNewSupplier()">Add New</p>
+            <form enctype="multipart/form-data" id="supplierFileUploadForm" name="supplierFileUploadForm">
+              <input type="file" id="suppliersFile" name="suppliersFile" accept=".csv">
+              <p id="fileUploadButton" onclick="supplierFileUpload()">Upload File</p>
+            </form>
+          </div>
 
       </div>
       <%- include('../form/supplierForm')%>

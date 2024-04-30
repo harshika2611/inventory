@@ -17,10 +17,12 @@ function dataTableGrid(storeArray, startIndex) {
     if (key === 'storeId') {
       key = 'No.';
     }
-    const createTh = document.createElement('th');
-    // createTh.setAttribute("class", "bg-dark text-light");
-    createTh.textContent = key;
-    createTable.appendChild(createTh);
+    if (key != 'is_delete') { 
+      const createTh = document.createElement('th');
+      // createTh.setAttribute("class", "bg-dark text-light");
+      createTh.textContent = key;
+      createTable.appendChild(createTh);   
+    }
   }
   const createTh = document.createElement('th');
   createTh.textContent = 'Action';
@@ -36,47 +38,57 @@ function dataTableGrid(storeArray, startIndex) {
         createTd.textContent = ++startIndex;
         createTr.appendChild(createTd);
       } else {
-        if (key == 'CreatedTime') {
-          let time = renderTimestamp(element[key]);
-          createTd.textContent = time;
-          createTr.appendChild(createTd);
-        } else {
-          createTd.textContent = element[key];
-          createTr.appendChild(createTd);
+        if (key != 'is_delete') {
+          if (key == 'CreatedTime' && element[key].includes("T")  ) {
+            let time = renderTimestamp(element[key]);
+            createTd.textContent = time;
+            createTr.appendChild(createTd);
+          } else {
+            createTd.textContent = element[key];
+            createTr.appendChild(createTd);
+          }
         }
       }
     }
-    const createActionTd = document.createElement('td');
-    createActionTd.setAttribute('class', 'store__actioncolumn');
-    const createEditTd = document.createElement('td');
-    createEditTd.setAttribute('id', `${element.storeId}`);
-    createEditTd.setAttribute('class', 'store__actionbutton');
-    createEditTd.setAttribute('onclick', 'openUpdateStoreForm(this)');
-    const createEditButton = document.createElement('button');
-    createEditButton.textContent = 'Edit';
-    createEditButton.setAttribute('class', 'btn btn-outline-primary');
-    createEditButton.setAttribute('width', '25');
-    createEditButton.setAttribute('height', '25');
-    createEditTd.appendChild(createEditButton);
-    createActionTd.appendChild(createEditTd);
+    if (element['is_delete'] == 0) {
+      const createActionTd = document.createElement('td');
+      createActionTd.setAttribute('class', 'store__actioncolumn');
+      const createEditTd = document.createElement('td');
+      createEditTd.setAttribute('id', `${element.storeId}`);
+      createEditTd.setAttribute('class', 'store__actionbutton');
+      createEditTd.setAttribute('onclick', 'openUpdateStoreForm(this)');
+      const createEditButton = document.createElement('button');
+      createEditButton.textContent = 'Edit';
+      createEditButton.setAttribute('class', 'btn btn-outline-primary');
+      createEditButton.setAttribute('width', '25');
+      createEditButton.setAttribute('height', '25');
+      createEditTd.appendChild(createEditButton);
+      createActionTd.appendChild(createEditTd);
 
-    const createDeleteTd = document.createElement('td');
-    createDeleteTd.setAttribute('id', `${element.storeId}`);
-    createDeleteTd.setAttribute('class', 'store__actionbutton');
-    createDeleteTd.setAttribute(
-      'onclick',
-      `deleteStoreDetails(${element.storeId})`
-    );
-    const createDeleteButton = document.createElement('button');
-    createDeleteButton.textContent = 'Delete';
-    createDeleteButton.setAttribute('class', 'btn btn-outline-danger');
-    createDeleteButton.setAttribute('width', '25');
-    createDeleteButton.setAttribute('height', '25');
-    createDeleteTd.appendChild(createDeleteButton);
-    createActionTd.appendChild(createDeleteTd);
-    createTr.appendChild(createActionTd);
-
+      const createDeleteTd = document.createElement('td');
+      createDeleteTd.setAttribute('id', `${element.storeId}`);
+      createDeleteTd.setAttribute('class', 'store__actionbutton');
+      createDeleteTd.setAttribute(
+        'onclick',
+        `deleteStoreDetails(${element.storeId})`
+      );
+      const createDeleteButton = document.createElement('button');
+      createDeleteButton.textContent = 'Delete';
+      createDeleteButton.setAttribute('class', 'btn btn-outline-danger');
+      createDeleteButton.setAttribute('width', '25');
+      createDeleteButton.setAttribute('height', '25');
+      createDeleteTd.appendChild(createDeleteButton);
+      createActionTd.appendChild(createDeleteTd);
+      createTr.appendChild(createActionTd);
+    } else if (element['is_delete'] == 1) {
+      let actionTd = document.createElement('td');
+      actionTd.setAttribute('colspan', 2);
+      actionTd.innerHTML = `<b>DELETED</b>`;
+      actionTd.setAttribute("class", "text-danger");
+      createTr.appendChild(actionTd);
+    }
     createTable.appendChild(createTr);
+
   }
   tableContainer.appendChild(createTable);
 }
