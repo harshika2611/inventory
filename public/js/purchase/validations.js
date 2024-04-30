@@ -31,6 +31,10 @@ const validation = {
     amount: {
       required: true,
       pattern: patterns.numberOnly,
+      validator: (value) => {
+        if (value >= 1 || value <= 9999999) return true;
+        return false;
+      },
     },
     payment_status: {
       required: false,
@@ -45,10 +49,18 @@ const validation = {
     unit_price: {
       required: true,
       pattern: patterns.numberOnly,
+      validator: (value) => {
+        if (value >= 1 || value <= 9999999) return true;
+        return false;
+      },
     },
     quantity: {
       required: true,
       pattern: patterns.numberOnly,
+      validator: (value) => {
+        if (value >= 1 || value <= 9999999) return true;
+        return false;
+      },
     },
   },
 };
