@@ -38,7 +38,7 @@ async function insertCustomerFromFileQuery(customerArray) {
   }
 }
 
-async function getCustomersQuery() {
+async function getCustomersQuery(customerStatus) {
   try {
     const getCustomers = `SELECT  c.id as CustomerId,c.firstname as Firstname,c.lastname as Lastname,c.email as Email,
     c.phonenumber as Phonenumber,c.zipcode as Zipcode,city_master.city_name as City,
@@ -46,14 +46,12 @@ async function getCustomersQuery() {
     FROM customer_master as c
     LEFT JOIN city_master ON c.city_id = city_master.city_id
     LEFT JOIN state_master ON c.state_id = state_master.state_id
-    WHERE c.is_delete = '0';`;
+    WHERE c.is_delete = ?`;
 
-    const [result] = await connection.execute(getCustomers);
+    const [result] = await connection.execute(getCustomers, [customerStatus]);
     return result; //return array
   } catch (error) {
-    logger.logError('Get Customers: ' + error);
     throw error;
-    // return [];
   }
 }
 
@@ -113,6 +111,18 @@ async function deleteCustomerQuery(customerId) {
   }
 }
 
+async function reactivateCustomerQuery(customerId) {
+  try {
+    const reactivateCustomer = `UPDATE customer_master SET is_delete=0 WHERE id=?`;
+
+    const [result] = await connection.execute(reactivateCustomer, [customerId]);
+    return result;
+  } catch (error) {
+    // logger.logError("Reactivate Customer: " + error);
+    throw error;
+  }
+}
+
 module.exports = {
   insertCustomerQuery,
   insertCustomerFromFileQuery,
@@ -120,4 +130,5 @@ module.exports = {
   checkCustomerExistQuery,
   updateCustomerQuery,
   deleteCustomerQuery,
+  reactivateCustomerQuery
 };

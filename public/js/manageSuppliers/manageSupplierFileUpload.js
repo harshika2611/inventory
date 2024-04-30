@@ -12,6 +12,11 @@ function hideFileUpload() {
   supplierFileUploadForm.style.display = "none";
   importDataButton.innerHTML = "Import Data";
   importDataButton.setAttribute("onclick", "showFileUpload()");
+
+  const suppliersFile = document.getElementById("suppliersFile");
+  if (suppliersFile) {
+    suppliersFile.value = "";
+  }
 }
 
 
@@ -53,6 +58,13 @@ async function supplierFileUpload() {
         supplierFileUploadForm.style.display = "none";
         getSuppliers();
         messagePopUp(responseMessage.message);
+
+        const importDataButton = document.querySelector(".importDataButton");
+        importDataButton.innerHTML = "Import Data";
+        const suppliersFile = document.getElementById("suppliersFile");
+        if (suppliersFile) {
+          suppliersFile.value = "";
+        }
       }
     } catch (error) {
       console.log(error);

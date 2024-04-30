@@ -5,6 +5,7 @@ const {
   checkSupplierExistQuery,
   updateSupplierQuery,
   deleteSupplierrQuery,
+  reactivateSupplierrQuery
 } = require('../../service/manageSuppliers/manageSuppliers.js');
 
 const {
@@ -30,7 +31,8 @@ async function insertSupplier(req, res) {
 
 async function getAllSuppliers(req, res) {
   try {
-    const supplierDetails = await getSupplierQuery();
+    const supplierStatus = req.params.status;
+    const supplierDetails = await getSupplierQuery(supplierStatus);
     return res.status(200).json(supplierDetails);
   } catch (error) {
     //here render error page
@@ -96,6 +98,21 @@ async function deleteSupplier(req, res) {
   }
 }
 
+async function reactivateSupplier(req, res) {
+  try {
+    const supplierId = req.query.supplierId;
+    const responseObject = await reactivateSupplierrQuery(supplierId);
+    if (responseObject.affectedRows > 0) {
+      return res.status(200).json({ message: 'Supplier Reactivate' });
+    } else {
+      return res.status(404).json({ message: 'Something Went Wrong' });
+    }
+  } catch (error) {
+    return res.status(500).json({ message: 'Unable to reactivate' });
+  }
+}
+
+
 module.exports = {
   insertSupplier,
   updateSupplier,
@@ -103,4 +120,5 @@ module.exports = {
   getAllSuppliers,
   getParticularSupplier,
   deleteSupplier,
+  reactivateSupplier
 };

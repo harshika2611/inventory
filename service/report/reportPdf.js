@@ -1,7 +1,7 @@
 const connection = require('../../config/connection.js');
 const logger = require('../../logs.js');
 
-async function  productGenerateReport(productReportObject, storageId) {
+async function productGenerateReport(productReportObject, storageId) {
   try {
     const databaseObject = productReportObject.databaseObject;
     const categoryName = productReportObject.categoryName;
@@ -51,14 +51,26 @@ async function productOutOfStockGenerateReport(productReportObject, storageId) {
 
 async function storageDetails(storageId) {
   try {
-    const storageDetails = `SELECT s.name as StorageName,o.value as StorageType,c.city_name as City,st.state_name as State 
+    if (!storageId) {
+      const storageDetails = `SELECT s.id as storageId,s.name as StorageName,o.value as StorageType 
+      FROM storage_space_master as s
+      LEFT JOIN option_master as o ON s.storage_type=o.id
+      LEFT JOIN city_master as c ON s.location_id=c.city_id
+      LEFT JOIN state_master as st ON c.state_id=st.state_id
+      WHERE s.is_delete=?`;
+      const [result] = await connection.execute(storageDetails, [0]);
+      return result;
+    } else {
+      const storageDetails = `SELECT s.name as StorageName,o.value as StorageType,c.city_name as City,st.state_name as State 
     FROM storage_space_master as s
     LEFT JOIN option_master as o ON s.storage_type=o.id
     LEFT JOIN city_master as c ON s.location_id=c.city_id
     LEFT JOIN state_master as st ON c.state_id=st.state_id
     WHERE s.id=? AND s.is_delete=?`;
-    const [result] = await connection.execute(storageDetails, [storageId, 0]);
-    return result;
+      const [result] = await connection.execute(storageDetails, [storageId, 0]);
+      return result;
+    }
+
   } catch (error) {
     throw error;
   }

@@ -1,8 +1,12 @@
 function getCustomers() {
   // currentPage = 1;
-  paggination('/api/manageCustomers');
+  const customerStatus = document.getElementById("customerStatus").value;
+  if (customerStatus === "active") {
+    paggination("/api/manageCustomers/0");
+  } else if (customerStatus === "inactive") {
+    paggination("/api/manageCustomers/1");
+  }
 }
-
 
 function dataTableGrid(customerArray, startIndex) {
   // console.log(customerArray);
@@ -78,29 +82,43 @@ function dataTableGrid(customerArray, startIndex) {
       }
       const createActionTd = document.createElement("td");
       createActionTd.setAttribute("class", "managecustomer__actioncolumn");
-      const createEditTd = document.createElement("td");
-      createEditTd.setAttribute("id", `${element.CustomerId}`);
-      createEditTd.setAttribute("class", "managecustomer__actionbutton");
-      createEditTd.setAttribute("onclick", "openUpdateCustomerForm(this)");
-      const createEditButton = document.createElement("img");
-      createEditButton.setAttribute("src", "src/assets/manageCustomer/edit.svg");
-      createEditButton.setAttribute("width", "25");
-      createEditButton.setAttribute("height", "25");
-      createEditTd.appendChild(createEditButton);
-      createActionTd.appendChild(createEditTd);
 
-      const createDeleteTd = document.createElement("td");
-      createDeleteTd.setAttribute("id", `${element.CustomerId}`);
-      createDeleteTd.setAttribute("class", "managecustomer__actionbutton");
-      createDeleteTd.setAttribute("onclick", "deleteCustomerDetails(this)");
-      const createDeleteButton = document.createElement("img");
-      createDeleteButton.setAttribute("src", "src/assets/manageCustomer/delete.svg");
-      createDeleteButton.setAttribute("width", "25");
-      createDeleteButton.setAttribute("height", "25");
-      createDeleteTd.appendChild(createDeleteButton);
-      createActionTd.appendChild(createDeleteTd);
+      const customerStatus = document.getElementById("customerStatus");
+      if (customerStatus.selectedIndex === 0) {
+        const createEditTd = document.createElement("td");
+        createEditTd.setAttribute("id", `${element.CustomerId}`);
+        createEditTd.setAttribute("class", "managecustomer__actionbutton");
+        createEditTd.setAttribute("onclick", "openUpdateCustomerForm(this)");
+        const createEditButton = document.createElement("img");
+        createEditButton.setAttribute("src", "src/assets/manageCustomer/edit.svg");
+        createEditButton.setAttribute("width", "25");
+        createEditButton.setAttribute("height", "25");
+        createEditTd.appendChild(createEditButton);
+        createActionTd.appendChild(createEditTd);
+
+        const createDeleteTd = document.createElement("td");
+        createDeleteTd.setAttribute("id", `${element.CustomerId}`);
+        createDeleteTd.setAttribute("class", "managecustomer__actionbutton");
+        createDeleteTd.setAttribute("onclick", "deleteCustomerDetails(this)");
+        const createDeleteButton = document.createElement("img");
+        createDeleteButton.setAttribute("src", "src/assets/manageCustomer/delete.svg");
+        createDeleteButton.setAttribute("width", "25");
+        createDeleteButton.setAttribute("height", "25");
+        createDeleteTd.appendChild(createDeleteButton);
+        createActionTd.appendChild(createDeleteTd);
+      } else {
+        const createActiveTd = document.createElement("td");
+        createActiveTd.setAttribute("id", `${element.CustomerId}`);
+        createActiveTd.setAttribute("class", "managecustomer__actionbutton");
+        createActiveTd.setAttribute("onclick", "reactivateCustomer(this)");
+        const createActiveButton = document.createElement("img");
+        createActiveButton.setAttribute("src", "src/assets/manageCustomer/account-reactivate.svg");
+        createActiveButton.setAttribute("width", "25");
+        createActiveButton.setAttribute("height", "25");
+        createActiveTd.appendChild(createActiveButton);
+        createActionTd.appendChild(createActiveTd);
+      }
       createTr.appendChild(createActionTd);
-
       createTable.appendChild(createTr);
     }
     tableContainer.appendChild(createTable);
@@ -160,8 +178,43 @@ async function deleteCustomerDetails(customer) {
 }
 
 
-function modelHide() {
-  const modal = new bootstrap.Modal('#deleteModal');
-
+function modelHide(id) {
+  const modal = new bootstrap.Modal(id);
   modal.hide();
+}
+
+
+function reactivateCustomer(customer) {
+  const modal = new bootstrap.Modal('#reactivateModal');
+
+  modal.show();
+
+  document.getElementById('confirmreactivate').onclick = async () => {
+    const customerId = customer.id;
+    const response = await fetch(`/api/reactivateCustomer?customerId=${customerId}`, {
+      method: 'GET',
+    });
+
+    try {
+      if (!response.ok) {
+        throw new Error('Unable To Reactivate Customer');
+      }
+
+      if (response.status === 200) {
+        const responseMessage = await response.json();
+        getCustomers();
+        messagePopUp(responseMessage.message);
+      }
+    } catch (error) {
+      const responseMessage = await response.json();
+      if (response.status === 404) {
+        messagePopUp(responseMessage.message);
+      }
+
+      if (response.status === 500) {
+        messagePopUp(responseMessage.message);
+      }
+    }
+    modal.hide();
+  };
 }

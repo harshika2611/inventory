@@ -354,10 +354,11 @@ const {
   getAllCustomers,
   getParticularCustomer,
   deleteCustomer,
+  reactivateCustomer
 } = require('../controller/manageCustomers/manageCustomers.js');
 
-const manageCustomerValidation = require('../middleware/manageCustomers/manageCustomerValidation.js');
-
+// const manageCustomerValidation = require('../middleware/manageCustomers/manageCustomerValidation.js');
+const manageCustomerSupplierValidation = require('../middleware/manageCustomers/customerSupplierValidation.js');
 const {
   uploadFile,
 } = require('../controller/manageCustomers/manageCustomersFileUpload.js');
@@ -372,7 +373,7 @@ router.get(
   getCustomersPage
 );
 router.get(
-  '/api/manageCustomers',
+  '/api/manageCustomers/:status',
   passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
   getAllCustomers
 );
@@ -383,14 +384,13 @@ router.get(
 );
 router.post(
   '/api/insertCustomer',
-  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
-  manageCustomerValidation,
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }), manageCustomerSupplierValidation,
   insertCustomer
 );
 router.post(
   '/api/updateCustomer',
   passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
-  manageCustomerValidation,
+  manageCustomerSupplierValidation,
   updateCustomer
 );
 router.get(
@@ -399,6 +399,7 @@ router.get(
   deleteCustomer
 );
 
+router.get('/api/reactivateCustomer', passport.authenticate('jwt', { session: false, failureRedirect: '/' }), reactivateCustomer);
 router.post(
   '/api/customersFileUpload',
   passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
@@ -414,9 +415,10 @@ const {
   getAllSuppliers,
   getParticularSupplier,
   deleteSupplier,
+  reactivateSupplier
 } = require('../controller/manageSuppliers/manageSuppliers.js');
 
-const manageSuppliersValidation = require('../middleware/manageSuppliers/manageSuppliersValidation.js');
+// const manageSuppliersValidation = require('../middleware/manageSuppliers/manageSuppliersValidation.js');
 
 const {
   supplierUploadFile,
@@ -431,25 +433,25 @@ router.get(
   getSuppliersPage
 );
 router.get(
-  '/api/manageSuppliers',
+  '/api/manageSuppliers/:status',
   passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
   getAllSuppliers
 );
 router.get(
-  '/api/getSuppliers',
+  '/api/getSuppliers/:status',
   passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
   getParticularSupplier
 );
 router.post(
   '/api/insertSupplier',
   passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
-  manageSuppliersValidation,
+  manageCustomerSupplierValidation,
   insertSupplier
 );
 router.post(
   '/api/updateSupplier',
   passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
-  manageSuppliersValidation,
+  manageCustomerSupplierValidation,
   updateSupplier
 );
 router.get(
@@ -458,6 +460,8 @@ router.get(
   deleteSupplier
 );
 
+router.get('/api/reactivateSupplier',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }), reactivateSupplier)
 router.post(
   '/api/suppliersFileUpload',
   passport.authenticate('jwt', { session: false, failureRedirect: '/' }),

@@ -5,6 +5,7 @@ const {
   checkCustomerExistQuery,
   updateCustomerQuery,
   deleteCustomerQuery,
+  reactivateCustomerQuery
 } = require('../../service/manageCustomers/manageCustomers.js');
 
 const {
@@ -30,7 +31,8 @@ async function getCustomersPage(req, res) {
 
 async function getAllCustomers(req, res) {
   try {
-    const customersDetails = await getCustomersQuery();
+    const customerStatus = req.params.status;
+    const customersDetails = await getCustomersQuery(customerStatus);
     return res.status(200).json(customersDetails);
   } catch (error) {
     //here render error page
@@ -104,6 +106,24 @@ async function deleteCustomer(req, res) {
   }
 }
 
+async function reactivateCustomer(req, res) {
+  try {
+    const customerId = req.query.customerId;
+
+    if (!customerId) {
+      return res.redirect('/manageCustomers');
+    }
+    const responseObject = await reactivateCustomerQuery(customerId);
+    if (responseObject.affectedRows > 0) {
+      return res.status(200).json({ message: 'Customer Reactivate' });
+    } else {
+      return res.status(404).json({ message: 'Something Went Wrong' });
+    }
+  } catch (error) {
+    return res.status(500).json({ message: 'Unable to reactivate' });
+  }
+}
+
 module.exports = {
   insertCustomer,
   updateCustomer,
@@ -111,4 +131,5 @@ module.exports = {
   getAllCustomers,
   getParticularCustomer,
   deleteCustomer,
+  reactivateCustomer
 };
