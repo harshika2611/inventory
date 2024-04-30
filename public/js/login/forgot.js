@@ -36,7 +36,7 @@ async function submitbtn() {
         //----client side validation error
         errorShow(forgotValidation);
       } else {
-        const response = await fetch(`/forgot`, {
+        const response = await fetch(location.pathname, {
           method: 'post',
           headers: {
             'Content-Type': 'application/json',

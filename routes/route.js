@@ -30,8 +30,7 @@ router.get(
 router.get('/user', getUserName);
 router.post('/user', checkUser);
 router.get('/activelink/:link/:id', getLink);
-router.get('/forgot', getForgot);
-router.post('/forgot', forgotFormValidation, forgotPass);
+router.post('/activelink/:link/:id', forgotFormValidation, forgotPass);
 router.get(
   '/logout',
   passport.authenticate('jwt', { session: false }),

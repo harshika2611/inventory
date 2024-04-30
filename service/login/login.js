@@ -64,9 +64,23 @@ const logUnsuccessService = async (id) => {
 
 const checkUserService = async (body) => {
   try {
-    const sql4 = `select email,id from users where email=?`;
-    const [result4] = await connection.execute(sql4, [body.email]);
-    return result4;
+    if (body?.email) {
+      const sql4 = `select email,id from users where email=?`;
+      const [result4] = await connection.execute(sql4, [body.email]);
+      return result4;
+    } else {
+      const sql4 = `select email from users where unique_code=? and id=?`;
+      const [result4] = await connection.execute(sql4, [
+        body?.link,
+        body?.userId,
+      ]);
+
+      await connection.execute(
+        `update users set unique_code = NULL where id = ?`,
+        [body?.userId]
+      );
+      return result4;
+    }
   } catch (error) {
     logger.logError(`Error`, error);
     throw error;
@@ -83,10 +97,10 @@ const userService = async (otp, body) => {
   }
 };
 
-const expireService = async (link) => {
+const expireService = async (data) => {
   try {
-    const sql6 = `select updated_at from users where unique_code=?`;
-    const result6 = await connection.execute(sql6, [link]);
+    const sql6 = `select updated_at from users where unique_code=? and id = ?`;
+    const result6 = await connection.execute(sql6, [data.link, data.id]);
     return result6;
   } catch (error) {
     logger.logError(`Error`, error);

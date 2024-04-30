@@ -130,17 +130,22 @@ const getLink = async (req, res) => {
   try {
     const link = req.params.link;
     const id = req.params.id;
-    const user = await expireService(link);
-    const timer = user[0][0].updated_at;
-    const expeireTimer = new Date(
-      new Date(timer).getTime() + 2 * 3600000
-    ).toTimeString();
-    const newtime = new Date().toTimeString();
-    if (newtime < expeireTimer) {
-      res.redirect('/forgot');
-    } else {
-      res.send('expired');
+
+    if (id && link) {
+      const user = await expireService({ link, id });
+      const timer = user[0][0]?.updated_at;
+      if (timer) {
+        const expeireTimer = new Date(
+          new Date(timer).getTime() + 2 * 3600000
+        ).toTimeString();
+        const newtime = new Date().toTimeString();
+        if (newtime < expeireTimer) {
+          res.render('login/forgot');
+          return;
+        }
+      }
     }
+    res.send('expired');
   } catch (error) {
     logger.logError(error);
     res.status(500).json({ message: 'can`t fetch user controller' });

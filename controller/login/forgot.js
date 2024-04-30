@@ -8,9 +8,14 @@ const getForgot = async (req, res) => {
 
 const forgotPass = async (req, res) => {
   try {
-    const result4 = await checkUserService(req.body);
+    const link = req?.params?.link;
+    const userId = req?.params?.id;
+    const result4 = await checkUserService({ ...req.body, link, userId });
     if (result4.length > 0) {
-      const result = await forgotPassService(req.body);
+      const result = await forgotPassService({
+        ...req.body,
+        email: result4[0].email,
+      });
       if (!result == 0) {
         res.status(200).send('You are successfully registerd');
       }
