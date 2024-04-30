@@ -340,7 +340,10 @@ function debounce(cb, interval, immediate) {
 }
 
 function search() {
-  let searchbar = document.getElementById('searchbar').value.toLowerCase().trim();
+  let searchbar = document
+    .getElementById('searchbar')
+    .value.toLowerCase()
+    .trim();
   if (searchbar == '') {
     paggination(null, dataArray);
   } else {
@@ -355,4 +358,5 @@ function search() {
     paggination(null, filteredResult);
   }
 }
+
 // document.getElementById('input').onkeyup = debounce(search, 400);

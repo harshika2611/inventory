@@ -60,7 +60,7 @@ const getAllCity = async (id, name) => {
     const store = data.result;
     let option = document.getElementById(`${id}`);
     option.innerHTML = '';
-    option.innerHTML = `<option value="select here">Select here</option>`;
+    option.innerHTML = `<option value="select here">Select City</option>`;
     store.forEach((element, index) => {
       option.innerHTML += `<option value="${element.city_id}">${element.city_name}</option>`;
 

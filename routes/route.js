@@ -128,7 +128,7 @@ const {
 const {
   reportPdfPage,
   productReportGenerate,
-  outOfStockProducts
+  outOfStockProducts,
 } = require('../controller/report/reportPdf.js');
 
 const {

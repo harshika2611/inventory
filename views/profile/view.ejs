@@ -19,20 +19,21 @@
           <% if(profileDetails[0][0].role !=4) { %>
             <div><span>Name : <%= profileDetails[0][0].firstname%></span><br />
               <% } else {%>
-                <div><span>Name : <%= profileDetails[0][0].firstname + " " + profileDetails[0][0].lastname%>
-                  </span><br />
-                  <% } %>
-                </div>
-                <div><span>Date of Birth : <%= profileDetails[0][0].dob %></span><br /></div>
-                <div>
-                  <div><span>Role : <%= profileDetails[0][0].role %></span></div><br />
-                </div>
-                <div>
-                  <span>Email : <%= profileDetails[0][0].email %></span>
-                </div>
-                <div class="edit-btn-container">
-                  <button class="edit-profile-btn" onclick="location.href='/profileEdit'">Edit Profile</button>
-                </div>
+                <%console.log(profileDetails[0][0].lastname)%>
+                  <div><span>Name : <%= profileDetails[0][0].firstname + " " + profileDetails[0][0].lastname%>
+                    </span><br />
+                    <% } %>
+                  </div>
+                  <div><span>Date of Birth : <%= profileDetails[0][0].dob %></span><br /></div>
+                  <div>
+                    <div><span>Role : <%= profileDetails[0][0].role %></span></div><br />
+                  </div>
+                  <div>
+                    <span>Email : <%= profileDetails[0][0].email %></span>
+                  </div>
+                  <div class="edit-btn-container">
+                    <button class="edit-profile-btn" onclick="location.href='/profileEdit'">Edit Profile</button>
+                  </div>
             </div>
             <div class="img-container view-img">
               <img src="/uploads/<%=profileDetails[0][0].img_path%>" alt="Image">

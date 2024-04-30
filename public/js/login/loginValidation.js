@@ -3,7 +3,7 @@ function loginFormValidation(data) {
   for (let key in data) {
     switch (key) {
       case 'email':
-        const regexemail = /^[a-z0-9]+@[a-z]+\.[a-z]{2,3}$/;
+        const regexemail = /^(?!.{51})[a-z0-9-_.+]+@[a-z0-9]+[a-z0-9-.]*\.[a-z0-9]{2,9}/;
 
         if (data[key].length === 0) {
           loginError[key] = '* require';

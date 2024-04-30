@@ -1,88 +1,4 @@
-const patterns = {
-  textOnly: '^[a-zA-Z\\s]+$',
-  numberOnly: '^\\d+$',
-  email: '^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$',
-  date: '^(19[0-9]{2}|2[0-9]{3})-(0[1-9]|1[012])-([123]0|[012][1-9]|31)$',
-};
-
-// Pattern Field is optional
-const validation = {
-  firstname: {
-    required: true,
-    pattern: patterns.textOnly,
-  },
-  lastname: {
-    required: false,
-    pattern: patterns.textOnly,
-  },
-  dob: {
-    required: true,
-    pattern: patterns.date,
-    validator: (d) => {
-      if (new Date(d) <= new Date()) return true;
-      return false;
-    },
-  },
-  email: {
-    required: true,
-    pattern: patterns.email,
-  },
-};
-
-function checkValidation(body, validation) {
-  const result = [];
-  for (let arr of Object.entries(validation)) {
-    const field = arr[0];
-    const obj = arr[1];
-
-    const value = body[field]?.[0]?.value?.trim();
-    if (obj.required) {
-      if (!value) {
-        result.push({
-          status: 'error',
-          field,
-          message: `${field} is required!`,
-        });
-      }
-    }
-
-    // Note pattern is optional property
-    if (obj?.pattern && value) {
-      if (!new RegExp(obj.pattern, 'i').test(value)) {
-        result.push({
-          status: 'error',
-          field,
-          message: `Invalid input for ${field}!`,
-        });
-      }
-    }
-
-    if (obj?.validator && !obj?.validator(value)) {
-      result.push({
-        status: 'error',
-        field,
-        message: `Invalid input for ${field}!`,
-      });
-    }
-  }
-
-  if (result.length > 0) {
-    result.forEach((obj) => {
-      document.getElementsByName(obj.field)[0].value = '';
-      document.getElementsByName(obj.field)[0].required = true;
-    });
-    return false;
-  }
-
-  return true;
-}
-
-function validator(e) {
-  return checkValidation(
-    Object.groupBy(Array.from(e.srcElement), (o) => o.name),
-    validation
-  );
-}
+let url = new URL(window.location.href);
 
 function loadPreview(e) {
   let reader = new FileReader();
@@ -90,4 +6,82 @@ function loadPreview(e) {
   reader.onload = () => {
     document.getElementById('profileImage').src = reader.result;
   };
+}
+
+function profileFormValidation(data) {
+  let profileError = {};
+  const regextext = /^[a-zA-Z\\s]+$/;
+  for (let key in data) {
+    console.log(key);
+    switch (key) {
+      case 'firstname':
+        if (data[key].length === 0) {
+          profileError[key] = '* require';
+        } else if (!regextext.test(data[key]) && data[key] !== '') {
+          profileError[key] = '* Please valid Firstname';
+        } else if (data[key].length < 3 && data[key] !== '') {
+          profileError[key] = '* Please valid firstname';
+        } else if (data[key].length > 15 && data[key] !== '') {
+          profileError[key] = '* Please valid firstname';
+        } else {
+          delete profileError[key];
+        }
+        break;
+      case 'lastname':
+        if (data[key].trim().length === 0) {
+          profileError[key] = '* require';
+        } else if (!regextext.test(data[key]) && data[key] !== '') {
+          profileError[key] = '* Please valid Lastname';
+        } else if (data[key].trim().length === 0 && data[key] !== '') {
+          profileError[key] = '* Please Enter Lastname';
+        } else if (data[key].trim().length < 3 && data[key] !== '') {
+          profileError[key] = '* Please valid Lastname';
+        } else if (data[key].trim().length > 15 && data[key] !== '') {
+          profileError[key] = '* Please valid Lastname';
+        } else {
+          delete profileError[key];
+        }
+        break;
+      case 'email':
+        const regexemail = /^(?!.{51})[a-z0-9-_.+]+@[a-z0-9]+[a-z0-9-.]*\.[a-z0-9]{2,9}/
+        if (data[key].trim().length === 0) {
+          profileError[key] = '* require';
+        } else if (!regexemail.test(data[key]) && data[key] !== '') {
+          profileError[key] = '* Please Enter Valid Email';
+        } else {
+          delete profileError[key];
+        }
+        break;
+      case 'dob':
+        const date = /\d{4}-\d{1,2}-\d{1,2}/;
+        if (data[key].trim().length === 0) {
+          profileError[key] = '* require';
+        } else if (!date.test(data[key]) && data[key] !== '') {
+          profileError[key] = '* Please Enter Valid date';
+        }
+        break;
+    }
+  }
+  return profileError;
+}
+
+function submitbtn() {
+  try {
+    const data = formData('form');
+    const profileValidation = profileFormValidation(data);
+    console.log(data, 'alsp');
+    if (Object.keys(profileValidation).length > 0) {
+      errorShow(profileValidation);
+
+      // for (let key in profileValidation) {
+      //   const test = (document.getElementsByName(`${key}`)[0].value = '');
+      // }
+
+      return false;
+    } else {
+      return true;
+    }
+  } catch (error) {
+    console.log(error);
+  }
 }
