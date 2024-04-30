@@ -30,7 +30,7 @@ function manageSuppliersValidation(req, res, next) {
 
       case "email":
 
-        const regexemail = /^[a-z0-9]+@[a-z]+\.[a-z]{2,3}$/;
+        const regexemail = /^(?!.{51})[a-z0-9-_.+]+@[a-z0-9]+[a-z0-9-.]*\.[a-z0-9]{2,9}/;
 
         if (!supplierDetails[key]) {
           supplierFormErrorObject[key] = "* require";

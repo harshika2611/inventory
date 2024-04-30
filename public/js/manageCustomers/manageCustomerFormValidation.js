@@ -30,7 +30,7 @@ function manageCustomerFormValidation(customerFormData) {
       case "email":
         // console.log(key + " " + customerFormData[key]);
 
-        const regexemail = /^[a-z0-9]+@[a-z]+\.[a-z]{2,3}$/;
+        const regexemail = /^(?!.{51})[a-z0-9-_.+]+@[a-z0-9]+[a-z0-9-.]*\.[a-z0-9]{2,9}/;
 
         if (customerFormData[key].length === 0) {
           customerFormErrorObject[key] = "* require";

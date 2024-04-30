@@ -50,7 +50,7 @@ function manageManagerFormValidation(req, res, next) {
         break;
 
       case 'email':
-        const regexemail = /^[a-z0-9]+@[a-z]+\.[a-z]{2,3}$/;
+        const regexemail = /^(?!.{51})[a-z0-9-_.+]+@[a-z0-9]+[a-z0-9-.]*\.[a-z0-9]{2,9}/;
         if (managerDetails[key].length === 0) {
           managerFormError[key] = '* require';
         } else if (

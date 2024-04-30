@@ -12,7 +12,8 @@
   <div class="row form-popup" id="myForm">
     <div class="col-md-12 " data-bs-spy="scroll">
       <form method="post" id="form">
-        <h6 onclick="closeForm()" class="text-danger" style="margin-left: 390px; margin-top: 5px; cursor: pointer; font-size: 25px;">
+        <h6 onclick="closeForm()" class="text-danger"
+          style="margin-left: 390px; margin-top: 5px; cursor: pointer; font-size: 25px;">
           X</h6>
         <div class="container">
           <h1>Manager Details</h1>
@@ -36,16 +37,16 @@
               <label for="floatingInput">Email address</label>
             </div>
             <div class="form-floating customerform__errordiv">
-              <select name="state" id="state" onchange="getAllStore(this.value)">
-
+              <select name="state" id="state" class="form-select" aria-label="Floating label select example"
+                onchange="getAllStore(this.value)">
               </select>
-
             </div>
-            <div class="form-floating customerform__errordiv">
-              <select name="place" id="place">
-                <option value="" selected>Select here</option>
-              </select>
 
+
+            <div class="form-floating customerform__errordiv">
+              <select name="place" id="place" class="form-select" aria-label="Floating label select example">
+                <option value="" selected>Select Store</option>
+              </select>
             </div>
           </fieldset>
           <div id="error"></div>

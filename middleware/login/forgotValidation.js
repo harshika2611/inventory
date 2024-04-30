@@ -4,7 +4,7 @@ function forgotFormValidation(req, res, next) {
   for (let key in forgotDetails) {
     switch (key) {
       case 'email':
-        const regexemail = /^[a-z0-9]+@[a-z]+\.[a-z]{2,3}$/;
+        const regexemail = /^(?!.{51})[a-z0-9-_.+]+@[a-z0-9]+[a-z0-9-.]*\.[a-z0-9]{2,9}/;
 
         if (forgotDetails[key].length === 0) {
           forgotError[key] = '* require';

@@ -29,6 +29,14 @@
                 <label for="storage">Storage</label>
               </div>
               <%}%>
+                <div class="form-floating fill2">
+                  <select name="payment_status" class="form-select" aria-label="select" id="payment"
+                    onchange="salesFilter(this.value)">
+                    <option value="pending" selected>Pending</option>
+                    <option value="paid">Paid</option>
+                  </select>
+                  <label for="floatingPaymentStatus">Payment</label>
+                </div>
           </div>
           <div class="grid">
             <table class="table table-hover">
@@ -37,9 +45,9 @@
             </table>
           </div>
         </div>
-        <section id="paggination">
-          <%- include('../components/pagginationComponent')%>
-        </section>
+        <!-- <section id="paggination"> -->
+        <%- include('../components/pagginationComponent')%>
+          <!-- </section> -->
       </div>
 
 </body>

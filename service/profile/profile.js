@@ -49,7 +49,7 @@ async function updateProfileQuery(data) {
       data.email,
       data.id,
     ]);
-    return [result];
+    return result;
   } catch (error) {
     logger.logError(error);
     return [];

@@ -16,8 +16,8 @@
     <div class="container div-second">
       <div class="main-container">
         <div class="profile-details">
-          <form class="g-3 edit-profile-form" enctype="multipart/form-data" id="form" method="post"
-            action="/profileEdit" onsubmit="return validator(event)">
+          <form class="g-3 edit-profile-form" method="post" enctype="multipart/form-data" id="form"
+            action="/profileEdit" onsubmit="return submitbtn();">
             <div class="container edit-img-container">
               <div class="img-container">
                 <img src="/uploads/<%=profileDetails[0][0].img_path%>" alt="Profile Image" id="profileImage">
@@ -53,7 +53,7 @@
                   <% } %>
             </div>
             <div class="edit-btn-container">
-              <button type="button" class="edit-profile-btn" onclick="submitbtn();">Save</button>
+              <button type="submit" id="submitBtn" class="edit-profile-btn">Save</button>
             </div>
           </form>
         </div>
@@ -61,8 +61,7 @@
     </div>
     <script src="js/commonFunction/commonFunction.js"></script>
     <script src="js/profile/profile.js"></script>
-    <script src="js/manager/manager.js"></script>
-    <script src="js/manager/managerValidation.js"></script>
+
 </body>
 
 </html>

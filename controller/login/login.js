@@ -101,6 +101,8 @@ const userLogin = async (req, res) => {
     } else {
       res.status(402).send('no logner available');
     }
+  } else {
+    res.status(401).send('invalid email or password');
   }
 };
 

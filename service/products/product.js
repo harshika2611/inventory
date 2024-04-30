@@ -51,7 +51,6 @@ const updateProduct = async (body, payload) => {
       [body.id]
     );
     const insertedId = await insertProductService(body);
-
     await connection.execute(
       `UPDATE products_details SET product_id = ? WHERE product_id = ?`,
       [insertedId, body.id]
