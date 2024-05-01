@@ -32,14 +32,34 @@
 .user-image {
   cursor: pointer;
 }
-
-.width-100 {
-  width: 232px;
+.side-bar {
   z-index: 11;
   border: none;
   overflow: hidden;
 }
-
+.width-100-hover {
+  background-color: #365c72;
+}
+.navigationDiv {
+  width: 170px;
+  border-radius: 10px;
+  z-index: 11;
+  border: none;
+  overflow: hidden;
+}
+.navigationDiv:hover {
+  background-color: #0c5077;
+}
+.navigationSubDiv {
+  width: 150px;
+  border-radius: 10px;
+  z-index: 11;
+  border: none;
+  overflow: hidden;
+}
+.navigationSubDiv:hover {
+  background-color: #0c5077;
+}
 .div-h {
   min-height: 800px !important;
 }
@@ -50,6 +70,7 @@
   position: fixed;
   left: 0;
   height: 100vh;
+  width: 232px;
 }
 
 img {

@@ -17,12 +17,14 @@
         <div class="card mx-5 mb-2 p-3"
           style="width: 67rem;box-shadow: 0 0 10px #0000001a; border-right: 6px solid #002F4B; border-radius: 20px;">
           <div>
-            <span class="fs-2" style="color: #002F4B;;">Orders</span>
-            <hr>
+            <span class="fs-2" style="color: #002F4B;">Sales Orders</span>
             <span class=" float-end">
+              <label for="fromDate" style="color: #002F4B;"> From:</label>
               <input type="date" class="w-300 h-25 p-1" id="fromDate" onchange="searchdata()">
+              <label for="toDate" style="color: #002F4B; margin-left: 5px;"> To:</label>
               <input type="date" class="w-300 h-25 p-1" id="toDate" onchange="searchdata()">
             </span>
+            <hr>
           </div>
           <div>
             <table class="table table-hover">

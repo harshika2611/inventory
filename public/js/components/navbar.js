@@ -19,3 +19,25 @@ window.onclick = function (event) {
 function logout() {
   window.location = '/';
 }
+
+const navHover = () => {
+  const path = window.location.pathname.split('/')[1];
+  console.log(path);
+  if (path == 'purchaseOrder' || path == 'purchaseHistory') {
+    document.getElementById(`navpurchase`).classList.add('width-100-hover');
+    document.getElementById(`submenu1`).classList.remove('collapse-horizontal');
+    document.getElementById(`submenu1`).classList.add('show');
+  } else if (path == 'salesNewOrder' || path == 'salesHistory') {
+    document.getElementById(`navsales`).classList.add('width-100-hover');
+    document.getElementById(`submenu2`).classList.remove('collapse-horizontal');
+    document.getElementById(`submenu2`).classList.add('show');
+  } else if (path.toLowerCase().includes('report')) {
+    console.log(path.toLowerCase().includes('report'));
+    document.getElementById(`navreport`).classList.add('width-100-hover');
+    document.getElementById(`submenu3`).classList.remove('collapse-horizontal');
+    document.getElementById(`submenu3`).classList.add('show');
+  } else {
+    document.getElementById(`nav${path}`).classList.add('width-100-hover');
+  }
+};
+navHover();

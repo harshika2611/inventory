@@ -80,7 +80,7 @@ const showQuantityData = async (lowvalue) => {
   let lowStock = [];
   let header = Object.keys(productData[0]);
   productData.map((e) => {
-    if (e.stock < lowStockMark) {
+    if (e.Stock < lowStockMark) {
       lowStock.push(e);
     }
   });
@@ -108,44 +108,50 @@ const showQuantityData = async (lowvalue) => {
 };
 
 const showData = () => {
-  let header2 = [
-    'Order_Id',
-    'Order_Name',
-    'Order_Amount',
-    'order_date',
-    'created_Time',
-  ];
-
   let orderSum = 0;
   orderData.forEach((el) => (orderSum += el.Order_Amount));
 
   document.getElementById('totalOrder').innerText = orderData.length;
   document.getElementById('orderCost').innerText = orderSum;
   orderData = orderData.slice(0, 5);
-
-  document.getElementById('orderTableHead').innerHTML = header2
-    .map((e) => `<th class="text-center">${e.replace('_', ' ')}</th>`)
+  let header = Object.keys(orderData[0]);
+  let chengeData = {
+    count: 1,
+    array: [...orderData],
+  };
+  document.getElementById('orderTableHead').innerHTML = header
+    .map(
+      (e) =>
+        `<th class="text-center">${
+          e == 'Order_Id' ? 'NO' : e.replace('_', ' ')
+        }</th>`
+    )
     .join('');
-  // let time = renderTimestamp(orderData[0]['created_Time']);
-  orderData.map((e) => {
-    header2.map((h) => {
-      if (h == 'created_Time' || h == 'order_date') {
+  chengeData.array.map((e) => {
+    header.map((h) => {
+      if (h == 'Created_Time' || h == 'Order_Time') {
         let time = (e[h] = renderTimestamp(e[h]));
         e[h] = time;
       }
+      if (h == 'Order_Id') {
+        e.No = chengeData.count;
+        chengeData.count++;
+      }
     });
   });
-  console.log(orderData);
-  document.getElementById('orderTableBody').innerHTML = orderData
+  document.getElementById('orderTableBody').innerHTML = chengeData.array
     .map(
       (e) => `<tr onclick="productlist('${e.Order_Id}')">
-	      ${header2.map((h) => `<td>${e[h] ? e[h] : '-'}</td>`).join('')}</tr>`
+        ${header
+          .map(
+            (h) => `<td>${h != 'Order_Id' ? (e[h] ? e[h] : '-') : e['No']}</td>`
+          )
+          .join('')}</tr>`
     )
     .join('');
 };
 const productlist = (id) => {
   window.location = `/orderProduct/${id}`;
-  console.log(product);
 };
 
 onloadData();

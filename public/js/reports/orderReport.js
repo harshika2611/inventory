@@ -2,29 +2,52 @@ let productHeader = document.getElementById('productHeader');
 let productData = document.getElementById('productData');
 const fetchData = async () => {
   paggination('api/orderreport/allorder');
+  const maxDate = new Date().toISOString().split('T')[0];
+  document.getElementById('toDate').setAttribute('max', maxDate);
+  document.getElementById('fromDate').setAttribute('max', maxDate);
 };
 
 const dataTableGrid = (pagginationArray, startIndex) => {
   if (pagginationArray.length == 0) {
-    productHeader.innerHTML = `<h1  class='text-center'>Enter valid Product name </h1>`;
-    productData.innerHTML = `<h6 class='text-center'>Error</h6>`;
+    productHeader.innerHTML = `<h1  class='text-center'>No Orders </h1>`;
+    productData.innerHTML = `<h6 class='text-center'>...</h6>`;
   } else {
-    let header = Object.keys(pagginationArray[0]);
-    pagginationArray.map((e) => {
-      header.map((h) => {
+    let header = [
+      'No',
+      'Order_Name',
+      'Customer_Name',
+      'Order_Status',
+      'Order_Amount',
+      'Payment_Status',
+      'Order_Time',
+      'Created_Time',
+    ];
+    let array = [...pagginationArray];
+
+    array.map((e) => {
+      Object.keys(pagginationArray[0]).map((h) => {
         if (
-          (h == 'created_Time' || h == 'order_date') &&
+          (h == 'Created_Time' || h == 'Order_Time') &&
           (e[h].includes('T') || e[h].includes('Z'))
         ) {
           let time = (e[h] = renderTimestamp(e[h]));
           e[h] = time;
         }
+        if (h == 'Order_Id') {
+          e.No = ++startIndex;
+          ++startIndex;
+        }
       });
     });
     productHeader.innerHTML = header
-      .map((e) => `<th>${e.replace('_', ' ')} </th>`)
+      .map(
+        (e) =>
+          `<th class="text-center">${
+            e == 'Order_Id' ? 'NO' : e.replace('_', ' ')
+          } </th>`
+      )
       .join('');
-    productData.innerHTML = pagginationArray
+    productData.innerHTML = array
       .map(
         (e) => `<tr onclick="productlist('${e.Order_Id}')">
       ${header.map((h) => `<td>${e[h] ? e[h] : '-'}</td>`).join('')}</tr>`
@@ -41,8 +64,6 @@ const searchdata = () => {
   let fromDate = document.getElementById('fromDate').value;
   let toDate = document.getElementById('toDate').value;
 
-  // let date = new Date();
-  // let currentDate = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
   let currentDate = new Date().toISOString().slice(0, 10);
   if (fromDate.length == 0) {
     fromDate = currentDate;
