@@ -27,7 +27,7 @@ function manageSupplierFormValidation(supplierFormData) {
 
       case "email":
 
-        const regexemail = /^(?!.{51})[a-z0-9-_.+]+@[a-z0-9]+[a-z0-9-.]*\.[a-z0-9]{2,9}/;
+        const regexemail = /^(?!.{255})[a-z0-9-_.+]+@[a-z0-9]+[a-z0-9-.]*\.[a-z0-9]{2,9}/;
 
         if (supplierFormData[key].length === 0) {
           supplierFormErrorObject[key] = "* require";

@@ -30,8 +30,8 @@ function manageCustomerFormValidation(customerFormData) {
       case "email":
         // console.log(key + " " + customerFormData[key]);
 
-        const regexemail = /^(?!.{51})[a-z0-9-_.+]+@[a-z0-9]+[a-z0-9-.]*\.[a-z0-9]{2,9}/;
-
+        const regexemail = /^(?!.{255})[a-z0-9-_.+]+@[a-z0-9]+[a-z0-9-.]*\.[a-z0-9]{2,9}/;
+        // const regexemail = /^[a-z0-9]+@[a-z]+\.[a-z]{2,3}$/;
         if (customerFormData[key].length === 0) {
           customerFormErrorObject[key] = "* require";
         } else if (!regexemail.test(customerFormData[key]) && customerFormData[key] !== "") {
