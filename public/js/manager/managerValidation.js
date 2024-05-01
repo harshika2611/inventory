@@ -1,5 +1,6 @@
 function manageManagerFormValidation(data) {
   let managerFormError = {};
+
   const regextext = /^[a-zA-Z\\s]+$/;
   for (let key in data) {
     switch (key) {
@@ -51,6 +52,14 @@ function manageManagerFormValidation(data) {
       case 'state':
         const stateSelectCombo = document.getElementById('state');
         if (stateSelectCombo.selectedIndex < 1) {
+          managerFormError[key] = '* require';
+        } else {
+          delete managerFormError[key];
+        }
+        break;
+      case 'place':
+        const storeCombo = document.getElementById('place');
+        if (storeCombo.selectedIndex < 1) {
           managerFormError[key] = '* require';
         } else {
           delete managerFormError[key];

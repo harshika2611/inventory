@@ -38,7 +38,7 @@ function manageProductFormValidation(data) {
         break;
 
       case 'Price':
-        console.log(data[key].length, 'lem');
+      
         if (data[key].length === 0) {
           productFormError[key] = '* require';
         } else if (!numberregex.test(data[key]) && data[key] !== '') {

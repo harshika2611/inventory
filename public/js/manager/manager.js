@@ -55,6 +55,7 @@ async function submitbtn() {
 
 const getAllCity = async (id, name) => {
   try {
+    console.log(id, name);
     const response = await fetch('/cityCombo');
     const data = await response.json();
     const store = data.result;
@@ -62,7 +63,7 @@ const getAllCity = async (id, name) => {
     option.innerHTML = '';
     option.innerHTML = `<option value="select here">Select City</option>`;
     store.forEach((element, index) => {
-      option.innerHTML += `<option value="${element.city_id}">${element.city_name}</option>`;
+      option.innerHTML += `<option value="${element.city_id}" 'selected="selected"'>${element.city_name}</option>`;
 
       if (name && element.city_name === name) {
         option.selectedIndex = index + 1;
@@ -75,12 +76,14 @@ const getAllCity = async (id, name) => {
 
 const getAllStore = async (state, name, cityName) => {
   try {
+    console.log(state, name, cityName);
     let index = document.getElementById('state').value;
     let option = document.getElementById('place');
     const response = await fetch(`/storeCombo/${index}`);
     const data = await response.json();
     const store = data.result;
     option.innerHTML = '';
+    option.innerHTML = `<option value="select here">Select Store</option>`;
     store.forEach((element) => {
       option.innerHTML += `<option value="${element.id}">${element.name}</option>`;
     });
@@ -213,23 +216,23 @@ async function updateManager(manager) {
           case 'email':
             element.value = managerDetails[0][key];
             break;
-          case 'city_name':
-            const state = { id: 'state' };
-            await getAllCity('state', managerDetails[0].city_name);
-            let stateCombo = document.getElementById('state');
-            console.log(state, managerDetails[0][key]);
-            for (op of stateCombo) {
-              console.log(op);
-              if (op.value === managerDetails[0][key]) {
-                op.setAttribute('selected', true);
-              } else {
-                op.setAttribute('selected', false);
-              }
-            }
-            break;
+          // case 'city_name':
+
+          // for (op of stateCombo) {
+          //   if (op.value === managerDetails[0][key]) {
+          //     op.setAttribute('selected', true);
+          //   } else {
+          //     op.setAttribute('selected', false);
+          //   }
+          // }
+          // break;
         }
-        getAllStore(state, managerDetails[0].name, managerDetails[0].city_name);
+        // getAllStore(state, managerDetails[0].name, managerDetails[0].city_name);
       }
+      getAllCity('state', managerDetails[0].city_name);
+      const state = { id: 'state' };
+      console.log(managerDetails[0].city_name);
+      getAllStore(state, managerDetails[0].city_name, managerDetails[0].name);
     }
   } catch (error) {
     console.log(error);
@@ -313,7 +316,7 @@ managerFilter();
 function filterUp(event, order) {
   let status = document.getElementById('status').value;
   const key = event.target.getAttribute('id');
-  url = `/api/getmanagers?status=${status}&field=id&order=${order}`;
+  url = `/api/getmanagers?status=${status}&field=${key}&order=${order}`;
   paggination(url);
 }
 
@@ -322,7 +325,6 @@ const search = () => {
   if (search == '') {
     paggination(null, dataArray);
   } else {
-    console.log(dataArray);
     filteredResult = dataArray.filter((ele) => {
       return (
         ele.Firstname.toLowerCase().includes(search) ||

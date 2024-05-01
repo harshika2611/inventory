@@ -216,7 +216,7 @@ async function deleteProduct(product) {
 }
 
 async function deleteProductPop(id) {
-  console.log(id, 'here');
+ 
   url = `/api/deleteProduct/${id}`;
   const response = await fetch(url);
   try {

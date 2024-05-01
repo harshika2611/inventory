@@ -13,7 +13,7 @@ function renderTimestamp(databaseDate) {
 
 async function viewProfile(req, res) {
   try {
-    console.log(req.user);
+  
     const profileDetails = await viewProfileQuery(req?.user?.id);
     profileDetails[0][0].dob = renderTimestamp(profileDetails[0][0].dob);
     return res.render('./profile/view', {
