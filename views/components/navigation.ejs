@@ -1,58 +1,57 @@
 <link rel="stylesheet" href="src/css/navigation.css" />
-<script src="js/components/navbar.js"></script>
 <div id="navdiv1" onmouseup="document.getElementById('notifications-box').style.display = 'none'">
   <div class="position-absolute top-0 start-0 d-flex z-1 main-div">
     <div class="nav-costom1">
       <div class="container-fluid">
         <div class="row flex-nowrap">
-          <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 width-100 bgColor">
+          <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 side-bar bgColor">
             <div class="my-3 mx-5" style="height: 50px">
               <a href="/dashboard"><img src="icons/l.png" alt="img" style="margin-left: -45px;margin-top: -27px;"
                   width="200" height="140"></a>
             </div>
             <div class="d-flex flex-column align-items-center align-items-sm-start pt-2 mx-3 min-vh-100 div-h "
               style="margin-top: 40px">
-              <div class="btn my-2 width-100">
+              <div class="btn my-2 navigationDiv" id="navdashboard">
                 <a href="/dashboard" class="d-flex align-items-center justify-content-start nav-link"><img
                     src="icons/home.svg" alt="img" width="30" height="20" />
                   <span class="fs-6 mx-2 text-light">Dashboard</span>
                 </a>
               </div>
-              <div class="btn my-2 width-100">
+              <div class="btn my-2 navigationDiv" id="navproducts">
                 <a href="/products" class="d-flex align-items-center justify-content-start nav-link"><img
                     src="icons/Products.svg" alt="img" width="30" height="20" />
                   <span class="fs-6 mx-2 text-light">Products</span>
                 </a>
               </div>
               <% if(data?.roleId==4){ %>
-                <div class="btn my-2 width-100">
+                <div class="btn my-2 navigationDiv" id="navmanager">
                   <a href="/manager" class="d-flex align-items-center justify-content-start nav-link"><img
                       src="icons/manager.svg" alt="img" width="30" height="20" />
                     <span class="fs-6 mx-2 text-light">Managers</span>
                   </a>
                 </div>
                 <% } %>
-                  <div class="btn my-2 width-100">
+                  <div class="btn my-2 navigationDiv" id="navmanageCustomers">
                     <a href="/manageCustomers" class="d-flex align-items-center justify-content-start nav-link"><img
                         src="icons/customer.svg" alt="img" width="30" height="20" />
                       <span class="fs-6 mx-2 text-light">Customers</span>
                     </a>
                   </div>
-                  <div class="btn my-2 width-100">
+                  <div class="btn my-2 navigationDiv" id="navmanageSuppliers">
                     <a href="/manageSuppliers" class="d-flex align-items-center justify-content-start nav-link"><img
                         src="icons/supplier.svg" alt="img" width="30" height="20" />
                       <span class="fs-6 mx-2 text-light">Suppliers</span>
                     </a>
                   </div>
                   <% if(data?.roleId==4){ %>
-                    <div class="btn my-2 width-100">
+                    <div class="btn my-2 navigationDiv" id="navstore">
                       <a href="/store" class="d-flex align-items-center justify-content-start nav-link"><img
                           src="icons/warehouses.svg" alt="img" width="30" height="20" />
                         <span class="fs-6 mx-2 text-light">Warehouses</span>
                       </a>
                     </div>
                     <% } %>
-                      <div class="btn my-2 width-100" data-bs-toggle="collapse" data-bs-target="#submenu1"
+                      <div class="btn my-2" id="navpurchase" data-bs-toggle="collapse" data-bs-target="#submenu1"
                         aria-expanded="false" aria-controls="submenu1">
                         <div class="d-flex">
                           <a class="d-flex align-items-center justify-content-start nav-link">
@@ -65,14 +64,14 @@
                           <ul class="dis-flex nav flex-row ms-1">
                             <li>
                               <a href="/purchaseOrder"
-                                class="d-flex align-items-center justify-content-start nav-link text-dark"><img
+                                class="d-flex align-items-center justify-content-start nav-link text-dark navigationSubDiv"><img
                                   src="icons/order.svg" alt="img" width="30" height="20" />
                                 <span class="fs-6 mx-2 text-light">Order</span>
                               </a>
                             </li>
                             <li>
                               <a href="/purchaseHistory"
-                                class="d-flex align-items-center justify-content-start nav-link text-dark"><img
+                                class="d-flex align-items-center justify-content-start nav-link text-dark navigationSubDiv"><img
                                   src="icons/history.svg" alt="img" width="30" height="20" />
                                 <span class="fs-6 mx-2 text-light">History</span>
                               </a>
@@ -80,10 +79,9 @@
                           </ul>
                         </div>
                       </div>
-                      <div class="btn my-2 width-100" data-bs-toggle="collapse" data-bs-target="#submenu2"
+                      <div class="btn my-2" id="navsales" data-bs-toggle="collapse" data-bs-target="#submenu2"
                         aria-expanded="false">
                         <div class="d-flex">
-
                           <a class="d-flex align-items-center justify-content-start nav-link">
                             <img src="icons/sales.svg" alt="img" width="30" height="20" />
                             <span class="fs-6 mx-2 text-light">Sales</span>
@@ -94,14 +92,14 @@
                           <ul class="dis-flex nav flex-row ms-1">
                             <li>
                               <a href="/salesNewOrder"
-                                class="d-flex align-items-center justify-content-start nav-link text-dark"><img
+                                class="d-flex align-items-center justify-content-start nav-link text-dark navigationSubDiv"><img
                                   src="icons/order.svg" alt="img" width="30" height="20" />
                                 <span class="fs-6 mx-2 text-light">Order</span>
                               </a>
                             </li>
                             <li>
                               <a href="/salesHistory"
-                                class="d-flex align-items-center justify-content-start nav-link text-dark"><img
+                                class="d-flex align-items-center justify-content-start nav-link text-dark navigationSubDiv"><img
                                   src="icons/history.svg" alt="img" width="30" height="20" />
                                 <span class="fs-6 mx-2 text-light">History</span>
                               </a>
@@ -109,11 +107,10 @@
                           </ul>
                         </div>
                       </div>
-                      <div class="btn my-2 width-100" data-bs-toggle="collapse" data-bs-target="#submenu3"
+                      <div class="btn my-2" id="navreport" data-bs-toggle="collapse" data-bs-target="#submenu3"
                         aria-expanded="false">
                         <div class="d-flex">
-
-                          <a class="d-flex align-items-center justify-content-start nav-link">
+                          <a class="d-flex align-items-center justify-content-start nav-link ">
                             <img src="icons/sales.svg" alt="img" width="30" height="20" />
                             <span class="fs-6 mx-2 text-light">Reports</span>
                           </a>
@@ -123,21 +120,21 @@
                           <ul class="dis-flex nav flex-row ms-1">
                             <li>
                               <a href="/purchaseReport"
-                                class="d-flex align-items-center justify-content-start nav-link text-dark"><img
+                                class="d-flex align-items-center justify-content-start nav-link text-dark navigationSubDiv"><img
                                   src="icons/purchase.svg" alt="img" width="30" height="20" />
                                 <span class="fs-6 mx-2 text-light">Purchase </span>
                               </a>
                             </li>
                             <li>
                               <a href="/salesReport"
-                                class="d-flex align-items-center justify-content-start nav-link text-dark"><img
+                                class="d-flex align-items-center justify-content-start nav-link text-dark navigationSubDiv"><img
                                   src="icons/history.svg" alt="img" width="30" height="20" />
                                 <span class="fs-6 mx-2 text-light">Sales</span>
                               </a>
                             </li>
                             <li>
                               <a href="/reportGenerate"
-                                class="d-flex align-items-center justify-content-start nav-link text-dark"><img
+                                class="d-flex align-items-center justify-content-start nav-link text-dark navigationSubDiv"><img
                                   src="icons/history.svg" alt="img" width="30" height="20" />
                                 <span class="fs-6 mx-2 text-light">Customize</span>
                               </a>
@@ -160,7 +157,7 @@
     <nav class="navbar bg-body nav-costom2" style="position: fixed;
     z-index: 10;
     margin-left: 210px; box-shadow: 0 2px 5px #0000001f,0 6px 10px #0000001f; left: 0;
-  width: -webkit-fill-available; width: -moz-available;">
+    width: -webkit-fill-available; width: -moz-available;">
       <div class="container-fluid">
         <p class="navbar-brand fs-3 b" style="margin-left: 20px;"><b> Inventory Management </b></p>
         <div class="m-1">
@@ -229,9 +226,9 @@
 
         const html = `
           <div class="notification ${obj.seen ? '' : 'unread'}">
-              ${text}
-          </div>
-        `;
+            ${text}
+            </div>
+            `;
 
         box.innerHTML += html;
       })
@@ -259,3 +256,4 @@
       function displayNotifications() { }
     </script>
     <% } %>
+      <script src="js/components/navbar.js"></script>

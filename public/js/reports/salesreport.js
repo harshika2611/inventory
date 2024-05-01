@@ -165,7 +165,7 @@ const monthSales = async () => {
     dataLabels: {
       enabled: true,
       formatter: function (val) {
-        return val + '₹';
+        return '₹' + val;
       },
       offsetY: -20,
       style: {
@@ -209,7 +209,7 @@ const monthSales = async () => {
       labels: {
         show: false,
         formatter: function (val) {
-          return val + '₹';
+          return '₹' + val;
         },
       },
     },
