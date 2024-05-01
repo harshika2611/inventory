@@ -477,7 +477,7 @@ const {
   updateStore,
   deleteStore,
   getParticularStore,
-  filterStore,
+  storeProducts,
 } = require('../controller/stores/store.js');
 const storeValidation = require('../middleware/store/storeValidation.js');
 
@@ -519,6 +519,11 @@ router.post(
   checkRole,
   deleteStore
 );
+router.get(
+  '/storeProducts',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  storeProducts
+)
 // router.post('/filterStore',passport.authenticate('jwt', { session: false, failureRedirect: '/' }), filterStore);
 
 // ------------------- Manage Purchases ---------------------- //

@@ -33,7 +33,14 @@ async function submitbtn() {
       });
 
       if (response.status == 200) {
-        window.location = `/dashboard`;
+        Swal.fire({
+          icon: "success",
+          title: "Welcome Inventory Management...",
+          showConfirmButton: false,
+          timer: 1500
+        }).then((result) => {
+          window.location = `/dashboard`;
+        });
       }
       if (response.status == 401) {
         error = 'invalid email or password';

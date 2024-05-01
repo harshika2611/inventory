@@ -45,9 +45,16 @@ async function submitbtn() {
           body: JSON.stringify(data),
         });
 
+       
         if (response.status == 200) {
-          alert('You are successfully registerd');
-          window.location = `/`;
+          Swal.fire({
+            icon: "success",
+            title: "Your Password has been saved !",
+            showConfirmButton: false,
+            timer: 1500
+          }).then((result) => {
+            window.location = `/`;
+          });
         }
         if (response.status == 401) {
           //unauthorized
