@@ -37,16 +37,6 @@
               <input class="form-control form2 mr-sm-2 w-60" type="search" id="search" placeholder="Search"
                 onkeyup="search()" aria-label="Search" />
             </div>
-            <div id="filter" class="filter">
-              <%if(data.roleId==4){%>
-                <div class="form-floating ">
-                  <select name="storage" class="form-select" aria-label="select" id="storageCombo"
-                    onchange="allFetch()"></select>
-                  <label for="storage">Storage</label>
-                </div>
-            </div>
-            <%}%>
-
           </div>
         </div>
         <div class="grid" id="grid">

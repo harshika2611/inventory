@@ -92,6 +92,8 @@ const updateManager = async (req, res) => {
       return res.status(409).send('already exist');
     } else {
       try {
+        const changeEmail = await changeEmailService(req.body);
+        console.log(req.body);
         const otp = Math.floor(Math.random() * 1000000000000 + 1);
         const result1 = await updateManagerService(otp, req.body);
         return res.status(200).send('maanger add');

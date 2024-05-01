@@ -92,6 +92,8 @@ const userLogin = async (req, res) => {
           return res.status(403).send('password was expired');
         }
       }
+    } else {
+      return res.status(402).send('no logner available');
     }
   } else {
     return res.status(401).send('invalid email or password');
@@ -134,12 +136,11 @@ const getLink = async (req, res) => {
         ).toTimeString();
         const newtime = new Date().toTimeString();
         if (newtime < expeireTimer) {
-          res.render('login/forgot');
-          return;
+          return res.render('login/forgot');
         }
       }
+      return res.send('expired');
     }
-    res.send('expired');
   } catch (error) {
     logger.logError(error);
     res.status(500).json({ message: 'can`t fetch user controller' });

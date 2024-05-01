@@ -52,6 +52,7 @@ async function submitbtn() {
       }
       if (response.status == 402) {
         error = 'Sorry!! You are no longer exist';
+        document.getElementById('forgot').style.display = 'none';
         document.getElementById('main_err').innerHTML = error;
       }
       if (response.status == 403) {
