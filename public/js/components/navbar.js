@@ -20,6 +20,18 @@ function logout() {
   window.location = '/';
 }
 
+function showLoader() {
+  document.getElementById('overlay').style.display = 'block';
+  document.getElementById('loader').style.display = 'block';
+  document.body.style.overflow = 'hidden';
+}
+
+function hideLoader() {
+  document.getElementById('overlay').style.display = 'none';
+  document.getElementById('loader').style.display = 'none';
+  document.body.style.overflow = 'unset';
+}
+
 const navHover = () => {
   const path = window.location.pathname.split('/')[1];
   console.log(path);

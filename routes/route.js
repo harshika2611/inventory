@@ -354,7 +354,7 @@ const {
   getAllCustomers,
   getParticularCustomer,
   deleteCustomer,
-  reactivateCustomer
+  reactivateCustomer,
 } = require('../controller/manageCustomers/manageCustomers.js');
 
 // const manageCustomerValidation = require('../middleware/manageCustomers/manageCustomerValidation.js');
@@ -384,7 +384,8 @@ router.get(
 );
 router.post(
   '/api/insertCustomer',
-  passport.authenticate('jwt', { session: false, failureRedirect: '/' }), manageCustomerSupplierValidation,
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  manageCustomerSupplierValidation,
   insertCustomer
 );
 router.post(
@@ -399,7 +400,11 @@ router.get(
   deleteCustomer
 );
 
-router.get('/api/reactivateCustomer', passport.authenticate('jwt', { session: false, failureRedirect: '/' }), reactivateCustomer);
+router.get(
+  '/api/reactivateCustomer',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  reactivateCustomer
+);
 router.post(
   '/api/customersFileUpload',
   passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
@@ -415,7 +420,7 @@ const {
   getAllSuppliers,
   getParticularSupplier,
   deleteSupplier,
-  reactivateSupplier
+  reactivateSupplier,
 } = require('../controller/manageSuppliers/manageSuppliers.js');
 
 // const manageSuppliersValidation = require('../middleware/manageSuppliers/manageSuppliersValidation.js');
@@ -460,8 +465,11 @@ router.get(
   deleteSupplier
 );
 
-router.get('/api/reactivateSupplier',
-  passport.authenticate('jwt', { session: false, failureRedirect: '/' }), reactivateSupplier)
+router.get(
+  '/api/reactivateSupplier',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  reactivateSupplier
+);
 router.post(
   '/api/suppliersFileUpload',
   passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
@@ -607,13 +615,13 @@ router.put(
   passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
   checkValidation({
     ...purchaseValidations.form2,
-    product_id: { required: false },
+    storage_id: { requried: false },
   }),
   updateProductPurchase
 );
 
 router.delete(
-  '/api/purchase/product/:id',
+  '/api/purchase/product/:id/:storageId',
   passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
   deleteProductPurchase
 );
@@ -657,6 +665,7 @@ const {
   productInfoPost,
   productInfoValid,
   productValid,
+  productView,
 } = require('../controller/product/productInfo.js');
 const manageProductFormValidation = require('../middleware/product/productValidation.js');
 router.get(
@@ -674,6 +683,11 @@ router.get(
   '/productInfo',
   passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
   productInfo
+);
+router.get(
+  '/productView',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  productView
 );
 router.post(
   '/productInfo',

@@ -101,12 +101,11 @@ async function fetchPurchaseOrder(data) {
 async function createPurchaseOrder(data) {
   try {
     const [results] = await connection.execute(
-      'INSERT INTO purchase_order (name, supplier_id, storage_id, amount, payment_status, date) VALUES (?, ?, ?, ?, ?, ?)',
+      'INSERT INTO purchase_order (name, supplier_id, storage_id, payment_status, date) VALUES (?, ?, ?, ?, ?)',
       [
-        data.name,
+        data.name || '',
         data.supplier_id,
         data.storage_id,
-        data.amount,
         data.payment_status,
         data.date,
       ]
@@ -131,8 +130,8 @@ async function createPurchaseOrder(data) {
 async function updatePurchaseOrder(data) {
   try {
     const [results] = await connection.execute(
-      'UPDATE purchase_order SET name = ?, date = ?, amount = ?, payment_status = ? WHERE id = ?',
-      [data.name, data.date, data.amount, data.payment_status, data.id]
+      'UPDATE purchase_order SET name = ?, date = ?, payment_status = ? WHERE id = ?',
+      [data.name, data.date, data.payment_status, data.id]
     );
     return results;
   } catch (error) {

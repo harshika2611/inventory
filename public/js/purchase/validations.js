@@ -9,7 +9,7 @@ const patterns = {
 const validation = {
   form1: {
     name: {
-      required: true,
+      required: false,
       pattern: patterns.textOnly,
     },
     date: {
@@ -28,14 +28,6 @@ const validation = {
       required: true,
       pattern: patterns.numberOnly,
     },
-    amount: {
-      required: true,
-      pattern: patterns.numberOnly,
-      validator: (value) => {
-        if (value >= 1 || value <= 9999999) return true;
-        return false;
-      },
-    },
     payment_status: {
       required: false,
       pattern: patterns.numberOnly,
@@ -50,7 +42,7 @@ const validation = {
       required: true,
       pattern: patterns.numberOnly,
       validator: (value) => {
-        if (value >= 1 || value <= 9999999) return true;
+        if (value >= 1 && value <= 9999999) return true;
         return false;
       },
     },
@@ -58,7 +50,7 @@ const validation = {
       required: true,
       pattern: patterns.numberOnly,
       validator: (value) => {
-        if (value >= 1 || value <= 9999999) return true;
+        if (value >= 1 && value <= 9999999) return true;
         return false;
       },
     },

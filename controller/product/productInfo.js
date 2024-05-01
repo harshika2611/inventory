@@ -41,6 +41,18 @@ const productInfo = async (req, res) => {
   }
 };
 
+const productView = async (req, res) => {
+  try {
+    if (req.query.id) {
+      res.render('product/productView', { data: req.user });
+    } else {
+      res.render('components/errorPage');
+    }
+  } catch (err) {
+    res.render('components/errorPage');
+  }
+};
+
 const productInfoPost = async (req, res) => {
   try {
     await updateProduct({ ...req.body, id: req.query.id }, req.user);
@@ -98,4 +110,5 @@ module.exports = {
   productInfoPost,
   productInfoValid,
   productValid,
+  productView,
 };

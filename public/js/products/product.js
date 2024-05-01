@@ -25,6 +25,7 @@ async function submitbtn() {
       errorShow(productValidation);
     } else {
       url = `/products`;
+      showLoader();
       const response = await fetch(url, {
         method: 'post',
         headers: {
@@ -33,6 +34,7 @@ async function submitbtn() {
         },
         body: JSON.stringify(data),
       });
+      hideLoader();
       if (response.status == 200) {
         alert('product added');
         window.location = `/products`;
@@ -51,6 +53,7 @@ async function submitbtn() {
       errorShow(productValidation);
     } else {
       url = `/products`;
+      showLoader();
       const response = await fetch(url, {
         method: 'post',
         headers: {
@@ -59,6 +62,7 @@ async function submitbtn() {
         },
         body: JSON.stringify(data),
       });
+      hideLoader();
       if (response.status == 200) {
         alert('product added');
         window.location = `/products`;
@@ -221,7 +225,9 @@ async function deleteProduct(product) {
 
 async function deleteProductPop(id) {
   url = `/api/deleteProduct/${id}`;
+  showLoader();
   const response = await fetch(url);
+  hideLoader();
   try {
     if (response.status == 200) {
       const message = await response.json();
@@ -267,9 +273,10 @@ const search = () => {
 
 const getAllStore = async () => {
   try {
+    showLoader();
     const response = await fetch('api/combos/productCategory');
     const data = await response.json();
-
+    hideLoader();
     const store = data;
     let option = document.getElementById('category');
     option.innerHTML = '';

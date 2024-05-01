@@ -34,6 +34,7 @@ async function submitSupplierDetails() {
     errorShow(supplierDetailsValidation);
   } else {
     //----backend
+    showLoader();
     const response = await fetch('/api/insertSupplier', {
       method: 'POST',
       body: JSON.stringify(supplierFormData),
@@ -41,7 +42,7 @@ async function submitSupplierDetails() {
         'Content-Type': 'application/json',
       },
     });
-
+    hideLoader();
     try {
       if (!response.ok) {
         throw new Error('Error In Backend Validation Manage Supplier');

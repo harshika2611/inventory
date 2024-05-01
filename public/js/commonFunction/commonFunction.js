@@ -48,9 +48,11 @@ function errorShow(errorObject) {
 }
 
 async function getAllState(selectComboId, selectStateName) {
+  showLoader();
   const response = await fetch('/api/getState', {
     method: 'GET',
   });
+  hideLoader();
   try {
     if (!response.ok) {
       throw new Error("Can't get state");
@@ -105,7 +107,7 @@ async function getCity(stateSelectCombo, selectedStateName, selectedCityName) {
   if (selectedStateName && selectedCityName) {
     stateName = selectedStateName;
   }
-
+  showLoader();
   const response = await fetch('/api/getCity', {
     method: 'POST',
     body: JSON.stringify({ state: `${stateName}` }),
@@ -113,7 +115,7 @@ async function getCity(stateSelectCombo, selectedStateName, selectedCityName) {
       'Content-Type': 'application/json',
     },
   });
-
+  hideLoader();
   try {
     if (!response.ok) {
       throw new Error("Can't get city");
@@ -184,27 +186,11 @@ function generateWarehousesDropDown(id = null, renderDeleted = false) {
           content += `</optgroup>`;
         }
       );
-
       return content;
     })
     .catch(() => '');
 }
 
-const lodder = () => {
-  let img = document.createElement('img');
-  img.setAttribute('src', 'icons/lodder.gif');
-  img.setAttribute('alt', 'img');
-  img.setAttribute('width', '200');
-  img.setAttribute('height', '200');
-  img.setAttribute(
-    'class',
-    'position-absolute top-50 start-50 translate-middle'
-  );
-  // document.body.appendChild(img);
-  console.log(img);
-  document.querySelector('body').innerHTML = '';
-  document.querySelector('body').appendChild(img);
-};
 function generateDropDown(value, selectedId) {
   return fetch(`api/combos/${value}`)
     .then((res) => res.json())
@@ -219,5 +205,5 @@ function generateDropDown(value, selectedId) {
       });
       return { content, data };
     })
-    .catch(() => '');
+    .catch((err) => console.log(err));
 }
