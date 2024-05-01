@@ -12,7 +12,7 @@ function profileFormValidation(data) {
   let profileError = {};
   const regextext = /^[a-zA-Z\\s]+$/;
   for (let key in data) {
-    console.log(key);
+
     switch (key) {
       case 'firstname':
         if (data[key].length === 0) {
@@ -69,7 +69,7 @@ function submitbtn() {
   try {
     const data = formData('form');
     const profileValidation = profileFormValidation(data);
-    console.log(data, 'alsp');
+  
     if (Object.keys(profileValidation).length > 0) {
       errorShow(profileValidation);
 

@@ -50,7 +50,8 @@ function manageManagerFormValidation(req, res, next) {
         break;
 
       case 'email':
-        const regexemail = /^(?!.{51})[a-z0-9-_.+]+@[a-z0-9]+[a-z0-9-.]*\.[a-z0-9]{2,9}/;
+        const regexemail =
+          /^(?!.{51})[a-z0-9-_.+]+@[a-z0-9]+[a-z0-9-.]*\.[a-z0-9]{2,9}/;
         if (managerDetails[key].length === 0) {
           managerFormError[key] = '* require';
         } else if (
@@ -64,6 +65,13 @@ function manageManagerFormValidation(req, res, next) {
         break;
 
       case 'state':
+        if (managerDetails[key] == 'select here') {
+          managerFormError[key] = '*require';
+        } else {
+          delete managerFormError[key];
+        }
+        break;
+      case 'place':
         if (managerDetails[key] == 'select here') {
           managerFormError[key] = '*require';
         } else {
