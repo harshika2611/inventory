@@ -77,16 +77,26 @@ async function deleteStoreQuery(storeId) {
     const [result2] = await connection.execute(deletePurchase, [storeId]);
     const [result3] = await connection.execute(deleteSales, [storeId]);
     const [result4] = await connection.execute(deleteProduct, [storeId]);
-    console.log(result4);
+    // console.log(result4);
   } catch (error) {
     logger.logError('Delete Store: ' + error);
   }
 }
 
+async function storeProductQuery(storeId) { 
+  try {
+    const storeProducts = `SELECT users.firstname,s.name, pm.id,pm.product_name,p.stock,pm.sku_id,pm.cost,pm.description FROM storage_space_master as s left join products_details as p on s.id = p.storage_id join product_master as pm on p.product_id = pm.id join manager_details as m on s.id = m.storage_id join users on m.user_id = users.id where s.id = ? `;
+    const [storeResult] = await connection.execute(storeProducts, [storeId]); 
+    return storeResult;
+  }catch (error) {
+    logger.logError('Product Store: ' + error);
+  }
+}
 module.exports = {
   insertStoreQuery,
   getStoreQuery,
   updateStoreQuery,
   deleteStoreQuery,
   checkStoreExistQuery,
+  storeProductQuery
 };

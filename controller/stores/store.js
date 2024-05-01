@@ -6,6 +6,7 @@ const {
   updateStoreQuery,
   deleteStoreQuery,
   checkStoreExistQuery,
+  storeProductQuery
 } = require('../../service/stores/store');
 
 async function insertStore(req, res) {
@@ -90,6 +91,13 @@ async function filterStore(req, res) {
   try {
   } catch (error) {}
 }
+
+async function  storeProducts(req, res) {
+  const storeId = req.query.storeId;
+  const storeDetails = await storeProductQuery(storeId);
+  res.render('stores/warehouseDetails', { storeDetails });
+}
+
 module.exports = {
   insertStore,
   getStore,
@@ -98,4 +106,5 @@ module.exports = {
   deleteStore,
   getParticularStore,
   filterStore,
+  storeProducts,
 };

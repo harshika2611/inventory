@@ -80,6 +80,21 @@ function dataTableGrid(storeArray, startIndex) {
       createDeleteTd.appendChild(createDeleteButton);
       createActionTd.appendChild(createDeleteTd);
       createTr.appendChild(createActionTd);
+
+      const createViewTd = document.createElement('td');
+      createViewTd.setAttribute('id', `${element.storeId}`);
+      createViewTd.setAttribute('class', 'store__actionbutton');
+      const createViewButton = document.createElement('a');
+      console.log(createViewButton);
+      createViewButton.textContent = 'View';
+      createViewButton.setAttribute('class', 'btn btn-primary');
+      createViewButton.setAttribute('width', '25');
+      createViewButton.setAttribute('height', '25');
+      // console.log("efserf", `${element.storeId}`);
+      createViewButton.href = `/storeProducts?storeId=${element.storeId}`;
+      createViewTd.appendChild(createViewButton);
+      createActionTd.appendChild(createViewTd);
+      createTr.appendChild(createActionTd);
     } else if (element['is_delete'] == 1) {
       let actionTd = document.createElement('td');
       actionTd.setAttribute('colspan', 2);
@@ -143,7 +158,17 @@ async function submitStoreDetails() {
         // const responseMessage = await response.json();
         // console.log(response.status);
         // console.log(responseMessage.message);
-        window.location.href = '/store';
+        Swal.fire({
+          icon: "success",
+          title: "Successfully Added Warehouse...",
+          showConfirmButton: false,
+          timer: 1000
+        }).then((result) => {
+          window.location.replace(
+            window.location.protocol + '//' + window.location.host + `/store`
+          );
+        });
+        // window.location.href = '/store';
       }
     } catch (error) {
       console.log(error);
@@ -242,9 +267,16 @@ async function updateStoreDetails(storeId) {
         const responseMessage = await response.json();
         console.log(response.status);
         console.log(responseMessage.message);
-        window.location.replace(
-          window.location.protocol + '//' + window.location.host + `/store`
-        );
+        Swal.fire({
+          icon: "success",
+          title: "Updated Warehouse...",
+          showConfirmButton: false,
+          timer: 1000
+        }).then((result) => {
+          window.location.replace(
+            window.location.protocol + '//' + window.location.host + `/store`
+          );
+        });
       }
     } catch (error) {
       console.log(error);
@@ -294,8 +326,10 @@ async function deleteStoreDetails(storeId) {
         deletedata(storeId);
         swalWithBootstrapButtons.fire({
           title: 'Deleted!',
-          text: 'Your file has been deleted.',
+          text: 'Warehouse has been deleted.',
           icon: 'success',
+        }).then((result) => {
+          window.location.replace('/store');
         });
       } else if (
         /* Read more about handling dismissals below */
@@ -314,7 +348,7 @@ const deletedata = async (storeId) => {
   const response = await fetch(`/deleteStore/?storeId=${storeId}`, {
     method: 'POST',
   });
-  window.location.replace('/store');
+ 
 };
 
 // Search
