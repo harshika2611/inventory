@@ -438,7 +438,7 @@ router.get(
   getAllSuppliers
 );
 router.get(
-  '/api/getSuppliers/:status',
+  '/api/getSuppliers',
   passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
   getParticularSupplier
 );

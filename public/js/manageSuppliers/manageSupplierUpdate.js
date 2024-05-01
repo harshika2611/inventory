@@ -9,7 +9,6 @@ async function openUpdateSupplierForm(supplier) {
     method: 'GET'
   });
   const supplierDetails = await response.json();
-
   try {
     if (!response.ok) {
       throw new Error("Error In Get Supplier Details");

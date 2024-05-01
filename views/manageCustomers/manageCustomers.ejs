@@ -70,6 +70,7 @@
           <p class="managecustomerTitle">Customers</p>
         </div>
         <div class="managecustomer-container__button">
+          <p class="addnewcustomerbutton" onclick="addNewCustomer()">Add New</p>
           <p class="customerfilterbutton" onclick="customerFilterShow()">Filter</p>
         </div>
         <select id="customerStatus" onchange="getCustomers()">
@@ -78,7 +79,6 @@
         </select>
         <div class="importDataDiv">
           <p class="importDataButton" onclick="showFileUpload()">Import Data</p>
-          <p class="addnewcustomerbutton" onclick="addNewCustomer()">Add New</p>
           <form enctype="multipart/form-data" id="customerFileUploadForm" name="customerFileUploadForm">
             <input type="file" id="customersFile" name="customersFile" accept=".csv">
             <p id="fileUploadButton" onclick="customerFileUpload()">Upload File</p>
