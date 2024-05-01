@@ -23,20 +23,15 @@ const getProductDetailsService = async (
   return await connection.execute(sql, [productId]);
 };
 
-const getProduct = async (product, order, field, storage, payload) => {
+const getProduct = async (product, order, field) => {
   let Query =
-    'SELECT product_master.id,product_name as Productname,sku_id as SKUid,option_master.value as Category ,cost as Cost,stock as Quantity,description as Description,product_master.is_delete,products_details.is_delete as store FROM product_master left join products_details on product_master.id=products_details.product_id left join option_master on product_master.category_id =option_master.id  where';
+    'SELECT product_master.id,product_name AS Productname,sku_id AS SKUid,option_master.value AS Category,cost AS Cost,description AS Description,product_master.is_delete FROM product_master LEFT JOIN option_master ON product_master.category_id = option_master.id';
   if (product.length > 0) {
-    let sql = `${Query} product_master.id=? and storage_id=? `;
-    return await connection.execute(sql, [
-      product,
-      payload.roleId == 4 ? storage : payload.storageId,
-    ]);
+    let sql = `${Query} where product_master.id=?`;
+    return await connection.execute(sql, [product]);
   } else {
-    let sql = `${Query}  storage_id= ? ORDER BY ${field} ${order};`;
-    return await connection.execute(sql, [
-      payload.roleId == 4 ? storage : payload.storageId,
-    ]);
+    let sql = `${Query} ORDER BY ${field} ${order};`;
+    return await connection.execute(sql);
   }
 };
 
@@ -110,21 +105,6 @@ const insertProductService = async (body) => {
     throw error;
   }
 };
-const insertProductDetailService = async (result, body, payload) => {
-  try {
-    console.log(payload.storageId, 'what');
-    const sql1 = `insert into products_details(product_id,storage_id) values (?,?)`;
-    const [ans1] = await connection.execute(sql1, [
-      result,
-      payload.roleId == 4 ? body.storageIn : payload.storageId,
-    ]);
-    return ans1;
-  } catch (error) {
-    console.log(error);
-    logger.logError(`Error`, error);
-    throw error;
-  }
-};
 
 const deleteMainProductService = async (id) => {
   try {
@@ -147,7 +127,6 @@ module.exports = {
   getProduct,
   updateProduct,
   checkProductSevice,
-  insertProductDetailService,
   insertProductService,
   getProductDetailsService,
 };

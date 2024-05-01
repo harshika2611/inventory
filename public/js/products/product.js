@@ -2,10 +2,6 @@ let url = new URL(window.location.href);
 
 async function addProduct() {
   getAllStore();
-  const storageOptionosIn = await generateWarehousesDropDown();
-  if (document.getElementById('storageComboIn') != null) {
-    document.getElementById('storageComboIn').innerHTML = storageOptionosIn;
-  }
   const customerForm = document.getElementById('myForm');
   customerForm.style.display = 'block';
   document.getElementById('submitBtn').innerHTML = 'Submit';
@@ -116,7 +112,6 @@ function dataTableGrid(product, startIndex) {
     'SKUid',
     'Category',
     'Cost',
-    'Quantity',
     'Description',
   ]) {
     if (key === 'id') {
@@ -157,7 +152,7 @@ function dataTableGrid(product, startIndex) {
   createTh = document.createElement('th');
   createTh.setAttribute('class', 'align-middle');
   createTh.textContent = 'Action';
-  createTh.colSpan = '2';
+  createTh.colSpan = '3';
   createTr.appendChild(createTh);
   table.appendChild(createTr);
 
@@ -170,12 +165,20 @@ function dataTableGrid(product, startIndex) {
       if (key == 'id') {
         createTd.textContent = ++startIndex;
         createTr.appendChild(createTd);
-      } else if (key !== 'is_delete' && key !== 'store') {
+      } else if (key !== 'is_delete') {
         createTd.textContent = element[key] == null ? '-' : element[key];
         createTr.appendChild(createTd);
       }
     }
-    if (element['is_delete'] == 0 && element['store'] == 0) {
+    if (element['is_delete'] == 0) {
+      const createViewTd = document.createElement('td');
+      const achor0 = document.createElement('a');
+      const createViewButton = document.createElement('button');
+      createViewButton.setAttribute('type', 'button');
+      createViewButton.setAttribute('class', 'btn btn-outline-primary');
+      createViewButton.textContent = 'View';
+      createViewTd.appendChild(achor0);
+      achor0.appendChild(createViewButton);
       const createEditTd = document.createElement('td');
       const achor = document.createElement('a');
       achor.setAttribute('href', `/productinfo?id=${element.id}`);
@@ -183,22 +186,23 @@ function dataTableGrid(product, startIndex) {
       createEditTd.setAttribute('id', `${element.id}`);
       const createEditButton = document.createElement('button');
       createEditButton.setAttribute('type', 'button');
-      createEditButton.textContent = 'View details';
-      createEditButton.setAttribute('class', 'btn btn-outline-primary');
+      createEditButton.textContent = 'Edit';
+      createEditButton.setAttribute('class', 'btn btn-success');
       const createDeleteTd = document.createElement('td');
       createDeleteTd.setAttribute('id', `${element.id}`);
       const createDeleteButton = document.createElement('button');
       createDeleteButton.textContent = 'Delete';
-      createDeleteButton.setAttribute('class', 'btn btn-outline-danger');
+      createDeleteButton.setAttribute('class', 'btn btn-danger');
       createDeleteButton.setAttribute('id', `${element.id}`);
       createDeleteButton.setAttribute('type', 'button');
       createDeleteButton.setAttribute('onclick', 'deleteProduct(this)');
       createDeleteTd.appendChild(createDeleteButton);
       achor.appendChild(createEditButton);
       createEditTd.appendChild(achor);
+      createTr.appendChild(createViewTd);
       createTr.appendChild(createEditTd);
       createTr.appendChild(createDeleteTd);
-    } else if (element['is_delete'] == 1 || element['store'] == 1) {
+    } else if (element['is_delete'] == 1) {
       let actionTd = document.createElement('td');
       actionTd.setAttribute('colspan', 2);
       actionTd.innerHTML = `<b><i>DELETED</i></b>`;
@@ -216,7 +220,6 @@ async function deleteProduct(product) {
 }
 
 async function deleteProductPop(id) {
- 
   url = `/api/deleteProduct/${id}`;
   const response = await fetch(url);
   try {

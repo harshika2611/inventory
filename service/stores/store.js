@@ -69,7 +69,7 @@ async function deleteStoreQuery(storeId) {
     const deleteStore = `update storage_space_master set is_delete = '1' where id = ?`;
     const deleteManager = `update manager_details set is_delete = '1' where storage_id = ?`;
     const deletePurchase = `update purchase_order set is_delete = '1' where storage_id = ?`;
-    const deleteSales = `update sales_order set is_delete = '1' where storage_id = ?`;
+    const deleteSales = `update sales_order set is_delete = '1' where storage_id = ?`; 
     const deleteProduct = `update products_details set is_delete='1' where storage_id = ?`;
     // console.log(deleteStore);
     const [result] = await connection.execute(deleteStore, [storeId]);

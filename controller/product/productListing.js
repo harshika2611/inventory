@@ -3,7 +3,6 @@ const {
   getProduct,
   checkProductSevice,
   insertProductService,
-  insertProductDetailService,
   getProductDetailsService,
 } = require('../../service/products/product');
 const logger = require('../../logs');
@@ -22,11 +21,6 @@ const manageProduct = async (req, res) => {
       try {
         const result = await insertProductService(req.body);
 
-        const result1 = await insertProductDetailService(
-          result,
-          req.body,
-          req.user
-        );
         return res.status(200).send('product successfully added');
       } catch (error) {
         logger.logError(error);
@@ -44,9 +38,7 @@ const getApiproduct = async (req, res) => {
     let id = req.query.id || '';
     let order = req.query.order || 'asc';
     let field = req.query.field || 'id';
-    let storage = req.query.storage || 1;
-    let payload = req.user;
-    const [rows] = await getProduct(id, order, field, storage, payload);
+    const [rows] = await getProduct(id, order, field);
     return res.json(rows);
   } catch (err) {
     logger.logError(err);

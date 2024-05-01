@@ -65,7 +65,7 @@ WHERE
 ORDER BY ${field} ${order}`;
 
     const [ans] = await connection.execute(sql0, [status, 0]);
-    
+
     return ans;
   } catch (error) {
     logger.logError(`Error`, error);
@@ -81,6 +81,8 @@ const getPerticularManagerService = async (id) => {
     lastname,
     email,
     name ,
+    storage_space_master.id as location,
+    city_id,
     city_name,
     users.created_at AS Created,
     users.updated_at AS Updated

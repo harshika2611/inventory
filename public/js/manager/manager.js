@@ -76,8 +76,9 @@ const getAllCity = async (id, name) => {
 
 const getAllStore = async (state, name, cityName) => {
   try {
-    console.log(state, name, cityName);
+    const stateId = state.id;
     let index = document.getElementById('state').value;
+
     let option = document.getElementById('place');
     const response = await fetch(`/storeCombo/${index}`);
     const data = await response.json();
@@ -170,7 +171,7 @@ function dataTableGrid(manager, startIndex) {
     const createEditButton = document.createElement('button');
     createEditButton.setAttribute('type', 'button');
     createEditButton.textContent = 'Edit';
-    createEditButton.setAttribute('class', 'btn btn-outline-primary');
+    createEditButton.setAttribute('class', 'btn btn-success');
     createEditTd.appendChild(createEditButton);
     const createDeleteTd = document.createElement('td');
     createDeleteTd.setAttribute('id', `${element.id}`);
@@ -179,7 +180,7 @@ function dataTableGrid(manager, startIndex) {
     const createDeleteButton = document.createElement('button');
     createDeleteButton.setAttribute('type', 'button');
     createDeleteButton.textContent = 'Delete';
-    createDeleteButton.setAttribute('class', 'btn btn-outline-danger');
+    createDeleteButton.setAttribute('class', 'btn btn-danger');
     createDeleteTd.appendChild(createDeleteButton);
     createTr.appendChild(createEditTd);
     createTr.appendChild(createDeleteTd);
@@ -194,6 +195,8 @@ async function updateManager(manager) {
   document.getElementById('submitBtn').innerHTML = 'Update';
   document.getElementById('filter').style = `filter: blur(2px);`;
   document.getElementById('grid').style = `filter: blur(2px);`;
+  document.getElementById('head').style = `filter: blur(2px);`;
+
   document
     .getElementById('submitBtn')
     .setAttribute('onclick', `updateDeails(${id})`);
@@ -201,7 +204,7 @@ async function updateManager(manager) {
   const managerDetails = await response.json();
   try {
     if (!response.ok) {
-      throw new Error('Error In Get Customer Details');
+      throw new Error('Error In Get Manager Details');
     }
     if (response.status == 200) {
       for (const key in managerDetails[0]) {
@@ -215,24 +218,41 @@ async function updateManager(manager) {
             break;
           case 'email':
             element.value = managerDetails[0][key];
+            console.log(key);
+            console.log(document.getElementById(`${key}`).value, 'haahah');
+            document.getElementById(`${key}`).disabled = true;
             break;
-          // case 'city_name':
-
-          // for (op of stateCombo) {
-          //   if (op.value === managerDetails[0][key]) {
-          //     op.setAttribute('selected', true);
-          //   } else {
-          //     op.setAttribute('selected', false);
-          //   }
-          // }
-          // break;
+          case 'city_name':
+            //   const state = { id: 'state' };
+            await getAllCity('state', managerDetails[0].city_id);
+            let stateCombo = document.getElementById('state');
+            console.log(stateCombo, 'arr');
+            console.log(managerDetails[0].city_id.toString(), 'all');
+            const cityId = managerDetails[0].city_id;
+            console.log(cityId);
+            for (op of stateCombo) {
+              console.log(op.value);
+              //     console.log(op.value == cityId, 'whattttt');
+              if ((op.value = cityId)) {
+                cityId = op.value;
+                // op.setAttribute('selected', true);
+              } else {
+                op.setAttribute('selected', false);
+              }
+            }
+            break;
         }
-        // getAllStore(state, managerDetails[0].name, managerDetails[0].city_name);
+        // getAllStore(
+        //   state,
+        //   managerDetails[0].location,
+        //   managerDetails[0].city_id
+        // );
       }
-      getAllCity('state', managerDetails[0].city_name);
-      const state = { id: 'state' };
-      console.log(managerDetails[0].city_name);
-      getAllStore(state, managerDetails[0].city_name, managerDetails[0].name);
+      // console.log(managerDetails[0]);
+      // getAllCity('state', managerDetails[0].city_id);
+      // const state = { id: 'state' };
+      // console.log(managerDetails[0].city_name);
+      // getAllStore(state, managerDetails[0].city_name, managerDetails[0].name);
     }
   } catch (error) {
     console.log(error);

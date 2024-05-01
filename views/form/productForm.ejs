@@ -17,45 +17,37 @@
           <h1>Product Details</h1>
           <h3 onclick="closeForm()" id="closeCustomerForm" class="text-danger">X</h3>
           <fieldset>
+            <div class="form-floating mb-3 customerform__errordiv">
+              <input name="productname" type="text" class="form-control customerInput" id="floatingInput"
+                placeholder="name@example.com">
+              <label for="floatingInput">Product Name </label>
+            </div>
 
-            <%if(data.roleId==4){%>
-              <div class="form-floating ">
-                <select name="storageIn" class="form-select" aria-label="select" id="storageComboIn"></select>
-                <label for="storageIn">Storage</label>
-              </div>
-              <%}%>
+            <div class="form-floating mb-3 customerform__errordiv">
+              <input name="skuid" type="text" class="form-control customerInput" id="floatingInput"
+                placeholder="name@example.com">
+              <label for="floatingInput">SKU id</label>
+            </div>
 
-                <div class="form-floating mb-3 customerform__errordiv">
-                  <input name="productname" type="text" class="form-control customerInput" id="floatingInput"
-                    placeholder="name@example.com">
-                  <label for="floatingInput">Product Name </label>
-                </div>
+            <div class="form-floating customerform__errordiv">
+              <select name="category" id="category" class="form-select" aria-label="Floating label select example">
+              </select>
 
-                <div class="form-floating mb-3 customerform__errordiv">
-                  <input name="skuid" type="text" class="form-control customerInput" id="floatingInput"
-                    placeholder="name@example.com">
-                  <label for="floatingInput">SKU id</label>
-                </div>
+            </div>
 
-                <div class="form-floating customerform__errordiv">
-                  <select name="category" id="category" class="form-select" aria-label="Floating label select example">
-                  </select>
-
-                </div>
-
-                <div class="form-floating mb-3 customerform__errordiv">
-                  <input name="Price" type="number" class="form-control customerInput" id="Price"
-                    placeholder="name@example.com">
-                  <label for="Price">Price</label>
-                </div>
+            <div class="form-floating mb-3 customerform__errordiv">
+              <input name="Price" type="number" class="form-control customerInput" id="Price"
+                placeholder="name@example.com">
+              <label for="Price">Price</label>
+            </div>
 
 
 
-                <div class="form-floating mb-3 customerform__errordiv">
-                  <input name="description" type="text" class="form-control customerInput" id="floatingInput"
-                    placeholder="name@example.com">
-                  <label for="floatingInput">Description</label>
-                </div>
+            <div class="form-floating mb-3 customerform__errordiv">
+              <input name="description" type="text" class="form-control customerInput" id="floatingInput"
+                placeholder="name@example.com">
+              <label for="floatingInput">Description</label>
+            </div>
 
           </fieldset>
           <div id="error"></div>
