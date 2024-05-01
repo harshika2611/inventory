@@ -21,12 +21,15 @@ async function updateOrder(type, event, page) {
     window.location.href = `/${url}?id=${id}&storage=${storage}`;
   } else if (type == 'delete') {
     let confirm = document.getElementById('confirm'); //confirm btn id
-    confirm.setAttribute('onclick', `deleteOrder(${id},'${page}','${storage}')`);
+    confirm.setAttribute(
+      'onclick',
+      `deleteOrder(${id},'${page}','${storage}')`
+    );
     modal.show();
   }
 }
 
-async function fetchDelete(id, page,storage) {
+async function fetchDelete(id, page, storage) {
   let url = '';
 
   switch (page) {
@@ -37,16 +40,18 @@ async function fetchDelete(id, page,storage) {
       url = 'deleteSalesProduct';
       break;
   }
+  showLoader();
   const response = await fetch(`/${url}?id=${id}&storage=${storage}`);
   const result = await response.json();
+  hideLoader();
   return;
 }
 function modelHide(modelName) {
   bootstrap.Modal.getInstance(document.getElementById(`${modelName}`)).hide();
 }
 
-async function deleteOrder(id, page,storage) {
-  await fetchDelete(id, page,storage);
+async function deleteOrder(id, page, storage) {
+  await fetchDelete(id, page, storage);
   modelHide('deleteModal');
   fetching();
 }

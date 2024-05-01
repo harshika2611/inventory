@@ -27,6 +27,7 @@ async function submitbtn() {
       errorShow(managerValidation);
     } else {
       url = `/manager`;
+      showLoader();
       const response = await fetch(url, {
         method: 'post',
         headers: {
@@ -35,6 +36,7 @@ async function submitbtn() {
         },
         body: JSON.stringify(data),
       });
+      hideLoader();
       if (response.status == 200) {
         alert('Manager added');
         window.location = `/user`;
@@ -55,9 +57,10 @@ async function submitbtn() {
 
 const getAllCity = async (id, name) => {
   try {
-    console.log(id, name);
+    showLoader();
     const response = await fetch('/cityCombo');
     const data = await response.json();
+    hideLoader();
     const store = data.result;
     let option = document.getElementById(`${id}`);
     option.innerHTML = '';
@@ -80,8 +83,10 @@ const getAllStore = async (state, name, cityName) => {
     let index = document.getElementById('state').value;
 
     let option = document.getElementById('place');
+    showLoader();
     const response = await fetch(`/storeCombo/${index}`);
     const data = await response.json();
+    hideLoader();
     const store = data.result;
     option.innerHTML = '';
     option.innerHTML = `<option value="select here">Select Store</option>`;
@@ -200,8 +205,10 @@ async function updateManager(manager) {
   document
     .getElementById('submitBtn')
     .setAttribute('onclick', `updateDeails(${id})`);
+  showLoader();
   const response = await fetch(url);
   const managerDetails = await response.json();
+  hideLoader();
   try {
     if (!response.ok) {
       throw new Error('Error In Get Manager Details');
@@ -270,6 +277,7 @@ async function updateDeails(id) {
       //----client side validation error
       errorShow(managerValidation);
     } else {
+      showLoader();
       const response = await fetch(url, {
         method: 'post',
         headers: {
@@ -278,6 +286,7 @@ async function updateDeails(id) {
         },
         body: JSON.stringify(data),
       });
+      hideLoader();
       if (response.status == 200) {
         alert('Manager updated');
         window.location = `/manager`;
@@ -307,7 +316,9 @@ async function deleteManager(manager) {
 
 async function deleteManagerPop(id) {
   url = `/api/deleteManager/${id}`;
+  showLoader();
   const response = await fetch(url);
+  hideLoader();
   try {
     if (response.status == 200) {
       const message = await response.json();

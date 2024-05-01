@@ -1,69 +1,76 @@
 function showFileUpload() {
-  const importDataButton = document.querySelector(".importDataButton");
-  const customerFileUploadForm = document.getElementById("customerFileUploadForm");
-  customerFileUploadForm.style.display = "block";
-  importDataButton.innerHTML = "Close";
-  importDataButton.setAttribute("onclick", "hideFileUpload()");
+  const importDataButton = document.querySelector('.importDataButton');
+  const customerFileUploadForm = document.getElementById(
+    'customerFileUploadForm'
+  );
+  customerFileUploadForm.style.display = 'block';
+  importDataButton.innerHTML = 'Close';
+  importDataButton.setAttribute('onclick', 'hideFileUpload()');
 }
 
 function hideFileUpload() {
-  const importDataButton = document.querySelector(".importDataButton");
-  const customerFileUploadForm = document.getElementById("customerFileUploadForm");
-  customerFileUploadForm.style.display = "none";
-  importDataButton.innerHTML = "Import Data";
-  importDataButton.setAttribute("onclick", "showFileUpload()");
+  const importDataButton = document.querySelector('.importDataButton');
+  const customerFileUploadForm = document.getElementById(
+    'customerFileUploadForm'
+  );
+  customerFileUploadForm.style.display = 'none';
+  importDataButton.innerHTML = 'Import Data';
+  importDataButton.setAttribute('onclick', 'showFileUpload()');
 
-  const customersFile = document.getElementById("customersFile");
+  const customersFile = document.getElementById('customersFile');
   if (customersFile) {
-    customersFile.value = "";
+    customersFile.value = '';
   }
 }
 
-
 async function customerFileUpload() {
-  const customerFileData = document.getElementById("customerFileUploadForm");
+  const customerFileData = document.getElementById('customerFileUploadForm');
 
   //first check file is select or not
-  const customersFile = document.getElementById("customersFile");
+  const customersFile = document.getElementById('customersFile');
   if (customersFile.files.length === 0) {
-    const fileerror = document.getElementById("fileerrorSpan");
+    const fileerror = document.getElementById('fileerrorSpan');
     if (fileerror) {
       fileerror.remove();
     }
-    const fileerrorSpan = document.createElement("span");
-    fileerrorSpan.setAttribute("id", "fileerrorSpan");
-    fileerrorSpan.innerHTML = "* please select file";
-    fileerrorSpan.style.color = "red";
-    fileerrorSpan.style.padding = "20px";
+    const fileerrorSpan = document.createElement('span');
+    fileerrorSpan.setAttribute('id', 'fileerrorSpan');
+    fileerrorSpan.innerHTML = '* please select file';
+    fileerrorSpan.style.color = 'red';
+    fileerrorSpan.style.padding = '20px';
     customerFileData.appendChild(fileerrorSpan);
   } else {
-    const fileerrorSpan = document.getElementById("fileerrorSpan");
+    const fileerrorSpan = document.getElementById('fileerrorSpan');
     if (fileerrorSpan) {
       fileerrorSpan.remove();
     }
     const formData = new FormData(customerFileData);
+    showLoader();
     const response = await fetch('/api/customersFileUpload', {
-      method: "POST",
-      body: formData
+      method: 'POST',
+      body: formData,
     });
+    hideLoader();
 
     try {
       if (!response.ok) {
-        throw new Error("Cannot Send File");
+        throw new Error('Cannot Send File');
       }
 
       if (response.status === 200) {
         const responseMessage = await response.json();
-        const customerFileUploadForm = document.getElementById("customerFileUploadForm");
-        customerFileUploadForm.style.display = "none";
+        const customerFileUploadForm = document.getElementById(
+          'customerFileUploadForm'
+        );
+        customerFileUploadForm.style.display = 'none';
         getCustomers();
         messagePopUp(responseMessage.message);
-        const importDataButton = document.querySelector(".importDataButton");
-        importDataButton.innerHTML = "Import Data";
+        const importDataButton = document.querySelector('.importDataButton');
+        importDataButton.innerHTML = 'Import Data';
         //select file value clear
-        const customersFile = document.getElementById("customersFile");
+        const customersFile = document.getElementById('customersFile');
         if (customersFile) {
-          customersFile.value = "";
+          customersFile.value = '';
         }
       }
     } catch (error) {

@@ -12,44 +12,47 @@ async function reportGenerateOption() {
   }
 
   //----now create report option
-  const optionArrayForRadio = [{
-    type: "radio",
-    id: "productDetails",
-    class: "productDetails productRadioButton",
-    value: "product_details",
-    textContent: "Product",
-    onclick: "addProductCategory()"
-  }, {
-    type: "radio",
-    id: "supplierDetails",
-    class: "supplierDetails supplierRadioButton",
-    value: "supplier_details",
-    textContent: "Supplier",
-    onclick: ""
-  }];
+  const optionArrayForRadio = [
+    {
+      type: 'radio',
+      id: 'productDetails',
+      class: 'productDetails productRadioButton',
+      value: 'product_details',
+      textContent: 'Product',
+      onclick: 'addProductCategory()',
+    },
+    {
+      type: 'radio',
+      id: 'supplierDetails',
+      class: 'supplierDetails supplierRadioButton',
+      value: 'supplier_details',
+      textContent: 'Supplier',
+      onclick: '',
+    },
+  ];
 
-  const createReportOptionDiv = document.createElement("div");
-  createReportOptionDiv.setAttribute("class", "reportOptionDiv");
+  const createReportOptionDiv = document.createElement('div');
+  createReportOptionDiv.setAttribute('class', 'reportOptionDiv');
 
   const createPTitle = document.createElement('p');
-  createPTitle.innerHTML = "Please Select Option For Generate Report";
-  createPTitle.setAttribute("class", "reportGenerateTitle");
+  createPTitle.innerHTML = 'Please Select Option For Generate Report';
+  createPTitle.setAttribute('class', 'reportGenerateTitle');
 
   createReportOptionDiv.appendChild(createPTitle);
 
-  const createSelect = document.createElement("select");
-  createSelect.setAttribute("id", "selectReportOption");
-  createSelect.setAttribute("onchange", "selectReportOption(this)");
-  const createOption = document.createElement("option");
-  createOption.setAttribute("value", "");
-  createOption.textContent = "Select Report Option";
+  const createSelect = document.createElement('select');
+  createSelect.setAttribute('id', 'selectReportOption');
+  createSelect.setAttribute('onchange', 'selectReportOption(this)');
+  const createOption = document.createElement('option');
+  createOption.setAttribute('value', '');
+  createOption.textContent = 'Select Report Option';
   createOption.selected = true;
   createOption.disabled = true;
   createSelect.appendChild(createOption);
 
   for (let element of optionArrayForRadio) {
-    const createOption = document.createElement("option");
-    createOption.setAttribute("value", `${element.value}`);
+    const createOption = document.createElement('option');
+    createOption.setAttribute('value', `${element.value}`);
     createOption.textContent = element.textContent;
     createSelect.appendChild(createOption);
   }
@@ -78,39 +81,39 @@ async function reportGenerateOption() {
 
 function selectReportOption(optionSelect) {
   if (optionSelect.selectedIndex === 0) {
-    messagePopUp("Please Select Report Generate Option");
+    messagePopUp('Please Select Report Generate Option');
   } else {
     switch (optionSelect.value) {
-      case "product_details":
+      case 'product_details':
         addProductCategory();
         break;
-      case "supplier_details":
-        const createDivCategory = document.querySelector(".createDivCategory");
+      case 'supplier_details':
+        const createDivCategory = document.querySelector('.createDivCategory');
         if (createDivCategory) {
-          createDivCategory.innerHTML = "";
+          createDivCategory.innerHTML = '';
         }
         break;
     }
   }
 }
 async function addProductCategory() {
-
-  const createDivCategory = document.querySelector(".createDivCategory");
+  const createDivCategory = document.querySelector('.createDivCategory');
   if (createDivCategory) {
     createDivCategory.remove();
   }
 
   //----fetch all product category available in database
   //database select_master key name pass
-  const comboKeyName = { key: "productCategory" };
+  const comboKeyName = { key: 'productCategory' };
+  showLoader();
   const response = await fetch('/api/combos', {
-    method: "POST",
+    method: 'POST',
     body: JSON.stringify(comboKeyName),
     headers: {
-      "Content-Type": "application/json"
-    }
+      'Content-Type': 'application/json',
+    },
   });
-
+  hideLoader();
   try {
     if (!response.ok) {
       throw new Error("Can't fetch combo");
@@ -122,24 +125,24 @@ async function addProductCategory() {
 
       //now generate checkbox
       const reportGenerateDiv = document.querySelector('.reportGenerate-div');
-      const createDivCategory = document.createElement("div");
-      createDivCategory.setAttribute("class", "createDivCategory");
+      const createDivCategory = document.createElement('div');
+      createDivCategory.setAttribute('class', 'createDivCategory');
 
-      const createSelect = document.createElement("select");
-      createSelect.setAttribute("onchange", "addCustomizeOptionSelect()");
-      createSelect.setAttribute("id", "productCategorySelect");
-      const createOptionTitle = document.createElement("option");
-      createOptionTitle.setAttribute("value", "");
-      createOptionTitle.innerHTML = "Select Category";
+      const createSelect = document.createElement('select');
+      createSelect.setAttribute('onchange', 'addCustomizeOptionSelect()');
+      createSelect.setAttribute('id', 'productCategorySelect');
+      const createOptionTitle = document.createElement('option');
+      createOptionTitle.setAttribute('value', '');
+      createOptionTitle.innerHTML = 'Select Category';
       createSelect.appendChild(createOptionTitle);
       createOptionTitle.disabled = true;
       createOptionTitle.selected = true;
       responseDataArray.forEach((element, index) => {
-        const createOption = document.createElement("option");
-        createOption.setAttribute("id", `customizeOptionheckBox${index}`);
-        createOption.setAttribute("class", "customizeOptionheckBox");
-        createOption.setAttribute("name", "customizeOptionheckBox");
-        createOption.setAttribute("value", `${element.value}`);
+        const createOption = document.createElement('option');
+        createOption.setAttribute('id', `customizeOptionheckBox${index}`);
+        createOption.setAttribute('class', 'customizeOptionheckBox');
+        createOption.setAttribute('name', 'customizeOptionheckBox');
+        createOption.setAttribute('value', `${element.value}`);
         createOption.textContent = `${element.value}`;
         createSelect.appendChild(createOption);
       });
@@ -147,7 +150,6 @@ async function addProductCategory() {
       // createOptionAll.setAttribute("value", "");
       // createOptionAll.innerHTML = "All Category";
       // createSelect.appendChild(createOptionAll);
-
 
       createDivCategory.appendChild(createSelect);
       reportGenerateDiv.appendChild(createDivCategory);
@@ -167,27 +169,33 @@ async function addProductCategory() {
 }
 
 function addCustomizeOptionSelect() {
-  const customizeOptionSelect = document.getElementById("customizeOptionSelect");
-  const customizeOptionDiv = document.getElementById("customizeOptionDiv");
+  const customizeOptionSelect = document.getElementById(
+    'customizeOptionSelect'
+  );
+  const customizeOptionDiv = document.getElementById('customizeOptionDiv');
   if (customizeOptionSelect) {
     customizeOptionSelect.remove();
   }
   if (customizeOptionDiv) {
     customizeOptionDiv.remove();
   }
-  const createDivCategory = document.querySelector(".createDivCategory");
-  const createSelect = document.createElement("select");
-  createSelect.setAttribute("id", "customizeOptionSelect");
-  createSelect.setAttribute("onchange", "addCustomizeOption()");
+  const createDivCategory = document.querySelector('.createDivCategory');
+  const createSelect = document.createElement('select');
+  createSelect.setAttribute('id', 'customizeOptionSelect');
+  createSelect.setAttribute('onchange', 'addCustomizeOption()');
 
-  const optionArray = ["Select Report Type", "Product Details", "Out Of Stock Products"];
+  const optionArray = [
+    'Select Report Type',
+    'Product Details',
+    'Out Of Stock Products',
+  ];
   for (let element of optionArray) {
-    const createOption = document.createElement("option");
-    createOption.setAttribute("value", `${element}`);
+    const createOption = document.createElement('option');
+    createOption.setAttribute('value', `${element}`);
     createOption.innerHTML = `${element}`;
     createSelect.appendChild(createOption);
     switch (element) {
-      case "Select Report Type":
+      case 'Select Report Type':
         createOption.disabled = true;
         createOption.selected = true;
         break;
@@ -197,27 +205,30 @@ function addCustomizeOptionSelect() {
 }
 
 function addCustomizeOption() {
-  const customizeOptionSelect = document.getElementById("customizeOptionSelect");
+  const customizeOptionSelect = document.getElementById(
+    'customizeOptionSelect'
+  );
 
   if (customizeOptionSelect.selectedIndex > 0) {
     const selectOptionValue = customizeOptionSelect.value;
 
     switch (selectOptionValue) {
-      case "Product Details":
+      case 'Product Details':
         addCustomizeOptionProductDetails();
         break;
-      case "Out Of Stock Products":
+      case 'Out Of Stock Products':
         addCustomizeOptionOutOfStockProduct();
         break;
       default:
-        const customizeOptionDiv = document.getElementById("customizeOptionDiv");
+        const customizeOptionDiv =
+          document.getElementById('customizeOptionDiv');
         customizeOptionDiv.remove();
-        messagePopUp("Please Select Valid Report Type");
+        messagePopUp('Please Select Valid Report Type');
     }
   } else {
-    const customizeOptionDiv = document.getElementById("customizeOptionDiv");
+    const customizeOptionDiv = document.getElementById('customizeOptionDiv');
     customizeOptionDiv.remove();
-    messagePopUp("Please Select Report Type");
+    messagePopUp('Please Select Report Type');
   }
 }
 
@@ -225,78 +236,88 @@ function addCustomizeOptionProductDetails() {
   // const reportGenerateDiv = document.querySelector(".reportGenerate-div");
 
   //before add new customize option clear div
-  const customizeDiv = document.getElementById("customizeOptionDiv");
-  const createDivCategory = document.querySelector(".createDivCategory");
+  const customizeDiv = document.getElementById('customizeOptionDiv');
+  const createDivCategory = document.querySelector('.createDivCategory');
 
   if (customizeDiv) {
     customizeDiv.remove();
   }
 
-  const customizeOptionDiv = document.createElement("div");
-  customizeOptionDiv.setAttribute("id", "customizeOptionDiv");
+  const customizeOptionDiv = document.createElement('div');
+  customizeOptionDiv.setAttribute('id', 'customizeOptionDiv');
 
   //---create check box
-  const customizeOptionArray = [{
-    type: "checkbox",
-    id: "productCustomizeOption1",
-    class: "productCustomizeOption",
-    name: "productCustomizeOption",
-    value: "product_name",
-    textContent: "Product Name"
-  }, {
-    type: "checkbox",
-    id: "productCustomizeOption2",
-    class: "productCustomizeOption",
-    name: "productCustomizeOption",
-    value: "stock",
-    textContent: "Stock"
-  }, {
-    type: "checkbox",
-    id: "productCustomizeOption3",
-    class: "productCustomizeOption",
-    name: "productCustomizeOption",
-    value: "sku_id",
-    textContent: "SKU ID"
-  }, {
-    type: "checkbox",
-    id: "productCustomizeOption4",
-    class: "productCustomizeOption",
-    name: "productCustomizeOption",
-    value: "cost",
-    textContent: "Selling Cost"
-  }]
-
+  const customizeOptionArray = [
+    {
+      type: 'checkbox',
+      id: 'productCustomizeOption1',
+      class: 'productCustomizeOption',
+      name: 'productCustomizeOption',
+      value: 'product_name',
+      textContent: 'Product Name',
+    },
+    {
+      type: 'checkbox',
+      id: 'productCustomizeOption2',
+      class: 'productCustomizeOption',
+      name: 'productCustomizeOption',
+      value: 'stock',
+      textContent: 'Stock',
+    },
+    {
+      type: 'checkbox',
+      id: 'productCustomizeOption3',
+      class: 'productCustomizeOption',
+      name: 'productCustomizeOption',
+      value: 'sku_id',
+      textContent: 'SKU ID',
+    },
+    {
+      type: 'checkbox',
+      id: 'productCustomizeOption4',
+      class: 'productCustomizeOption',
+      name: 'productCustomizeOption',
+      value: 'cost',
+      textContent: 'Selling Cost',
+    },
+  ];
 
   for (let element of customizeOptionArray) {
-    const createCheckboxDiv = document.createElement("div");
+    const createCheckboxDiv = document.createElement('div');
     const checkBox = document.createElement('input');
     const labelForCheckBox = document.createElement('label');
-    checkBox.setAttribute("type", `${element.type}`);
-    checkBox.setAttribute("id", `${element.id}`);
-    checkBox.setAttribute("class", `${element.class}`);
-    checkBox.setAttribute("name", `${element.name}`);
-    checkBox.setAttribute("value", `${element.value}`);
+    checkBox.setAttribute('type', `${element.type}`);
+    checkBox.setAttribute('id', `${element.id}`);
+    checkBox.setAttribute('class', `${element.class}`);
+    checkBox.setAttribute('name', `${element.name}`);
+    checkBox.setAttribute('value', `${element.value}`);
 
-    labelForCheckBox.setAttribute("for", `${element.id}`);
+    labelForCheckBox.setAttribute('for', `${element.id}`);
     labelForCheckBox.innerHTML = element.textContent;
     createCheckboxDiv.appendChild(labelForCheckBox);
     createCheckboxDiv.appendChild(checkBox);
     customizeOptionDiv.appendChild(createCheckboxDiv);
   }
 
-  const generateButton = document.createElement("p");
-  generateButton.innerHTML = "Generate PDF";
-  generateButton.setAttribute("onclick", "generateReport()");
-  generateButton.setAttribute("class", "generatePdfButton");
+  const generateButton = document.createElement('p');
+  generateButton.innerHTML = 'Generate PDF';
+  generateButton.setAttribute('onclick', 'generateReport()');
+  generateButton.setAttribute('class', 'generatePdfButton');
   createDivCategory.appendChild(customizeOptionDiv);
   customizeOptionDiv.appendChild(generateButton);
 }
 
 async function generateReport() {
-  const productCustomizeOption = document.querySelectorAll('.productCustomizeOption');
+  const productCustomizeOption = document.querySelectorAll(
+    '.productCustomizeOption'
+  );
 
-  const productCategorySelect = document.getElementById("productCategorySelect");
-  const customizeOptionSelect = document.getElementById("customizeOptionSelect");
+  const productCategorySelect = document.getElementById(
+    'productCategorySelect'
+  );
+  const customizeOptionSelect = document.getElementById(
+    'customizeOptionSelect'
+  );
 
   const productDetailsObject = {};
   const databaseObject = {};
@@ -308,24 +329,28 @@ async function generateReport() {
     for (let element of productCustomizeOption) {
       if (element.checked) {
         switch (element.value) {
-          case "product_name":
-            productMaster.push("product_name");
+          case 'product_name':
+            productMaster.push('product_name');
             break;
-          case "sku_id":
-            productMaster.push("sku_id");
+          case 'sku_id':
+            productMaster.push('sku_id');
             break;
-          case "cost":
-            productMaster.push("cost");
+          case 'cost':
+            productMaster.push('cost');
             break;
-          case "stock":
-            productDetails.push("stock");
+          case 'stock':
+            productDetails.push('stock');
             break;
         }
       }
     }
 
-    if (productMaster.length === 0 && productDetails.length === 0 && purchaseProducts.length === 0) {
-      messagePopUp("Please select options");
+    if (
+      productMaster.length === 0 &&
+      productDetails.length === 0 &&
+      purchaseProducts.length === 0
+    ) {
+      messagePopUp('Please select options');
     } else {
       if (productMaster.length !== 0) {
         databaseObject.product_master = productMaster;
@@ -339,62 +364,74 @@ async function generateReport() {
 
       if (productCategorySelect && customizeOptionSelect) {
         productDetailsObject.databaseObject = databaseObject;
-        productDetailsObject.categoryName = productCategorySelect.value
+        productDetailsObject.categoryName = productCategorySelect.value;
         productDetailsObject.reportType = customizeOptionSelect.value;
       }
     }
   }
-  const storageDetails = document.getElementById("storageDetails");
+  const storageDetails = document.getElementById('storageDetails');
   if (storageDetails) {
     productDetailsObject.selectStorageId = storageDetails.value;
   }
   if (Object.keys(databaseObject).length > 0) {
+    showLoader();
     const response = await fetch('/reportGenerate', {
       method: 'POST',
       body: JSON.stringify(productDetailsObject),
       headers: {
-        "Content-Type": "application/json"
-      }
+        'Content-Type': 'application/json',
+      },
     });
-
+    hideLoader();
     try {
       if (!response.ok) {
-        throw new Error("PDF Generate Error");
+        throw new Error('PDF Generate Error');
       }
 
       if (response.status === 200) {
         const pdfResponse = await response.json();
         // window.open(`${window.location.origin}/uploads/pdfFile/${pdfResponse.pdfName}`, "_blank");
-        const customizeOptionDiv = document.getElementById("customizeOptionDiv");
-        const createA = document.createElement("a");
-        createA.setAttribute("href", `${window.location.origin}/uploads/pdfFile/${pdfResponse.pdfName}`);
-        createA.setAttribute("download", `${pdfResponse.pdfName}`);
-        createA.setAttribute("id", "pdfDownloadButton");
-        createA.setAttribute("class", "pdfDownloadButton");
-        createA.innerHTML = "Download PDF";
+        const customizeOptionDiv =
+          document.getElementById('customizeOptionDiv');
+        const createA = document.createElement('a');
+        createA.setAttribute(
+          'href',
+          `${window.location.origin}/uploads/pdfFile/${pdfResponse.pdfName}`
+        );
+        createA.setAttribute('download', `${pdfResponse.pdfName}`);
+        createA.setAttribute('id', 'pdfDownloadButton');
+        createA.setAttribute('class', 'pdfDownloadButton');
+        createA.innerHTML = 'Download PDF';
         customizeOptionDiv.appendChild(createA);
 
         //now generate pdf button remove
-        const generatePdfButton = document.querySelector(".generatePdfButton");
+        const generatePdfButton = document.querySelector('.generatePdfButton');
         if (generatePdfButton) {
           generatePdfButton.remove();
         }
-        document.getElementById("pdfDownloadButton").addEventListener("click", function () {
-          //socket implment for delete generated file
-          let socket = io();
-          socket.emit('unlinkProductPdf', {
-            pdfName: pdfResponse.pdfName
+        document
+          .getElementById('pdfDownloadButton')
+          .addEventListener('click', function () {
+            //socket implment for delete generated file
+            let socket = io();
+            socket.emit('unlinkProductPdf', {
+              pdfName: pdfResponse.pdfName,
+            });
+
+            //--reset
+            const customizeOptionDiv =
+              document.getElementById('customizeOptionDiv');
+            const productCategorySelect = document.getElementById(
+              'productCategorySelect'
+            );
+            const customizeOptionSelect = document.getElementById(
+              'customizeOptionSelect'
+            );
+            productCategorySelect.selectedIndex = 0;
+            customizeOptionSelect.selectedIndex = 0;
+
+            customizeOptionDiv.remove();
           });
-
-          //--reset
-          const customizeOptionDiv = document.getElementById("customizeOptionDiv");
-          const productCategorySelect = document.getElementById("productCategorySelect");
-          const customizeOptionSelect = document.getElementById("customizeOptionSelect");
-          productCategorySelect.selectedIndex = 0;
-          customizeOptionSelect.selectedIndex = 0;
-
-          customizeOptionDiv.remove();
-        });
       }
     } catch (error) {
       console.log(error);

@@ -25,7 +25,7 @@ const patterns = {
 const purchaseValidations = {
   form1: {
     name: {
-      required: true,
+      required: false,
       pattern: patterns.textOnly,
     },
     date: {
@@ -44,14 +44,6 @@ const purchaseValidations = {
       required: true,
       pattern: patterns.numberOnly,
     },
-    amount: {
-      required: true,
-      pattern: patterns.numberOnly,
-      validator: (value) => {
-        if (value >= 1 || value <= 9999999) return true;
-        return false;
-      },
-    },
     payment_status: {
       required: false,
       pattern: patterns.numberOnly,
@@ -66,7 +58,7 @@ const purchaseValidations = {
       required: true,
       pattern: patterns.numberOnly,
       validator: (value) => {
-        if (value >= 1 || value <= 9999999) return true;
+        if (value >= 1 && value <= 9999999) return true;
         return false;
       },
     },
@@ -74,9 +66,13 @@ const purchaseValidations = {
       required: true,
       pattern: patterns.numberOnly,
       validator: (value) => {
-        if (value >= 1 || value <= 9999999) return true;
+        if (value >= 1 && value <= 9999999) return true;
         return false;
       },
+    },
+    storage_id: {
+      requried: true,
+      pattern: patterns.numberOnly,
     },
   },
 };
@@ -201,7 +197,7 @@ async function createProductPurchase(req, res) {
     res.json(
       await addProductInPurchaseOrder({
         ...req.body,
-        storage_id: req?.user?.storageId,
+        ...(req?.user?.storageId ? { storage_id: req?.user?.storageId } : {}),
       })
     );
   } catch (error) {
@@ -215,7 +211,7 @@ async function updateProductPurchase(req, res) {
       await updateProductInPurchaseOrder({
         ...req.body,
         id: req.params.id,
-        storage_id: req.user.storageId,
+        ...(req?.user?.storageId ? { storage_id: req?.user?.storageId } : {}),
       })
     );
   } catch (error) {
@@ -228,7 +224,9 @@ async function deleteProductPurchase(req, res) {
     res.json(
       await deleteProductFromPurchaseOrder({
         id: req.params.id,
-        storage_id: req.user.storageId,
+        ...(req?.user?.storageId
+          ? { storage_id: req?.user?.storageId }
+          : { storage_id: req.params.storageId }),
       })
     );
   } catch (error) {

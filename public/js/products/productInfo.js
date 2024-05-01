@@ -9,8 +9,10 @@ let formtitles = Object.keys(fData);
 let product;
 
 const fetchApi = async (api) => {
+  showLoader();
   let response = await fetch(api);
   let data = await response.json();
+  hideLoader();
   return data;
 };
 
@@ -59,6 +61,7 @@ const submitData = async () => {
     });
 
     try {
+      showLoader();
       let response = await fetch(`/productInfo?id=${id}`, {
         method: 'Post',
         headers: {
@@ -67,6 +70,7 @@ const submitData = async () => {
         body: body,
       });
       let res = await response.json();
+      hideLoader();
       if (response.status == 200) {
         messagePopUp(res.message);
         formtitles.forEach((e) => {

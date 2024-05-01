@@ -17,11 +17,11 @@ function dataTableGrid(storeArray, startIndex) {
     if (key === 'storeId') {
       key = 'No.';
     }
-    if (key != 'is_delete') { 
+    if (key != 'is_delete') {
       const createTh = document.createElement('th');
       // createTh.setAttribute("class", "bg-dark text-light");
       createTh.textContent = key;
-      createTable.appendChild(createTh);   
+      createTable.appendChild(createTh);
     }
   }
   const createTh = document.createElement('th');
@@ -39,7 +39,7 @@ function dataTableGrid(storeArray, startIndex) {
         createTr.appendChild(createTd);
       } else {
         if (key != 'is_delete') {
-          if (key == 'CreatedTime' && element[key].includes("T")  ) {
+          if (key == 'CreatedTime' && element[key].includes('T')) {
             let time = renderTimestamp(element[key]);
             createTd.textContent = time;
             createTr.appendChild(createTd);
@@ -99,11 +99,10 @@ function dataTableGrid(storeArray, startIndex) {
       let actionTd = document.createElement('td');
       actionTd.setAttribute('colspan', 2);
       actionTd.innerHTML = `<b>DELETED</b>`;
-      actionTd.setAttribute("class", "text-danger");
+      actionTd.setAttribute('class', 'text-danger');
       createTr.appendChild(actionTd);
     }
     createTable.appendChild(createTr);
-
   }
   tableContainer.appendChild(createTable);
 }
@@ -139,6 +138,7 @@ async function submitStoreDetails() {
     //----client side validation error
     errorShow(storeValidation);
   } else {
+    showLoader();
     const response = await fetch('/insertStore', {
       method: 'POST',
       body: JSON.stringify(storeFormData),
@@ -147,7 +147,7 @@ async function submitStoreDetails() {
       },
     });
     let result = await response.json();
-
+    hideLoader();
     try {
       // console.log(result.status);
       // if (!result.ok) {
@@ -159,10 +159,10 @@ async function submitStoreDetails() {
         // console.log(response.status);
         // console.log(responseMessage.message);
         Swal.fire({
-          icon: "success",
-          title: "Successfully Added Warehouse...",
+          icon: 'success',
+          title: 'Successfully Added Warehouse...',
           showConfirmButton: false,
-          timer: 1000
+          timer: 1000,
         }).then((result) => {
           window.location.replace(
             window.location.protocol + '//' + window.location.host + `/store`
@@ -209,12 +209,12 @@ async function openUpdateStoreForm(store) {
   document
     .getElementById('updateButton')
     .setAttribute('onclick', `updateStoreDetails(${storeId})`);
-
+  showLoader();
   const response = await fetch(`/getStore/?storeId=${storeId}`, {
     method: 'GET',
   });
   const storeDetails = await response.json();
-
+  hideLoader();
   try {
     if (!response.ok) {
       throw new Error('Error In Get Store Details');
@@ -250,6 +250,7 @@ async function updateStoreDetails(storeId) {
     //----client side validation error
     errorShow(storeValidation);
   } else {
+    showLoader();
     const response = await fetch('/updateStore', {
       method: 'POST',
       body: JSON.stringify(storeFormData),
@@ -257,7 +258,7 @@ async function updateStoreDetails(storeId) {
         'Content-Type': 'application/json',
       },
     });
-
+    hideLoader();
     try {
       if (!response.ok) {
         throw new Error('Error In Backend Validation Manage Store');
@@ -268,10 +269,10 @@ async function updateStoreDetails(storeId) {
         console.log(response.status);
         console.log(responseMessage.message);
         Swal.fire({
-          icon: "success",
-          title: "Updated Warehouse...",
+          icon: 'success',
+          title: 'Updated Warehouse...',
           showConfirmButton: false,
-          timer: 1000
+          timer: 1000,
         }).then((result) => {
           window.location.replace(
             window.location.protocol + '//' + window.location.host + `/store`
@@ -324,13 +325,15 @@ async function deleteStoreDetails(storeId) {
     .then((result) => {
       if (result.isConfirmed) {
         deletedata(storeId);
-        swalWithBootstrapButtons.fire({
-          title: 'Deleted!',
-          text: 'Warehouse has been deleted.',
-          icon: 'success',
-        }).then((result) => {
-          window.location.replace('/store');
-        });
+        swalWithBootstrapButtons
+          .fire({
+            title: 'Deleted!',
+            text: 'Warehouse has been deleted.',
+            icon: 'success',
+          })
+          .then((result) => {
+            window.location.replace('/store');
+          });
       } else if (
         /* Read more about handling dismissals below */
         result.dismiss === Swal.DismissReason.cancel
@@ -345,10 +348,12 @@ async function deleteStoreDetails(storeId) {
 }
 
 const deletedata = async (storeId) => {
+  showLoader();
   const response = await fetch(`/deleteStore/?storeId=${storeId}`, {
     method: 'POST',
   });
- 
+  hideLoader();
+  window.location.replace('/store');
 };
 
 // Search

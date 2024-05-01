@@ -14,9 +14,11 @@ let endIndex;
 async function paggination(apiName = null, records = []) {
   currentPage = 1;
   if (apiName) {
+    showLoader();
     const response = await fetch(apiName, {
       method: 'GET',
     });
+    hideLoader();
     const responseArray = await response.json();
     dataArray = [...responseArray]; //return shallow copy or array
     /**this array is use for paggination in both case also in filter */

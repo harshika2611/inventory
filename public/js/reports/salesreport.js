@@ -74,8 +74,10 @@ const fetchData = async () => {
   let productData = document.getElementById('productData');
   let categoryHeader = document.getElementById('categorytHeader');
   let categoryData = document.getElementById('categoryData');
+  showLoader();
   let api = await fetch('api/salesreport/allproduct');
   let api2 = await fetch('api/salesreport/allcategory');
+  hideLoader();
   getData(api, productHeader, productData, 5, true);
   getData(api2, categoryHeader, categoryData, 3, false);
   monthSales();
@@ -95,8 +97,10 @@ const changesInApi = (array) => {
   return array;
 };
 const fetchapi = async (apiurl) => {
+  showLoader();
   let api = await fetch(apiurl);
   let apiData = await api.json();
+  hideLoader();
   return apiData;
 };
 const monthSales = async () => {

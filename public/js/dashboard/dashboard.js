@@ -65,8 +65,10 @@ const onloadData = async () => {
   showData();
 };
 const fetchapi = async (apiurl) => {
+  showLoader();
   let api = await fetch(apiurl);
   let apiData = await api.json();
+  hideLoader();
   return apiData;
 };
 

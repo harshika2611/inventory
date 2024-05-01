@@ -20,8 +20,10 @@ async function fetchUpdate(id) {
 }
 
 async function commonFetch(url, option) {
+  showLoader();
   const response = await fetch(url, option);
   const result = await response.json();
+  hideLoader();
   return [result, response];
 }
 // function displayProductForm() {

@@ -39,22 +39,24 @@ async function generateForm1(oId = null) {
 		<div class="form-floating mb-3">
 			<input name="date" type="date" class="form-control" id="floatingDate" placeholder="date"
       max="${maxDate}"
-				${orderDetails?.date
-      ? `value = "${new Date(orderDetails?.date)
-        .toLocaleDateString()
-        .split('/')
-        .reverse()
-        .join('-')}"`
-      : ''
-    }
+				${
+          orderDetails?.date
+            ? `value = "${new Date(orderDetails?.date)
+                .toLocaleDateString()
+                .split('/')
+                .reverse()
+                .join('-')}"`
+            : ''
+        }
 			>
 			<label for="floatingDate">Date</label>
 			<div class="invalid-feedback">
 				Please enter a valid date.
 			</div>
 		</div>
-    ${admin
-      ? `<div class="form-floating mb-3">
+    ${
+      admin
+        ? `<div class="form-floating mb-3">
             <select name="storage_id" class="form-select" aria-label="select" id="floatingStorage"
               ${orderDetails?.purchaseId ? 'disabled' : ''}
             >
@@ -65,7 +67,7 @@ async function generateForm1(oId = null) {
               Please select a valid storage space.
             </div>
           </div>`
-      : ''
+        : ''
     }
 		<div class="form-floating mb-3">
 			<select name="supplier_id" class="form-select" aria-label="select" id="floatingSupplier"
@@ -79,16 +81,6 @@ async function generateForm1(oId = null) {
 			</div>
 		</div>
 		<div class="form-floating mb-3">
-			<input name="amount" type="number" class="form-control" id="floatingAmount" placeholder="amount" min="1"
-        max="9999999"
-				${orderDetails?.amount ? `value = "${orderDetails?.amount}"` : ''}
-			>
-			<label for="floatingAmount">Amount</label>
-			<div class="invalid-feedback">
-				Please select a valid amount.
-			</div>
-		</div>
-		<div class="form-floating mb-3">
 			<select name="payment_status" class="form-select" aria-label="select" id="floatingPaymentStatus">
 				${paymentOptions}
 			</select>
@@ -99,8 +91,9 @@ async function generateForm1(oId = null) {
 		</div>
 	</form>
 	<div class="d-flex mt-5 justify-content-center">
-		${orderDetails?.purchaseId
-      ? `<button
+		${
+      orderDetails?.purchaseId
+        ? `<button
 					type="button"
 					class="btn btn-primary me-3"
 					onclick="submitForm1(1)"
@@ -115,7 +108,7 @@ async function generateForm1(oId = null) {
 					>
 						Next
 					</button>`
-      : `<button
+        : `<button
 					type="button"
 					class="btn btn-primary"
 					onclick="submitForm1()"
@@ -137,7 +130,6 @@ async function submitForm1(update = false) {
     ? document.getElementsByName('storage_id')[0]
     : {};
   const supplierElement = document.getElementsByName('supplier_id')[0];
-  const amountElement = document.getElementsByName('amount')[0];
   const paymentElement = document.getElementsByName('payment_status')[0];
 
   // Clear Errors
@@ -146,7 +138,6 @@ async function submitForm1(update = false) {
     dateElement,
     storageElement,
     supplierElement,
-    amountElement,
     paymentElement,
   ]).forEach((ele) => (ele.required = false));
 
@@ -154,7 +145,6 @@ async function submitForm1(update = false) {
     name: nameElement.value,
     date: dateElement.value,
     supplier_id: supplierElement.value,
-    amount: amountElement.value,
     payment_status: paymentElement.value,
     ...(admin ? { storage_id: storageElement.value } : {}),
   };
@@ -171,7 +161,7 @@ async function submitForm1(update = false) {
       Object.entries(data).forEach((arr) => {
         body.append(arr[0], arr[1]);
       });
-
+      showLoader();
       const response = await fetch(
         `api/purchase/order${update ? '/' + orderDetails.purchaseId : ''}`,
         {
@@ -184,7 +174,7 @@ async function submitForm1(update = false) {
       );
 
       const result = await response.json();
-
+      hideLoader();
       if (result.insertId && !orderId) {
         orderId = result.insertId;
       } else if (
@@ -220,7 +210,10 @@ async function generateForm2() {
 	<form class="was-validated">
 	</form>
 
-	<div class="d-flex mt-5 justify-content-center">
+	<div class="d-flex mt-5 justify-content-center flex-wrap">
+    <h6 class="w-100 text-center">
+      Total Amount is ${orderDetails?.amount || 0}
+    </h6>
 		<button
 			type="button"
 			class="btn btn-secondary me-3"
@@ -259,9 +252,11 @@ async function generateForm2() {
 
 async function getOrderDetails(id) {
   if (id) {
+    showLoader();
     const response = await fetch(`api/order/${id}`);
     orderId = id;
     orderDetails = await response.json();
+    hideLoader();
   }
 }
 
@@ -277,10 +272,11 @@ function generateAddProductRows(
 			<div class="col">
 				<div class="form-floating">
 					<select class="form-select custom-disabled" aria-label="select" id="floatingCategories" name="category" required
-						${productDetails?.categoryId
-      ? 'disabled'
-      : 'onchange="onCategoryChange(event)"'
-    }
+						${
+              productDetails?.categoryId
+                ? 'disabled'
+                : 'onchange="onCategoryChange(event)"'
+            }
 					>
             ${categoryOptions}
 					</select>
@@ -395,9 +391,15 @@ async function saveProduct(e, purchaseProductId = null) {
       Object.entries(data).forEach((arr) => {
         body.append(arr[0], arr[1]);
       });
+      if (admin) {
+        body.append('storage_id', orderDetails?.storageId);
+      }
+
+      showLoader();
 
       const response = await fetch(
-        `api/purchase/product${purchaseProductId ? '/' + purchaseProductId : ''
+        `api/purchase/product${
+          purchaseProductId ? '/' + purchaseProductId : ''
         }`,
         {
           method: purchaseProductId ? 'PUT' : 'POST',
@@ -409,7 +411,7 @@ async function saveProduct(e, purchaseProductId = null) {
       );
 
       const result = await response.json();
-
+      hideLoader();
       if (result.status == 'error') {
         return;
       }
@@ -430,13 +432,15 @@ async function deleteProduct(e, purchaseProductId = null) {
   document.getElementById('confirm').onclick = async () => {
     e.target.parentElement.parentElement.parentElement.remove();
     if (purchaseProductId) {
+      showLoader();
       const response = await fetch(
-        `api/purchase/product/${purchaseProductId}`,
+        `api/purchase/product/${purchaseProductId}/${orderDetails?.storageId}`,
         {
           method: 'DELETE',
         }
       );
       await response.json();
+      hideLoader();
       await getOrderDetails(orderId);
     }
     modal.hide();

@@ -1,23 +1,22 @@
 const connection = require('../../config/connection.js');
 const logger = require('../../logs.js');
 
-const getProductDetailsService = async (
-  productId,
-  order,
-  field,
-  storage,
-  payload
-) => {
+const getProductDetailsService = async (productId) => {
   const sql = `
     SELECT
-      id,
+      pm.id,
       product_master.product_name as productname,
       product_master.sku_id as skuid,
       product_master.category_id as categoryId,
-      cost,
-      description
+      pm.cost,
+      pm.description,
+      pm.is_delete as productDeleted
     FROM
-      product_master
+      product_master as pm
+        LEFT JOIN
+      products_details as pd
+        ON
+      pm.id = pd.product_id
     WHERE
       id = ?`;
   return await connection.execute(sql, [productId]);
