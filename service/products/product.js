@@ -22,14 +22,22 @@ const getProductDetailsService = async (productId) => {
   return await connection.execute(sql, [productId]);
 };
 
-const getProduct = async (storage, order, field) => {
-  if (storage) {
-    let sql = `SELECT product_master.id,product_name AS Productname,sku_id AS SKUid,option_master.value AS Category,cost AS Cost,description AS Description,product_master.is_delete FROM product_master LEFT JOIN option_master ON product_master.category_id = option_master.id left join products_details on products_details.product_id = product_master.id where products_details.storage_id=? `;
-    return await connection.execute(sql, [storage]);
-  } else {
-    let sql = `SELECT product_master.id,product_name AS Productname,storage_space_master.name, sku_id AS SKUid,option_master.value AS Category,cost AS Cost,description AS Description,product_master.is_delete FROM product_master LEFT JOIN option_master ON product_master.category_id = option_master.id left join products_details on products_details.product_id=product_master.id left join storage_space_master on storage_space_master.id=products_details.storage_id  ORDER BY ${field} ${order};`;
+const getProduct = async ( order, field) => {
+
+    let sql = `SELECT 
+    product_master.id,
+    product_name AS Productname,
+    sku_id AS SKUid,
+    option_master.value AS Category,
+    cost AS Cost,
+    description AS Description,
+    product_master.is_delete
+FROM
+    product_master
+        LEFT JOIN
+    option_master ON product_master.category_id = option_master.id ORDER BY ${field} ${order};`;
     return await connection.execute(sql);
-  }
+  
 };
 const updateProduct = async (body, payload) => {
   const [result] = await connection.execute(
