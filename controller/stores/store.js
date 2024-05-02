@@ -6,7 +6,7 @@ const {
   updateStoreQuery,
   deleteStoreQuery,
   checkStoreExistQuery,
-  storeProductQuery
+  storeProductQuery,
 } = require('../../service/stores/store');
 
 async function insertStore(req, res) {
@@ -92,13 +92,19 @@ async function filterStore(req, res) {
   } catch (error) {}
 }
 
-async function  storeProducts(req, res) {
-  const storeId = req.query.storeId;
+async function storeProducts(req, res) {
+  const storeId = req.query.id;
   const storeDetails = await storeProductQuery(storeId);
-  res.render('stores/warehouseDetails', { storeDetails });
+  return res.json(storeDetails);
+}
+
+async function detailsStore(req, res) {
+  const data = req.user;
+  res.render('stores/warehouseDetails', { data });
 }
 
 module.exports = {
+  detailsStore,
   insertStore,
   getStore,
   getStorePage,

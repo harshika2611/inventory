@@ -479,6 +479,7 @@ router.post(
 
 // ---------Store
 const {
+  detailsStore,
   insertStore,
   getStore,
   getStorePage,
@@ -527,11 +528,23 @@ router.post(
   checkRole,
   deleteStore
 );
+
 router.get(
   '/storeProducts',
   passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  checkRole,
+  detailsStore
+);
+
+router.get(
+  '/api/storeProducts',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  checkRole,
   storeProducts
-)
+);
+
+
+
 // router.post('/filterStore',passport.authenticate('jwt', { session: false, failureRedirect: '/' }), filterStore);
 
 // ------------------- Manage Purchases ---------------------- //
@@ -671,43 +684,51 @@ const manageProductFormValidation = require('../middleware/product/productValida
 router.get(
   '/products',
   passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+
   productListing
 );
 router.post(
   '/products',
   passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+
   manageProductFormValidation,
   manageProduct
 );
 router.get(
   '/productInfo',
   passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+
   productInfo
 );
 router.get(
   '/productView',
   passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+
   productView
 );
 router.post(
   '/productInfo',
   passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+
   productInfoValid(productValid),
   productInfoPost
 );
 router.get(
   '/api/products',
   passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+
   getApiproduct
 );
 router.get(
   '/api/productDetails/:id',
   passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+
   getProductDetails
 );
 router.get(
   '/api/deleteProduct/:id',
   passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+
   deleteMainProduct
 );
 

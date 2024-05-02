@@ -1,4 +1,5 @@
 const {
+  checkExpireService,
   userService,
   checkUserService,
   userLoginService,
@@ -137,9 +138,13 @@ const getLink = async (req, res) => {
         const newtime = new Date().toTimeString();
         if (newtime < expeireTimer) {
           return res.render('login/forgot');
+        } else {
+          otp = Math.floor(Math.random() * 1000000000000 + 1);
+          const change = await checkExpireService(otp, id);
+          // return res.render('login/user');
+          return res.send('expired');
         }
       }
-      return res.send('expired');
     }
   } catch (error) {
     logger.logError(error);

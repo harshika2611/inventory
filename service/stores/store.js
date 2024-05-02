@@ -69,7 +69,7 @@ async function deleteStoreQuery(storeId) {
     const deleteStore = `update storage_space_master set is_delete = '1' where id = ?`;
     const deleteManager = `update manager_details set is_delete = '1' where storage_id = ?`;
     const deletePurchase = `update purchase_order set is_delete = '1' where storage_id = ?`;
-    const deleteSales = `update sales_order set is_delete = '1' where storage_id = ?`; 
+    const deleteSales = `update sales_order set is_delete = '1' where storage_id = ?`;
     const deleteProduct = `update products_details set is_delete='1' where storage_id = ?`;
     // console.log(deleteStore);
     const [result] = await connection.execute(deleteStore, [storeId]);
@@ -83,12 +83,26 @@ async function deleteStoreQuery(storeId) {
   }
 }
 
-async function storeProductQuery(storeId) { 
+async function storeProductQuery(storeId) {
   try {
-    const storeProducts = `SELECT users.firstname,s.name, pm.id,pm.product_name,p.stock,pm.sku_id,pm.cost,pm.description FROM storage_space_master as s left join products_details as p on s.id = p.storage_id join product_master as pm on p.product_id = pm.id join manager_details as m on s.id = m.storage_id join users on m.user_id = users.id where s.id = ? `;
-    const [storeResult] = await connection.execute(storeProducts, [storeId]); 
+    const storeProducts = `SELECT 
+    product_master.id,
+    product_name AS Productname,
+    sku_id AS SKUid,
+    option_master.value AS Category,
+    cost AS Cost,
+    description AS Description,
+    products_details.is_delete
+FROM
+    product_master
+        LEFT JOIN
+    products_details ON product_master.id = products_details.product_id
+        LEFT JOIN
+    option_master ON product_master.category_id = option_master.id 
+    where products_details.storage_id=?`;
+    const [storeResult] = await connection.execute(storeProducts, [storeId]);
     return storeResult;
-  }catch (error) {
+  } catch (error) {
     logger.logError('Product Store: ' + error);
   }
 }
@@ -98,5 +112,5 @@ module.exports = {
   updateStoreQuery,
   deleteStoreQuery,
   checkStoreExistQuery,
-  storeProductQuery
+  storeProductQuery,
 };
