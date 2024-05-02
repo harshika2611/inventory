@@ -93,10 +93,9 @@ const updateManager = async (req, res) => {
     } else {
       try {
         const changeEmail = await changeEmailService(req.body);
-        console.log(req.body);
         const otp = Math.floor(Math.random() * 1000000000000 + 1);
         const result1 = await updateManagerService(otp, req.body);
-        return res.status(200).send('maanger add');
+        return res.status(200).send('manager add');
       } catch (error) {
         logger.logError(error);
         return res.status(500).json({ message: 'can`t fetch user controller' });
