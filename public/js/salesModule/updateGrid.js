@@ -1,4 +1,4 @@
-async function updateOrder(type, event, page) {
+async function updateOrder(type, event, page,orderType) {
   let deleteModal;
   let url = '';
   let editModalName;
@@ -21,17 +21,14 @@ async function updateOrder(type, event, page) {
     window.location.href = `/${url}?id=${id}&storage=${storage}`;
   } else if (type == 'delete') {
     let confirm = document.getElementById('confirm'); //confirm btn id
-    confirm.setAttribute(
-      'onclick',
-      `deleteOrder(${id},'${page}','${storage}')`
-    );
+    confirm.setAttribute('onclick', `deleteOrder(${id},'${page}','${storage}','${orderType}')`);
     modal.show();
   }
 }
 
-async function fetchDelete(id, page, storage) {
+async function fetchDelete(id, page,storage,orderType) {
   let url = '';
-
+console.log(orderType);
   switch (page) {
     case 'order':
       url = 'deleteSalesOrder';
@@ -40,8 +37,7 @@ async function fetchDelete(id, page, storage) {
       url = 'deleteSalesProduct';
       break;
   }
-  showLoader();
-  const response = await fetch(`/${url}?id=${id}&storage=${storage}`);
+  const response = await fetch(`/${url}?id=${id}&storage=${storage}&orderType=${orderType}`);
   const result = await response.json();
   hideLoader();
   return;
@@ -50,8 +46,8 @@ function modelHide(modelName) {
   bootstrap.Modal.getInstance(document.getElementById(`${modelName}`)).hide();
 }
 
-async function deleteOrder(id, page, storage) {
-  await fetchDelete(id, page, storage);
+async function deleteOrder(id, page,storage,orderType) {
+  await fetchDelete(id, page,storage,orderType);
   modelHide('deleteModal');
   fetching();
 }

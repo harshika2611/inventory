@@ -83,28 +83,47 @@ async function updateProduct(req) {
     `select sales_products.product_id,sales_products.quantity,sales_products.order_type ,products_details.stock from sales_products join products_details on sales_products.product_id = products_details.product_id where sales_products.id = ? and products_details.storage_id = ?;`,
     [req.body.id, req.user.storageId]
   );
-  // console.log(req.body);
-  // console.log(req.body.orderType == prevQuantity[0].order_type);
+  
   let total_stock = 0;
-  console.log(prevQuantity[0].order_type == 8 && req.body.orderType == 9);
+  console.log(prevQuantity[0].order_type,req.body.orderType);
   //Sales To return
   if (prevQuantity[0].order_type == 8 && req.body.orderType == 9) {
+    console.log('Sales To return');
     total_stock =
       parseInt(prevQuantity[0].stock) +
       parseInt(prevQuantity[0].quantity) +
       parseInt(req.body.quantity);
   } else if (prevQuantity[0].order_type == 9 && req.body.orderType == 9) {
+    //return to return
+    console.log('return to return');
     total_stock =
       parseInt(prevQuantity[0].stock) -
       parseInt(prevQuantity[0].quantity) +
       parseInt(req.body.quantity);
   } else if (prevQuantity[0].order_type == 9 && req.body.orderType == 8) {
+    //return to sales
+    console.log('return to sales');
     total_stock =
       parseInt(prevQuantity[0].stock) -
       parseInt(prevQuantity[0].quantity) -
       parseInt(req.body.quantity);
+  } else {
+    //sales to sales OR Delete
+    // if (req.body.quantity == 0 && req.body.orderType == 9) {
+    //   total_stock =
+    //     parseInt(prevQuantity[0].stock) -
+    //     parseInt(prevQuantity[0].quantity) +
+    //     parseInt(req.body.quantity);
+    // }
+    // else {
+      console.log('sales to sales');
+      total_stock =
+        parseInt(prevQuantity[0].stock) +
+        parseInt(prevQuantity[0].quantity) -
+        parseInt(req.body.quantity);
+    // }
   }
-  console.log(total_stock);
+
   if (total_stock > 0 || req.body.orderType == 9) {
     const [result] = await connection.execute(
       `update products_details set stock = ? where product_id = ? and storage_id = ?;`,
@@ -161,7 +180,7 @@ async function checkQuanitiy(req, type) {
 async function updateStock(req, stock) {
   const [data] = await connection.execute(
     `update products_details set stock = ? where product_id = ? and storage_id = ?`,
-    [stock - req.body.quantity, req.body.product, req.user.storageId]
+    [(req.body.ordertype == 8?parseInt(stock) - parseInt(req.body.quantity):parseInt(stock) + parseInt(req.body.quantity)), req.body.product, req.user.storageId]
   );
   return data;
 }
