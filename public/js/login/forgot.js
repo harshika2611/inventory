@@ -55,6 +55,7 @@ async function submitbtn() {
           }).then((result) => {
             window.location = `/`;
           });
+          document.body.classList.remove('swal2-height-auto')
         }
         if (response.status == 401) {
           //unauthorized

@@ -58,7 +58,7 @@ th {
   background-color: #f9f9f9;
 }
 .table tr:hover {
-  background-color: #e5ebf4;
+  background-color: #d7e7ff;
 }
 .grid {
   margin-top: 3%;
@@ -67,6 +67,7 @@ th {
   width: 100%;
   border-collapse: collapse;
   border-spacing: 0;
+  color: #5e5e5e;
 }
 .imgMain {
   width: 40px;
