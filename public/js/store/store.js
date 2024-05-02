@@ -85,7 +85,6 @@ function dataTableGrid(storeArray, startIndex) {
       createViewTd.setAttribute('id', `${element.storeId}`);
       createViewTd.setAttribute('class', 'store__actionbutton');
       const createViewButton = document.createElement('a');
-      console.log(createViewButton);
       createViewButton.textContent = 'View';
       createViewButton.setAttribute('class', 'btn btn-primary');
       createViewButton.setAttribute('width', '25');
@@ -97,7 +96,7 @@ function dataTableGrid(storeArray, startIndex) {
       createTr.appendChild(createActionTd);
     } else if (element['is_delete'] == 1) {
       let actionTd = document.createElement('td');
-      actionTd.setAttribute('colspan', 2);
+      actionTd.setAttribute('colspan', 3);
       actionTd.innerHTML = `<b>DELETED</b>`;
       actionTd.setAttribute('class', 'text-danger');
       createTr.appendChild(actionTd);
@@ -353,7 +352,6 @@ const deletedata = async (storeId) => {
     method: 'POST',
   });
   hideLoader();
-  window.location.replace('/store');
 };
 
 // Search

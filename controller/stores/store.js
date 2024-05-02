@@ -7,6 +7,7 @@ const {
   deleteStoreQuery,
   checkStoreExistQuery,
   storeProductQuery,
+  deleteStoreProductQuery,
 } = require('../../service/stores/store');
 
 async function insertStore(req, res) {
@@ -53,15 +54,6 @@ async function getParticularStore(req, res) {
 async function updateStore(req, res) {
   try {
     const storeDetails = req.body;
-    // console.log(storeDetails);
-    // const storeId = req.query.storeId;
-    // const cityStateIdArray = await getCityStateId(storeDetails.state, storeDetails.city);
-
-    //----city, state id store
-    // let cityId = cityStateIdArray[0].city_id;
-    // let stateId = cityStateIdArray[0].state_id;
-    // storeDetails.city = cityId.toString();
-    // storeDetails.state = stateId.toString();
     const updateStoreStatus = await updateStoreQuery(
       storeDetails,
       storeDetails.storeId
@@ -82,6 +74,16 @@ async function deleteStore(req, res) {
     const storeId = req.query.storeId;
     await deleteStoreQuery(storeId);
     window.location.reload('/store');
+  } catch (error) {
+    return res.status(500).json({ message: 'Unable to delete' });
+  }
+}
+
+async function deleteStoreProduct(req, res) {
+  try {
+    const storeId = req.query.storeId;
+    const productId = req.query.productId;
+    await deleteStoreProductQuery(storeId, productId);
   } catch (error) {
     return res.status(500).json({ message: 'Unable to delete' });
   }
@@ -113,4 +115,5 @@ module.exports = {
   getParticularStore,
   filterStore,
   storeProducts,
+  deleteStoreProduct,
 };

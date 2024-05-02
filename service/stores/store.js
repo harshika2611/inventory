@@ -83,27 +83,25 @@ async function deleteStoreQuery(storeId) {
   }
 }
 
+async function deleteStoreProductQuery(storeId, productId) {
+  try {
+    const deleteStoreProduct = `update products_details set is_delete = '1' where storage_id = ? and product_id =?;`;
+    const [result] = await connection.execute(deleteStoreProduct, [
+      storeId,
+      productId,
+    ]);
+  } catch (error) {
+    logger.logError('Delete Store Product: ' + error);
+  }
+}
+
 async function storeProductQuery(storeId) {
   try {
-    const storeProducts = `SELECT 
-    product_master.id,
-    product_name AS Productname,
-    sku_id AS SKUid,
-    option_master.value AS Category,
-    cost AS Cost,
-    description AS Description,
-    products_details.is_delete
-FROM
-    product_master
-        LEFT JOIN
-    products_details ON product_master.id = products_details.product_id
-        LEFT JOIN
-    option_master ON product_master.category_id = option_master.id 
-    where products_details.storage_id=?`;
+    const storeProducts = `SELECT users.firstname, storage_space_master.name, product_master.id,product_name AS Productname,sku_id AS SKUid,option_master.value AS Category,cost AS Cost,description AS Description, products_details.is_delete FROM product_master LEFT JOIN products_details ON product_master.id = products_details.product_id LEFT JOIN option_master ON product_master.category_id = option_master.id left join storage_space_master on storage_space_master.id = products_details.storage_id left join manager_details on storage_space_master.id = manager_details.storage_id left join users on users.id = manager_details.user_id where products_details.storage_id=? ;`;
     const [storeResult] = await connection.execute(storeProducts, [storeId]);
     return storeResult;
   } catch (error) {
-    logger.logError('Product Store: ' + error);
+    logger.logError('Store Product : ' + error);
   }
 }
 module.exports = {
@@ -112,5 +110,6 @@ module.exports = {
   updateStoreQuery,
   deleteStoreQuery,
   checkStoreExistQuery,
+  deleteStoreProductQuery,
   storeProductQuery,
 };

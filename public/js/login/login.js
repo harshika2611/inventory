@@ -37,10 +37,11 @@ async function submitbtn() {
           icon: "success",
           title: "Welcome Inventory Management...",
           showConfirmButton: false,
-          timer: 1500
+          timer: 1000
         }).then((result) => {
           window.location = `/dashboard`;
         });
+        document.body.classList.remove('swal2-height-auto')
       }
       if (response.status == 401) {
         error = 'invalid email or password';
