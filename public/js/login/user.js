@@ -1,42 +1,34 @@
-async function submitbtn() {
+function profileFormValidation(data) {
+  let profileError = {};
+  const regextext = /^[a-zA-Z\\s]+$/;
+  for (let key in data) {
+    switch (key) {
+      case 'email':
+        const regexemail =
+          /^(?!.{255})[a-z0-9-_.+]+@[a-z0-9]+[a-z0-9-.]*\.[a-z0-9]{2,9}/;
+        if (data[key].trim().length === 0) {
+          profileError[key] = '* require';
+        } else if (!regexemail.test(data[key]) && data[key] !== '') {
+          profileError[key] = '* Please Enter Valid Email';
+        } else {
+          delete profileError[key];
+        }
+        break;
+    }
+  }
+  return profileError;
+}
+
+function submitbtn() {
   try {
     const data = formData('form');
+    const profileValidation = profileFormValidation(data);
 
-    const loginValidation = loginFormValidation(data);
-
-    if (Object.keys(loginValidation).length > 0) {
-      //----client side validation error
-      errorShow(loginValidation);
+    if (Object.keys(profileValidation).length > 0) {
+      errorShow(profileValidation);
+      return false;
     } else {
-      const response = await fetch('/', {
-        method: 'post',
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
-        body: JSON.stringify(data),
-      });
-
-      if (response.status == 200) {
-        window.location = `/dashboard`;
-      }
-      if (response.status == 401) {
-        error = 'invalid email or password';
-        document.getElementById('main_err').innerHTML = error;
-      }
-      if (response.status == 404) {
-        error = 'user not exist';
-        document.getElementById('main_err').innerHTML = error;
-      }
-      if (response.status == 403) {
-        error = 'Password was expired Kindly go through forgot Password';
-        document.getElementById('expire').innerHTML = error;
-      }
-      if (response.status === 400) {
-        const errorObject = await response.json();
-
-        errorShow(errorObject);
-      }
+      return true;
     }
   } catch (error) {
     console.log(error);

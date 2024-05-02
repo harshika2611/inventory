@@ -3,7 +3,7 @@ function forgotFormValidation(data) {
   for (let key in data) {
     switch (key) {
       case 'email':
-        const regexemail = /^(?!.{51})[a-z0-9-_.+]+@[a-z0-9]+[a-z0-9-.]*\.[a-z0-9]{2,9}/;
+        const regexemail = /^(?!.{255})[a-z0-9-_.+]+@[a-z0-9]+[a-z0-9-.]*\.[a-z0-9]{2,9}/;
 
         if (data[key].length === 0) {
           forgotError[key] = '* require';

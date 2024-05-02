@@ -137,6 +137,12 @@ const getAllStore = async (cityid, storename) => {
 };
 
 function dataTableGrid(manager, startIndex) {
+  if (manager.length === 0) {
+    document.getElementById('error').innerHTML = 'No data Found!!!';
+    document.getElementById('th').innerHTML = '';
+  } else {
+    document.getElementById('error').innerHTML = '';
+  }
   const table = document.getElementById('thead');
   const tableBody = document.getElementById('tbody');
   let createTh = document.createElement('th');

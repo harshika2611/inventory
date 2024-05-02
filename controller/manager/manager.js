@@ -2,7 +2,6 @@ const logger = require('../../logs.js');
 const {
   cityComboService,
   deleteManagerService,
-  checkUpdateManagerService,
   getPerticularManagerService,
   storeComboServices,
   insertManagerDetail,
@@ -87,20 +86,20 @@ const listManagers = async (req, res) => {
 
 const updateManager = async (req, res) => {
   try {
-    const checkManger = await checkUpdateManagerService(req.body);
-    if (checkManger.length) {
-      return res.status(409).send('already exist');
-    } else {
-      try {
-        const changeEmail = await changeEmailService(req.body);
-        const otp = Math.floor(Math.random() * 1000000000000 + 1);
-        const result1 = await updateManagerService(otp, req.body);
-        return res.status(200).send('manager add');
-      } catch (error) {
-        logger.logError(error);
-        return res.status(500).json({ message: 'can`t fetch user controller' });
-      }
+    // const checkManger = await checkUpdateManagerService(req.body);
+    // if (checkManger.length) {
+    //   return res.status(409).send('already exist');
+    // } else {
+    try {
+      // const changeEmail = await changeEmailService(req.body);
+      const otp = Math.floor(Math.random() * 1000000000000 + 1);
+      const result1 = await updateManagerService(otp, req.body);
+      return res.status(200).send('manager add');
+    } catch (error) {
+      logger.logError(error);
+      return res.status(500).json({ message: 'can`t fetch user controller' });
     }
+    // }
   } catch (error) {
     logger.logError(error);
     return res.status(500).json({ message: 'can`t fetch user controller' });

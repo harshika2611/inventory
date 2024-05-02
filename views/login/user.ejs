@@ -14,7 +14,7 @@
     <div id="form-s">
       <h1>Inventory Management</h1><br><br>
       <h2>Validate Email</h2>
-      <form method="post" id="form">
+      <form method="post" id="form" action="/user" onsubmit="return submitbtn();">
         <label for="email"></label>
         <input type="email" name="email" id="email">
         <%if(locals.error){%>

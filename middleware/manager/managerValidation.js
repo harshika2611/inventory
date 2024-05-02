@@ -17,7 +17,7 @@ function manageManagerFormValidation(req, res, next) {
         ) {
           managerFormError[key] = '* Please valid firstname';
         } else if (
-          managerDetails[key].trim().length > 15 &&
+          managerDetails[key].trim().length > 45 &&
           managerDetails[key] !== ''
         ) {
           managerFormError[key] = '* Please valid firstname';
@@ -51,7 +51,7 @@ function manageManagerFormValidation(req, res, next) {
 
       case 'email':
         const regexemail =
-          /^(?!.{51})[a-z0-9-_.+]+@[a-z0-9]+[a-z0-9-.]*\.[a-z0-9]{2,9}/;
+        /^(?!.{255})[a-z0-9-_.+]+@[a-z0-9]+[a-z0-9-.]*\.[a-z0-9]{2,9}/;
         if (managerDetails[key].length === 0) {
           managerFormError[key] = '* require';
         } else if (

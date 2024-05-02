@@ -702,7 +702,6 @@ router.get(
 router.get(
   '/productView',
   passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
-
   productView
 );
 router.post(

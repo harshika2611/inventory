@@ -12,7 +12,6 @@ function profileFormValidation(data) {
   let profileError = {};
   const regextext = /^[a-zA-Z\\s]+$/;
   for (let key in data) {
-
     switch (key) {
       case 'firstname':
         if (data[key].length === 0) {
@@ -21,7 +20,7 @@ function profileFormValidation(data) {
           profileError[key] = '* Please valid Firstname';
         } else if (data[key].length < 3 && data[key] !== '') {
           profileError[key] = '* Please valid firstname';
-        } else if (data[key].length > 15 && data[key] !== '') {
+        } else if (data[key].length > 45 && data[key] !== '') {
           profileError[key] = '* Please valid firstname';
         } else {
           delete profileError[key];
@@ -36,14 +35,15 @@ function profileFormValidation(data) {
           profileError[key] = '* Please Enter Lastname';
         } else if (data[key].trim().length < 3 && data[key] !== '') {
           profileError[key] = '* Please valid Lastname';
-        } else if (data[key].trim().length > 15 && data[key] !== '') {
+        } else if (data[key].trim().length > 45 && data[key] !== '') {
           profileError[key] = '* Please valid Lastname';
         } else {
           delete profileError[key];
         }
         break;
       case 'email':
-        const regexemail = /^(?!.{51})[a-z0-9-_.+]+@[a-z0-9]+[a-z0-9-.]*\.[a-z0-9]{2,9}/
+        const regexemail =
+          /^(?!.{255})[a-z0-9-_.+]+@[a-z0-9]+[a-z0-9-.]*\.[a-z0-9]{2,9}/;
         if (data[key].trim().length === 0) {
           profileError[key] = '* require';
         } else if (!regexemail.test(data[key]) && data[key] !== '') {
@@ -69,7 +69,7 @@ function submitbtn() {
   try {
     const data = formData('form');
     const profileValidation = profileFormValidation(data);
-  
+
     if (Object.keys(profileValidation).length > 0) {
       errorShow(profileValidation);
 
