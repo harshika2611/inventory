@@ -191,20 +191,6 @@ function generateWarehousesDropDown(id = null, renderDeleted = false) {
     .catch(() => '');
 }
 
-const lodder = () => {
-  let img = document.createElement('img');
-  img.setAttribute('src', 'icons/lodder.gif');
-  img.setAttribute('alt', 'img');
-  img.setAttribute('width', '200');
-  img.setAttribute('height', '200');
-  img.setAttribute(
-    'class',
-    'position-absolute top-50 start-50 translate-middle'
-  );
-  console.log(img);
-  document.querySelector('body').innerHTML = '';
-  document.querySelector('body').appendChild(img);
-};
 function generateDropDown(value, selectedId) {
   return fetch(`api/combos/${value}`)
     .then((res) => res.json())
