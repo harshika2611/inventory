@@ -6,7 +6,7 @@
 
 .invoice__section {
   max-width: 1300px;
-  background-color: rgb(185, 184, 184);
+  /* background-color: rgb(185, 184, 184); */
 }
 
 .invoice__container {
@@ -20,6 +20,7 @@
   flex-direction: column;
   gap: 10px;
 }
+
 .invoice__header h1 {
   text-align: center;
   font-size: 40px;
@@ -40,6 +41,7 @@
   gap: 20px;
   position: relative;
 }
+
 .invoicecommon__tablestyle {
   width: 100%;
   border-collapse: collapse;
@@ -47,17 +49,12 @@
 }
 
 .invoicecommon__tablestyle th {
-  background-color: #002f4b;
+  background-color: #102f4b;
   color: white;
   font-weight: bold;
   padding: 12px;
   text-align: left;
   border-bottom: 2px solid #ddd;
-}
-
-/* Style for table rows */
-.invoicecommon__tablestyle tr {
-  border-bottom: 1px solid #ddd;
 }
 
 /* Alternate row color */
@@ -66,17 +63,21 @@
 }
 
 .invoice__table {
-  width: 50%;
+  width: 40%;
 }
 
-/* .invoicetable__div {
-  display: flex;
-  align-items: end;
+/* .3nvoicetable__div {
+display: flex;
+align-items: end;
 } */
 
 .inventory__table {
 }
 
+.inventory__table tr {
+  border-bottom: 1px solid #ddd;
+}
+
 .balance__table {
-  width: 50%;
+  width: 40%;
 }

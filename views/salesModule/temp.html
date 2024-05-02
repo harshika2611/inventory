@@ -4,93 +4,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Invoice</title>
+  <link rel="stylesheet" href="temp.css" />
+  <title>Document</title>
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
 
-    .invoice__section {
-      max-width: 1300px;
-      background-color: rgb(218, 218, 218);
-    }
-
-    .invoice__container {
-      max-width: 1000px;
-      margin: 0 auto;
-      padding: 20px;
-    }
-
-    .invoice__header {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .invoice__header h1 {
-      text-align: center;
-      font-size: 40px;
-      padding: 20px;
-      background-color: whitesmoke;
-      border-radius: 10px;
-    }
-
-    .invoice__header address {
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-    }
-
-    .invoicetable__div {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-      position: relative;
-    }
-
-    .invoicecommon__tablestyle {
-      width: 100%;
-      border-collapse: collapse;
-      border-spacing: 0;
-    }
-
-    .invoicecommon__tablestyle th {
-      background-color: #102F4B;
-      color: white;
-      font-weight: bold;
-      padding: 12px;
-      text-align: left;
-      border-bottom: 2px solid #ddd;
-      border-radius: 10px;
-    }
-
-    .invoicecommon__tablestyle td {
-      background-color: whitesmoke;
-      color: black;
-      padding: 12px;
-      text-align: left;
-      border-bottom: 2px solid #ddd;
-      border-radius: 10px;
-    }
-
-    .invoice__table {
-      width: 40%;
-    }
-
-    /* Alternate row color */
-    .inventory__table tr:nth-child(even) {
-      background-color: #f9f9f9;
-    }
-
-    .inventory__table tr {
-      border-bottom: 1px solid #ddd;
-    }
-
-    .balance__table {
-      width: 40%;
-    }
   </style>
 </head>
 
@@ -98,9 +15,7 @@
   <section class="invoice__section">
     <div class="invoice__container">
       <header class="invoice__header">
-        <h1>
-          <%=(type=='invoice' ?'Sales Invoice':'Purchase Invoice')%>
-        </h1>
+        <h1>Invoice</h1>
         <address>
           <p>
             <%=data.firstname%>
@@ -133,7 +48,7 @@
             </tr>
             <tr>
               <th>Amount Due</th>
-              <td>
+              <td>$
                 <%=data.amount%>
               </td>
             </tr>
@@ -158,13 +73,13 @@
                 <td>
                   <%=ele.sku_id%>
                 </td>
-                <td>
+                <td>$
                   <%=ele.cost%>
                 </td>
                 <td>
                   <%=ele.quantity%>
                 </td>
-                <td>
+                <td>$
                   <%=ele.cost*ele.quantity%>
                     </span>
                 </td>
@@ -175,19 +90,19 @@
         <table class="invoicecommon__tablestyle balance__table">
           <tr>
             <th>Total</th>
-            <td>
+            <td>$
               <%=data.amount%>
             </td>
           </tr>
           <tr>
             <th>Amount Paid</th>
-            <td>
+            <td>$
               <%=(data.payment_status=='Pending'?0:data.amount)%>
             </td>
           </tr>
           <tr>
             <th>Balance Due</th>
-            <td>
+            <td>$
               <%=(data.payment_status=='Pending'?data.amount:0)%>
             </td>
           </tr>

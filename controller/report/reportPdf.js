@@ -91,15 +91,6 @@ async function generatePdf(data, reportType) {
   }
 }
 
-//this function is use ful when user download pdf then pdf unlink
-function unlinkProductPdf(pdfNameObject) {
-  const pdfPath = path.join(__dirname, `../../public/uploads/pdfFiles/${pdfNameObject.pdfName}`);  //path of pdf
-  if (fs.existsSync(pdfPath)) {
-    fs.unlinkSync(pdfPath);
-  }
-}
-
-
 async function productReportGenerate(req, res) {
   try {
     const roleId = req.user.roleId;
@@ -170,4 +161,4 @@ async function outOfStockProducts(req, res) {
   }
 }
 
-module.exports = { reportPdfPage, productReportGenerate, outOfStockProducts, generatePdf, unlinkProductPdf };
+module.exports = { reportPdfPage, productReportGenerate, outOfStockProducts, generatePdf };

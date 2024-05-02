@@ -1,4 +1,9 @@
 const logger = require('../../logs');
+const puppeteer = require('puppeteer');
+const path = require('path');
+const fs = require('fs');
+const ejs = require("ejs");
+
 // const { getOrderDetail } = require('../../service/salesModule/salesService');
 const jwt = require('jsonwebtoken');
 async function invoiceGenerator(req, res) {
@@ -54,4 +59,35 @@ function pdfTokenVerify(req, res, next) {
   }
 }
 
-module.exports = { invoiceGenerator, pdfTokenVerify };
+async function generateSalesPdf(orderDetails, reportType) {
+  const templatePath = path.join(__dirname, '../../views/salesModule/invoice.ejs');
+  const template = fs.readFileSync(templatePath, "utf8");
+  const data = orderDetails.data;
+  const products = orderDetails.products;
+  const html = ejs.render(template, { data, products, user: orderDetails.user, type: orderDetails.type });
+  let browser = await puppeteer.launch();
+  const page = await browser.newPage();
+  await page.setContent(html, { waitUntil: 'load' });
+
+  // To reflect CSS used for screens instead of print
+  // await page.emulateMediaType('screen');
+  const pdfPath = path.join(__dirname, `../../public/uploads/pdfFiles/${Date.now()}-${reportType}.pdf`);  //path of pdf
+
+  await page.pdf({
+    path: pdfPath,
+    margin: { top: '100px', right: '50px', bottom: '100px', left: '50px' },
+    printBackground: true,
+    formate: 'A4'
+  });
+  await browser.close();
+
+  if (fs.existsSync(pdfPath)) {
+    const filename = pdfPath.split("/");
+    return filename[filename.length - 1];
+  } else {
+    return "";
+  }
+}
+
+
+module.exports = { invoiceGenerator, pdfTokenVerify, generateSalesPdf };

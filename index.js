@@ -35,7 +35,7 @@ const {
   readNotifications,
 } = require('./service/notification/index.js');
 
-const { unlinkProductPdf } = require('./controller/report/reportPdf.js');
+const { unlinkProductPdf } = require('./controller/commonFunctions/commonFunctions.js');
 
 const server = http.createServer(app);
 const io = new Server(server);

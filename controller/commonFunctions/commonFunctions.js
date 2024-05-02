@@ -1,6 +1,8 @@
 const logger = require('../../logs.js');
 const { getStateQuery, getCityQuery } = require('../../service/commonFunctions/commonFunctions.js');
 const { getCombos } = require('../../service/helper.js');
+const path = require('path');
+const fs = require("fs");
 
 async function getState(req, res) {
   try {
@@ -46,4 +48,12 @@ async function getCombosDetails(req, res) {
   }
 }
 
-module.exports = { getState, getCity, getCombosDetails }
+//this function is use ful when user download pdf then pdf unlink
+function unlinkProductPdf(pdfNameObject) {
+  const pdfPath = path.join(__dirname, `../../public/uploads/pdfFiles/${pdfNameObject.pdfName}`);  //path of pdf
+  if (fs.existsSync(pdfPath)) {
+    fs.unlinkSync(pdfPath);
+  }
+}
+
+module.exports = { getState, getCity, getCombosDetails, unlinkProductPdf }
