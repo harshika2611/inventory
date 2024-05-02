@@ -73,8 +73,8 @@ const getProductDetailsAllService = async (productId, storageId, isAdmin) => {
   }
 };
 
-const getProduct = async (req, order, field) => {
-  const orderBy = new Map([['id', 'product_master.id']]);
+const getProduct = async (req,order, field) => {
+
   let sql = `SELECT 
     product_master.id,
     product_master.product_name AS Productname,
@@ -87,7 +87,7 @@ const getProduct = async (req, order, field) => {
         ? '(select stock from products_details where products_details.product_id = product_master.id and storage_id =' +
           req.user.storageId +
           ' ) as quantity,'
-        : ''
+        : '(select sum(stock) from products_details where products_details.product_id = product_master.id ) as quantity,'
     }
     product_master.is_delete
 FROM
@@ -95,7 +95,7 @@ FROM
         LEFT JOIN
     option_master ON product_master.category_id = option_master.id
  ORDER BY ${field} ${order};`;
-  return await connection.execute(sql);
+    return await connection.execute(sql);
 };
 const updateProduct = async (body, payload) => {
   const [result] = await connection.execute(

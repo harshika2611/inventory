@@ -6,6 +6,9 @@
   justify-content: end;
   display: flex;
 }
+.formHeader{
+	display: flex;
+}
 .filter {
   margin-right: 1%;
   display: flex;
@@ -26,7 +29,7 @@
   width: 100%;
 }
 #gridComponent {
-  padding-top: 3%;
+  padding-top: 7%;
   width: 95%;
   margin: 0 auto;
 }

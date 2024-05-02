@@ -16,6 +16,10 @@
   /* height: 1000px; */
 }
 
+.stockout td{
+background-color: #ffe1e1;
+}
+
 .form-control {
   width: 700px;
   display: flex;
