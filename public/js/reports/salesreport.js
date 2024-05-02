@@ -60,12 +60,14 @@ const getData = async (
     count++;
   }
   tableHeader.innerHTML = header
-    .map((e) => `<th>${e.replace('_', ' ')}</th>`)
+    .map((e) => `<th class="text-center">${e.replace('_', ' ')}</th>`)
     .join('');
   tableData.innerHTML = letestdata
     .map(
       (e) => `<tr>
-        ${header.map((h) => `<td>${e[h] ? e[h] : '-'}</td>`).join('')}</tr>`
+        ${header
+          .map((h) => `<td class="text-center">${e[h] ? e[h] : '-'}</td>`)
+          .join('')}</tr>`
     )
     .join('');
 };

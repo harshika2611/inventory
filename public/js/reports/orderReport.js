@@ -50,14 +50,16 @@ const dataTableGrid = (pagginationArray, startIndex) => {
     productData.innerHTML = array
       .map(
         (e) => `<tr onclick="productlist('${e.Order_Id}')">
-      ${header.map((h) => `<td>${e[h] ? e[h] : '-'}</td>`).join('')}</tr>`
+      ${header
+        .map((h) => `<td class="text-center">${e[h] ? e[h] : '-'}</td>`)
+        .join('')}</tr>`
       )
       .join('');
   }
 };
 
 const productlist = (id) => {
-  window.location = `/orderProduct/${id}`;
+  window.location = `/orderProduct?id=${id}`;
 };
 
 const searchdata = () => {

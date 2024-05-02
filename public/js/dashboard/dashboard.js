@@ -89,13 +89,10 @@ const showQuantityData = async (lowvalue) => {
 
   document.getElementById('totalStock').innerText = productData.length;
   document.getElementById('outStock').innerText = lowStock.length;
-  console.log(lowStock.length);
   document.getElementById('totalStock').style.color =
     productData.length <= 30 ? 'rgb(255, 185, 0)' : 'black';
   document.getElementById('totalStock').style.color =
     productData.length <= 6 ? 'red' : 'black';
-
-  lowStock = lowStock.slice(0, 5);
 
   document.getElementById('lowQuantityStockTableHead').innerHTML = header
     .map((e) => `<th class="text-center">${e.replace('_', ' ')}</th>`)
@@ -104,7 +101,9 @@ const showQuantityData = async (lowvalue) => {
   document.getElementById('lowQuantityStockTableBody').innerHTML = lowStock
     .map(
       (e) => `<tr>
-        ${header.map((h) => `<td>${e[h]}</td>`).join('')}</tr>`
+        ${header
+          .map((h) => `<td class="text-center">${e[h] ? e[h] : '-'}</td>`)
+          .join('')}</tr>`
     )
     .join('');
 };
@@ -153,7 +152,7 @@ const showData = () => {
     .join('');
 };
 const productlist = (id) => {
-  window.location = `/orderProduct/${id}`;
+  window.location = `/orderProduct?id=${id}`;
 };
 
 onloadData();

@@ -168,12 +168,12 @@ router.get(
 );
 
 router.get(
-  '/orderReport',
+  '/SalesorderDashbord',
   passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
   getorderReport
 );
 router.get(
-  '/orderProduct/:id',
+  '/orderProduct',
   passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
   getorderProducts
 );
@@ -183,7 +183,7 @@ router.get(
   getApiorderRreport
 );
 router.get(
-  '/api/orderreport/allproduct/:id',
+  '/api/orderreport/allproduct',
   passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
   getApiordersProductRreport
 );

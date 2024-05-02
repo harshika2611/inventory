@@ -47,7 +47,7 @@ const getApiorderRreport = async (req, res) => {
 
 const getApiordersProductRreport = async (req, res) => {
   try {
-    let id = req.params.id;
+    let id = req.query.id;
     const [rows] = await getApiordersProduct(id);
     res.json(rows);
   } catch (err) {
