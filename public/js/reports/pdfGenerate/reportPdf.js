@@ -20,17 +20,16 @@ async function reportGenerateOption() {
       value: 'product_details',
       textContent: 'Product',
       onclick: 'addProductCategory()',
-    },
-    {
-      type: 'radio',
-      id: 'supplierDetails',
-      class: 'supplierDetails supplierRadioButton',
-      value: 'supplier_details',
-      textContent: 'Supplier',
-      onclick: '',
-    },
+    }
   ];
-
+  // {
+  //   type: 'radio',
+  //   id: 'supplierDetails',
+  //   class: 'supplierDetails supplierRadioButton',
+  //   value: 'supplier_details',
+  //   textContent: 'Supplier',
+  //   onclick: '',
+  // },
   const createReportOptionDiv = document.createElement('div');
   createReportOptionDiv.setAttribute('class', 'reportOptionDiv');
 
@@ -58,25 +57,6 @@ async function reportGenerateOption() {
   }
   createReportOptionDiv.appendChild(createSelect);
   reportGenerateDiv.appendChild(createReportOptionDiv);
-
-  // for (let element of optionArrayForRadio) {
-  //   const createRadioDiv = document.createElement("div");
-  //   createRadioDiv.setAttribute("class", "reportRadioOption");
-  //   const radioButton = document.createElement('input');
-  //   const labelForRadioButton = document.createElement('label');
-  //   radioButton.setAttribute("type", `${element.type}`);
-  //   radioButton.setAttribute("id", `${element.id}`);
-  //   radioButton.setAttribute("class", `${element.class}`);
-  //   radioButton.setAttribute("value", `${element.value}`);
-  //   radioButton.setAttribute("onclick", `${element.onclick}`);
-
-  //   labelForRadioButton.setAttribute("for", `${element.id}`);
-  //   labelForRadioButton.innerHTML = element.textContent;
-
-  //   createRadioDiv.appendChild(labelForRadioButton);
-  //   createRadioDiv.appendChild(radioButton);
-  //   reportGenerateDiv.appendChild(createRadioDiv);
-  // }
 }
 
 function selectReportOption(optionSelect) {
@@ -390,13 +370,14 @@ async function generateReport() {
 
       if (response.status === 200) {
         const pdfResponse = await response.json();
-        // window.open(`${window.location.origin}/uploads/pdfFile/${pdfResponse.pdfName}`, "_blank");
+        console.log(pdfResponse.pdfName);
+
         const customizeOptionDiv =
           document.getElementById('customizeOptionDiv');
         const createA = document.createElement('a');
         createA.setAttribute(
           'href',
-          `${window.location.origin}/uploads/pdfFile/${pdfResponse.pdfName}`
+          `${window.location.origin}/uploads/pdfFiles/${pdfResponse.pdfName}`
         );
         createA.setAttribute('download', `${pdfResponse.pdfName}`);
         createA.setAttribute('id', 'pdfDownloadButton');

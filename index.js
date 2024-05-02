@@ -10,6 +10,22 @@ const logger = require('./logs.js');
 const route = require('./routes/route.js');
 const passport = require('passport');
 const { auth } = require('./middleware/auth.js');
+const fs = require("fs");
+
+const uploadsFolder = path.join(__dirname, `./public/uploads/`);
+const csvFileFolder = path.join(__dirname, `./public/uploads/csvFiles`);
+const pdfFileFolder = path.join(__dirname, `./public/uploads/pdfFiles`);
+
+if (!fs.existsSync(uploadsFolder)) {
+  fs.mkdirSync(uploadsFolder);
+}
+if (!fs.existsSync(csvFileFolder)) {
+  fs.mkdirSync(csvFileFolder);
+}
+if (!fs.existsSync(pdfFileFolder)) {
+  fs.mkdirSync(pdfFileFolder);
+}
+
 
 // Socket IO
 const http = require('http');
