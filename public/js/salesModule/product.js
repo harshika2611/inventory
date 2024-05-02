@@ -1,3 +1,4 @@
+
 let productGridResult;
 async function fetching() {
   let orderId = document.getElementById('productOrderId').value;
@@ -47,9 +48,72 @@ async function fetching() {
   OrderTypeCombo();
 }
 
-function generatePdf(id) {
-  console.log(id);
-  window.location.href = `/getPdf?id=${id}&type=invoice`;
+// function generatePdf(id) {
+//   console.log(id);
+//   window.location.href = `/getPdf?id=${id}&type=invoice`;
+// }
+
+async function generatePdf(id) {
+  // window.location.href = `/getPdf?id=${id}&type=invoice`;
+
+  const response = await fetch(`/invoice?invoiceId=${id}&type=invoice`, {
+    method: 'GET'
+  });
+
+  try {
+    if (!response.ok) {
+      throw new Error("Sales Report Generate Error");
+    }
+
+    if (response.status === 200) {
+      const responsePdfName = await response.json();
+      const generatePdf = document.getElementById('generatePdf');
+      if (generatePdf) {
+        generatePdf.remove();
+      }
+      const productFooter = document.getElementById("productFooter");
+      const downloadPdf = document.createElement("a");
+      downloadPdf.setAttribute("id", "downloadPdf");
+      downloadPdf.setAttribute("class", "btn btn-outline-primary");
+      downloadPdf.setAttribute("href", `${window.location.origin}/uploads/pdfFiles/${responsePdfName.pdfName}`);
+      downloadPdf.setAttribute("download", `${responsePdfName.pdfName}`);
+      downloadPdf.innerHTML = "Download PDF";
+      productFooter.appendChild(downloadPdf);
+
+      const downloadPdfButton = document.getElementById("downloadPdf");
+      if (downloadPdfButton) {
+        downloadPdfButton.onclick = () => {
+          downloadPdfButton.remove();
+
+          //---generate pdf button add
+          const productFooter = document.getElementById("productFooter");
+          if (productFooter) {
+            const genertePdfButton = document.createElement("a");
+            genertePdfButton.setAttribute("id", "generatePdf");
+            genertePdfButton.setAttribute("class", "btn btn-outline-primary");
+            genertePdfButton.setAttribute("onclick", `generatePdf(${id})`);
+            genertePdfButton.innerHTML = "Generate PDf";
+            productFooter.appendChild(genertePdfButton);
+          }
+          //socket implment for delete generated file
+          let socket = io();
+          socket.emit('unlinkProductPdf', {
+            pdfName: responsePdfName.pdfName
+          });
+        }
+      }
+    }
+  } catch (error) {
+    console.log(error);
+    const responseMessage = await response.json();
+    if (response.status === 400) {
+      messagePopUp(responseMessage.message);
+    }
+
+    if (response.status === 500) {
+      messagePopUp(responseMessage.message);
+    }
+  }
 }
 
 function enableSave(id) {

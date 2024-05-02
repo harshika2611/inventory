@@ -22,104 +22,110 @@ async function initial() {
   if (admin) {
     const storageOptions = await generateWarehousesDropDown(1, true);
 
-    document.getElementById('floatingStorageId').innerHTML = storageOptions;
+    const floatingStorageId = document.getElementById('floatingStorageId');
+
+    floatingStorageId.innerHTML = storageOptions;
   }
 }
 
-async function dataTableGrid(records) {
-  if (records.length) {
-    let head = `<tr>`;
-    for (let key of [
-      'No.',
-      'Supplier Name',
-      'Company Name',
-      'Phone',
-      'GST',
-      'Amount',
-      'Date',
-    ]) {
-      head += `<th scope="col" class="align-middle">
-      <span class="d-inline-flex flex-row align-items-center">
-        ${key}
-        ${mapping[key]
-          ? `
-        <span class="d-inline-flex flex-column align-items-center ms-2">
-          <span style="cursor: pointer" onclick="paggination('api/purchases?key=${mapping[key]}&value=asc&${queryString}')">^</span>
-          <span style="rotate: 180deg; cursor: pointer" onclick="paggination('api/purchases?key=${mapping[key]}&value=desc&${queryString}')">^</span>
+function dataTableGrid(records) {
+  try {
+    if (records.length) {
+      let head = `<tr>`;
+      for (let key of [
+        'No.',
+        'Supplier Name',
+        'Company Name',
+        'Phone',
+        'GST',
+        'Amount',
+        'Date',
+      ]) {
+        head += `<th scope="col" class="align-middle">
+        <span class="d-inline-flex flex-row align-items-center">
+          ${key}
+          ${mapping[key]
+            ? `
+          <span class="d-inline-flex flex-column align-items-center ms-2">
+            <span style="cursor: pointer" onclick="paggination('api/purchases?key=${mapping[key]}&value=asc&${queryString}')">^</span>
+            <span style="rotate: 180deg; cursor: pointer" onclick="paggination('api/purchases?key=${mapping[key]}&value=desc&${queryString}')">^</span>
+          </span>
+          `
+            : ``
+          }
         </span>
-        `
-          : ``
-        }
-      </span>
-    </th>`;
-    }
+      </th>`;
+      }
 
-    head += `<th scope="col" colspan="3" class="align-middle">Action</th>`;
+      head += `<th scope="col" colspan="3" class="align-middle">Action</th>`;
 
-    head += `</tr>`;
+      head += `</tr>`;
 
-    document.getElementById('thead').innerHTML = head;
+      document.getElementById('thead').innerHTML = head;
 
-    const tbody = document.querySelector('tbody');
-    tbody.innerHTML = '';
+      const tbody = document.getElementById('tbody');
+      tbody.innerHTML = '';
 
-    records.forEach((obj, index) => {
-      let tr = document.createElement('tr');
+      records.forEach((obj, index) => {
+        let tr = document.createElement('tr');
 
-      let noTd = document.createElement('td');
-      noTd.innerText = startIndex + index + 1;
+        let noTd = document.createElement('td');
+        noTd.innerText = startIndex + index + 1;
 
-      let suppTd = document.createElement('td');
-      suppTd.innerText = obj.fname;
+        let suppTd = document.createElement('td');
+        suppTd.innerText = obj.fname;
 
-      let comTd = document.createElement('td');
-      comTd.innerText = obj.company;
+        let comTd = document.createElement('td');
+        comTd.innerText = obj.company;
 
-      let phTd = document.createElement('td');
-      phTd.innerText = obj.phone;
+        let phTd = document.createElement('td');
+        phTd.innerText = obj.phone;
 
-      let gstTd = document.createElement('td');
-      gstTd.innerText = obj.gst;
+        let gstTd = document.createElement('td');
+        gstTd.innerText = obj.gst;
 
-      let amountTd = document.createElement('td');
-      amountTd.innerText = obj.amount;
+        let amountTd = document.createElement('td');
+        amountTd.innerText = obj.amount;
 
-      let dateTd = document.createElement('td');
-      dateTd.innerText = new Date(obj.date).toLocaleDateString();
+        let dateTd = document.createElement('td');
+        dateTd.innerText = new Date(obj.date).toLocaleDateString();
 
-      [noTd, suppTd, comTd, phTd, gstTd, amountTd, dateTd].forEach((e) =>
-        tr.appendChild(e)
-      );
+        [noTd, suppTd, comTd, phTd, gstTd, amountTd, dateTd].forEach((e) =>
+          tr.appendChild(e)
+        );
 
-      if (!obj.is_delete) {
-        let viewTd = document.createElement('td');
-        viewTd.innerHTML = `<button class="btn" onclick="window.location.href = '/salesOrderView?invoiceId=${obj?.id}&type=purchase'">
+        if (!obj.is_delete) {
+          let viewTd = document.createElement('td');
+          viewTd.innerHTML = `<button class="btn" onclick="viewPurchaseOrder(${obj?.id})">
           <img src="icons/book.svg" width="25" height="25">
         </button>`;
 
-        let editTd = document.createElement('td');
-        editTd.innerHTML = `<button class="btn" onclick="window.location.href = '/purchaseOrder?orderId=${obj?.id}'">
-          <img src="src/assets/manageCustomer/edit.svg" width="25" height="25">
-        </button>`;
+          let editTd = document.createElement('td');
+          editTd.innerHTML = `<button class="btn" onclick="window.location.href = '/purchaseOrder?orderId=${obj?.id}'">
+            <img src="src/assets/manageCustomer/edit.svg" width="25" height="25">
+          </button>`;
 
-        let deleteTd = document.createElement('td');
-        deleteTd.innerHTML = `<button class="btn" onclick="deletePurchaseOrder(${obj.id})">
-          <img src="src/assets/manageCustomer/delete.svg" width="25" height="25">
-        </button>`;
+          let deleteTd = document.createElement('td');
+          deleteTd.innerHTML = `<button class="btn" onclick="deletePurchaseOrder(${obj.id})">
+            <img src="src/assets/manageCustomer/delete.svg" width="25" height="25">
+          </button>`;
 
-        [viewTd, editTd, deleteTd].forEach((e) => tr.appendChild(e));
-      } else {
-        let actionTd = document.createElement('td');
-        actionTd.setAttribute('colspan', 3);
-        actionTd.innerHTML = `<b><i>DELETED</i></b>`;
-        [actionTd].forEach((e) => tr.appendChild(e));
-      }
+          [viewTd, editTd, deleteTd].forEach((e) => tr.appendChild(e));
+        } else {
+          let actionTd = document.createElement('td');
+          actionTd.setAttribute('colspan', 3);
+          actionTd.innerHTML = `<b><i>DELETED</i></b>`;
+          [actionTd].forEach((e) => tr.appendChild(e));
+        }
 
-      tbody.append(tr);
-    });
-  } else {
-    document.getElementById('thead').innerHTML = '';
-    document.getElementById('tbody').innerHTML = '<h5>No records found</h5>';
+        tbody.append(tr);
+      });
+    } else {
+      document.getElementById('thead').innerHTML = '';
+      document.getElementById('tbody').innerHTML = '<h5>No records found</h5>';
+    }
+  } catch (error) {
+    console.log(error);
   }
 }
 

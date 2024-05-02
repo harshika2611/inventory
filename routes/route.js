@@ -254,6 +254,7 @@ const {
   orderHistory,
   newOrder,
   invoicePdf,
+  invoicePdfView
 } = require('../controller/salesModule/salesRender.js');
 
 const {
@@ -333,15 +334,14 @@ router.get(
 );
 router.get(
   '/invoice',
-  pdfTokenVerify,
-  // passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
   invoicePdf
 );
 
 router.get(
   '/salesOrderView',
   passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
-  invoicePdf
+  invoicePdfView
 );
 
 //------------------------------------------------------
