@@ -6,9 +6,9 @@ function commonDetailsFilter(optionArray, searchClasss, filterClass) {
   searchOptionArray = [...optionArray];
   searchDivClasss = searchClasss;
   filterButtonClass = filterClass;
-  console.log(optionArray);
-  console.log(searchClasss);
-  console.log(filterClass);
+  // console.log(optionArray);
+  // console.log(searchClasss);
+  // console.log(filterClass);
   filterShow();
 }
 

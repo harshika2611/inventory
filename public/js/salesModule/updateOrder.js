@@ -9,9 +9,6 @@ function updateOrderForm(result, id) {
   if (document.getElementById('storageCombo') != null) {
     let storageCombo = document.getElementById('storageCombo');
     for (op of storageCombo) {
-      console.log(123);
-      console.log(op);
-      console.log(op.value == result[0].storage_id);
       if (op.value == result[0].storage_id) {
         op.setAttribute('selected', true);
       }

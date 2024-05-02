@@ -42,8 +42,7 @@ const dataTableGrid = (pagginationArray, startIndex) => {
     productHeader.innerHTML = header
       .map(
         (e) =>
-          `<th class="text-center">${
-            e == 'Order_Id' ? 'NO' : e.replace('_', ' ')
+          `<th class="text-center">${e == 'Order_Id' ? 'NO' : e.replace('_', ' ')
           } </th>`
       )
       .join('');
@@ -73,8 +72,6 @@ const searchdata = () => {
   if (toDate.length == 0) {
     toDate = currentDate;
   }
-  console.log(fromDate);
-  console.log(toDate);
   paggination(
     `/api/orderreport/allorder?fromDate=${fromDate}&&toDate=${toDate}`
   );

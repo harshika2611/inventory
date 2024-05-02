@@ -1,5 +1,6 @@
 //---------update customer details
 async function openUpdateCustomerForm(customer) {
+
   const customerId = customer.id;
   document.getElementById('myForm').style.display = 'block';
   document.getElementById('submitButton').innerHTML = 'Update';
@@ -7,6 +8,10 @@ async function openUpdateCustomerForm(customer) {
     .getElementById('submitButton')
     .setAttribute('onclick', `updateCustomerDetails(${customerId})`);
   showLoader();
+
+  //--reset
+  resetCustomerForm();
+
   const response = await fetch(`/api/getCustomers/?customerId=${customerId}`, {
     method: 'GET',
   });
@@ -52,7 +57,6 @@ async function openUpdateCustomerForm(customer) {
   } catch (error) {
     if (response.status === 404) {
       messagePopUp(customerDetails.message);
-      console.log(customerDetails.message);
     }
 
     if (response.status === 500) {
@@ -90,19 +94,20 @@ async function updateCustomerDetails(customerId) {
 
       if (response.status === 200) {
         const responseMessage = await response.json();
-        console.log(response.status);
-        console.log(responseMessage.message);
         const customerForm = document.getElementById('myForm');
         customerForm.style.display = 'none';
         getCustomers();
         messagePopUp(responseMessage.message);
+
+        //--reset
+        resetCustomerForm();
       }
     } catch (error) {
       console.log(error);
 
       if (response.status === 400) {
         const errorObject = await response.json();
-        console.log(errorObject);
+        // console.log(errorObject);
         errorShow(errorObject);
       }
 

@@ -143,12 +143,11 @@ async function getallProducts() {
 async function getProducts() {
   let categoryId = document.getElementById(`productCategory`).value;
   let filterdResult = allProduct.filter((ele) => {
-    console.log(ele.category_id, categoryId);
+    // console.log(ele.category_id, categoryId);
     if (ele.category_id == categoryId) {
       return ele;
     }
   });
-  console.log(filterdResult);
   generateCombo(filterdResult, `product`);
 }
 async function addProduct() {
@@ -246,7 +245,6 @@ async function updateProduct(id) {
     }
   } else {
     obj = {};
-    console.log(`editQuantity${id}`);
     obj[`editQuantity${id}`] = '*Enter Valid Input';
     errorShow(obj);
   }
@@ -260,11 +258,9 @@ async function OrderTypeCombo() {
     str += `<option value="${data.opt_id}">${data.value}</option>`;
   });
   let arr = document.getElementsByClassName(`orderType`);
-  console.log(arr);
   for (ele of arr) {
     ele.innerHTML = str;
     let type = ele.getAttribute('name').split('orderType')[1];
-    console.log(type);
     for (op of ele) {
       op.value == type ? op.setAttribute('selected', true) : '';
     }

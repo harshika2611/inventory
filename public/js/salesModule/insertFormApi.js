@@ -44,7 +44,6 @@ async function insertOrder() {
         document.getElementById('productOrderId').value = id;
         displayProductForm();
         await getCombos('productCategory');
-        console.log(document.getElementById('productCategory').value);
         await getallProducts();
         fetching();
       }

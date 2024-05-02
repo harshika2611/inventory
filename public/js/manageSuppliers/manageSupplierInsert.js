@@ -1,5 +1,6 @@
 //---------addnew supplier
 async function addNewSupplier() {
+
   const supplierForm = document.getElementById('myForm');
   supplierForm.style.display = 'block';
   document.getElementById('submitButton').innerHTML = 'Submit';
@@ -7,20 +8,10 @@ async function addNewSupplier() {
     .getElementById('submitButton')
     .setAttribute('onclick', `submitSupplierDetails()`);
 
-  const addNewCustomerButton = document.querySelector('.addnewcustomerbutton');
-
-  getAllState('stateSelectCombo'); //second parameter those state we need to selected
-
+  // const addNewCustomerButton = document.querySelector('.addnewcustomerbutton');
   //---old field value clear
-  const inputTag = supplierForm.querySelectorAll('.supplierInput');
-  for (let element of inputTag) {
-    element.value = '';
-  }
-
-  const selectTag = supplierForm.getElementsByTagName('select');
-  for (let element of selectTag) {
-    element.selectedIndex = 0;
-  }
+  resetSupplierForm();
+  getAllState('stateSelectCombo'); //second parameter those state we need to selected
 }
 
 async function submitSupplierDetails() {
@@ -64,8 +55,8 @@ async function submitSupplierDetails() {
           element.remove();
         });
 
-        // window.location.replace(window.location.protocol + "//" +
-        //   window.location.host + `/manageSuppliers`);
+        //---old field value clear
+        resetSupplierForm();
       }
     } catch (error) {
       console.log(error);

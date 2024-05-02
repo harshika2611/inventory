@@ -39,10 +39,10 @@ function loginFormValidation(data) {
   }
   return loginError;
 }
-document.getElementById('password').addEventListener('keyup', (e) => {
-  if (e.getModifierState('CapsLock')) {
-    document.getElementById('text').innerHTML = 'Caps lock is ON';
-  } else {
-    document.getElementById('text').innerHTML = '';
-  }
-});
+// document.getElementById('password').addEventListener('keyup', (e) => {
+//   if (e.getModifierState('CapsLock')) {
+//     document.getElementById('text').innerHTML = 'Caps lock is ON';
+//   } else {
+//     document.getElementById('text').innerHTML = '';
+//   }
+// });

@@ -105,7 +105,6 @@ function searchInputAdd() {
 
 function customerFilter(filterColumn) {
   const searchInput = document.getElementById("searchInput");
-  console.log(searchInput.value);
   let filterArray = [];
   dataArray.forEach((element) => {
     for (let key in element) {

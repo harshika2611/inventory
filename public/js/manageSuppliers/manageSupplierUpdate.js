@@ -7,6 +7,10 @@ async function openUpdateSupplierForm(supplier) {
     .getElementById('submitButton')
     .setAttribute('onclick', `updateSupplierDetails(${supplierId})`);
   showLoader();
+
+  //---old field value clear
+  resetSupplierForm();
+
   const response = await fetch(`/api/getSuppliers/?supplierId=${supplierId}`, {
     method: 'GET',
   });
@@ -108,8 +112,8 @@ async function updateSupplierDetails(supplierId) {
           element.remove();
         });
 
-        // window.location.replace(window.location.protocol + "//" +
-        //   window.location.host + `/manageSuppliers`);
+        //---reset supplier form
+        resetSupplierForm();
       }
     } catch (error) {
       console.log(error);

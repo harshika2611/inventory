@@ -1,70 +1,64 @@
 function insertSalesFormValidation(insertFormData) {
-	let insertFormErrorObject = {};
+  let insertFormErrorObject = {};
 
-	for (let key in insertFormData) {
-		switch (key) {
-			case 'customer':
-				// console.log(key + " " + insertFormData[key]);
+  for (let key in insertFormData) {
+    switch (key) {
+      case 'customer':
+        const customerCombo = document.getElementById('customer');
 
-				const customerCombo = document.getElementById('customer');
+        if (customerCombo.selectedIndex < 0) {
+          insertFormErrorObject[key] = '* require';
+        } else {
+          delete insertFormErrorObject[key];
+        }
+        break;
 
-				if (customerCombo.selectedIndex < 0) {
-					insertFormErrorObject[key] = '* require';
-				} else {
-					delete insertFormErrorObject[key];
-				}
-				break;
-
-			case 'amount':
-				// console.log(key + " " + insertFormData[key]);
-				if (insertFormData[key].length === 0) {
-					insertFormErrorObject[key] = '* require';
-				} else if (
-					insertFormData[key].trim().length === 0 &&
-					insertFormData[key] !== ''
-				) {
-					insertFormErrorObject[key] = '* Please Enter Amount';
-        } else if(isNaN(
+      case 'amount':
+        if (insertFormData[key].length === 0) {
+          insertFormErrorObject[key] = '* require';
+        } else if (
+          insertFormData[key].trim().length === 0 &&
+          insertFormData[key] !== ''
+        ) {
+          insertFormErrorObject[key] = '* Please Enter Amount';
+        } else if (isNaN(
           parseInt(insertFormData[key]))) {
-					insertFormErrorObject[key] = '* Please Enter Valid Amount';
-          }
+          insertFormErrorObject[key] = '* Please Enter Valid Amount';
+        }
         else {
-					delete insertFormErrorObject[key];
-				}
-				break;
+          delete insertFormErrorObject[key];
+        }
+        break;
 
-			case 'shippingAddress':
-				// console.log(key + " " + insertFormData[key]);
+      case 'shippingAddress':
+        if (insertFormData[key].length === 0) {
+          insertFormErrorObject[key] = '* require';
+        } else if (
+          insertFormData[key].trim().length === 0 &&
+          insertFormData[key] !== ''
+        ) {
+          insertFormErrorObject[key] = '* Please Enter valid Address';
+        } else {
+          delete insertFormErrorObject[key];
+        }
+        break;
 
-				if (insertFormData[key].length === 0) {
-					insertFormErrorObject[key] = '* require';
-				} else if (
-					insertFormData[key].trim().length === 0 &&
-					insertFormData[key] !== ''
-				) {
-					insertFormErrorObject[key] = '* Please Enter valid Address';
-				} else {
-					delete insertFormErrorObject[key];
-				}
-				break;
-
-			case 'date':
-				// console.log(key + " " + insertFormData[key]);
-				const dateregex = '^(19[0-9]{2}|2[0-9]{3})-(0[1-9]|1[012])-([123]0|[012][1-9]|31)$';
-				if (insertFormData[key].length === 0) {
-					insertFormErrorObject[key] = '* require';
-				} else if (
-					insertFormData[key].trim().length === 0 ||
-					isNaN(new Date(insertFormData[key]))
-				) {
-					insertFormErrorObject[key] = '* Please Enter Valid Date';
-				} else if (new Date() <= new Date(insertFormData[key])|| !RegExp(dateregex).test(insertFormData[key])) {
-					insertFormErrorObject[key] = '* Please Enter Valid Date';
-				} else {
-					delete insertFormErrorObject[key];
-				}
-				break;
-		}
-	}
-	return insertFormErrorObject;
+      case 'date':
+        const dateregex = '^(19[0-9]{2}|2[0-9]{3})-(0[1-9]|1[012])-([123]0|[012][1-9]|31)$';
+        if (insertFormData[key].length === 0) {
+          insertFormErrorObject[key] = '* require';
+        } else if (
+          insertFormData[key].trim().length === 0 ||
+          isNaN(new Date(insertFormData[key]))
+        ) {
+          insertFormErrorObject[key] = '* Please Enter Valid Date';
+        } else if (new Date() <= new Date(insertFormData[key]) || !RegExp(dateregex).test(insertFormData[key])) {
+          insertFormErrorObject[key] = '* Please Enter Valid Date';
+        } else {
+          delete insertFormErrorObject[key];
+        }
+        break;
+    }
+  }
+  return insertFormErrorObject;
 }

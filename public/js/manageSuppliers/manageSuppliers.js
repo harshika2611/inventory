@@ -145,6 +145,29 @@ function dataTableGrid(supplierArray, startIndex) {
   }
 }
 
+function resetSupplierForm() {
+  //---old field value clear
+  const supplierForm = document.getElementById("supplierForm");
+
+  const inputTag = supplierForm.querySelectorAll('.supplierInput');
+  if (inputTag.length > 0) {
+    for (let element of inputTag) {
+      element.value = '';
+    }
+  }
+
+  const stateSelectCombo = document.getElementById("stateSelectCombo");
+  if (stateSelectCombo) {
+    stateSelectCombo.selectedIndex = 0;
+  }
+
+  const citySelectCombo = document.getElementById("citySelectCombo");
+  if (citySelectCombo) {
+    citySelectCombo.innerHTML = "";
+  }
+}
+
+
 function closeForm() {
   document.getElementById('myForm').style.display = 'none';
   //-----in the supplier form errorspan remove
@@ -153,6 +176,8 @@ function closeForm() {
   allSpan.forEach((element) => {
     element.remove();
   });
+  //---reset supplier form
+  resetSupplierForm();
 }
 
 //----delete supplier details
@@ -171,7 +196,6 @@ async function deleteSupplierDetails(supplier) {
       }
     );
     hideLoader();
-    console.log(response.status);
     try {
       if (!response.ok) {
         throw new Error('Unable To Delete Supplier');
@@ -220,7 +244,6 @@ function reactivateSupplier(supplier) {
       }
     );
     hideLoader();
-    console.log(response.status);
     try {
       if (!response.ok) {
         throw new Error('Unable To Reactivate Supplier');

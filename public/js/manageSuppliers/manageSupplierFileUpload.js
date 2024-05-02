@@ -77,12 +77,10 @@ async function supplierFileUpload() {
       const responseMessage = await response.json();
 
       if (response.status === 400) {
-        console.log(responseMessage.message);
         messagePopUp(responseMessage.message);
       }
 
       if (response.status === 500) {
-        console.log(responseMessage.message);
         messagePopUp(responseMessage.message);
       }
     }
