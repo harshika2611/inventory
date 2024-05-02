@@ -103,45 +103,42 @@ function dataTableGrid(product, startIndex) {
     'Category',
     'Cost',
     'Description',
-    roleId == 5 ? 'Quantity' : '',
+    roleId == 5 ? 'Quantity' : 'Total Quantity',
   ]) {
     if (key === 'id') {
       key = 'No.';
     }
-    if (key !== '') {
-      span = document.createElement('span');
-      span.setAttribute('class', 'd-inline-flex flex-row align-items-center');
-      createTh = document.createElement('th');
-      createTh.setAttribute('class', 'align-middle');
-      span.textContent = key;
-      createTr.appendChild(createTh);
-      createTh.appendChild(span);
-      table.appendChild(createTr);
-      let spanMain = document.createElement('span');
-      spanMain.setAttribute(
-        'class',
-        'd-inline-flex flex-column align-items-center ms-2'
-      );
-      let span1 = document.createElement('span');
-      span1.textContent = '^';
-      span1.setAttribute('class', 'span1');
-      span1.setAttribute('onclick', `filterUp(event,'ASC')`);
-      span1.setAttribute('id', `${key}`);
+    span = document.createElement('span');
+    span.setAttribute('class', 'd-inline-flex flex-row align-items-center');
+    createTh = document.createElement('th');
+    createTh.setAttribute('class', 'align-middle');
+    span.textContent = key;
+    createTr.appendChild(createTh);
+    createTh.appendChild(span);
+    table.appendChild(createTr);
+    let spanMain = document.createElement('span');
+    spanMain.setAttribute(
+      'class',
+      'd-inline-flex flex-column align-items-center ms-2'
+    );
+    let span1 = document.createElement('span');
+    span1.textContent = '^';
+    span1.setAttribute('class', 'span1');
+    span1.setAttribute('onclick', `filterUp(event,'ASC')`);
+    span1.setAttribute('id', `${key}`);
 
-      let span2 = document.createElement('span');
-      span2.textContent = '^';
-      span2.setAttribute('class', 'span2');
-      span2.setAttribute('onclick', `filterUp(event,'DESC')`);
-      span2.setAttribute('id', `${key}`);
-      spanMain.appendChild(span1);
-      spanMain.appendChild(span2);
-      span.appendChild(spanMain);
-      if (key == 'No.') {
-        spanMain.remove();
-      }
+    let span2 = document.createElement('span');
+    span2.textContent = '^';
+    span2.setAttribute('class', 'span2');
+    span2.setAttribute('onclick', `filterUp(event,'DESC')`);
+    span2.setAttribute('id', `${key}`);
+    spanMain.appendChild(span1);
+    spanMain.appendChild(span2);
+    span.appendChild(spanMain);
+    if (key == 'No.') {
+      spanMain.remove();
     }
   }
-
   createTh = document.createElement('th');
   createTh.setAttribute('class', 'align-middle');
   createTh.textContent = 'Action';
@@ -152,7 +149,9 @@ function dataTableGrid(product, startIndex) {
   for (const element of product) {
     let createTr = document.createElement('tr');
     tableBody.appendChild(createTr);
-
+    if (element.quantity < 10) {
+      createTr.classList.add('stockout');
+    }
     for (const key in element) {
       const createTd = document.createElement('td');
       if (key == 'id') {
@@ -197,9 +196,7 @@ function dataTableGrid(product, startIndex) {
         createViewButton.textContent = 'View';
         createViewTd.appendChild(achor0);
         achor0.appendChild(createViewButton);
-
         createTr.appendChild(createViewTd);
-
         const createDeleteTd = document.createElement('td');
         createDeleteTd.setAttribute('id', `${element.id}`);
         const createDeleteButton = document.createElement('button');

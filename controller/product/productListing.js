@@ -35,14 +35,14 @@ const manageProduct = async (req, res) => {
 };
 
 const getApiproduct = async (req, res) => {
-  // try {
+  try {
     let order = req.query.order || 'asc';
     let field = req.query.field || 'id';
     const [rows] = await getProduct(req,order, field);
     return res.json(rows);
-  // } catch (err) {
-  //   logger.logError(err);
-  // }
+  } catch (err) {
+    logger.logError(err);
+  }
 };
 
 const getProductDetails = async (req, res) => {
