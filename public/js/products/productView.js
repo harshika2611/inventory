@@ -42,7 +42,7 @@ const loadData = async () => {
     </tr>
     <tr>
       <td>Stock</td>
-      <td>${productDetails.stock}</td>
+      <td>${productDetails.stock || 0}</td>
     </tr>
     <tr>
       <td>Description</td>
