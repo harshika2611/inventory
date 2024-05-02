@@ -254,7 +254,7 @@ const {
   orderHistory,
   newOrder,
   invoicePdf,
-  invoicePdfView
+  invoicePdfView,
 } = require('../controller/salesModule/salesRender.js');
 
 const {
@@ -543,8 +543,6 @@ router.get(
   storeProducts
 );
 
-
-
 // router.post('/filterStore',passport.authenticate('jwt', { session: false, failureRedirect: '/' }), filterStore);
 
 // ------------------- Manage Purchases ---------------------- //
@@ -672,6 +670,7 @@ const {
   productListing,
   getApiproduct,
   getProductDetails,
+  getProductAllDetails,
 } = require('../controller/product/productListing.js');
 const {
   productInfo,
@@ -725,6 +724,13 @@ router.get(
 
   getProductDetails
 );
+
+router.get(
+  '/api/productAllDetails/:id',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  getProductAllDetails
+);
+
 router.get(
   '/api/deleteProduct/:id',
   passport.authenticate('jwt', { session: false, failureRedirect: '/' }),

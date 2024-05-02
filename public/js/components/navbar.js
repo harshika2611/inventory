@@ -48,6 +48,8 @@ navHover = () => {
     document.getElementById(`navreport`).classList.add('width-100-hover');
     document.getElementById(`submenu3`).classList.remove('collapse-horizontal');
     document.getElementById(`submenu3`).classList.add('show');
+  } else if (path == 'productinfo' || path == 'productView') {
+    document.getElementById(`navproducts`).classList.add('width-100-hover');
   } else {
     document.getElementById(`nav${path}`).classList.add('width-100-hover');
   }
