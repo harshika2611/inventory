@@ -162,13 +162,16 @@ async function productGrid(req, res) {
     fields.forEach((ele) => {
       header.push(ele.name);
     });
-    res.json({ rows, header });
+    
     let totalAmount = 0;
     rows.forEach((ele) => {
-      totalAmount += ele.Total;
+      totalAmount = (ele.order_type == 8?totalAmount+ ele.Total:totalAmount-ele.Total);
     });
+    
+    logger.info(totalAmount);
     let input2 = [totalAmount, req.query.orderId];
     let data = await updateAmount(input2);
+    res.json({ rows, header,totalAmount });
   } catch (err) {
     logger.logError(err);
     logger.logError('not found');

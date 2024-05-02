@@ -42,7 +42,7 @@ function insertSalesFormValidation(insertFormData) {
 					insertFormData[key].trim().length === 0 &&
 					insertFormData[key] !== ''
 				) {
-					insertFormErrorObject[key] = '* Please Enter Lastname';
+					insertFormErrorObject[key] = '* Please Enter valid Address';
 				} else {
 					delete insertFormErrorObject[key];
 				}
@@ -50,7 +50,7 @@ function insertSalesFormValidation(insertFormData) {
 
 			case 'date':
 				// console.log(key + " " + insertFormData[key]);
-
+				const dateregex = '^(19[0-9]{2}|2[0-9]{3})-(0[1-9]|1[012])-([123]0|[012][1-9]|31)$';
 				if (insertFormData[key].length === 0) {
 					insertFormErrorObject[key] = '* require';
 				} else if (
@@ -58,7 +58,7 @@ function insertSalesFormValidation(insertFormData) {
 					isNaN(new Date(insertFormData[key]))
 				) {
 					insertFormErrorObject[key] = '* Please Enter Valid Date';
-				} else if (new Date() < new Date(insertFormData[key])) {
+				} else if (new Date() <= new Date(insertFormData[key])|| !RegExp(dateregex).test(insertFormData[key])) {
 					insertFormErrorObject[key] = '* Please Enter Valid Date';
 				} else {
 					delete insertFormErrorObject[key];

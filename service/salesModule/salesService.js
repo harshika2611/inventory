@@ -69,7 +69,7 @@ async function updateOrder(input) {
   return await connection.execute(sql, input);
 }
 async function productList(input) {
-  let sql = `select sales_products.id as id, product_master.product_name , option_master.value as Category , sales_products.quantity,product_master.cost as UnitPrice ,(sales_products.quantity * product_master.cost ) as Total from sales_products join product_master on sales_products.product_id = product_master.id join option_master on option_master.id = product_master.category_id where sales_products.order_id = ? and sales_products.is_delete = 0;`;
+  let sql = `select sales_products.id as id, product_master.product_name , option_master.value as Category , sales_products.quantity,sales_products.order_type,product_master.cost as UnitPrice ,(sales_products.quantity * product_master.cost ) as Total from sales_products join product_master on sales_products.product_id = product_master.id join option_master on option_master.id = product_master.category_id where sales_products.order_id = ? and sales_products.is_delete = 0;`;
 
   return await connection.execute(sql, input);
 }
@@ -80,27 +80,54 @@ async function deleteQuery(table, input) {
 }
 async function updateProduct(req) {
   const [prevQuantity] = await connection.execute(
-    `select sales_products.product_id,(sales_products.quantity+ products_details.stock) as total_stock from sales_products join products_details on sales_products.product_id = products_details.product_id where sales_products.id = ? and products_details.storage_id = ?;`,
+    `select sales_products.product_id,sales_products.quantity,sales_products.order_type ,products_details.stock from sales_products join products_details on sales_products.product_id = products_details.product_id where sales_products.id = ? and products_details.storage_id = ?;`,
     [req.body.id, req.user.storageId]
   );
-  console.log(req.body);
-  if (prevQuantity[0].total_stock > req.body.quantity) {
+  // console.log(req.body);
+  // console.log(req.body.orderType == prevQuantity[0].order_type);
+  let total_stock = 0;
+  console.log(prevQuantity[0].order_type == 8 && req.body.orderType == 9);
+  //Sales To return
+  if (prevQuantity[0].order_type == 8 && req.body.orderType == 9) {
+    total_stock =
+      parseInt(prevQuantity[0].stock) +
+      parseInt(prevQuantity[0].quantity) +
+      parseInt(req.body.quantity);
+  } else if (prevQuantity[0].order_type == 9 && req.body.orderType == 9) {
+    total_stock =
+      parseInt(prevQuantity[0].stock) -
+      parseInt(prevQuantity[0].quantity) +
+      parseInt(req.body.quantity);
+  } else if (prevQuantity[0].order_type == 9 && req.body.orderType == 8) {
+    total_stock =
+      parseInt(prevQuantity[0].stock) -
+      parseInt(prevQuantity[0].quantity) -
+      parseInt(req.body.quantity);
+  }
+  console.log(total_stock);
+  if (total_stock > 0 || req.body.orderType == 9) {
     const [result] = await connection.execute(
       `update products_details set stock = ? where product_id = ? and storage_id = ?;`,
-      [
-        prevQuantity[0].total_stock - req.body.quantity,
-        prevQuantity[0].product_id,
-        req.user.storageId,
-      ]
+      [total_stock, prevQuantity[0].product_id, req.user.storageId]
     );
     const [data] = await connection.execute(
-      `update sales_products set quantity = ? where id = ?`,
+      `update sales_products set quantity = ? ${
+        req.body.orderType ? ',order_type = ' + req.body.orderType : ''
+      } where id = ?`,
       [req.body.quantity, req.body.id]
     );
-
     return [true, 0];
-  } else {
-    return [false, prevQuantity[0].total_stock];
+  } else if (prevQuantity[0].order_type == 9) {
+    return [
+      false,
+      parseInt(prevQuantity[0].quantity) + parseInt(prevQuantity[0].stock) -req.body.quantity,
+    ];
+  }
+  else {
+    return [
+      false,
+      parseInt(prevQuantity[0].quantity) + parseInt(prevQuantity[0].stock),
+    ];
   }
 }
 
@@ -117,17 +144,6 @@ async function updateAmount(input) {
 
 async function checkQuanitiy(req, type) {
   try {
-    //   let storageId = req.user.storageId;
-    // if (storageId == null) {
-    //   switch (req.method) {
-    //     case 'POST':
-    //       storageId = req.body.storage;
-    //       break;
-    //     case 'POST':
-    //       storageId = req.query.storage;
-    //       break;
-    //   }
-    // }
     const [result] = await connection.execute(
       `select stock from products_details where product_id = ? and storage_id = ?`,
       [req.body.product, req.user.storageId]
