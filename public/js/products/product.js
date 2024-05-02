@@ -178,6 +178,15 @@ function dataTableGrid(product, startIndex) {
       }
     }
     if (element['is_delete'] == 0) {
+      const createViewTd = document.createElement('td');
+      const achor0 = document.createElement('a');
+      achor0.setAttribute('href', `/productView?id=${element.id}`);
+      const createViewButton = document.createElement('button');
+      createViewButton.setAttribute('type', 'button');
+      createViewButton.setAttribute('class', 'btn btn-outline-primary');
+      createViewButton.textContent = 'View';
+      createViewTd.appendChild(achor0);
+      achor0.appendChild(createViewButton);
       const createEditTd = document.createElement('td');
       const achor = document.createElement('a');
       achor.setAttribute('href', `/productinfo?id=${element.id}`);

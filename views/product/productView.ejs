@@ -18,11 +18,16 @@
           <div class="col p-5">
             <h3>Product View</h3>
             <div id="productBody">
-
             </div>
           </div>
           <div class="col d-flex align-items-center p-5">
             <img src="icons/pro1.png" alt="img" width="350" height="350">
+          </div>
+          <div class="p-5">
+            <% if(!data?.storageId) { %>
+              <h3>Storages</h3>
+              <div id="storages" class="d-flex justify-content-between flex-wrap"></div>
+              <% } %>
           </div>
         </div>
       </div>

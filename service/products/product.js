@@ -3,29 +3,78 @@ const logger = require('../../logs.js');
 
 const getProductDetailsService = async (productId) => {
   const sql = `
+  SELECT
+    pm.id,
+    pm.product_name as productname,
+    pm.sku_id as skuid,
+    pm.category_id as categoryId,
+    pm.cost,
+    pm.description
+  FROM
+    product_master as pm
+  WHERE
+    id = ?`;
+  return await connection.execute(sql, [productId]);
+};
+
+const getProductDetailsAllService = async (productId, storageId, isAdmin) => {
+  if (!isAdmin) {
+    const sql = `
     SELECT
       pm.id,
-      pm.product_name as productname,
+      pm.product_name as productName,
       pm.sku_id as skuid,
       pm.category_id as categoryId,
+      om.\`value\` AS categoryName,
+      pd.stock AS stock,
       pm.cost,
       pm.description,
       pm.is_delete as productDeleted
     FROM
       product_master as pm
         LEFT JOIN
-      products_details as pd
-        ON
-      pm.id = pd.product_id
+      products_details AS pd ON pm.id = pd.product_id AND pd.storage_id = ?
+        LEFT JOIN
+      option_master AS om ON om.id = pm.category_id
     WHERE
-      id = ?`;
-  return await connection.execute(sql, [productId]);
+      pm.id = ?`;
+    return await connection.execute(sql, [storageId, productId]);
+  } else {
+    const sql = `
+    SELECT 
+      pm.id,
+      pm.product_name AS productName,
+      pm.sku_id AS skuid,
+      om.\`value\` AS categoryName,
+      pm.cost,
+      pm.description,
+      pm.is_delete AS productDeleted,
+      pd.stock AS storageStock,
+      ss.id AS storageId,
+      ss.\`name\` AS storageName,
+      cm.city_name AS cityName,
+      om.\`value\` AS warehouseType,
+      ss.is_delete AS storageDeleted
+    FROM
+      product_master AS pm
+        LEFT JOIN
+      products_details AS pd ON pm.id = pd.product_id
+        LEFT JOIN
+      storage_space_master AS ss ON ss.id = pd.storage_id
+        LEFT JOIN
+      city_master AS cm ON cm.city_id = ss.location_id
+        LEFT JOIN
+      option_master AS om ON om.id = ss.storage_type
+        LEFT JOIN
+      option_master AS om2 ON om2.id = pm.category_id
+    WHERE
+        pm.id = ?`;
+    return await connection.execute(sql, [productId]);
+  }
 };
 
-const getProduct = async (req,order, field) => {
-  const orderBy = new Map([
-    ['id', 'product_master.id']
-  ]);
+const getProduct = async (req, order, field) => {
+  const orderBy = new Map([['id', 'product_master.id']]);
   let sql = `SELECT 
     product_master.id,
     product_master.product_name AS Productname,
@@ -33,14 +82,20 @@ const getProduct = async (req,order, field) => {
     option_master.value AS Category,
     cost AS Cost,
     description AS Description,
-    ${req.user.roleId == 5?('(select stock from products_details where products_details.product_id = product_master.id and storage_id ='+req.user.storageId+' ) as quantity,'):''}
+    ${
+      req.user.roleId == 5
+        ? '(select stock from products_details where products_details.product_id = product_master.id and storage_id =' +
+          req.user.storageId +
+          ' ) as quantity,'
+        : ''
+    }
     product_master.is_delete
 FROM
     product_master
         LEFT JOIN
     option_master ON product_master.category_id = option_master.id
  ORDER BY ${field} ${order};`;
-    return await connection.execute(sql);
+  return await connection.execute(sql);
 };
 const updateProduct = async (body, payload) => {
   const [result] = await connection.execute(
@@ -121,8 +176,11 @@ const deleteMainProductService = async (id) => {
     WHERE
         id = ?`;
     const [result] = await connection.execute(sql, [1, id]);
-    const [data] = await connection.execute(`update products_details set is_delete = 1 where product_id = ?`, [id]);
-    logger.info(data)
+    const [data] = await connection.execute(
+      `update products_details set is_delete = 1 where product_id = ?`,
+      [id]
+    );
+    logger.info(data);
     return result;
   } catch (error) {
     logger.logError(`Error`, error);
@@ -137,4 +195,5 @@ module.exports = {
   checkProductSevice,
   insertProductService,
   getProductDetailsService,
+  getProductDetailsAllService,
 };

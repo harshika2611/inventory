@@ -4,6 +4,7 @@ const {
   checkProductSevice,
   insertProductService,
   getProductDetailsService,
+  getProductDetailsAllService,
 } = require('../../service/products/product');
 const logger = require('../../logs');
 
@@ -54,6 +55,47 @@ const getProductDetails = async (req, res) => {
   }
 };
 
+const getProductAllDetails = async (req, res) => {
+  try {
+    let id = req.params.id;
+    const [rows] = await getProductDetailsAllService(
+      id,
+      (storageId = req.user.storageId),
+      (isAdmin = req.user.roleId == 4)
+    );
+    if (rows[0]?.storageId) {
+      const result = {
+        productName: rows[0]?.productName,
+        skuid: rows[0]?.skuid,
+        categoryName: rows[0]?.categoryName,
+        cost: rows[0]?.cost,
+        stock: 0,
+        description: rows[0]?.description,
+        deleted: rows[0]?.productDeleted,
+        storage: [],
+      };
+
+      rows.forEach((row) => {
+        const storage = {};
+        storage.id = row.storageId;
+        storage.name = row.storageName;
+        storage.location = row.cityName;
+        storage.type = row.warehouseType;
+        storage.stock = row.storageStock;
+        storage.deleted = row.storageDeleted;
+
+        result.stock += storage.stock;
+        result.storage.push({ ...storage });
+      });
+
+      return res.json(result);
+    }
+    return res.json(rows[0]);
+  } catch (err) {
+    logger.logError(err);
+  }
+};
+
 const deleteMainProduct = async (req, res) => {
   try {
     const id = req.params.id;
@@ -76,4 +118,5 @@ module.exports = {
   getApiproduct,
   manageProduct,
   getProductDetails,
+  getProductAllDetails,
 };
