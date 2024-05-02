@@ -91,7 +91,7 @@ function dataTableGrid(storeArray, startIndex) {
       createViewButton.setAttribute('width', '25');
       createViewButton.setAttribute('height', '25');
       // console.log("efserf", `${element.storeId}`);
-      createViewButton.href = `/storeProducts?storeId=${element.storeId}`;
+      createViewButton.href = `/storeProducts?id=${element.storeId}`;
       createViewTd.appendChild(createViewButton);
       createActionTd.appendChild(createViewTd);
       createTr.appendChild(createActionTd);

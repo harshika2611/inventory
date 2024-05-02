@@ -107,8 +107,18 @@ const expireService = async (data) => {
     throw error;
   }
 };
+const checkExpireService = async (otp, id) => {
+  try {
+    const sql = `update users set unique_code=? where id=?`;
+    const [result] = await connection.execute(sql, [otp, id]);
+  } catch (error) {
+    logger.logError(`Error`, error);
+    throw error;
+  }
+};
 
 module.exports = {
+  checkExpireService,
   expireService,
   userService,
   checkUserService,

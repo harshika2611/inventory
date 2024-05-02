@@ -4,58 +4,35 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Store Products</title>
-  <script src="/js/bootstrap.js"></script>
-  <script src="js/store/store.js"></script>
-  <script src="js/store/storeFormValidation.js"></script>
-  <script src="js/commonFunction/commonFunction.js"></script>
-  <link rel="stylesheet" href="src/css/dashboard/dashboard.css" />
-  <link rel="stylesheet" href="src/css/allpage.css" />
+  <title>Details</title>
   <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
+  <script src="/js/bootstrap.js"></script>
   <link rel="stylesheet" href="src/css/allpage.css" />
-  <link rel="stylesheet" href="src/css/store/store.css" />
-  <!-- <script src="js/store/storeProducts.js"></script> -->
 </head>
+
 <body>
-  <div class="div-second managecustomer-section">
-    <a href="/store" class="btn btn-dark" style="margin-left: 900px;">Back</a>
-   <h4> Warehouse Name: <%=storeDetails[0].name%></h4>
-   <h4> Total Products: <%=storeDetails.length%></h4>
-   <h4> Manger name : <%= storeDetails[0].firstname!='undefined' ? storeDetails[0].firstname:'No manager'%></h4><br><br>
-  <table class="store__table">
-    <thead>
-      <th>Id</th>
-      <th>Products Name</th>
-      <th>Stock</th>
-      <th>Sku Id</th>
-      <th>Cost</th>
-      <th>Descripation</th>
-    </thead>
-    <tbody>
-      <%for (let i=0 ; i < storeDetails.length ; i++){%>
-        <tr>
-          <td>
-            <%=storeDetails[i].id%>
-          </td>
-          <td>
-            <%=storeDetails[i].product_name%>
-          </td>
-          <td>
-            <%=storeDetails[i].stock%>
-          </td>
-          <td>
-            <%=storeDetails[i].sku_id%>
-          </td>
-          <td>
-            <%=storeDetails[i].cost%>
-          </td>
-          <td>
-            <%=storeDetails[i].description%>
-          </td>
-        </tr>
-        <%}%>
-    </tbody>
-  </table>
-  </div>
+  <%- include('../components/navigation',{data})%>
+    <div class="div-second">
+      <div class="container p-3">
+        <div class="row ">
+          <div class="col p-5">
+            <h3>Store View</h3>
+            <div class="grid" id="grid">
+              <table class="table table-hover" id="table">
+                <thead class="table-light" id="thead">
+                </thead>
+                <tbody id="tbody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <section class="d-flex justify-content-center" id="paggination">
+        <%- include('../components/pagginationComponent')%>
+      </section>
+    </div>
+    <script src="js/commonFunction/commonFunction.js"></script>
+    <script src="js/store/storeDetails.js"></script>
 </body>
+
 </html>
