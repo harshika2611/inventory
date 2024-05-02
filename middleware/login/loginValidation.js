@@ -4,7 +4,7 @@ function loginFormValidation(req, res, next) {
   for (let key in loginDetails) {
     switch (key) {
       case 'email':
-        const regexemail = /^(?!.{51})[a-z0-9-_.+]+@[a-z0-9]+[a-z0-9-.]*\.[a-z0-9]{2,9}/;
+        const regexemail = /^(?!.{255})[a-z0-9-_.+]+@[a-z0-9]+[a-z0-9-.]*\.[a-z0-9]{2,9}/;
 
         if (loginDetails[key].length === 0) {
           loginError[key] = '* require';

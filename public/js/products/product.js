@@ -81,22 +81,8 @@ async function submitbtn() {
   }
 }
 
-async function allFetch() {
-  if (document.getElementById('storageComboIn') != null) {
-    let storage = document.getElementById('storageCombo').value;
-    url = `/api/products?storage=${storage}`;
-  }
-
-  paggination(url);
-}
-
 async function getProducts() {
-  const storageOptionos = await generateWarehousesDropDown(1, true);
-  if (document.getElementById('storageCombo') != null) {
-    document.getElementById('storageCombo').innerHTML = storageOptionos;
-  }
-  paggination('/api/products');
-  allFetch();
+  await paggination('/api/products');
 }
 getProducts();
 

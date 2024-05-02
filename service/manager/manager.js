@@ -106,24 +106,24 @@ WHERE
   }
 };
 
-const checkUpdateManagerService = async (body) => {
-  try {
-    const sql0 = `select email from users where email=? and id != ?`;
-    const [result] = await connection.execute(sql0, [body.email, body.id]);
-    return result;
-  } catch (error) {
-    logger.logError(`Error`, error);
-    throw error;
-  }
-};
+// const checkUpdateManagerService = async (body) => {
+//   try {
+//     const sql0 = `select email from users where email=? and id != ?`;
+//     const [result] = await connection.execute(sql0, [body.email, body.id]);
+//     return result;
+//   } catch (error) {
+//     logger.logError(`Error`, error);
+//     throw error;
+//   }
+// };
 
 const updateManagerService = async (otp, body) => {
   try {
-    const sql1 = `update users set firstname=?,lastname=?,email=? where id=?;`;
+    console.log(body);
+    const sql1 = `update users set firstname=?,lastname=? where id=?;`;
     const [result] = await connection.execute(sql1, [
       body.firstname,
       body.lastname,
-      body.email,
       body.id,
     ]);
 
@@ -196,7 +196,6 @@ const deleteManagerService = async (id) => {
 module.exports = {
   cityComboService,
   deleteManagerService,
-  checkUpdateManagerService,
   getPerticularManagerService,
   storeComboServices,
   insertManagerDetail,

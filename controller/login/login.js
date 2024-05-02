@@ -133,7 +133,7 @@ const getLink = async (req, res) => {
       const timer = user[0][0]?.updated_at;
       if (timer) {
         const expeireTimer = new Date(
-          new Date(timer).getTime() + 2 * 3600000
+          new Date(timer).getTime() + 5 * 3600000
         ).toTimeString();
         const newtime = new Date().toTimeString();
         if (newtime < expeireTimer) {
