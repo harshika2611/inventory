@@ -28,23 +28,23 @@ async function fetching() {
     <td>${data.product_name}</td>
     <td>${data.Category}</td>
     <td> <input type="text" class="form-control editQuantity" name="editQuantity${data.id}" id="editQuantity${data.id}" onkeyup="enableSave(${data.id})" value="${data.quantity}"></td>
-		<td>${data.UnitPrice}</td> 
+		<td><select name="orderType${data.order_type}" class=" form-select dropdown-toggle orderType" id="orderType${data.id}" onchange="enableSave(${data.id})">
+    </select> </td>
+    <td>${data.UnitPrice}</td> 
 		<td>${data.Total}</td>
     <td><a class='btn btn-secondary' id="${storage}edit${data.id}" disabled="true" onclick="">Save</a></td>
     <td><a class="btn btn-danger" id="${storage}delete${data.id}" onclick="updateOrder('delete', event,'product')">DELETE</a></td>
     </tr>`;
-    totalAmount += data.Total;
-    if (totalAmount > 0) {
-      document
-        .getElementById('generatePdf')
-        .setAttribute('onclick', `generatePdf(${orderId})`);
-    }
+    document
+      .getElementById('generatePdf')
+      .setAttribute('onclick', `generatePdf(${orderId})`);
   });
   document.getElementById(
     'totalAmount'
-  ).innerHTML = `Total Amount Is ${totalAmount}`;
+  ).innerHTML = `Total Amount Is ${result.totalAmount}`;
 
   document.getElementById('productListBody').innerHTML = body;
+  OrderTypeCombo();
 }
 
 function generatePdf(id) {
@@ -118,6 +118,8 @@ async function addProduct() {
             title: 'oops!!',
             text: result.msg,
             icon: 'error',
+            // toast: true,
+            // position:"top-end"
           });
         } else {
           fetching();
@@ -138,12 +140,13 @@ async function updateProduct(id) {
   if (document.getElementById('storageCombo') != null) {
     storage = document.getElementById('storageCombo').value;
   }
-  console.log(id);
   let quantity = document.getElementById(`editQuantity${id}`).value;
+  let orderType = document.getElementById(`orderType${id}`).value;
   if (quantity > 0 && quantity !== '' && !isNaN(parseInt(quantity))) {
     let updateProductobj = {};
     updateProductobj['quantity'] = quantity;
     updateProductobj['id'] = id;
+    updateProductobj['orderType'] = orderType;
     updateProductobj['storage'] = storage;
     let option = {
       method: 'POST',
@@ -158,12 +161,16 @@ async function updateProduct(id) {
             title: '',
             text: 'Successfully Updated',
             icon: 'success',
+            // toast: true,
+            // position: 'top-end',
           });
         } else {
           Swal.fire({
             title: 'Oops!!!',
             text: `Sorry! Max Available Stock is ${result.stock}`,
             icon: 'error',
+            // toast: true,
+            // position: 'top-end',
           });
         }
         await fetching();
@@ -178,5 +185,24 @@ async function updateProduct(id) {
     console.log(`editQuantity${id}`);
     obj[`editQuantity${id}`] = '*Enter Valid Input';
     errorShow(obj);
+  }
+}
+
+async function OrderTypeCombo() {
+  const response = await fetch(`/api/combos/orderType`);
+  const result = await response.json();
+  let str;
+  result.forEach((data) => {
+    str += `<option value="${data.opt_id}">${data.value}</option>`;
+  });
+  let arr = document.getElementsByClassName(`orderType`);
+  console.log(arr);
+  for (ele of arr) {
+    ele.innerHTML = str;
+    let type = ele.getAttribute('name').split('orderType')[1];
+    console.log(type);
+    for (op of ele) {
+      op.value == type ? op.setAttribute('selected', true) : '';
+    }
   }
 }

@@ -49,6 +49,32 @@ a {
   display: flex;
   flex-direction: column;
   gap: 20px;
+  align-items: center;
+}
+#productCategorySelect {
+  padding: 10px 0;
+}
+
+.productCustomizeOption {
+  height: 20px;
+  width: 20px;
+}
+
+.createDivCategory {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+#customizeOptionDiv {
+  display: flex;
+  gap: 20px;
+}
+
+#customizeOptionDiv div {
+  display: flex;
+  gap: 10px;
+  align-items: center;
 }
 .reportGenerate-div label {
   font-size: 20px;

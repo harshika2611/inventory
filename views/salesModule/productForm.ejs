@@ -5,25 +5,29 @@
         <input type="text" name="orderid" id="productOrderId" hidden />
       </td>
       <td>
-        <!-- <label for="category">Category : </label> -->
-        <select name="category" id="productCategory" tabindex="1" onchange="getProducts()"
-          class="productField category me-5 btn btn-secondary dropdown-toggle">
-          <option value="" selected hidden>Select Category</option>
-        </select>
+        <div class="form-floating fill2">
+          <select name="category" id="productCategory" tabindex="1" onchange="getProducts()"
+            class="productField category me-5 form-select dropdown-toggle">
+            <option value="" selected hidden>Select Category</option>
+          </select>
+          <label>Category</label>
+        </div>
       </td>
       <td>
-        <!-- <label for="product">Products : </label> -->
-        <select name="product" id="product" tabindex="2"
-          class="productField product me-5 btn btn-secondary dropdown-toggle">
-          <option value="" selected hidden>Select category first</option>
-        </select>
+        <div class="form-floating fill2">
+          <select name="product" id="product" tabindex="2"
+            class="productField product me-5 form-select dropdown-toggle">
+            <option value="" selected hidden>Select category first</option>
+          </select>
+          <label>Product</label>
+        </div>
       </td>
       <td>
-        <!-- <label for="orderType" class="insertLabels ms-5">Type : </label> -->
-        <select name="ordertype" tabindex="3" class=" btn btn-secondary dropdown-toggle" id="orderType">
-          <option value="8">Sales</option>
-          <option value="9">Return</option>
-        </select>
+        <div class="form-floating fill2">
+          <select name="ordertype" tabindex="3" class=" form-select dropdown-toggle orderType"  id="orderType">
+          </select>
+          <label>Order Type</label>
+        </div>
       </td>
       <td>
         <input type="number" name="quantity" tabindex="4" id="quantity" placeholder="Quantity....."

@@ -57,3 +57,8 @@ th {
 .fill2 {
   margin-left: 1%;
 }
+
+#error{
+  text-align: center;
+  font-size: large;
+}

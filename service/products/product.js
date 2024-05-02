@@ -33,7 +33,6 @@ const getProduct = async (product, order, field) => {
     return await connection.execute(sql);
   }
 };
-
 const updateProduct = async (body, payload) => {
   const [result] = await connection.execute(
     `select * from product_master where id=?;`,

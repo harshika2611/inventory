@@ -31,14 +31,12 @@
               <%}%>
                 <div class="form-floating fill2">
                   <select name="payment_status" class="form-select" aria-label="select" id="payment"
-                    onchange="salesFilter(this.value)">
-                    <option value="pending" selected>Pending</option>
-                    <option value="paid">Paid</option>
-                  </select>
+                    onchange="paymentFilter()"></select>
                   <label for="floatingPaymentStatus">Payment</label>
                 </div>
           </div>
           <div class="grid">
+            <p id="error"></p>
             <table class="table table-hover">
               <thead class="table-light" id="thead"></thead>
               <tbody id="tbody"></tbody>
