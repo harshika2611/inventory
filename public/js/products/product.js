@@ -192,20 +192,23 @@ function dataTableGrid(product, startIndex) {
       createEditButton.setAttribute('type', 'button');
       createEditButton.textContent = 'Edit';
       createEditButton.setAttribute('class', 'btn btn-success');
-      const createDeleteTd = document.createElement('td');
-      createDeleteTd.setAttribute('id', `${element.id}`);
-      const createDeleteButton = document.createElement('button');
-      createDeleteButton.textContent = 'Delete';
-      createDeleteButton.setAttribute('class', 'btn btn-danger');
-      createDeleteButton.setAttribute('id', `${element.id}`);
-      createDeleteButton.setAttribute('type', 'button');
-      createDeleteButton.setAttribute('onclick', 'deleteProduct(this)');
-      createDeleteTd.appendChild(createDeleteButton);
+
       achor.appendChild(createEditButton);
       createEditTd.appendChild(achor);
       createTr.appendChild(createViewTd);
       createTr.appendChild(createEditTd);
-      createTr.appendChild(createDeleteTd);
+      if (roleId == 4) {
+        const createDeleteTd = document.createElement('td');
+        createDeleteTd.setAttribute('id', `${element.id}`);
+        const createDeleteButton = document.createElement('button');
+        createDeleteButton.textContent = 'Delete';
+        createDeleteButton.setAttribute('class', 'btn btn-danger');
+        createDeleteButton.setAttribute('id', `${element.id}`);
+        createDeleteButton.setAttribute('type', 'button');
+        createDeleteButton.setAttribute('onclick', 'deleteProduct(this)');
+        createDeleteTd.appendChild(createDeleteButton);
+        createTr.appendChild(createDeleteTd);
+      }
     } else if (element['is_delete'] == 1) {
       let actionTd = document.createElement('td');
       actionTd.setAttribute('colspan', 2);
