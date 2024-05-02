@@ -221,10 +221,10 @@
 
         switch (obj.type_id) {
           case 20:
-            text = `A <a href="/productinfo?id=${obj.description.split('-')[0]}">product</a> has ran out of stock.`;
+            text = `A <a href="/productView?id=${obj.description.split('-')[0]}">product</a> has ran out of stock.`;
             break;
           case 21:
-            text = `A <a href="/productinfo?id=${obj.description.split('-')[0]}">product</a> is nearing stock out.`;
+            text = `A <a href="/productView?id=${obj.description.split('-')[0]}">product</a> is nearing stock out.`;
             break;
         }
 
