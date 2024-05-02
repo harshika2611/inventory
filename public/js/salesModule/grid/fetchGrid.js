@@ -2,7 +2,6 @@ const colmap = new Map([
   ['id', 'ID'],
   ['firstname', 'FirstName'],
   ['lastname', 'LastName'],
-  ['id', 'ID'],
   ['amount', 'Amount'],
   ['shipping_address', 'ShippingAddress'],
   ['payment_status', 'PaymentStatus'],
@@ -18,9 +17,7 @@ async function fetching(offset) {
     storage = document.getElementById('storageCombo').value;
   }
   url = `/salesorder?storage=${storage}`;
-  // if (offset != ''||offset) {
   url = url + offset;
-  // }
   paggination(url);
 }
 
@@ -31,7 +28,6 @@ function dataTableGrid(result) {
     document.getElementById('error').innerHTML = 'No Data Found!!!';
     document.getElementById('thead').innerHTML = '';
     document.getElementById('tbody').innerHTML = '';
-
   } else {
     document.getElementById('error').innerHTML = '';
     for (let key in result[0]) {
@@ -55,6 +51,10 @@ function dataTableGrid(result) {
 
     let body = ``;
     result.forEach((data) => {
+      let d = new Date(data.order_date);
+      let dtOffset = new Date(
+        d.setMinutes(d.getMinutes() - d.getTimezoneOffset())
+      );
       body += `<tr>
         <td scope="row">${data.id}</td>
         <td>${data.firstname}</td>
@@ -63,9 +63,10 @@ function dataTableGrid(result) {
 				<td>${data.type == 8 ? 'Sales' : 'Return'}</td>
         <td>${data.shipping_address}</td>
         <td>${data.payment_status == 10 ? 'Pending' : 'Paid'}</td>
-        <td>${data.order_date.split('T')[0]}</td>
-        ${data.is_delete == 0
-          ? `<td><a class="btn btn-outline-primary" onclick="viewOrder(${data.id})">View</a></td><td>
+        <td>${dtOffset.toISOString().split('T')[0]}</td>
+        ${
+          data.is_delete == 0
+            ? `<td><a class="btn btn-outline-primary" onclick="viewOrder(${data.id})">View</a></td><td>
       <a class='btn btn-success' id=${data.storage_id}edit${data.id} onclick="updateOrder('edit',event,'order')">EDIT</a></td><td>
        <a class="btn btn-danger" id=${data.storage_id}delete${data.id} onclick="updateOrder('delete',event,'order')">DELETE</a></td>
         `

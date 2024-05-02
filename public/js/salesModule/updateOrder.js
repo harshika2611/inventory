@@ -28,6 +28,7 @@ function updateOrderForm(result, id) {
       op.setAttribute('selected', true);
     }
   }
-  date.value = result[0].order_date.split('T')[0];
+  let d = new Date(result[0].order_date);
+  let dtOffset = new Date(d.setMinutes(d.getMinutes() - d.getTimezoneOffset()));
+  date.value = dtOffset.toISOString().split('T')[0];
 }
-// we will use grid fetch function for edit and delete

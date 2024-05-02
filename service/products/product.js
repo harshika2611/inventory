@@ -22,22 +22,25 @@ const getProductDetailsService = async (productId) => {
   return await connection.execute(sql, [productId]);
 };
 
-const getProduct = async ( order, field) => {
-
-    let sql = `SELECT 
+const getProduct = async (req,order, field) => {
+  const orderBy = new Map([
+    ['id', 'product_master.id']
+  ]);
+  let sql = `SELECT 
     product_master.id,
-    product_name AS Productname,
+    product_master.product_name AS Productname,
     sku_id AS SKUid,
     option_master.value AS Category,
     cost AS Cost,
     description AS Description,
+    ${req.user.roleId == 5?('(select stock from products_details where products_details.product_id = product_master.id and storage_id ='+req.user.storageId+' ) as quantity,'):''}
     product_master.is_delete
 FROM
     product_master
         LEFT JOIN
-    option_master ON product_master.category_id = option_master.id ORDER BY ${field} ${order};`;
+    option_master ON product_master.category_id = option_master.id
+ ORDER BY ${field} ${order};`;
     return await connection.execute(sql);
-  
 };
 const updateProduct = async (body, payload) => {
   const [result] = await connection.execute(
@@ -117,8 +120,9 @@ const deleteMainProductService = async (id) => {
     is_delete = ?
     WHERE
         id = ?`;
-
     const [result] = await connection.execute(sql, [1, id]);
+    const [data] = await connection.execute(`update products_details set is_delete = 1 where product_id = ?`, [id]);
+    logger.info(data)
     return result;
   } catch (error) {
     logger.logError(`Error`, error);
