@@ -3,6 +3,7 @@ let url = new URL(window.location.href);
 function addManager() {
   const customerForm = document.getElementById('myForm');
   customerForm.style.display = 'block';
+  customerForm.style.overflow = 'hidden';
   document.getElementById('submitBtn').innerHTML = 'Submit';
   document.getElementById('filter').style = `filter: blur(2px);`;
   document.getElementById('head').style = `filter: blur(2px);`;

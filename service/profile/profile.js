@@ -9,14 +9,10 @@ async function viewProfileQuery(id) {
         lastname,
         dob,
         email,
-        option_master.value as role,
+        role_id as role,
         img_path
       from
         users
-          inner join
-        option_master
-          on
-        users.role_id = option_master.id
       where
         users.id = ?;
     `;
