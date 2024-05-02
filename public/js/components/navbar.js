@@ -32,7 +32,7 @@ function hideLoader() {
   document.body.style.overflow = 'unset';
 }
 
-const navHover = () => {
+window.onload = navHover = () => {
   const path = window.location.pathname.split('/')[1];
   console.log(path);
   if (path == 'purchaseOrder' || path == 'purchaseHistory') {
@@ -52,4 +52,3 @@ const navHover = () => {
     document.getElementById(`nav${path}`).classList.add('width-100-hover');
   }
 };
-navHover();

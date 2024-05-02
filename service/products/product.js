@@ -5,9 +5,9 @@ const getProductDetailsService = async (productId) => {
   const sql = `
     SELECT
       pm.id,
-      product_master.product_name as productname,
-      product_master.sku_id as skuid,
-      product_master.category_id as categoryId,
+      pm.product_name as productname,
+      pm.sku_id as skuid,
+      pm.category_id as categoryId,
       pm.cost,
       pm.description,
       pm.is_delete as productDeleted
@@ -22,14 +22,12 @@ const getProductDetailsService = async (productId) => {
   return await connection.execute(sql, [productId]);
 };
 
-const getProduct = async (product, order, field) => {
-  let Query =
-    'SELECT product_master.id,product_name AS Productname,sku_id AS SKUid,option_master.value AS Category,cost AS Cost,description AS Description,product_master.is_delete FROM product_master LEFT JOIN option_master ON product_master.category_id = option_master.id';
-  if (product.length > 0) {
-    let sql = `${Query} where product_master.id=?`;
-    return await connection.execute(sql, [product]);
+const getProduct = async (storage, order, field) => {
+  if (storage) {
+    let sql = `SELECT product_master.id,product_name AS Productname,sku_id AS SKUid,option_master.value AS Category,cost AS Cost,description AS Description,product_master.is_delete FROM product_master LEFT JOIN option_master ON product_master.category_id = option_master.id left join products_details on products_details product_id=product_master.idwhere product_master.id=? and products_details.storage_id=? `;
+    return await connection.execute(sql, [product, storage]);
   } else {
-    let sql = `${Query} ORDER BY ${field} ${order};`;
+    let sql = `SELECT product_master.id,product_name AS Productname,storage_space_master.name, sku_id AS SKUid,option_master.value AS Category,cost AS Cost,description AS Description,product_master.is_delete FROM product_master LEFT JOIN option_master ON product_master.category_id = option_master.id left join products_details on products_details.product_id=product_master.id left join storage_space_master on storage_space_master.id=products_details.storage_id  ORDER BY ${field} ${order};`;
     return await connection.execute(sql);
   }
 };
