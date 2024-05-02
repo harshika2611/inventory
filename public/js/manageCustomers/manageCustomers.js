@@ -9,7 +9,6 @@ function getCustomers() {
 }
 
 function dataTableGrid(customerArray, startIndex) {
-  // console.log(customerArray);
   //-----div contain table
   //-----old exist table remove
   const oldTable = document.getElementById('managecustomer__table');
@@ -133,6 +132,25 @@ function dataTableGrid(customerArray, startIndex) {
   }
 }
 
+function resetCustomerForm() {
+  //---old field value clear
+  const customerForm = document.getElementById("customerForm");
+  const inputTag = customerForm.querySelectorAll('.customerInput');
+  for (let element of inputTag) {
+    element.value = '';
+  }
+
+  const stateSelectCombo = document.getElementById("stateSelectCombo");
+  if (stateSelectCombo) {
+    stateSelectCombo.selectedIndex = 0;
+  }
+
+  const citySelectCombo = document.getElementById("citySelectCombo");
+  if (citySelectCombo) {
+    citySelectCombo.innerHTML = "";
+  }
+}
+
 function closeForm() {
   document.getElementById('myForm').style.display = 'none';
 
@@ -142,6 +160,8 @@ function closeForm() {
   allSpan.forEach((element) => {
     element.remove();
   });
+  //---old filed reset
+  resetCustomerForm();
 }
 
 //----delete customer details
@@ -160,7 +180,6 @@ async function deleteCustomerDetails(customer) {
       }
     );
     hideLoader();
-    console.log(response.status);
     try {
       if (!response.ok) {
         throw new Error('Unable To Delete Customer');

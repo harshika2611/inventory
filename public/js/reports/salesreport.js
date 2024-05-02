@@ -1,7 +1,7 @@
 const showProduct = () => {
   window.location = `/salesReportallProducts`;
 };
-console.log(document.readyState);
+
 const getData = async (
   api,
   tableHeader,

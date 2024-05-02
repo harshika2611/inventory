@@ -123,8 +123,7 @@ const showData = () => {
   document.getElementById('orderTableHead').innerHTML = header
     .map(
       (e) =>
-        `<th class="text-center">${
-          e == 'Order_Id' ? 'NO' : e.replace('_', ' ')
+        `<th class="text-center">${e == 'Order_Id' ? 'NO' : e.replace('_', ' ')
         }</th>`
     )
     .join('');

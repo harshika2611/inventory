@@ -79,7 +79,6 @@ function dataTableGrid(result) {
 }
 async function paymentFilter() {
   let paymentStatus = document.getElementById('payment').value;
-  console.log(paymentStatus == '');
   if (paymentStatus == '') {
     // let arr = dataArray
     paggination(null, dataArray);
@@ -87,7 +86,6 @@ async function paymentFilter() {
     filteredResult = dataArray.filter((ele) => {
       return ele.payment_status == paymentStatus;
     });
-    console.log(filteredResult);
     paggination(null, filteredResult);
   }
 }
@@ -224,7 +222,7 @@ function searchFilter() {
         ele.order_date.includes(searchbar)
       );
     });
-    console.log(filteredResult);
+    // console.log(filteredResult);
     paggination(null, filteredResult);
   }
 }

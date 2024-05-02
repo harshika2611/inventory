@@ -1,4 +1,4 @@
-async function updateOrder(type, event, page,orderType) {
+async function updateOrder(type, event, page, orderType) {
   let deleteModal;
   let url = '';
   let editModalName;
@@ -26,9 +26,9 @@ async function updateOrder(type, event, page,orderType) {
   }
 }
 
-async function fetchDelete(id, page,storage,orderType) {
+async function fetchDelete(id, page, storage, orderType) {
   let url = '';
-console.log(orderType);
+
   switch (page) {
     case 'order':
       url = 'deleteSalesOrder';
@@ -46,8 +46,8 @@ function modelHide(modelName) {
   bootstrap.Modal.getInstance(document.getElementById(`${modelName}`)).hide();
 }
 
-async function deleteOrder(id, page,storage,orderType) {
-  await fetchDelete(id, page,storage,orderType);
+async function deleteOrder(id, page, storage, orderType) {
+  await fetchDelete(id, page, storage, orderType);
   modelHide('deleteModal');
   fetching();
 }

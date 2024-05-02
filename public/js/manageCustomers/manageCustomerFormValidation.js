@@ -5,7 +5,6 @@ function manageCustomerFormValidation(customerFormData) {
   for (let key in customerFormData) {
     switch (key) {
       case "firstname":
-        // console.log(key + " " + customerFormData[key]);
         if (customerFormData[key].length === 0) {
           customerFormErrorObject[key] = "* require";
         } else if (customerFormData[key].trim().length === 0 && customerFormData[key] !== "") {
@@ -16,8 +15,6 @@ function manageCustomerFormValidation(customerFormData) {
         break;
 
       case "lastname":
-        // console.log(key + " " + customerFormData[key]);
-
         if (customerFormData[key].length === 0) {
           customerFormErrorObject[key] = "* require";
         } else if (customerFormData[key].trim().length === 0 && customerFormData[key] !== "") {
@@ -28,8 +25,6 @@ function manageCustomerFormValidation(customerFormData) {
         break;
 
       case "email":
-        // console.log(key + " " + customerFormData[key]);
-
         const regexemail = /^(?!.{255})[a-z0-9-_.+]+@[a-z0-9]+[a-z0-9-.]*\.[a-z0-9]{2,9}/;
         // const regexemail = /^[a-z0-9]+@[a-z]+\.[a-z]{2,3}$/;
         if (customerFormData[key].length === 0) {
@@ -42,8 +37,6 @@ function manageCustomerFormValidation(customerFormData) {
         break;
 
       case "phonenumber":
-        // console.log(key + " " + customerFormData[key]);
-
         if (customerFormData[key].length === 0) {
           customerFormErrorObject[key] = "* require";
         } else if ((isNaN(customerFormData[key]) || customerFormData[key].length !== 10 || customerFormData[key].trim().length === 0) && customerFormData[key] !== "") {
@@ -54,8 +47,6 @@ function manageCustomerFormValidation(customerFormData) {
         break;
 
       case "address":
-        // console.log(key + " " + customerFormData[key]);
-
         if (customerFormData[key].trim().length === 0 && customerFormData[key] !== "") {
           customerFormErrorObject[key] = "* Please Enter Address Not Only Space";
         } else {
@@ -64,8 +55,6 @@ function manageCustomerFormValidation(customerFormData) {
         break;
 
       case "zipcode":
-        // console.log(key + " " + customerFormData[key]);
-
         if (customerFormData[key].length === 0) {
           customerFormErrorObject[key] = "* require";
         } else if (isNaN(customerFormData[key]) || customerFormData[key].trim().length === 0) {
@@ -76,8 +65,6 @@ function manageCustomerFormValidation(customerFormData) {
         break;
 
       case "state":
-        // console.log(key + " " + customerFormData[key]);
-
         const stateSelectCombo = document.getElementById("stateSelectCombo");
 
         if (stateSelectCombo.selectedIndex < 1) {
@@ -88,8 +75,6 @@ function manageCustomerFormValidation(customerFormData) {
         break;
 
       case "city":
-        // console.log(key + " " + customerFormData[key]);
-
         const citySelectCombo = document.getElementById("citySelectCombo");
 
         if (citySelectCombo.selectedIndex < 1) {

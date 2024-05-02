@@ -370,7 +370,7 @@ async function generateReport() {
 
       if (response.status === 200) {
         const pdfResponse = await response.json();
-        console.log(pdfResponse.pdfName);
+        // console.log(pdfResponse.pdfName);
 
         const customizeOptionDiv =
           document.getElementById('customizeOptionDiv');

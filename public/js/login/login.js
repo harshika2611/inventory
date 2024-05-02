@@ -18,10 +18,11 @@ async function submitbtn() {
   try {
     const data = formData('form');
     const loginValidation = loginFormValidation(data);
-
+    console.log(data);
     if (Object.keys(loginValidation).length > 0) {
       //----client side validation error
       errorShow(loginValidation);
+      console, log(loginValidation);
     } else {
       const response = await fetch('/', {
         method: 'post',

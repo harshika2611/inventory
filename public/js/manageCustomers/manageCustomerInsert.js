@@ -1,5 +1,6 @@
 //---------addnew customer
 async function addNewCustomer() {
+
   const customerForm = document.getElementById('myForm');
   customerForm.style.display = 'block';
   document.getElementById('submitButton').innerHTML = 'Submit';
@@ -7,18 +8,11 @@ async function addNewCustomer() {
     .getElementById('submitButton')
     .setAttribute('onclick', `submitCustomerDetails()`);
 
+  //---old field value clear
+  resetCustomerForm();
+
   getAllState('stateSelectCombo'); //second parameter those state we need to selected
 
-  //---old field value clear
-  const inputTag = customerForm.querySelectorAll('.customerInput');
-  for (let element of inputTag) {
-    element.value = '';
-  }
-
-  const selectTag = customerForm.getElementsByTagName('select');
-  for (let element of selectTag) {
-    element.selectedIndex = 0;
-  }
 }
 
 async function submitCustomerDetails() {
@@ -54,6 +48,7 @@ async function submitCustomerDetails() {
         customerForm.style.display = 'none';
         getCustomers();
         messagePopUp(responseMessage.message);
+        resetCustomerForm();
       }
     } catch (error) {
       console.log(error);

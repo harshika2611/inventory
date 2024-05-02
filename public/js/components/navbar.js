@@ -34,7 +34,7 @@ function hideLoader() {
 
 navHover = () => {
   const path = window.location.pathname.split('/')[1];
-  console.log(path);
+  // console.log(path);
   if (path == 'purchaseOrder' || path == 'purchaseHistory') {
     document.getElementById(`navpurchase`).classList.add('width-100-hover');
     document.getElementById(`submenu1`).classList.remove('collapse-horizontal');
@@ -44,7 +44,6 @@ navHover = () => {
     document.getElementById(`submenu2`).classList.remove('collapse-horizontal');
     document.getElementById(`submenu2`).classList.add('show');
   } else if (path.toLowerCase().includes('report')) {
-    console.log(path.toLowerCase().includes('report'));
     document.getElementById(`navreport`).classList.add('width-100-hover');
     document.getElementById(`submenu3`).classList.remove('collapse-horizontal');
     document.getElementById(`submenu3`).classList.add('show');
