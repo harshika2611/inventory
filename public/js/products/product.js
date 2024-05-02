@@ -178,15 +178,6 @@ function dataTableGrid(product, startIndex) {
       }
     }
     if (element['is_delete'] == 0) {
-      const createViewTd = document.createElement('td');
-      const achor0 = document.createElement('a');
-      achor0.setAttribute('href', `/productView?id=${element.id}`);
-      const createViewButton = document.createElement('button');
-      createViewButton.setAttribute('type', 'button');
-      createViewButton.setAttribute('class', 'btn btn-outline-primary');
-      createViewButton.textContent = 'View';
-      createViewTd.appendChild(achor0);
-      achor0.appendChild(createViewButton);
       const createEditTd = document.createElement('td');
       const achor = document.createElement('a');
       achor.setAttribute('href', `/productinfo?id=${element.id}`);
@@ -204,13 +195,16 @@ function dataTableGrid(product, startIndex) {
       if (roleId == 4) {
         const createViewTd = document.createElement('td');
         const achor0 = document.createElement('a');
+        achor0.setAttribute('href', `/productView?id=${element.id}`);
         const createViewButton = document.createElement('button');
         createViewButton.setAttribute('type', 'button');
         createViewButton.setAttribute('class', 'btn btn-outline-primary');
         createViewButton.textContent = 'View';
         createViewTd.appendChild(achor0);
         achor0.appendChild(createViewButton);
+
         createTr.appendChild(createViewTd);
+
         const createDeleteTd = document.createElement('td');
         createDeleteTd.setAttribute('id', `${element.id}`);
         const createDeleteButton = document.createElement('button');
@@ -224,7 +218,7 @@ function dataTableGrid(product, startIndex) {
       }
     } else if (element['is_delete'] == 1) {
       let actionTd = document.createElement('td');
-      actionTd.setAttribute('colspan', 2);
+      actionTd.setAttribute('colspan', 3);
       actionTd.innerHTML = `<b><i>DELETED</i></b>`;
       createTr.appendChild(actionTd);
     }
