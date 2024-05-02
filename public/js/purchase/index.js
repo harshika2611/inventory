@@ -192,6 +192,7 @@ async function submitForm1(update = false) {
 }
 
 async function generateForm2() {
+  await getOrderDetails(orderId);
   const categoryData = await generateDropDown('productCategory');
 
   const root = document.getElementById('root');
