@@ -162,16 +162,17 @@ async function productGrid(req, res) {
     fields.forEach((ele) => {
       header.push(ele.name);
     });
-    
+
     let totalAmount = 0;
     rows.forEach((ele) => {
-      totalAmount = (ele.order_type == 8?totalAmount+ ele.Total:totalAmount-ele.Total);
+      totalAmount =
+        ele.order_type == 8 ? totalAmount + ele.Total : totalAmount - ele.Total;
     });
-    
+
     logger.info(totalAmount);
     let input2 = [totalAmount, req.query.orderId];
     let data = await updateAmount(input2);
-    res.json({ rows, header,totalAmount });
+    res.json({ rows, header, totalAmount });
   } catch (err) {
     logger.logError(err);
     logger.logError('not found');
@@ -204,9 +205,11 @@ async function deleteProduct(req, res) {
   try {
     req.body.quantity = 0;
     req.body.id = req.query.id;
+    req.body.orderType = req.query.orderType
     if (req.user.storageId == null) {
       req.user['storageId'] = req.query.storage;
     }
+console.log(req.query);
     let [flag, stock] = await updateProduct(req);
 
     if (flag == true) {

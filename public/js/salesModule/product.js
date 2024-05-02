@@ -8,7 +8,7 @@ async function fetching() {
   if (document.getElementById('storageCombo') != null) {
     storage = document.getElementById('storageCombo').value;
   }
-  let totalAmount = 0;
+
   productGridResult = result.rows; //to select one row
   let head = `<tr>`;
   result.header.forEach((ele) => {
@@ -33,7 +33,7 @@ async function fetching() {
     <td>${data.UnitPrice}</td> 
 		<td>${data.Total}</td>
     <td><a class='btn btn-secondary' id="${storage}edit${data.id}" disabled="true" onclick="">Save</a></td>
-    <td><a class="btn btn-danger" id="${storage}delete${data.id}" onclick="updateOrder('delete', event,'product')">DELETE</a></td>
+    <td><a class="btn btn-danger" id="${storage}delete${data.id}" onclick="updateOrder('delete', event,'product',${data.order_type})">DELETE</a></td>
     </tr>`;
     document
       .getElementById('generatePdf')
