@@ -12,11 +12,38 @@ function addManager() {
   getAllCity('state');
 }
 
+function resetManagerForm() {
+  const managerInputField = document.querySelectorAll(".managerInputField");
+  if (managerInputField.length > 0) {
+    for (let element of managerInputField) {
+      switch (element.name) {
+        case "email":
+          element.value = "";
+          element.disabled = false;
+          break;
+        default:
+          element.value = "";
+      }
+    }
+  }
+
+  const state = document.getElementById("state");
+  if (state) {
+    state.selectedIndex = 0;
+  }
+
+  const place = document.getElementById("place");
+  if (place) {
+    place.innerHTML = "";
+  }
+}
+
 function closeForm() {
   document.getElementById('myForm').style.display = 'none';
   document.getElementById('filter').style = 'none';
   document.getElementById('grid').style = 'none';
   document.getElementById('head').style = 'none';
+  resetManagerForm();
 }
 
 async function submitbtn() {
@@ -67,10 +94,11 @@ const getAllCity = async (id, name) => {
     option.innerHTML = '';
     option.innerHTML = `<option value="select here">Select City</option>`;
     store.forEach((element, index) => {
-      option.innerHTML += `<option value="${element.city_id}" 'selected="selected"'>${element.city_name}</option>`;
 
       if (name && element.city_name === name) {
-        option.selectedIndex = index + 1;
+        option.innerHTML += `<option value="${element.city_id}" selected>${element.city_name}</option>`;
+      } else {
+        option.innerHTML += `<option value="${element.city_id}">${element.city_name}</option>`;
       }
     });
   } catch (error) {
@@ -78,11 +106,15 @@ const getAllCity = async (id, name) => {
   }
 };
 
-const getAllStore = async (state, name, cityName) => {
+const getAllStore = async (cityid, storename) => {
   try {
-    const stateId = state.id;
-    let index = document.getElementById('state').value;
-
+    let stateComboValue = document.getElementById('state');
+    let index;
+    if (stateComboValue.selectedIndex > 0) {
+      index = stateComboValue.value;
+    } else if (cityid && storename) {
+      index = cityid;
+    }
     let option = document.getElementById('place');
     showLoader();
     const response = await fetch(`/storeCombo/${index}`);
@@ -92,7 +124,12 @@ const getAllStore = async (state, name, cityName) => {
     option.innerHTML = '';
     option.innerHTML = `<option value="select here">Select Store</option>`;
     store.forEach((element) => {
-      option.innerHTML += `<option value="${element.id}">${element.name}</option>`;
+      if (storename && element.name === storename) {
+        console.log(storename);
+        option.innerHTML += `<option value="${element.id}" selected>${element.name}</option>`;
+      } else {
+        option.innerHTML += `<option value="${element.id}">${element.name}</option>`;
+      }
     });
   } catch (error) {
     console.log(error);
@@ -210,6 +247,7 @@ async function updateManager(manager) {
   const response = await fetch(url);
   const managerDetails = await response.json();
   hideLoader();
+
   try {
     if (!response.ok) {
       throw new Error('Error In Get Manager Details');
@@ -226,41 +264,15 @@ async function updateManager(manager) {
             break;
           case 'email':
             element.value = managerDetails[0][key];
-            console.log(key);
-            console.log(document.getElementById(`${key}`).value, 'haahah');
             document.getElementById(`${key}`).disabled = true;
             break;
           case 'city_name':
-            //   const state = { id: 'state' };
-            await getAllCity('state', managerDetails[0].city_id);
-            let stateCombo = document.getElementById('state');
-            console.log(stateCombo, 'arr');
-            console.log(managerDetails[0].city_id.toString(), 'all');
-            const cityId = managerDetails[0].city_id;
-            console.log(cityId);
-            for (op of stateCombo) {
-              console.log(op.value);
-              //     console.log(op.value == cityId, 'whattttt');
-              if ((op.value = cityId)) {
-                cityId = op.value;
-                // op.setAttribute('selected', true);
-              } else {
-                op.setAttribute('selected', false);
-              }
-            }
+            await getAllCity('state', managerDetails[0].city_name);
             break;
+          case "name":
+            await getAllStore(managerDetails[0].city_id, managerDetails[0].name);
         }
-        // getAllStore(
-        //   state,
-        //   managerDetails[0].location,
-        //   managerDetails[0].city_id
-        // );
       }
-      // console.log(managerDetails[0]);
-      // getAllCity('state', managerDetails[0].city_id);
-      // const state = { id: 'state' };
-      // console.log(managerDetails[0].city_name);
-      // getAllStore(state, managerDetails[0].city_name, managerDetails[0].name);
     }
   } catch (error) {
     console.log(error);
