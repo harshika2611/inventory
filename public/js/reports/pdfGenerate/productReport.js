@@ -77,7 +77,7 @@ async function generateReportOutOfStockProduct() {
           const createA = document.createElement('a');
           createA.setAttribute(
             'href',
-            `${window.location.origin}/uploads/pdfFile/${pdfResponse.pdfName}`
+            `${window.location.origin}/uploads/pdfFiles/${pdfResponse.pdfName}`
           );
           createA.setAttribute('download', `${pdfResponse.pdfName}`);
           createA.setAttribute('id', 'pdfDownloadButton');

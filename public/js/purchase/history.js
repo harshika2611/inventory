@@ -41,15 +41,14 @@ async function dataTableGrid(records) {
       head += `<th scope="col" class="align-middle">
       <span class="d-inline-flex flex-row align-items-center">
         ${key}
-        ${
-          mapping[key]
-            ? `
+        ${mapping[key]
+          ? `
         <span class="d-inline-flex flex-column align-items-center ms-2">
           <span style="cursor: pointer" onclick="paggination('api/purchases?key=${mapping[key]}&value=asc&${queryString}')">^</span>
           <span style="rotate: 180deg; cursor: pointer" onclick="paggination('api/purchases?key=${mapping[key]}&value=desc&${queryString}')">^</span>
         </span>
         `
-            : ``
+          : ``
         }
       </span>
     </th>`;

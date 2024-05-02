@@ -1,6 +1,7 @@
 const logger = require('../../logs.js');
 const multer = require("multer");
 const path = require('path');
+const fs = require('fs');
 
 const csvFilter = (req, file, cb) => {
   if (file.mimetype.includes("csv")) {

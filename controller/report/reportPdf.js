@@ -73,7 +73,7 @@ async function generatePdf(data, reportType) {
 
   // To reflect CSS used for screens instead of print
   // await page.emulateMediaType('screen');
-  const pdfPath = path.join(__dirname, `../../public/uploads/pdfFile/${Date.now()}-${reportType}.pdf`);  //path of pdf
+  const pdfPath = path.join(__dirname, `../../public/uploads/pdfFiles/${Date.now()}-${reportType}.pdf`);  //path of pdf
 
   await page.pdf({
     path: pdfPath,
@@ -93,7 +93,7 @@ async function generatePdf(data, reportType) {
 
 //this function is use ful when user download pdf then pdf unlink
 function unlinkProductPdf(pdfNameObject) {
-  const pdfPath = path.join(__dirname, `../../public/uploads/pdfFile/${pdfNameObject.pdfName}`);  //path of pdf
+  const pdfPath = path.join(__dirname, `../../public/uploads/pdfFiles/${pdfNameObject.pdfName}`);  //path of pdf
   if (fs.existsSync(pdfPath)) {
     fs.unlinkSync(pdfPath);
   }
