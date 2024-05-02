@@ -24,12 +24,14 @@ const dataTableGrid = (pagginationArray, startIndex) => {
     let header = Object.keys(pagginationArray[0]);
     let data = changesInApi(pagginationArray);
     productHeader.innerHTML = header
-      .map((e) => `<th>${e.replace('_', ' ')} </th>`)
+      .map((e) => `<th class="text-center">${e.replace('_', ' ')} </th>`)
       .join('');
     productData.innerHTML = data
       .map(
         (e) => `<tr>
-      ${header.map((h) => `<td>${e[h]}</td>`).join('')}</tr>`
+      ${header
+        .map((h) => `<td class="text-center">${e[h] ? e[h] : '-'}</td>`)
+        .join('')}</tr>`
       )
       .join('');
   }

@@ -1,9 +1,8 @@
 let productHeader = document.getElementById('productHeader');
 let productData = document.getElementById('productData');
-let input = window.location.pathname.split('/')[2];
-
+let input = window.location.search.split('?')[1].split('=')[1];
 const fetchData = async () => {
-  let api = await fetch(`/api/orderreport/allproduct/${input}`);
+  let api = await fetch(`/api/orderreport/allproduct?id=${input}`);
   let rows = await api.json();
   dataTableGrid(rows);
 };
@@ -15,12 +14,14 @@ const dataTableGrid = (pagginationArray, startIndex) => {
   } else {
     let header = Object.keys(pagginationArray[0]);
     productHeader.innerHTML = header
-      .map((e) => `<th>${e.replace('_', ' ')} </th>`)
+      .map((e) => `<th class="text-center">${e.replace('_', ' ')} </th>`)
       .join('');
     productData.innerHTML = pagginationArray
       .map(
         (e) => `<tr>
-      ${header.map((h) => `<td>${e[h] ? e[h] : '-'}</td>`).join('')}</tr>`
+      ${header
+        .map((h) => `<td class="text-center">${e[h] ? e[h] : '-'}</td>`)
+        .join('')}</tr>`
       )
       .join('');
   }
