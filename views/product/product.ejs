@@ -30,9 +30,12 @@
               <div class="newAdd">
                 <p class="btn btn-outline-dark filter1" onclick="addProduct()">Add New</p>
               </div>
+              <div>
+                <p class="btn btn-outline-dark filter1" onclick="addCategory()">Add category</p>
+              </div>
             </div>
           </div>
-          <div class="main2" id="main2">
+          <div class=" main2" id="main2">
             <div class="filter3">
               <input class="form-control form2 mr-sm-2 w-60" type="search" id="search" placeholder="Search"
                 onkeyup="search()" aria-label="Search" />
@@ -49,9 +52,10 @@
         </div>
         </div>
         <%- include('../form/productForm')%>
-          <section class="d-flex justify-content-center" id="paggination">
-            <%- include('../components/pagginationComponent')%>
-          </section>
+          <%- include('../form/category')%>
+            <section class="d-flex justify-content-center" id="paggination">
+              <%- include('../components/pagginationComponent')%>
+            </section>
 
       </section>
       <script src="js/commonFunction/commonFunction.js"></script>

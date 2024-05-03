@@ -48,34 +48,6 @@ async function submitbtn() {
         errorShow(errorObject);
       }
     }
-    if (Object.keys(productValidation).length > 0) {
-      //----client side validation error
-      errorShow(productValidation);
-    } else {
-      url = `/products`;
-      showLoader();
-      const response = await fetch(url, {
-        method: 'post',
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
-        body: JSON.stringify(data),
-      });
-      hideLoader();
-      if (response.status == 200) {
-        alert('product added');
-        window.location = `/products`;
-      }
-      if (response.status === 409) {
-        document.getElementById('error').innerHTML = 'product already exist';
-        document.getElementById('error').style.color = 'red';
-      }
-      if (response.status === 400) {
-        const errorObject = await response.json();
-        errorShow(errorObject);
-      }
-    }
   } catch (error) {
     console.log(error);
   }

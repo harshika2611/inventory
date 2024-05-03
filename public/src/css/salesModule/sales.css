@@ -56,7 +56,9 @@ th {
 #paggination {
   display: flex;
   justify-content: center;
+  margin-top: 4rem;
 }
+
 .fill2 {
   margin-left: 1%;
 }

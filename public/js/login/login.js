@@ -18,11 +18,9 @@ async function submitbtn() {
   try {
     const data = formData('form');
     const loginValidation = loginFormValidation(data);
-    console.log(data);
     if (Object.keys(loginValidation).length > 0) {
       //----client side validation error
       errorShow(loginValidation);
-      console, log(loginValidation);
     } else {
       const response = await fetch('/', {
         method: 'post',
@@ -35,14 +33,14 @@ async function submitbtn() {
 
       if (response.status == 200) {
         Swal.fire({
-          icon: "success",
-          title: "Welcome Inventory Management...",
+          icon: 'success',
+          title: 'Welcome Inventory Management...',
           showConfirmButton: false,
-          timer: 1000
+          timer: 1000,
         }).then((result) => {
           window.location = `/dashboard`;
         });
-        document.body.classList.remove('swal2-height-auto')
+        document.body.classList.remove('swal2-height-auto');
       }
       if (response.status == 401) {
         error = 'invalid email or password';

@@ -672,8 +672,11 @@ router.get(
 
 //---------------------Products Module---------------------
 const {
+  categoryRender,
+  categoryListing,
   deleteMainProduct,
   manageProduct,
+  manageCategory,
   productListing,
   getApiproduct,
   getProductDetails,
@@ -687,6 +690,17 @@ const {
   productView,
 } = require('../controller/product/productInfo.js');
 const manageProductFormValidation = require('../middleware/product/productValidation.js');
+
+router.get(
+  '/category',
+  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+  categoryRender
+);
+
+router.post('/category', manageCategory);
+
+router.get('/api/category', categoryListing);
+
 router.get(
   '/products',
   passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
@@ -700,6 +714,7 @@ router.post(
   manageProductFormValidation,
   manageProduct
 );
+
 router.get(
   '/productInfo',
   passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
