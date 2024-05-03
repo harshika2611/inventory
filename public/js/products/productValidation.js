@@ -37,7 +37,7 @@ function manageProductFormValidation(data) {
         }
         break;
 
-      case 'Price':
+      case 'cost':
       
         if (data[key].length === 0) {
           productFormError[key] = '* require';

@@ -1,4 +1,7 @@
 const {
+  categoryListingService,
+  categoryInsertService,
+  checkcategorySevice,
   deleteMainProductService,
   getProduct,
   checkProductSevice,
@@ -8,8 +11,44 @@ const {
 } = require('../../service/products/product');
 const logger = require('../../logs');
 
-const productListing = (req, res) => {
+const productListing = async (req, res) => {
   res.render('product/product', { data: req.user });
+};
+
+const manageCategory = async (req, res) => {
+  try {
+
+    const result = await checkcategorySevice(req.body);
+
+    if (result.length) {
+      return res.status(409).send('category already exist');
+    } else {
+      try {
+        const cate1 = await categoryInsertService(req.body);
+        return res.status(200).send('Category successfully added');
+      } catch (error) {
+        logger.logError(error);
+        return res.status(500).json({ message: 'can`t fetch user controller' });
+      }
+    }
+  } catch (error) {
+    logger.logError(error);
+    res.status(500).json({ error: 'can`t fetch user controller' });
+  }
+};
+
+const categoryRender = async (req, res) => {
+  res.render('product/category', { data: req.user });
+};
+
+const categoryListing = async (req, res) => {
+  try {
+    const data = await categoryListingService(req.body);
+    return res.json(data);
+  } catch (error) {
+    logger.logError(error);
+    res.status(500).json({ error: 'can`t fetch user controller' });
+  }
 };
 
 const manageProduct = async (req, res) => {
@@ -38,7 +77,7 @@ const getApiproduct = async (req, res) => {
   try {
     let order = req.query.order || 'asc';
     let field = req.query.field || 'id';
-    const [rows] = await getProduct(req,order, field);
+    const [rows] = await getProduct(req, order, field);
     return res.json(rows);
   } catch (err) {
     logger.logError(err);
@@ -100,7 +139,7 @@ const deleteMainProduct = async (req, res) => {
   try {
     const id = req.params.id;
     const result = await deleteMainProductService(id);
-    
+
     if (result.affectedRows > 0) {
       return res.status(200).json({ message: 'Product is deleted' });
     } else {
@@ -113,6 +152,9 @@ const deleteMainProduct = async (req, res) => {
 };
 
 module.exports = {
+  categoryRender,
+  categoryListing,
+  manageCategory,
   deleteMainProduct,
   productListing,
   getApiproduct,

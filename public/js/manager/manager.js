@@ -13,28 +13,28 @@ function addManager() {
 }
 
 function resetManagerForm() {
-  const managerInputField = document.querySelectorAll(".managerInputField");
+  const managerInputField = document.querySelectorAll('.managerInputField');
   if (managerInputField.length > 0) {
     for (let element of managerInputField) {
       switch (element.name) {
-        case "email":
-          element.value = "";
+        case 'email':
+          element.value = '';
           element.disabled = false;
           break;
         default:
-          element.value = "";
+          element.value = '';
       }
     }
   }
 
-  const state = document.getElementById("state");
+  const state = document.getElementById('state');
   if (state) {
     state.selectedIndex = 0;
   }
 
-  const place = document.getElementById("place");
+  const place = document.getElementById('place');
   if (place) {
-    place.innerHTML = "";
+    place.innerHTML = '';
   }
 }
 
@@ -94,7 +94,6 @@ const getAllCity = async (id, name) => {
     option.innerHTML = '';
     option.innerHTML = `<option value="select here">Select City</option>`;
     store.forEach((element, index) => {
-
       if (name && element.city_name === name) {
         option.innerHTML += `<option value="${element.city_id}" selected>${element.city_name}</option>`;
       } else {
@@ -137,12 +136,12 @@ const getAllStore = async (cityid, storename) => {
 };
 
 function dataTableGrid(manager, startIndex) {
-  if (manager.length === 0) {
-    document.getElementById('error').innerHTML = 'No data Found!!!';
-    document.getElementById('th').innerHTML = '';
-  } else {
-    document.getElementById('error').innerHTML = '';
-  }
+  // if (manager.length === 0) {
+  //   document.getElementById('error').innerHTML = 'No data Found!!!';
+  //   document.getElementById('th').innerHTML = '';
+  // } else {
+  //   document.getElementById('error').innerHTML = '';
+  // }
   const table = document.getElementById('thead');
   const tableBody = document.getElementById('tbody');
   let createTh = document.createElement('th');
@@ -275,8 +274,11 @@ async function updateManager(manager) {
           case 'city_name':
             await getAllCity('state', managerDetails[0].city_name);
             break;
-          case "name":
-            await getAllStore(managerDetails[0].city_id, managerDetails[0].name);
+          case 'name':
+            await getAllStore(
+              managerDetails[0].city_id,
+              managerDetails[0].name
+            );
         }
       }
     }

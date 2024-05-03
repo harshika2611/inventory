@@ -1,5 +1,6 @@
 const connection = require('../../config/connection.js');
 const logger = require('../../logs.js');
+const { cookieExtractor } = require('../../middleware/auth.js');
 
 const getProductDetailsService = async (productId) => {
   const sql = `
@@ -134,15 +135,51 @@ const updateProduct = async (body, payload) => {
   // );
 };
 
-const checkProductSevice = async (body) => {
+const checkcategorySevice = async (body) => {
   try {
-    // console.log(body);
-    const sql = `select product_name,sku_id from product_master where product_name=? and sku_id=?`;
-    const [ans] = await connection.execute(sql, [body.productname, body.skuid]);
-    // console.log(ans);
+    console.log(body);
+    const sql = `select \`key\` from option_master where \`key\`=? and select_id=7;`;
+    const [ans] = await connection.execute(sql, [body.categoryname]);
     return ans;
   } catch (error) {
-    console.log(error);
+    logger.logError(`Error`, error);
+    throw error;
+  }
+};
+
+const categoryInsertService = async (body) => {
+  try {
+    const sql1 = `insert into option_master(select_id,\`key\`,\`value\`) values (?,?,?)`;
+    const [ans1] = await connection.execute(sql1, [
+      7,
+      body.categoryname,
+      body.categoryname,
+    ]);
+    console.log(ans1);
+  } catch (error) {
+    logger.logError(`Error`, error);
+    throw error;
+  }
+};
+
+const categoryListingService = async (body) => {
+  try {
+    const sql2 = `select id,\`key\`,\`value\` from option_master where select_id=?`;
+    const [result] = await connection.execute(sql2, [7]);
+    return result;
+  } catch (error) {
+    logger.logError(`Error`, error);
+    throw error;
+  }
+};
+
+const checkProductSevice = async (body) => {
+  try {
+    const sql = `select product_name,sku_id from product_master where product_name=? and sku_id=?`;
+    const [ans] = await connection.execute(sql, [body.productname, body.skuid]);
+
+    return ans;
+  } catch (error) {
     logger.logError(`Error`, error);
     throw error;
   }
@@ -161,7 +198,6 @@ const insertProductService = async (body) => {
     // console.log(ans.insertId, 'insert');
     return ans.insertId;
   } catch (error) {
-    console.log(error);
     logger.logError(`Error`, error);
     throw error;
   }
@@ -188,6 +224,9 @@ const deleteMainProductService = async (id) => {
 };
 
 module.exports = {
+  categoryListingService,
+  categoryInsertService,
+  checkcategorySevice,
   deleteMainProductService,
   getProduct,
   updateProduct,
