@@ -1,9 +1,9 @@
-const addCategory = () => {
+function addCategory() {
   const categoryForm = document.getElementById('myForm1');
   categoryForm.style.display = 'block';
 };
 
-const closeForm = async () => {
+const closeFormCategory = () => {
   document.getElementById('myForm1').style.display = 'none';
 };
 
@@ -18,10 +18,10 @@ const submitbtn1 = async () => {
       },
       body: JSON.stringify(data),
     });
-    console.log(data);
     if (response.status === 200) {
       alert('Category Added');
-      await closeForm();
+      closeFormCategory();
+      fetchcategory();
     }
     if (response.status === 409) {
       document.getElementById('error').innerHTML = 'Category already exist';
@@ -40,7 +40,6 @@ fetchcategory();
 const dataTableGrid = (category, startIndex) => {
   document.getElementById('cards').innerHTML = '';
   const cards = document.getElementById('cards');
-
   for (const element of category) {
     const card1 = document.createElement('div');
     card1.setAttribute('class', 'card1');
@@ -49,7 +48,18 @@ const dataTableGrid = (category, startIndex) => {
     const cardId = document.createElement('h5');
     const cardIn = document.createElement('div');
     cardIn.setAttribute('class', 'cardIn');
-    const buttonDiv = document.createElement('div');
+    const createDelete = document.createElement('td');
+    createDelete.setAttribute('class', 'managecustomer__actionbutton');
+    const createDeleteButton = document.createElement('img');
+    createDeleteButton.setAttribute(
+      'src',
+      'src/assets/manageCustomer/delete.svg'
+    );
+    createDeleteButton.setAttribute('onclick', 'deleteCategory(this)');
+    createDeleteButton.setAttribute('id', `${element.id}`);
+    createDeleteButton.setAttribute('width', '25');
+    createDeleteButton.setAttribute('height', '25');
+    createDeleteButton.style.cursor = "pointer";
 
     for (const key in element) {
       if (key == 'id') {
@@ -61,8 +71,40 @@ const dataTableGrid = (category, startIndex) => {
       cardTitle.textContent = element['value'];
       cardIn.appendChild(cardTitle);
     }
-    cardIn.appendChild(buttonDiv);
+    cardIn.appendChild(createDeleteButton);
     card1.appendChild(cardIn);
     cards.appendChild(card1);
   }
 };
+
+
+async function deleteCategory(category) {
+
+  const responseDelete = await fetch('/api/deleteCategory', {
+    method: 'POST',
+    body: JSON.stringify({ categoryId: category.id }),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+
+  try {
+    if (!responseDelete.ok) {
+      throw new Error("Can't delete category");
+    }
+
+    if (responseDelete.status === 200) {
+      const responseMessage = await responseDelete.json();
+      messagePopUp(responseMessage.message);
+      fetchcategory();
+    }
+  } catch (error) {
+    const responseMessage = await responseDelete.json();
+    if (responseDelete.status === 400) {
+      messagePopUp(responseMessage.message);
+    }
+    if (responseDelete.status === 500) {
+      messagePopUp(responseMessage.message);
+    }
+  }
+}

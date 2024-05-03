@@ -28,124 +28,133 @@
                 </a>
               </div>
               <% if(data?.roleId==4){ %>
-                <div class="btn my-2 navigationDiv" id="navmanager">
-                  <a href="/manager" class="d-flex align-items-center justify-content-start nav-link"><img
+                <div class="btn my-2 navigationDiv" id="navcategory">
+                  <a href="/category" class="d-flex align-items-center justify-content-start nav-link"><img
                       src="icons/manager.svg" alt="img" width="30" height="20" />
-                    <span class="fs-6 mx-2 text-light">Managers</span>
+                    <span class="fs-6 mx-2 text-light">Category</span>
                   </a>
                 </div>
                 <% } %>
-                  <div class="btn my-2 navigationDiv" id="navmanageCustomers">
-                    <a href="/manageCustomers" class="d-flex align-items-center justify-content-start nav-link"><img
-                        src="icons/customer.svg" alt="img" width="30" height="20" />
-                      <span class="fs-6 mx-2 text-light">Customers</span>
-                    </a>
-                  </div>
-                  <div class="btn my-2 navigationDiv" id="navmanageSuppliers">
-                    <a href="/manageSuppliers" class="d-flex align-items-center justify-content-start nav-link"><img
-                        src="icons/supplier.svg" alt="img" width="30" height="20" />
-                      <span class="fs-6 mx-2 text-light">Suppliers</span>
-                    </a>
-                  </div>
                   <% if(data?.roleId==4){ %>
-                    <div class="btn my-2 navigationDiv" id="navstore">
-                      <a href="/store" class="d-flex align-items-center justify-content-start nav-link"><img
-                          src="icons/warehouses.svg" alt="img" width="30" height="20" />
-                        <span class="fs-6 mx-2 text-light">Warehouses</span>
+                    <div class="btn my-2 navigationDiv" id="navmanager">
+                      <a href="/manager" class="d-flex align-items-center justify-content-start nav-link"><img
+                          src="icons/manager.svg" alt="img" width="30" height="20" />
+                        <span class="fs-6 mx-2 text-light">Managers</span>
                       </a>
                     </div>
                     <% } %>
-                      <div class="btn my-2" id="navpurchase" data-bs-toggle="collapse" data-bs-target="#submenu1"
-                        aria-expanded="false" aria-controls="submenu1">
-                        <div class="d-flex">
-                          <a class="d-flex align-items-center justify-content-start nav-link">
-                            <img src="icons/purchase.svg" alt="img" width="30" height="20" />
-                            <span class="fs-6 mx-2 text-light">Purchase</span>
-                          </a>
-                          <img src="icons/downarrow.svg" alt="img" class="float-end mt-1" width="25" height="15" />
-                        </div>
-                        <div class="collapse collapse-horizontal" id="submenu1">
-                          <ul class="dis-flex nav flex-row ms-1">
-                            <li>
-                              <a href="/purchaseOrder"
-                                class="d-flex align-items-center justify-content-start nav-link text-dark navigationSubDiv"><img
-                                  src="icons/order.svg" alt="img" width="30" height="20" />
-                                <span class="fs-6 mx-2 text-light">Order</span>
-                              </a>
-                            </li>
-                            <li>
-                              <a href="/purchaseHistory"
-                                class="d-flex align-items-center justify-content-start nav-link text-dark navigationSubDiv"><img
-                                  src="icons/history.svg" alt="img" width="30" height="20" />
-                                <span class="fs-6 mx-2 text-light">History</span>
-                              </a>
-                            </li>
-                          </ul>
-                        </div>
+                      <div class="btn my-2 navigationDiv" id="navmanageCustomers">
+                        <a href="/manageCustomers" class="d-flex align-items-center justify-content-start nav-link"><img
+                            src="icons/customer.svg" alt="img" width="30" height="20" />
+                          <span class="fs-6 mx-2 text-light">Customers</span>
+                        </a>
                       </div>
-                      <div class="btn my-2" id="navsales" data-bs-toggle="collapse" data-bs-target="#submenu2"
-                        aria-expanded="false">
-                        <div class="d-flex">
-                          <a class="d-flex align-items-center justify-content-start nav-link">
-                            <img src="icons/sales.svg" alt="img" width="30" height="20" />
-                            <span class="fs-6 mx-2 text-light">Sales</span>
-                            <img src="icons/downarrow.svg" alt="img" class="float-end mt-1" width="25" height="15" />
-                          </a>
-                        </div>
-                        <div class="collapse collapse-horizontal" id="submenu2">
-                          <ul class="dis-flex nav flex-row ms-1">
-                            <li>
-                              <a href="/salesNewOrder"
-                                class="d-flex align-items-center justify-content-start nav-link text-dark navigationSubDiv"><img
-                                  src="icons/order.svg" alt="img" width="30" height="20" />
-                                <span class="fs-6 mx-2 text-light">Order</span>
-                              </a>
-                            </li>
-                            <li>
-                              <a href="/salesHistory"
-                                class="d-flex align-items-center justify-content-start nav-link text-dark navigationSubDiv"><img
-                                  src="icons/history.svg" alt="img" width="30" height="20" />
-                                <span class="fs-6 mx-2 text-light">History</span>
-                              </a>
-                            </li>
-                          </ul>
-                        </div>
+                      <div class="btn my-2 navigationDiv" id="navmanageSuppliers">
+                        <a href="/manageSuppliers" class="d-flex align-items-center justify-content-start nav-link"><img
+                            src="icons/supplier.svg" alt="img" width="30" height="20" />
+                          <span class="fs-6 mx-2 text-light">Suppliers</span>
+                        </a>
                       </div>
-                      <div class="btn my-2" id="navreport" data-bs-toggle="collapse" data-bs-target="#submenu3"
-                        aria-expanded="false">
-                        <div class="d-flex">
-                          <a class="d-flex align-items-center justify-content-start nav-link ">
-                            <img src="icons/sales.svg" alt="img" width="30" height="20" />
-                            <span class="fs-6 mx-2 text-light">Reports</span>
+                      <% if(data?.roleId==4){ %>
+                        <div class="btn my-2 navigationDiv" id="navstore">
+                          <a href="/store" class="d-flex align-items-center justify-content-start nav-link"><img
+                              src="icons/warehouses.svg" alt="img" width="30" height="20" />
+                            <span class="fs-6 mx-2 text-light">Warehouses</span>
                           </a>
-                          <img src="icons/downarrow.svg" alt="img" class="float-end mt-1" width="25" height="15" />
                         </div>
-                        <div class="collapse collapse-horizontal" id="submenu3">
-                          <ul class="dis-flex nav flex-row ms-1">
-                            <li>
-                              <a href="/purchaseReport"
-                                class="d-flex align-items-center justify-content-start nav-link text-dark navigationSubDiv"><img
-                                  src="icons/purchase.svg" alt="img" width="30" height="20" />
-                                <span class="fs-6 mx-2 text-light">Purchase </span>
+                        <% } %>
+                          <div class="btn my-2" id="navpurchase" data-bs-toggle="collapse" data-bs-target="#submenu1"
+                            aria-expanded="false" aria-controls="submenu1">
+                            <div class="d-flex">
+                              <a class="d-flex align-items-center justify-content-start nav-link">
+                                <img src="icons/purchase.svg" alt="img" width="30" height="20" />
+                                <span class="fs-6 mx-2 text-light">Purchase</span>
                               </a>
-                            </li>
-                            <li>
-                              <a href="/salesReport"
-                                class="d-flex align-items-center justify-content-start nav-link text-dark navigationSubDiv"><img
-                                  src="icons/history.svg" alt="img" width="30" height="20" />
+                              <img src="icons/downarrow.svg" alt="img" class="float-end mt-1" width="25" height="15" />
+                            </div>
+                            <div class="collapse collapse-horizontal" id="submenu1">
+                              <ul class="dis-flex nav flex-row ms-1">
+                                <li>
+                                  <a href="/purchaseOrder"
+                                    class="d-flex align-items-center justify-content-start nav-link text-dark navigationSubDiv"><img
+                                      src="icons/order.svg" alt="img" width="30" height="20" />
+                                    <span class="fs-6 mx-2 text-light">Order</span>
+                                  </a>
+                                </li>
+                                <li>
+                                  <a href="/purchaseHistory"
+                                    class="d-flex align-items-center justify-content-start nav-link text-dark navigationSubDiv"><img
+                                      src="icons/history.svg" alt="img" width="30" height="20" />
+                                    <span class="fs-6 mx-2 text-light">History</span>
+                                  </a>
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+                          <div class="btn my-2" id="navsales" data-bs-toggle="collapse" data-bs-target="#submenu2"
+                            aria-expanded="false">
+                            <div class="d-flex">
+                              <a class="d-flex align-items-center justify-content-start nav-link">
+                                <img src="icons/sales.svg" alt="img" width="30" height="20" />
                                 <span class="fs-6 mx-2 text-light">Sales</span>
+                                <img src="icons/downarrow.svg" alt="img" class="float-end mt-1" width="25"
+                                  height="15" />
                               </a>
-                            </li>
-                            <li>
-                              <a href="/reportGenerate"
-                                class="d-flex align-items-center justify-content-start nav-link text-dark navigationSubDiv"><img
-                                  src="icons/history.svg" alt="img" width="30" height="20" />
-                                <span class="fs-6 mx-2 text-light">Customize</span>
+                            </div>
+                            <div class="collapse collapse-horizontal" id="submenu2">
+                              <ul class="dis-flex nav flex-row ms-1">
+                                <li>
+                                  <a href="/salesNewOrder"
+                                    class="d-flex align-items-center justify-content-start nav-link text-dark navigationSubDiv"><img
+                                      src="icons/order.svg" alt="img" width="30" height="20" />
+                                    <span class="fs-6 mx-2 text-light">Order</span>
+                                  </a>
+                                </li>
+                                <li>
+                                  <a href="/salesHistory"
+                                    class="d-flex align-items-center justify-content-start nav-link text-dark navigationSubDiv"><img
+                                      src="icons/history.svg" alt="img" width="30" height="20" />
+                                    <span class="fs-6 mx-2 text-light">History</span>
+                                  </a>
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+                          <div class="btn my-2" id="navreport" data-bs-toggle="collapse" data-bs-target="#submenu3"
+                            aria-expanded="false">
+                            <div class="d-flex">
+                              <a class="d-flex align-items-center justify-content-start nav-link ">
+                                <img src="icons/sales.svg" alt="img" width="30" height="20" />
+                                <span class="fs-6 mx-2 text-light">Reports</span>
                               </a>
-                            </li>
-                          </ul>
-                        </div>
-                      </div>
+                              <img src="icons/downarrow.svg" alt="img" class="float-end mt-1" width="25" height="15" />
+                            </div>
+                            <div class="collapse collapse-horizontal" id="submenu3">
+                              <ul class="dis-flex nav flex-row ms-1">
+                                <li>
+                                  <a href="/purchaseReport"
+                                    class="d-flex align-items-center justify-content-start nav-link text-dark navigationSubDiv"><img
+                                      src="icons/purchase.svg" alt="img" width="30" height="20" />
+                                    <span class="fs-6 mx-2 text-light">Purchase </span>
+                                  </a>
+                                </li>
+                                <li>
+                                  <a href="/salesReport"
+                                    class="d-flex align-items-center justify-content-start nav-link text-dark navigationSubDiv"><img
+                                      src="icons/history.svg" alt="img" width="30" height="20" />
+                                    <span class="fs-6 mx-2 text-light">Sales</span>
+                                  </a>
+                                </li>
+                                <li>
+                                  <a href="/reportGenerate"
+                                    class="d-flex align-items-center justify-content-start nav-link text-dark navigationSubDiv"><img
+                                      src="icons/history.svg" alt="img" width="30" height="20" />
+                                    <span class="fs-6 mx-2 text-light">Customize</span>
+                                  </a>
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
             </div>
           </div>
         </div>

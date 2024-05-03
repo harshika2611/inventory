@@ -1,6 +1,7 @@
 const {
   categoryListingService,
   categoryInsertService,
+  deleteCategoryService,
   checkcategorySevice,
   deleteMainProductService,
   getProduct,
@@ -151,9 +152,27 @@ const deleteMainProduct = async (req, res) => {
   }
 };
 
+async function deleteCategory(req, res) {
+  try {
+    const id = req.body;
+    console.log(id);
+    const result = await deleteCategoryService(id.categoryId);
+
+    if (result.affectedRows > 0) {
+      return res.status(200).json({ message: 'Category is deleted' });
+    } else {
+      return res.status(404).json({ message: 'Something Went Wrong' });
+    }
+  } catch (error) {
+    logger.logError(error);
+    res.status(500).json({ message: 'Something Went Wrong' });
+  }
+}
+
 module.exports = {
   categoryRender,
   categoryListing,
+  deleteCategory,
   manageCategory,
   deleteMainProduct,
   productListing,
