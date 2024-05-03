@@ -13,7 +13,6 @@ function renderTimestamp(databaseDate) {
 
 async function viewProfile(req, res) {
   try {
-  
     const profileDetails = await viewProfileQuery(req?.user?.id);
     profileDetails[0][0].dob = renderTimestamp(profileDetails[0][0].dob);
     return res.render('./profile/view', {
@@ -30,7 +29,6 @@ async function viewProfile(req, res) {
 async function editProfile(req, res) {
   try {
     const profileDetails = await viewProfileQuery(req?.user?.id);
-    profileDetails[0][0].dob = renderTimestamp(profileDetails[0][0].dob);
     res.render('./profile/edit', { profileDetails, data: req.user });
   } catch (err) {
     logger.logError(err);

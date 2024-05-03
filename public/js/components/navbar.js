@@ -50,7 +50,7 @@ navHover = () => {
   } else if (path == 'productinfo' || path == 'productView') {
     document.getElementById(`navproducts`).classList.add('width-100-hover');
   } else {
-    document.getElementById(`nav${path}`).classList.add('width-100-hover');
+    document.getElementById(`nav${path}`)?.classList.add('width-100-hover');
   }
 };
 
