@@ -1,7 +1,13 @@
 let url = new URL(window.location.href);
 
+let allCategory = '';
+async function initial() {
+  allCategory = await getAllCategory();
+  document.getElementById('categoryFilter').innerHTML = allCategory;
+}
+initial();
 async function addProduct() {
-  getAllStore();
+  document.getElementById('category').innerHTML = allCategory;
   const customerForm = document.getElementById('myForm');
   customerForm.style.display = 'block';
   document.getElementById('submitBtn').innerHTML = 'Submit';
@@ -75,7 +81,7 @@ function dataTableGrid(product, startIndex) {
     'Category',
     'Cost',
     'Description',
-    roleId == 5 ? 'Quantity' : 'Total Quantity',
+    'Stock',
   ]) {
     if (key === 'id') {
       key = 'No.';
@@ -121,7 +127,7 @@ function dataTableGrid(product, startIndex) {
   for (const element of product) {
     let createTr = document.createElement('tr');
     tableBody.appendChild(createTr);
-    if (element.quantity < 10) {
+    if (element.Stock < 10) {
       createTr.classList.add('stockout');
     }
     for (const key in element) {
@@ -129,21 +135,24 @@ function dataTableGrid(product, startIndex) {
       if (key == 'id') {
         createTd.textContent = ++startIndex;
         createTr.appendChild(createTd);
-      } else if (key !== 'is_delete') {
+      } else if (key !== 'is_delete' && key !== 'categoryId') {
         createTd.textContent = element[key] == null ? '-' : element[key];
         createTr.appendChild(createTd);
       }
     }
     if (element['is_delete'] == 0) {
-      const createViewTd = document.createElement('td');
-      const achor0 = document.createElement('a');
-      achor0.setAttribute('href', `/productView?id=${element.id}`);
-      const createViewButton = document.createElement('button');
-      createViewButton.setAttribute('type', 'button');
-      createViewButton.setAttribute('class', 'btn btn-outline-primary');
-      createViewButton.textContent = 'View';
-      createViewTd.appendChild(achor0);
-      achor0.appendChild(createViewButton);
+      if (roleId == 4) {
+        const createViewTd = document.createElement('td');
+        const achor0 = document.createElement('a');
+        achor0.setAttribute('href', `/productView?id=${element.id}`);
+        const createViewButton = document.createElement('button');
+        createViewButton.setAttribute('type', 'button');
+        createViewButton.setAttribute('class', 'btn btn-outline-primary');
+        createViewButton.textContent = 'View';
+        createViewTd.appendChild(achor0);
+        achor0.appendChild(createViewButton);
+        createTr.appendChild(createViewTd);
+      }
       const createEditTd = document.createElement('td');
       const achor = document.createElement('a');
       achor.setAttribute('href', `/productinfo?id=${element.id}`);
@@ -159,16 +168,6 @@ function dataTableGrid(product, startIndex) {
 
       createTr.appendChild(createEditTd);
       if (roleId == 4) {
-        const createViewTd = document.createElement('td');
-        const achor0 = document.createElement('a');
-        achor0.setAttribute('href', `/productView?id=${element.id}`);
-        const createViewButton = document.createElement('button');
-        createViewButton.setAttribute('type', 'button');
-        createViewButton.setAttribute('class', 'btn btn-outline-primary');
-        createViewButton.textContent = 'View';
-        createViewTd.appendChild(achor0);
-        achor0.appendChild(createViewButton);
-        createTr.appendChild(createViewTd);
         const createDeleteTd = document.createElement('td');
         createDeleteTd.setAttribute('id', `${element.id}`);
         const createDeleteButton = document.createElement('button');
@@ -245,20 +244,36 @@ const search = () => {
   }
 };
 
-const getAllStore = async () => {
+async function getAllCategory() {
   try {
     showLoader();
     const response = await fetch('api/combos/productCategory');
     const data = await response.json();
     hideLoader();
     const store = data;
-    let option = document.getElementById('category');
-    option.innerHTML = '';
-    option.innerHTML = `<option value="select here">Select Category</option>`;
+    // let option = document.getElementById('category');
+    let str;
+    str = `<option value="">All</option>`;
     store.forEach((element) => {
-      option.innerHTML += `<option value="${element.opt_id}">${element.value}</option>`;
+      str += `<option value="${element.opt_id}">${element.value}</option>`;
     });
+    return str;
   } catch (error) {
     console.log(error);
+    return false;
   }
-};
+}
+
+function categoryFilter() {
+  category = document.getElementById('categoryFilter').value;
+  if (category === '') {
+    paggination(null, dataArray);
+  } else {
+    filteredResult = dataArray.filter((ele) => {
+      if (ele.categoryId == category) {
+        return ele;
+      }
+    });
+    paggination(null, filteredResult);
+  }
+}

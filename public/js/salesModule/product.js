@@ -1,3 +1,11 @@
+const colmap = new Map([
+  ['product_name', 'Product Name'],
+  ['Category', 'Category'],
+  ['quantity', 'Quantity'],
+  ['order_type', 'Order Type'],
+  ['Total', 'Total'],
+  ['UnitPrice', 'Unit Price'],
+]);
 
 let productGridResult;
 async function fetching() {
@@ -14,7 +22,7 @@ async function fetching() {
   let head = `<tr>`;
   result.header.forEach((ele) => {
     if (ele != 'id') {
-      head += `<th scope="col">${ele}</th>`;
+      head += `<th scope="col">${colmap.get(ele)}</th>`;
     }
   });
   head += `<th scope="col">EDIT</th>

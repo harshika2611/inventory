@@ -25,7 +25,7 @@ async function selectOrders(orderby, order, col, value, storageId) {
     customer_master.firstname,
     customer_master.lastname,
     sales_order.amount,
-		sales_order.type,
+		option_master.value as type,
     sales_order.shipping_address,
     sales_order.payment_status,
     sales_order.storage_id,
@@ -35,7 +35,7 @@ async function selectOrders(orderby, order, col, value, storageId) {
   from sales_order join customer_master
   on sales_order.customer_id = customer_master.id
   join
-    option_master ON  sales_order.payment_status=option_master.id
+    option_master ON  sales_order.type=option_master.id
   where ${col} = '${value}' and storage_id = ? order by ${orderby} ${order} ;`;
   try {
     return await connection.execute(sql, [storageId]);
@@ -154,7 +154,7 @@ async function updateProduct(req) {
 async function updateAmount(input) {
   try {
     return await connection.execute(
-      `update sales_order set amount = ? where id = ?;`,
+      `update sales_order set amount = ?,type = ? where id = ?;`,
       input
     );
   } catch (e) {
