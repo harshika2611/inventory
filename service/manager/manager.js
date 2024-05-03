@@ -119,7 +119,7 @@ WHERE
 
 const updateManagerService = async (otp, body) => {
   try {
-    console.log(body);
+    // console.log(body);
     const sql1 = `update users set firstname=?,lastname=? where id=?;`;
     const [result] = await connection.execute(sql1, [
       body.firstname,

@@ -85,7 +85,7 @@ async function updateProduct(req) {
   );
 
   let total_stock = 0;
-  console.log(prevQuantity[0].order_type, req.body.orderType);
+  // console.log(prevQuantity[0].order_type, req.body.orderType);
   //Sales To return
   if (prevQuantity[0].order_type == 8 && req.body.orderType == 9) {
     console.log('Sales To return');
