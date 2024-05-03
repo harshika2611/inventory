@@ -767,7 +767,6 @@ const {
   updateProfile,
 } = require('../controller/profile/profile.js');
 const { userProfileStorage } = require('../middleware/multer/multer.js');
-const upload = multer({ storage: userProfileStorage });
 
 router.get(
   '/profile',
@@ -782,7 +781,7 @@ router.get(
 router.post(
   '/profileEdit',
   passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
-  upload.single('newImage'),
+  userProfileStorage.single('newImage'),
   updateProfile
 );
 // router.post('/imageUpload',storeImage);

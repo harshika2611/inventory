@@ -50,7 +50,7 @@ async function getCombosDetails(req, res) {
 
 //this function is use ful when user download pdf then pdf unlink
 function unlinkProductPdf(pdfNameObject) {
-  const pdfPath = path.join(__dirname, `../../public/uploads/pdfFiles/${pdfNameObject.pdfName}`);  //path of pdf
+  const pdfPath = path.join(__dirname, `../../public/uploads/${pdfNameObject.folderName}/${pdfNameObject.pdfName}`);  //path of pdf
   if (fs.existsSync(pdfPath)) {
     fs.unlinkSync(pdfPath);
   }

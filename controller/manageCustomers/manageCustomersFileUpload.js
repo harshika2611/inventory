@@ -16,7 +16,7 @@ async function uploadFile(req, res) {
     if (req.fileError) {
       return res.status(400).json({ message: "Please Upload CSV File" });
     }
-
+    logger.info(req.file.filename);
     let filePath = path.join(__dirname, `../../public/uploads/csvFiles/${req.file.filename}`);
 
     /**first check file exist in folder or not it is extra handle if file upload in folder then this execute
@@ -68,7 +68,7 @@ async function uploadFile(req, res) {
               return res.status(400).json({ message: "Invalid Data In CSV File" });
             } else {
               const customerInsert = await insertCustomerFromFileQuery(customerDetails);
-              return res.status(200).json({ message: "Inserted" });
+              return res.status(200).json({ message: "Inserted", filePath: req.file.filename });
             }
           } catch (err) {
             return res.status(500).json({ message: "Something Went Wrong.." });

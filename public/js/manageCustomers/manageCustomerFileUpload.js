@@ -51,7 +51,6 @@ async function customerFileUpload() {
       body: formData,
     });
     hideLoader();
-
     try {
       if (!response.ok) {
         throw new Error('Cannot Send File');
@@ -65,6 +64,14 @@ async function customerFileUpload() {
         customerFileUploadForm.style.display = 'none';
         getCustomers();
         messagePopUp(responseMessage.message);
+
+        //socket implment for delete generated file
+        let socket = io();
+        socket.emit('unlinkProductPdf', {
+          pdfName: responseMessage.filePath,
+          folderName: "csvFiles"
+        });
+
         const importDataButton = document.querySelector('.importDataButton');
         importDataButton.innerHTML = 'Import Data';
         //select file value clear

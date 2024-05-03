@@ -1,5 +1,5 @@
 :root {
-  --reportpdfsection: #e8ebee;
+  --reportpdfsection: #f8fbff;
 }
 
 * {
@@ -84,7 +84,7 @@ a {
 #customizeOptionSelect,
 #storageDetails,
 #selectReportOption {
-  padding: 10px 0;
+  padding: 10px;
   border-radius: 6px;
   border: 1px solid #102f4b;
   background-color: white;
@@ -103,6 +103,7 @@ a {
   flex-direction: column;
   gap: 20px;
   padding: 20px;
+  /* background-color: #ffffff; */
   background-color: #ffffff;
   border-radius: 20px;
   width: 800px;

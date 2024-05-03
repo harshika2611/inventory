@@ -22,7 +22,7 @@ async function fetching(offset) {
 }
 
 let count = 1;
-function dataTableGrid(result) {
+function dataTableGrid(result, startIndex) {
   let head = `<tr>`;
   if (result.length === 0) {
     document.getElementById('error').innerHTML = 'No Data Found!!!';
@@ -64,13 +64,12 @@ function dataTableGrid(result) {
         <td>${data.shipping_address}</td>
         <td>${data.payment_status == 10 ? 'Pending' : 'Paid'}</td>
         <td>${dtOffset.toISOString().split('T')[0]}</td>
-        ${
-          data.is_delete == 0
-            ? `<td><a class="btn btn-outline-primary" onclick="viewOrder(${data.id})">View</a></td><td>
+        ${data.is_delete == 0
+          ? `<td><a class="btn btn-outline-primary" onclick="viewOrder(${data.id})">View</a></td><td>
       <a class='btn btn-success' id=${data.storage_id}edit${data.id} onclick="updateOrder('edit',event,'order')">EDIT</a></td><td>
        <a class="btn btn-danger" id=${data.storage_id}delete${data.id} onclick="updateOrder('delete',event,'order')">DELETE</a></td>
         `
-            : `<td colspan="3"><p  class="deleted">DELETED</p></td>`
+          : `<td colspan="3"><p  class="deleted">DELETED</p></td>`
         }</tr>`;
       startIndex++;
     });
@@ -157,6 +156,7 @@ async function viewOrder(id) {
             let socket = io();
             socket.emit('unlinkProductPdf', {
               pdfName: responsePdfName.pdfName,
+              folderName: "pdfFiles"
             });
             modal.hide();
           };
@@ -207,6 +207,7 @@ function pdfModelHide(id) {
     let socket = io();
     socket.emit('unlinkProductPdf', {
       pdfName: downloadInvoiceButton.download,
+      folderName: "pdfFiles"
     });
     downloadInvoiceButton.remove();
   }

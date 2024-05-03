@@ -6,8 +6,8 @@
   justify-content: end;
   display: flex;
 }
-.formHeader{
-	display: flex;
+.formHeader {
+  display: flex;
 }
 .filter {
   margin-right: 1%;
@@ -49,7 +49,7 @@
   margin-right: auto;
   width: auto;
 }
-th {
+.table th {
   background-color: #002f4b !important;
   color: white !important;
 }

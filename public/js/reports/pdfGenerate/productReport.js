@@ -98,6 +98,7 @@ async function generateReportOutOfStockProduct() {
               let socket = io();
               socket.emit('unlinkProductPdf', {
                 pdfName: pdfResponse.pdfName,
+                folderName: "pdfFiles"
               });
               //--reset
               const customizeOptionDiv =
