@@ -38,12 +38,18 @@ async function editProfile(req, res) {
 
 async function updateProfile(req, res) {
   try {
-    const result = await updateProfileQuery({
-      ...req.body,
-      id: req?.user?.id,
-      filename: req?.file?.filename,
-    });
-    await refreshToken(req, res);
+    if (req.fileError) {
+      return res.status(400).json({ message: req.fileError });
+    } else if (req.fileSizeError) {
+      return res.status(400).json({ message: req.fileSizeError });
+    } else {
+      const result = await updateProfileQuery({
+        ...req.body,
+        id: req?.user?.id,
+        filename: req?.file?.filename,
+      });
+      await refreshToken(req, res);
+    }
   } catch (error) {
     console.log(error);
     logger.logError(error);

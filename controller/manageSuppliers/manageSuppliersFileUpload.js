@@ -69,7 +69,7 @@ async function supplierUploadFile(req, res) {
               return res.status(400).json({ message: "Invalid Data In CSV File" });
             } else {
               const customerInsert = await insertSupplierFromFileQuery(supplierDetails);
-              return res.status(200).json({ message: "Inserted" });
+              return res.status(200).json({ message: "Inserted", filePath: req.file.filename });
             }
           } catch (err) {
             return res.status(500).json({ message: "Something Went Wrong.." });

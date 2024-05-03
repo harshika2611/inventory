@@ -54,7 +54,8 @@ async function viewPurchaseOrder(id) {
             //socket implment for delete generated file
             let socket = io();
             socket.emit('unlinkProductPdf', {
-              pdfName: responsePdfName.pdfName
+              pdfName: responsePdfName.pdfName,
+              folderName: "pdfFiles"
             });
             modal.hide();
           }
@@ -102,7 +103,8 @@ function pdfModelHide(id) {
     //socket implment for delete generated file
     let socket = io();
     socket.emit('unlinkProductPdf', {
-      pdfName: downloadInvoiceButton.download
+      pdfName: downloadInvoiceButton.download,
+      folderName: "pdfFiles"
     });
     downloadInvoiceButton.remove();
   }

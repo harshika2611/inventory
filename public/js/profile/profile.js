@@ -65,23 +65,48 @@ function profileFormValidation(data) {
   return profileError;
 }
 
-function submitbtn() {
-  try {
-    const data = formData('form');
-    const profileValidation = profileFormValidation(data);
+async function submitbtn() {
+  const data = formData('form');
+  const profileValidation = profileFormValidation(data);
 
-    if (Object.keys(profileValidation).length > 0) {
-      errorShow(profileValidation);
+  if (Object.keys(profileValidation).length > 0) {
+    errorShow(profileValidation);
 
-      // for (let key in profileValidation) {
-      //   const test = (document.getElementsByName(`${key}`)[0].value = '');
-      // }
+    // for (let key in profileValidation) {
+    //   const test = (document.getElementsByName(`${key}`)[0].value = '');
+    // }
+    return false;
+  } else {
+    return true;
+    //     const profileForm = document.getElementById("form");
+    //     const formData = new FormData(profileForm);
+    //     console.log(formData);
+    //     const response = await fetch("/profileEdit", {
+    //       method: 'POST',
+    //       body: formData
+    //     });
+    //     try {
+    //       if (!response.ok) {
+    //         throw new Error("Can't update profile");
+    //       }
 
-      return false;
-    } else {
-      return true;
-    }
-  } catch (error) {
-    console.log(error);
+    //       if (response.status === 200) {
+    //         const responseMessage = response.json();
+    //         messagePopUp(responseMessage.message);
+    //       }
+    //     } catch (error) {
+    //       const responseMessage = response.json();
+    //       if (response.status === 400) {
+    //         messagePopUp(responseMessage.message);
+    //       }
+
+    //       if (response.status === 500) {
+    //         messagePopUp(responseMessage.message);
+    //       }
+    //     }
+    //   }
+    // } catch (error) {
+    //   console.log(error);
+    // }
   }
 }

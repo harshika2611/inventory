@@ -397,6 +397,7 @@ async function generateReport() {
             let socket = io();
             socket.emit('unlinkProductPdf', {
               pdfName: pdfResponse.pdfName,
+              folderName: "pdfFiles"
             });
 
             //--reset

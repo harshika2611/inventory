@@ -74,7 +74,7 @@ const getProductDetailsAllService = async (productId, storageId, isAdmin) => {
   }
 };
 
-const getProduct = async (req,order, field) => {
+const getProduct = async (req, order, field) => {
 
   let sql = `SELECT 
     product_master.id,
@@ -84,12 +84,11 @@ const getProduct = async (req,order, field) => {
     option_master.value AS Category,
     cost AS Cost,
     description AS Description,
-    ${
-      req.user.roleId == 5
-        ? '(select stock from products_details where products_details.product_id = product_master.id and storage_id =' +
-          req.user.storageId +
-          ' ) as Stock,'
-        : '(select sum(stock) from products_details where products_details.product_id = product_master.id ) as Stock,'
+    ${req.user.roleId == 5
+      ? '(select stock from products_details where products_details.product_id = product_master.id and storage_id =' +
+      req.user.storageId +
+      ' ) as Stock,'
+      : '(select sum(stock) from products_details where products_details.product_id = product_master.id ) as Stock,'
     }
     product_master.is_delete
 FROM
@@ -97,7 +96,7 @@ FROM
         LEFT JOIN
     option_master ON product_master.category_id = option_master.id
  ORDER BY ${field} ${order};`;
-    return await connection.execute(sql);
+  return await connection.execute(sql);
 };
 const updateProduct = async (body, payload) => {
   const [result] = await connection.execute(
@@ -195,9 +194,9 @@ const insertProductService = async (body) => {
       body.skuid,
       body.category,
       body.cost,
+      body.cost,
       body.description,
     ]);
-    // console.log(ans.insertId, 'insert');
     return ans.insertId;
   } catch (error) {
     logger.logError(`Error`, error);

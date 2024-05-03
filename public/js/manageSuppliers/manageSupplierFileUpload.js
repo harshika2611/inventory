@@ -61,9 +61,17 @@ async function supplierFileUpload() {
         const supplierFileUploadForm = document.getElementById(
           'supplierFileUploadForm'
         );
+
         supplierFileUploadForm.style.display = 'none';
         getSuppliers();
         messagePopUp(responseMessage.message);
+
+        //socket implment for delete generated file
+        let socket = io();
+        socket.emit('unlinkProductPdf', {
+          pdfName: responseMessage.filePath,
+          folderName: "csvFiles"
+        });
 
         const importDataButton = document.querySelector('.importDataButton');
         importDataButton.innerHTML = 'Import Data';
