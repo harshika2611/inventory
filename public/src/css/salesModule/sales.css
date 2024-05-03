@@ -15,7 +15,7 @@
   align-items: center;
 }
 .grid {
-  height: 60dvh;
+  height: 45dvh;
   overflow: scroll;
   margin-top: 5%;
 }
@@ -56,7 +56,6 @@ th {
 #paggination {
   display: flex;
   justify-content: center;
-  margin-top: 4rem;
 }
 
 .fill2 {

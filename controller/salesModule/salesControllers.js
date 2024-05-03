@@ -163,14 +163,30 @@ async function productGrid(req, res) {
       header.push(ele.name);
     });
 
+    let orderType;
+    let hasReturn = false;
+    let hasSales = false;
+    // console.log(rows);
+    rows.forEach((ele) => {
+      if (ele.order_type == 8) {
+        hasSales = true;
+      } else if (ele.order_type == 9) {
+        hasReturn = true;
+      }
+    });
+    if (hasReturn && hasSales) {
+      orderType = 22;
+    } else{
+      hasReturn == true ? orderType = 9 : orderType = 8;
+    }
     let totalAmount = 0;
     rows.forEach((ele) => {
       totalAmount =
         ele.order_type == 8 ? totalAmount + ele.Total : totalAmount - ele.Total;
     });
 
-    logger.info(totalAmount);
-    let input2 = [totalAmount, req.query.orderId];
+    // logger.info(totalAmount);
+    let input2 = [totalAmount, orderType,req.query.orderId];
     let data = await updateAmount(input2);
     res.json({ rows, header, totalAmount });
   } catch (err) {
@@ -205,11 +221,11 @@ async function deleteProduct(req, res) {
   try {
     req.body.quantity = 0;
     req.body.id = req.query.id;
-    req.body.orderType = req.query.orderType
+    req.body.orderType = req.query.orderType;
     if (req.user.storageId == null) {
       req.user['storageId'] = req.query.storage;
     }
-console.log(req.query);
+    console.log(req.query);
     let [flag, stock] = await updateProduct(req);
 
     if (flag == true) {
