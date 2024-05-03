@@ -14,7 +14,7 @@ const getOrderreport = async (storage) => {
 };
 
 const getApiordersProduct = async (id) => {
-  let sql = `SELECT product_master.product_name,option_master.value as category, product_master.cost as Product_cost,sales_products.quantity FROM sales_products left join sales_order on sales_products.order_id=sales_order.id left join product_master on sales_products.product_id=product_master.id left join option_master on product_master.category_id=option_master.id where sales_products.is_delete=0 and sales_order.id=?`;
+  let sql = `SELECT product_master.product_name as Product_Name,option_master.value as Category, product_master.cost as Product_Cost,sales_products.quantity as Quantity FROM sales_products left join sales_order on sales_products.order_id=sales_order.id left join product_master on sales_products.product_id=product_master.id left join option_master on product_master.category_id=option_master.id where sales_products.is_delete=0 and sales_order.id=?`;
 
   return await connection.execute(sql, [id]);
 };

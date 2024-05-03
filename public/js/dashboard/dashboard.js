@@ -123,15 +123,19 @@ const showData = () => {
   document.getElementById('orderTableHead').innerHTML = header
     .map(
       (e) =>
-        `<th class="text-center">${e == 'Order_Id' ? 'NO' : e.replace('_', ' ')
+        `<th class="text-center">${
+          e == 'Order_Id' ? 'NO' : e.replace('_', ' ')
         }</th>`
     )
     .join('');
   chengeData.array.map((e) => {
     header.map((h) => {
-      if (h == 'Created_Time' || h == 'Order_Time') {
+      if (h == 'Created_Time') {
         let time = (e[h] = renderTimestamp(e[h]));
         e[h] = time;
+      }
+      if (h == 'Order_Time') {
+        e[h] = e[h].split('T')[0];
       }
       if (h == 'Order_Id') {
         e.No = chengeData.count;

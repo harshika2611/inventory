@@ -2,12 +2,10 @@ let productHeader = document.getElementById('productHeader');
 let productData = document.getElementById('productData');
 
 const searchdata = async (input) => {
-  input = input.trim();
-  let filterArray = [];
-  dataArray.map((e) => {
-    if (e['Product_Name'].includes(input)) {
-      filterArray.push(e);
-    }
+  let filterArray = dataArray.filter((ele) => {
+    return ele['Product_Name']
+      .toLowerCase()
+      .includes(input.toLowerCase().trim());
   });
   paggination(null, filterArray);
 };
