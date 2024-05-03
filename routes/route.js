@@ -674,6 +674,7 @@ router.get(
 const {
   categoryRender,
   categoryListing,
+  deleteCategory,
   deleteMainProduct,
   manageProduct,
   manageCategory,
@@ -701,6 +702,7 @@ router.post('/category', manageCategory);
 
 router.get('/api/category', categoryListing);
 
+router.post('/api/deleteCategory', passport.authenticate('jwt', { session: false, failureRedirect: '/' }), deleteCategory);
 router.get(
   '/products',
   passport.authenticate('jwt', { session: false, failureRedirect: '/' }),

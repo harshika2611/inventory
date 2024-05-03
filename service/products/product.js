@@ -165,7 +165,7 @@ const categoryInsertService = async (body) => {
 
 const categoryListingService = async (body) => {
   try {
-    const sql2 = `select id,\`key\`,\`value\` from option_master where select_id=?`;
+    const sql2 = `select id,\`key\`,\`value\` from option_master where select_id=? AND option_master.is_delete = 0`;
     const [result] = await connection.execute(sql2, [7]);
     return result;
   } catch (error) {
@@ -174,6 +174,16 @@ const categoryListingService = async (body) => {
   }
 };
 
+async function deleteCategoryService(id) {
+  try {
+    const categoryDelete = `Update option_master SET is_delete = 1 where option_master.id=?`;
+    const [result] = await connection.execute(categoryDelete, [id]);
+    return result;
+  } catch (error) {
+    logger.logError(`Error`, error);
+    throw error;
+  }
+}
 const checkProductSevice = async (body) => {
   try {
     const sql = `select product_name,sku_id from product_master where product_name=? and sku_id=?`;
@@ -188,6 +198,7 @@ const checkProductSevice = async (body) => {
 
 const insertProductService = async (body) => {
   try {
+    console.log(body);
     const sql = `insert into product_master(product_name,sku_id,category_id,cost,description) values (?,?,?,?,?)`;
     const [ans] = await connection.execute(sql, [
       body.productname,
@@ -227,6 +238,7 @@ const deleteMainProductService = async (id) => {
 module.exports = {
   categoryListingService,
   categoryInsertService,
+  deleteCategoryService,
   checkcategorySevice,
   deleteMainProductService,
   getProduct,
