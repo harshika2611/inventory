@@ -136,8 +136,8 @@ img {
   border: 1px solid black;
   border-radius: 10px;
   background-color: white;
-  padding: 10px 0;
   top: 75px;
+  overflow: hidden;
 }
 
 #notification:hover {
@@ -146,6 +146,14 @@ img {
 
 .notification {
   padding: 10px;
+
+  a {
+    color: rgba(var(--bs-link-color-rgb), var(--bs-link-opacity, 1));
+  }
+}
+
+.notification:hover {
+  background-color: whitesmoke;
 }
 
 .notification:nth-child(n + 2) {

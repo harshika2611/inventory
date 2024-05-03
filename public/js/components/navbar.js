@@ -3,7 +3,7 @@ function showDropDown() {
 }
 
 // Close the dropdown if the user clicks outside of it
-window.onclick = function (event) {
+window.addEventListener('click', function (event) {
   if (!event.target.matches('.dropimg')) {
     var dropdowns = document.getElementsByClassName('dropdown-content');
     var i;
@@ -14,7 +14,7 @@ window.onclick = function (event) {
       }
     }
   }
-};
+});
 
 function logout() {
   window.location = '/';

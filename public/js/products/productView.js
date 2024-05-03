@@ -78,10 +78,15 @@ const loadData = async () => {
           </p>
           
           ${
-            obj.stock <= 5
+            obj.stock == 0
               ? `
               <div class="alert alert-danger w-25" style="text-align: center;" role="alert">
-                Out Stock
+                Out of Stock
+              </div>`
+              : obj.stock <= 5
+              ? `
+              <div class="alert alert-danger w-25" style="text-align: center;" role="alert">
+                Nearing Stock Out
               </div>`
               : `
               <div class="alert alert-success w-25" style="text-align: center;" role="alert">
