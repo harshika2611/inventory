@@ -265,7 +265,7 @@ async function updateStoreDetails(storeId) {
 
       if (response.status === 200) {
         const responseMessage = await response.json();
-        console.log(response.status);
+        // console.log(response.status);
         console.log(responseMessage.message);
         Swal.fire({
           icon: 'success',
@@ -391,7 +391,7 @@ function search() {
         ele.Location.toLowerCase().includes(searchbar)
       );
     });
-    console.log(filteredResult);
+    // console.log(filteredResult);
     paggination(null, filteredResult);
   }
 }

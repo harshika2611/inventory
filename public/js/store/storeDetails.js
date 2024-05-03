@@ -17,6 +17,7 @@ function dataTableGrid(store, startIndex) {
     'Category',
     'Cost',
     'Description',
+    'Stock',
   ]) {
     if (key === 'id') {
       key = 'No.';
@@ -55,7 +56,7 @@ function dataTableGrid(store, startIndex) {
 
   createTh = document.createElement('th');
   createTh.setAttribute('class', 'align-middle');
-  createTh.textContent = 'Action';
+  // createTh.textContent = 'Action';
   createTh.colSpan = '2';
   createTr.appendChild(createTh);
   table.appendChild(createTr);
@@ -80,39 +81,39 @@ function dataTableGrid(store, startIndex) {
         parentElement.innerHTML = "Manager Name : "+element["firstname"]+"<br><br>"+"Warehouse Name : "+ element["name"]
          }
     }
-    if (element['is_delete'] == 0) {
-      const createEditTd = document.createElement('td');
-      const achor = document.createElement('a');
-      // achor.setAttribute('href', `/productinfo?id=${element.id}`);
-      // createEditTd.setAttribute('class', 'editButton');
-      createEditTd.setAttribute('id', `${element.id}`);
-      const createEditButton = document.createElement('button');
-      createEditButton.setAttribute('type', 'button');
-      // createEditButton.textContent = 'Edit';
-      // createEditButton.setAttribute('class', 'btn btn-success');
-      const createDeleteTd = document.createElement('td');
-      createDeleteTd.setAttribute('id', `${element.id}`);
-      const createDeleteButton = document.createElement('button');
-      createDeleteButton.textContent = 'Delete';
-      createDeleteButton.setAttribute('class', 'btn btn-danger');
-      createDeleteButton.setAttribute('id', `${element.id}`);
-      createDeleteButton.setAttribute('type', 'button');
-      createDeleteButton.setAttribute(
-        'onclick',
-        `deleteProduct(${id}, ${element.id})`
-      );
-      createDeleteTd.appendChild(createDeleteButton);
-      // achor.appendChild(createEditButton);
-      createEditTd.appendChild(achor);
-      // createTr.appendChild(createEditTd);
-      createTr.appendChild(createDeleteTd);
-    } else if (element['is_delete'] == 1) {
-      let actionTd = document.createElement('td');
-      actionTd.setAttribute('colspan', 2);
-      actionTd.innerHTML = `<b><i>DELETED</i></b>`;
-      actionTd.setAttribute('class', 'text-danger');
-      createTr.appendChild(actionTd);
-    }
+    // if (element['is_delete'] == 0) {
+    //   const createEditTd = document.createElement('td');
+    //   const achor = document.createElement('a');
+    //   // achor.setAttribute('href', `/productinfo?id=${element.id}`);
+    //   // createEditTd.setAttribute('class', 'editButton');
+    //   createEditTd.setAttribute('id', `${element.id}`);
+    //   const createEditButton = document.createElement('button');
+    //   createEditButton.setAttribute('type', 'button');
+    //   // createEditButton.textContent = 'Edit';
+    //   // createEditButton.setAttribute('class', 'btn btn-success');
+    //   const createDeleteTd = document.createElement('td');
+    //   createDeleteTd.setAttribute('id', `${element.id}`);
+    //   const createDeleteButton = document.createElement('button');
+    //   createDeleteButton.textContent = 'Delete';
+    //   createDeleteButton.setAttribute('class', 'btn btn-danger');
+    //   createDeleteButton.setAttribute('id', `${element.id}`);
+    //   createDeleteButton.setAttribute('type', 'button');
+    //   createDeleteButton.setAttribute(
+    //     'onclick',
+    //     `deleteProduct(${id}, ${element.id})`
+    //   );
+    //   createDeleteTd.appendChild(createDeleteButton);
+    //   // achor.appendChild(createEditButton);
+    //   createEditTd.appendChild(achor);
+    //   // createTr.appendChild(createEditTd);
+    //   createTr.appendChild(createDeleteTd);
+    // } else if (element['is_delete'] == 1) {
+    //   let actionTd = document.createElement('td');
+    //   actionTd.setAttribute('colspan', 2);
+    //   actionTd.innerHTML = `<b><i>DELETED</i></b>`;
+    //   actionTd.setAttribute('class', 'text-danger');
+    //   createTr.appendChild(actionTd);
+    // }
   }
 }
 

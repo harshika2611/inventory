@@ -136,10 +136,10 @@ const updateProduct = async (body, payload) => {
 
 const checkProductSevice = async (body) => {
   try {
-    console.log(body);
+    // console.log(body);
     const sql = `select product_name,sku_id from product_master where product_name=? and sku_id=?`;
     const [ans] = await connection.execute(sql, [body.productname, body.skuid]);
-    console.log(ans);
+    // console.log(ans);
     return ans;
   } catch (error) {
     console.log(error);
@@ -158,7 +158,7 @@ const insertProductService = async (body) => {
       body.Price,
       body.description,
     ]);
-    console.log(ans.insertId, 'insert');
+    // console.log(ans.insertId, 'insert');
     return ans.insertId;
   } catch (error) {
     console.log(error);
