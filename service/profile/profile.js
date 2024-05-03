@@ -37,8 +37,7 @@ async function updateProfileQuery(data) {
       set
         firstname = ?,
         lastname = ?,
-        dob = ?,
-        email = ?
+        dob = ?
         ${data?.filename ? `,img_path = '${data.filename}'` : ''}
       where
         id = ?
@@ -47,7 +46,6 @@ async function updateProfileQuery(data) {
       data.firstname,
       data.lastname,
       data.dob,
-      data.email,
       data.id,
     ]);
     return result;
