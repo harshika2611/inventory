@@ -155,7 +155,7 @@ const insertProductService = async (body) => {
       body.productname,
       body.skuid,
       body.category,
-      body.Price,
+      body.cost,
       body.description,
     ]);
     // console.log(ans.insertId, 'insert');

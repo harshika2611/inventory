@@ -26,12 +26,12 @@ const dataTableGrid = (pagginationArray, startIndex) => {
 
     array.map((e) => {
       Object.keys(pagginationArray[0]).map((h) => {
-        if (
-          (h == 'Created_Time' || h == 'Order_Time') &&
-          (e[h].includes('T') || e[h].includes('Z'))
-        ) {
+        if (h == 'Created_Time' && (e[h].includes('T') || e[h].includes('Z'))) {
           let time = (e[h] = renderTimestamp(e[h]));
           e[h] = time;
+        }
+        if (h == 'Order_Time') {
+          e[h] = e[h].split('T')[0];
         }
         if (h == 'Order_Id') {
           e.No = ++startIndex;
@@ -42,7 +42,8 @@ const dataTableGrid = (pagginationArray, startIndex) => {
     productHeader.innerHTML = header
       .map(
         (e) =>
-          `<th class="text-center">${e == 'Order_Id' ? 'NO' : e.replace('_', ' ')
+          `<th class="text-center">${
+            e == 'Order_Id' ? 'NO' : e.replace('_', ' ')
           } </th>`
       )
       .join('');
