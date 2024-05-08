@@ -8,9 +8,6 @@ function orderValidation(req, res, next) {
   for (let key in insertFormData) {
     switch (key) {
       case 'customer':
-        // console.log(key + " " + insertFormData[key]);
-
-
         if (insertFormData[key] === '') {
           insertFormErrorObject[key] = '* require';
         } else {
@@ -19,7 +16,6 @@ function orderValidation(req, res, next) {
         break;
 
       case 'amount':
-        // console.log(key + " " + insertFormData[key]);
         if (insertFormData[key].length === 0) {
           insertFormErrorObject[key] = '* require';
         } else if (
@@ -35,8 +31,6 @@ function orderValidation(req, res, next) {
         break;
 
       case 'shippingAddress':
-        // console.log(key + " " + insertFormData[key]);
-
         if (insertFormData[key].length === 0) {
           insertFormErrorObject[key] = '* require';
         } else if (
@@ -50,8 +44,6 @@ function orderValidation(req, res, next) {
         break;
 
       case 'date':
-        // console.log(key + " " + insertFormData[key]);
-
         if (insertFormData[key].length === 0) {
           insertFormErrorObject[key] = '* require';
         } else if (
@@ -81,9 +73,6 @@ function productValidation(req, res, next) {
   for (let key in productFormData) {
     switch (key) {
       case 'category':
-        // console.log(key + " " + productFormData[key]);
-
-       
         if (productFormData[key] === '') {
           productFormErrorObject[key] = '* require';
         } else {
@@ -92,10 +81,6 @@ function productValidation(req, res, next) {
         break;
 
       case 'product':
-        // console.log(key + " " + productFormData[key]);
-
-       
-
         if (productFormData[key] == '') {
           productFormErrorObject[key] = '* require';
         } else {
@@ -104,10 +89,6 @@ function productValidation(req, res, next) {
         break;
 
       case 'orderType':
-        // console.log(key + " " + productFormData[key]);
-
-       
-
         if (productFormData[key] == '') {
           productFormErrorObject[key] = '* require';
         } else {
@@ -116,7 +97,6 @@ function productValidation(req, res, next) {
         break;
 
       case 'quantity':
-        // console.log(key + " " + productFormData[key]);
         if (productFormData[key].length === 0) {
           productFormErrorObject[key] = '* require';
         } else if (
@@ -131,8 +111,8 @@ function productValidation(req, res, next) {
         }
         break;
     }
-	}
-	if (Object.keys(productFormErrorObject).length === 0) {
+  }
+  if (Object.keys(productFormErrorObject).length === 0) {
     next();
   } else {
     return res.status(400).json(productFormErrorObject);

@@ -22,7 +22,6 @@ function errorShow(errorObject) {
   });
 
   for (let key in errorObject) {
-    // console.log(key + " " + errorObject[key]);
     const targetElement = document.querySelector(`[name="${key}"]`);
     if (targetElement) {
       const errorSpan = targetElement.nextElementSibling;
@@ -194,7 +193,6 @@ const lodder = () => {
     'class',
     'position-absolute top-50 start-50 translate-middle'
   );
-  console.log(img);
   document.querySelector('body').innerHTML = '';
   document.querySelector('body').appendChild(img);
 };

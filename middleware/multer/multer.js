@@ -5,8 +5,7 @@ const fs = require('fs');
 
 const imageFilter = (req, file, cb) => {
   const fileTypeAllow = ["image/jpg", "image/png", "image/jpeg", "image/JPEG", "image/PNG", "image/JPG"];
-  const fileSize = parseInt(req.headers["content-length"])
-  console.log(fileSize);
+  const fileSize = parseInt(req.headers["content-length"]);
   // if (fileTypeAllow.includes(file.mimetype) && fileSize < 1000000) {
   //   // logger.info("csv file");
   //   cb(null, true);

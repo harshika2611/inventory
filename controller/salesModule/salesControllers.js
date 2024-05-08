@@ -176,7 +176,7 @@ async function productGrid(req, res) {
     });
     if (hasReturn && hasSales) {
       orderType = 22;
-    } else{
+    } else {
       hasReturn == true ? orderType = 9 : orderType = 8;
     }
     let totalAmount = 0;
@@ -186,7 +186,7 @@ async function productGrid(req, res) {
     });
 
     // logger.info(totalAmount);
-    let input2 = [totalAmount, orderType,req.query.orderId];
+    let input2 = [totalAmount, orderType, req.query.orderId];
     let data = await updateAmount(input2);
     res.json({ rows, header, totalAmount });
   } catch (err) {
@@ -225,7 +225,6 @@ async function deleteProduct(req, res) {
     if (req.user.storageId == null) {
       req.user['storageId'] = req.query.storage;
     }
-    console.log(req.query);
     let [flag, stock] = await updateProduct(req);
 
     if (flag == true) {

@@ -5,6 +5,10 @@ function addCategory() {
 
 const closeFormCategory = () => {
   document.getElementById('myForm1').style.display = 'none';
+  const customerInput = document.querySelectorAll(".customerInput");
+  for (let element of customerInput) {
+    element.innerHTML = "";
+  }
 };
 
 const submitbtn1 = async () => {
@@ -33,12 +37,20 @@ const submitbtn1 = async () => {
 };
 
 const fetchcategory = async () => {
-  await paggination(`/api/category`);
+  const category = document.getElementById("categoryStatus").value;
+  if (category === "Active") {
+    await paggination(`/api/category/0`);
+  } else if (category === "Inactive") {
+    await paggination(`/api/category/1`);
+  }
 };
+
 fetchcategory();
 
 const dataTableGrid = (category, startIndex) => {
   document.getElementById('cards').innerHTML = '';
+  const categoryStatus = document.getElementById("categoryStatus");
+
   const cards = document.getElementById('cards');
   for (const element of category) {
     const card1 = document.createElement('div');
@@ -48,18 +60,6 @@ const dataTableGrid = (category, startIndex) => {
     const cardId = document.createElement('h5');
     const cardIn = document.createElement('div');
     cardIn.setAttribute('class', 'cardIn');
-    const createDelete = document.createElement('td');
-    createDelete.setAttribute('class', 'managecustomer__actionbutton');
-    const createDeleteButton = document.createElement('img');
-    createDeleteButton.setAttribute(
-      'src',
-      'src/assets/manageCustomer/delete.svg'
-    );
-    createDeleteButton.setAttribute('onclick', 'deleteCategory(this)');
-    createDeleteButton.setAttribute('id', `${element.id}`);
-    createDeleteButton.setAttribute('width', '25');
-    createDeleteButton.setAttribute('height', '25');
-    createDeleteButton.style.cursor = "pointer";
 
     for (const key in element) {
       if (key == 'id') {
@@ -71,7 +71,31 @@ const dataTableGrid = (category, startIndex) => {
       cardTitle.textContent = element['value'];
       cardIn.appendChild(cardTitle);
     }
-    cardIn.appendChild(createDeleteButton);
+    if (categoryStatus.selectedIndex === 0) {
+      const createDeleteButton = document.createElement('img');
+      createDeleteButton.setAttribute(
+        'src',
+        'src/assets/manageCustomer/delete.svg'
+      );
+      createDeleteButton.setAttribute('onclick', 'deleteCategory(this)');
+      createDeleteButton.setAttribute('id', `${element.id}`);
+      createDeleteButton.setAttribute('width', '25');
+      createDeleteButton.setAttribute('height', '25');
+      createDeleteButton.style.cursor = "pointer";
+      cardIn.appendChild(createDeleteButton);
+    } else {
+      const createReactiveButton = document.createElement('img');
+      createReactiveButton.setAttribute(
+        'src',
+        'src/assets/manageCustomer/account-reactivate.svg'
+      );
+      createReactiveButton.setAttribute('onclick', 'reactivateCategory(this)');
+      createReactiveButton.setAttribute('id', `${element.id}`);
+      createReactiveButton.setAttribute('width', '25');
+      createReactiveButton.setAttribute('height', '25');
+      createReactiveButton.style.cursor = "pointer";
+      cardIn.appendChild(createReactiveButton);
+    }
     card1.appendChild(cardIn);
     cards.appendChild(card1);
   }
@@ -86,7 +110,7 @@ async function deleteCategory(category) {
     headers: {
       'Content-Type': 'application/json',
     },
-  })
+  });
 
   try {
     if (!responseDelete.ok) {
@@ -104,6 +128,49 @@ async function deleteCategory(category) {
       messagePopUp(responseMessage.message);
     }
     if (responseDelete.status === 500) {
+      messagePopUp(responseMessage.message);
+    }
+  }
+}
+
+function categoryFilter() {
+  const category = document.getElementById('categoryFilter').value.toLowerCase();
+  if (category === '') {
+    paggination(null, dataArray);
+  } else {
+    const filteredResult = [];
+    dataArray.filter((ele) => {
+      const categoryValue = ele.value.toLowerCase();
+      if (categoryValue.includes(category)) {
+        filteredResult.push(ele);
+      }
+    });
+    paggination(null, filteredResult);
+  }
+}
+
+async function reactivateCategory(category) {
+  const categoryId = category.id;
+
+  const response = await fetch(`/api/reactivateCategory/${categoryId}`);
+
+  try {
+    if (!response.ok) {
+      throw new Error("Category Reactivate Error");
+    }
+
+    if (response.status === 200) {
+      const responseMessage = await response.json();
+      messagePopUp(responseMessage.message);
+      fetchcategory();
+    }
+  } catch (error) {
+    const responseMessage = await response.json();
+    if (response.status === 404) {
+      messagePopUp(responseMessage.message);
+    }
+
+    if (response.status === 500) {
       messagePopUp(responseMessage.message);
     }
   }

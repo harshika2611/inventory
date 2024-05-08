@@ -124,7 +124,6 @@ const getAllStore = async (cityid, storename) => {
     option.innerHTML = `<option value="select here">Select Store</option>`;
     store.forEach((element) => {
       if (storename && element.name === storename) {
-        console.log(storename);
         option.innerHTML += `<option value="${element.id}" selected>${element.name}</option>`;
       } else {
         option.innerHTML += `<option value="${element.id}">${element.name}</option>`;

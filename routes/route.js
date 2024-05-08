@@ -257,11 +257,6 @@ const {
   invoicePdfView,
 } = require('../controller/salesModule/salesRender.js');
 
-const {
-  invoiceGenerator,
-  pdfTokenVerify,
-} = require('../controller/salesModule/pdfGeneration.js');
-
 router.get(
   '/salesorder',
   passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
@@ -327,11 +322,11 @@ router.get(
   passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
   deleteProduct
 );
-router.get(
-  '/getPdf',
-  passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
-  invoiceGenerator
-);
+// router.get(
+//   '/getPdf',
+//   passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
+//   invoiceGenerator
+// );
 router.get(
   '/invoice',
   passport.authenticate('jwt', { session: false, failureRedirect: '/' }),
@@ -675,6 +670,7 @@ const {
   categoryRender,
   categoryListing,
   deleteCategory,
+  reactivateCategory,
   deleteMainProduct,
   manageProduct,
   manageCategory,
@@ -700,9 +696,10 @@ router.get(
 
 router.post('/category', manageCategory);
 
-router.get('/api/category', categoryListing);
+router.get('/api/category/:categoryStatus', categoryListing);
 
 router.post('/api/deleteCategory', passport.authenticate('jwt', { session: false, failureRedirect: '/' }), deleteCategory);
+router.get('/api/reactivateCategory/:categoryId', passport.authenticate('jwt', { session: false, failureRedirect: '/' }), reactivateCategory);
 router.get(
   '/products',
   passport.authenticate('jwt', { session: false, failureRedirect: '/' }),

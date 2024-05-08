@@ -21,7 +21,6 @@ const invoicePdfView = async (req, res) => {
       [result, products] = await fetchPurchaseOrderView(req);
     }
     data = result[0];
-    console.log(data);
     let date = new Date(data.order_date);
     data.order_date =
       date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear();
@@ -55,13 +54,12 @@ const invoicePdf = async (req, res) => {
       invoiceType = "purchaseorderinvoice";
     }
     data = result[0];
-    console.log(data);
     let date = new Date(data.order_date);
     data.order_date =
       date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear();
     orderDetails.data = data;
     orderDetails.products = products;
-    orderDetails.user = req.use;
+    orderDetails.user = req.user;
     orderDetails.type = req.query.type;
     const pdfPath = await generateSalesPdf(orderDetails, `${invoiceType}`);
     if (pdfPath) {

@@ -12,7 +12,7 @@ async function getCombos(name) {
                 INNER JOIN
             option_master AS o ON s.id = o.select_id
         WHERE
-            s.key LIKE ?
+            s.key LIKE ? AND o.is_delete = 0
     `,
       [name]
     );

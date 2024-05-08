@@ -34,7 +34,6 @@ function hideLoader() {
 
 navHover = () => {
   const path = window.location.pathname.split('/')[1];
-  // console.log(path);
   if (path == 'purchaseOrder' || path == 'purchaseHistory') {
     document.getElementById(`navpurchase`).classList.add('width-100-hover');
     document.getElementById(`submenu1`).classList.remove('collapse-horizontal');

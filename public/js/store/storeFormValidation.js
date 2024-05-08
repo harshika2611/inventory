@@ -5,7 +5,6 @@ function storeFormValidation(storeFormData) {
   for (let key in storeFormData) {
     switch (key) {
       case "storageName":
-        // console.log(key + " " + storeFormData[key]);
         if (storeFormData[key].length === 0) {
           storeFormErrorObject[key] = "* require";
         } else if (storeFormData[key].trim().length === 0 && storeFormData[key] !== "") {
@@ -16,8 +15,6 @@ function storeFormValidation(storeFormData) {
         break;
 
       case "storeType":
-        // console.log(key + " " + storeFormData[key]);
-
         if (storeFormData[key].length === 0) {
           storeFormErrorObject[key] = "* require";
         } else if (storeFormData[key].trim().length === 0 && storeFormData[key] !== "") {
@@ -28,8 +25,6 @@ function storeFormValidation(storeFormData) {
         break;
 
       case "state":
-        // console.log(key + " " + storeFormData[key]);
-
         const stateSelectCombo = document.getElementById("stateSelectCombo");
 
         if (stateSelectCombo.selectedIndex < 1) {
@@ -40,8 +35,6 @@ function storeFormValidation(storeFormData) {
         break;
 
       case "city":
-        // console.log(key + " " + storeFormData[key]);
-
         const citySelectCombo = document.getElementById("citySelectCombo");
 
         if (citySelectCombo.selectedIndex < 1) {
