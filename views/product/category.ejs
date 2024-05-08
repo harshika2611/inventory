@@ -54,12 +54,19 @@
             <div>
               <p class="btn btn-outline-dark filter1" onclick="addCategory()">Add category</p>
             </div>
+            <div>
+              <select name="categoryStatus" class="form-select" aria-label="select" id="categoryStatus"
+                onchange="fetchcategory()">
+                <option value="Active">Active</option>
+                <option value="Inactive">Inactive</option>
+              </select>
+            </div>
           </div>
         </div>
         <div class=" main2" id="main2">
           <div class="filter3">
-            <input class="form-control form2 mr-sm-2 w-60" type="search" id="search" placeholder="Search"
-              onkeyup="search()" aria-label="Search" />
+            <input class="form-control form2 mr-sm-2 w-60" type="search" id="categoryFilter" placeholder="Search"
+              oninput="categoryFilter()" aria-label="Search" />
           </div>
         </div>
         <div class="grid" id="grid">

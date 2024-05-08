@@ -65,7 +65,6 @@ async function generatePdf(data, reportType) {
   const templatePath = path.join(__dirname, '../../views/reports/pdfTemplate/productPdfTemplate.ejs');
   const template = fs.readFileSync(templatePath, "utf8");
   const html = ejs.render(template, { data: data });
-  // console.log(html);
   let browser = await puppeteer.launch();
   const page = await browser.newPage();
 
@@ -73,7 +72,8 @@ async function generatePdf(data, reportType) {
 
   // To reflect CSS used for screens instead of print
   // await page.emulateMediaType('screen');
-  const pdfPath = path.join(__dirname, `../../public/uploads/pdfFiles/${Date.now()}-${reportType}.pdf`);  //path of pdf
+  const fileName = `${Date.now()}-${reportType}.pdf`;
+  const pdfPath = path.join(__dirname, `../../public/uploads/pdfFiles/${fileName}`);  //path of pdf
 
   await page.pdf({
     path: pdfPath,
@@ -84,8 +84,8 @@ async function generatePdf(data, reportType) {
   await browser.close();
 
   if (fs.existsSync(pdfPath)) {
-    const filename = pdfPath.split("/");
-    return filename[filename.length - 1];
+    // const filename = pdfPath.split("/");
+    return fileName;
   } else {
     return "";
   }

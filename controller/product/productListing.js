@@ -2,6 +2,7 @@ const {
   categoryListingService,
   categoryInsertService,
   deleteCategoryService,
+  reactivateCategoryService,
   checkcategorySevice,
   deleteMainProductService,
   getProduct,
@@ -44,7 +45,8 @@ const categoryRender = async (req, res) => {
 
 const categoryListing = async (req, res) => {
   try {
-    const data = await categoryListingService(req.body);
+    const categoryStatus = req.params["categoryStatus"];
+    const data = await categoryListingService(req.body, categoryStatus);
     return res.json(data);
   } catch (error) {
     logger.logError(error);
@@ -155,7 +157,6 @@ const deleteMainProduct = async (req, res) => {
 async function deleteCategory(req, res) {
   try {
     const id = req.body;
-    console.log(id);
     const result = await deleteCategoryService(id.categoryId);
 
     if (result.affectedRows > 0) {
@@ -169,10 +170,26 @@ async function deleteCategory(req, res) {
   }
 }
 
+async function reactivateCategory(req, res) {
+  try {
+    const categoryId = req.params["categoryId"];
+    const result = await reactivateCategoryService(categoryId);
+
+    if (result.affectedRows > 0) {
+      return res.status(200).json({ message: 'Category is Reactivate' });
+    } else {
+      return res.status(404).json({ message: 'Something Went Wrong' });
+    }
+  } catch (error) {
+    return res.status(500).json({ message: 'Something Went Wrong' });
+  }
+}
+
 module.exports = {
   categoryRender,
   categoryListing,
   deleteCategory,
+  reactivateCategory,
   manageCategory,
   deleteMainProduct,
   productListing,

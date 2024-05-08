@@ -89,7 +89,6 @@ function dataTableGrid(storeArray, startIndex) {
       createViewButton.setAttribute('class', 'btn btn-primary');
       createViewButton.setAttribute('width', '25');
       createViewButton.setAttribute('height', '25');
-      // console.log("efserf", `${element.storeId}`);
       createViewButton.href = `/storeProducts?id=${element.storeId}`;
       createViewTd.appendChild(createViewButton);
       createActionTd.appendChild(createViewTd);
@@ -289,13 +288,11 @@ async function updateStoreDetails(storeId) {
 
       if (response.status === 404) {
         const responseMessage = await response.json();
-        console.log(response.status);
         console.log(responseMessage.message);
       }
 
       if (response.status === 500) {
         const responseMessage = await response.json();
-        console.log(response.status);
         console.log(responseMessage.message);
       }
     }

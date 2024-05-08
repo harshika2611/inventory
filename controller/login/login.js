@@ -156,7 +156,6 @@ const userLogout = async (req, res) => {
     const token = req.cookies?.token;
     return res.clearCookie('token').status(200).redirect(`/`);
   } catch (error) {
-    console.log(error);
     logger.logError(error);
     res.status(500).json({ message: 'can`t fetch user controller' });
   }

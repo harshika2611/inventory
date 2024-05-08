@@ -17,7 +17,6 @@ document.getElementById('eye').addEventListener('click', function () {
 async function submitbtn() {
   try {
     const data = formData('form');
-    console.log(data);
     const loginValidation = loginFormValidation(data);
     if (Object.keys(loginValidation).length > 0) {
       //----client side validation error

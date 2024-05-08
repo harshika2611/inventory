@@ -51,7 +51,6 @@ async function updateProfile(req, res) {
       await refreshToken(req, res);
     }
   } catch (error) {
-    console.log(error);
     logger.logError(error);
     return res.status(500).json({ message: "Can't get profile details" });
   }
