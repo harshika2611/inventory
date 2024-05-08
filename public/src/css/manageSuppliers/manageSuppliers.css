@@ -34,7 +34,7 @@ a {
   max-width: 1300px;
   padding: 20px;
   margin: 0 auto;
-  overflow-x: auto;
+  /* overflow-x: auto; */
 }
 
 .managesupplierTitle {
@@ -69,6 +69,10 @@ a {
 
 /* Style for the table */
 
+#supplierTableDiv {
+  width: 100%;
+  overflow-x: auto;
+}
 .managesupplier__table {
   width: 100%;
   border-collapse: collapse;

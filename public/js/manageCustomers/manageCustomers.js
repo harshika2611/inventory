@@ -11,11 +11,13 @@ function getCustomers() {
 function dataTableGrid(customerArray, startIndex) {
   //-----div contain table
   //-----old exist table remove
-  const oldTable = document.getElementById('managecustomer__table');
+  const oldTable = document.getElementById('customerTableDiv');
   if (oldTable) {
     oldTable.remove();
   }
   const tableContainer = document.getElementById('managecustomer-container');
+  const createTableDiv = document.createElement("div");
+  createTableDiv.setAttribute("id", "customerTableDiv");
 
   if (customerArray.length === 0) {
     const notfoundmessage = document.getElementById('notfoundmessage');
@@ -128,7 +130,8 @@ function dataTableGrid(customerArray, startIndex) {
       createTr.appendChild(createActionTd);
       createTable.appendChild(createTr);
     }
-    tableContainer.appendChild(createTable);
+    createTableDiv.appendChild(createTable);
+    tableContainer.appendChild(createTableDiv);
   }
 }
 

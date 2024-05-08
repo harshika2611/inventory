@@ -11,12 +11,14 @@ function getSuppliers() {
 function dataTableGrid(supplierArray, startIndex) {
   //-----div contain table
   //-----old exist table remove
-  const oldTable = document.getElementById('managesupplier__table');
+  const oldTable = document.getElementById('supplierTableDiv');
   if (oldTable) {
     oldTable.remove();
   }
 
   const tableContainer = document.getElementById('managesupplier-container');
+  const createTableDiv = document.createElement("div");
+  createTableDiv.setAttribute("id", "supplierTableDiv");
 
   if (supplierArray.length === 0) {
     const notfoundmessage = document.getElementById('notfoundmessage');
@@ -141,7 +143,8 @@ function dataTableGrid(supplierArray, startIndex) {
 
       createTable.appendChild(createTr);
     }
-    tableContainer.appendChild(createTable);
+    createTableDiv.appendChild(createTable);
+    tableContainer.appendChild(createTableDiv);
   }
 }
 

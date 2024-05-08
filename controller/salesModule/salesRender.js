@@ -28,12 +28,6 @@ const invoicePdfView = async (req, res) => {
     orderDetails.products = products;
     orderDetails.user = req.use;
     orderDetails.type = req.query.type;
-    // const pdfPath = await generateSalesPdf(orderDetails, "salesOrder");
-    // if (pdfPath) {
-    //   return res.status(200).json({ pdfName: pdfPath });
-    // } else {
-    //   return res.status(400).json({ message: "Can't generate pdf" });
-    // }
     return res.render('salesModule/invoice', { data, products, user: req.user, type: req.query.type });
   } catch (err) {
     logger.logError(err);
@@ -67,12 +61,10 @@ const invoicePdf = async (req, res) => {
     } else {
       return res.status(400).json({ message: "Can't generate pdf" });
     }
-    // res.render((req.query.token === undefined ? 'salesModule/orderView' : 'salesModule/invoice'), { data, products, user: req.user, type: req.query.type });
   } catch (err) {
     logger.logError(err);
     return res.status(500).json({ message: "Something Went Wrong.." });
   }
 };
-
 
 module.exports = { orderHistory, newOrder, invoicePdf, invoicePdfView };

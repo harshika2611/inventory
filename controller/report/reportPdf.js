@@ -67,7 +67,6 @@ async function generatePdf(data, reportType) {
   const html = ejs.render(template, { data: data });
   let browser = await puppeteer.launch();
   const page = await browser.newPage();
-
   await page.setContent(html, { waitUntil: 'load' });
 
   // To reflect CSS used for screens instead of print
