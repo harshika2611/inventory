@@ -5,7 +5,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Product Details PDF</title>
-  <link rel="stylesheet" href="src/css/reports/pdfTemplate/productPdfTemplate.css" />
   <style>
     * {
       margin: 0;
@@ -13,14 +12,20 @@
       box-sizing: border-box;
     }
 
-    .productdetails__table {
+    .productPdf-div {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .tablestyle {
       font-family: arial, sans-serif;
       border-collapse: collapse;
       width: 100%;
     }
 
-    td,
-    th {
+    .information__table td,
+    .information__table th {
       border: 1px solid #dddddd;
       text-align: left;
       padding: 8px;
@@ -31,13 +36,25 @@
       font-size: 25px;
       font-weight: 400;
     }
+
+    .productdetails__table {
+      border-collapse: separate;
+      border-spacing: 0 10px;
+    }
+
+    .productdetails__table td,
+    .productdetails__table th {
+      border-bottom: 1px solid #dddddd;
+      text-align: left;
+      padding: 8px;
+    }
   </style>
 </head>
 
 <body>
   <section class="productPdf-section">
     <div class="productPdf-div">
-      <table class="productdetails__table">
+      <table class="tablestyle information__table">
         <tr>
           <td colspan="4" class="pdfTitle">Inventory Management</td>
         </tr>
@@ -75,8 +92,10 @@
             Category: <%= data.categoryName ? data.categoryName : "-" %>
           </td>
         </tr>
+      </table>
 
-        <%if(data.productDetails){%>
+      <%if(data.productDetails){%>
+        <table class="tablestyle productdetails__table">
           <tr>
             <%for(let key in data.productDetails[0]){%>
               <th>
@@ -92,9 +111,8 @@
               </th>
               <%}%>
           </tr>
-
           <%for(let element of data.productDetails){%>
-            <tr>
+            <tr class="productDetailsRow">
               <%for(let key in element){%>
                 <td>
                   <%= element[key]%>
@@ -102,8 +120,8 @@
                 <%}%>
             </tr>
             <%}%>
-              <%}%>
-      </table>
+        </table>
+        <%}%>
     </div>
   </section>
 </body>

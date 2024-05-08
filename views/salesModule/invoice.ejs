@@ -171,37 +171,37 @@
         </table>
       </div>
       <table class="invoicecommon__tablestyle inventory__table">
-        <thead>
+
+        <tr>
+          <th>Item</th>
+          <th>SKU</th>
+          <th>Rate</th>
+          <th>Quantity</th>
+          <th>Price</th>
+        </tr>
+
+
+        <%for(ele of products){%>
           <tr>
-            <th>Item</th>
-            <th>SKU</th>
-            <th>Rate</th>
-            <th>Quantity</th>
-            <th>Price</th>
+            <td>
+              <%=ele.product_name%>
+            </td>
+            <td>
+              <%=ele.sku_id%>
+            </td>
+            <td>
+              <%=ele.cost%>
+            </td>
+            <td>
+              <%=ele.quantity%>
+            </td>
+            <td>
+              <%=ele.cost*ele.quantity%>
+                </span>
+            </td>
           </tr>
-        </thead>
-        <tbody>
-          <%for(ele of products){%>
-            <tr>
-              <td>
-                <%=ele.product_name%>
-              </td>
-              <td>
-                <%=ele.sku_id%>
-              </td>
-              <td>
-                <%=ele.cost%>
-              </td>
-              <td>
-                <%=ele.quantity%>
-              </td>
-              <td>
-                <%=ele.cost*ele.quantity%>
-                  </span>
-              </td>
-            </tr>
-            <%}%>
-        </tbody>
+          <%}%>
+
       </table>
       <table class="invoicecommon__tablestyle balance__table">
         <tr>
