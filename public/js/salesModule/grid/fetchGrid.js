@@ -69,7 +69,7 @@ function dataTableGrid(result, startIndex) {
       <a class='btn btn-success' id=${data.storage_id}edit${data.id} onclick="updateOrder('edit',event,'order')">EDIT</a></td><td>
        <a class="btn btn-danger" id=${data.storage_id}delete${data.id} onclick="updateOrder('delete',event,'order')">DELETE</a></td>
         `
-          : `<td colspan="3"><p  class="deleted">DELETED</p></td>`
+            : `<td colspan="3"><p  class="deleted">DELETED</p></td>`
         }</tr>`;
       startIndex++;
     });

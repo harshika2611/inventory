@@ -74,7 +74,7 @@ const getProductDetailsAllService = async (productId, storageId, isAdmin) => {
   }
 };
 
-const getProduct = async (req, order, field) => {
+const getProduct = async (req,order, field) => {
 
   let sql = `SELECT 
     product_master.id,
@@ -96,7 +96,7 @@ FROM
         LEFT JOIN
     option_master ON product_master.category_id = option_master.id
  ORDER BY ${field} ${order};`;
-  return await connection.execute(sql);
+    return await connection.execute(sql);
 };
 const updateProduct = async (body, payload) => {
   const [result] = await connection.execute(
