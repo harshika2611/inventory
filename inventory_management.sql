@@ -7,7 +7,7 @@
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!50503 SET NAMES utf8mb4 */;
+/*!50503 SET NAMES utf8 */;
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -232,218 +232,6 @@ LOCK TABLES `products_details` WRITE;
 INSERT INTO `products_details` VALUES (1,1,33,'0'),(1,2,180,'0'),(1,3,1000,'0'),(1,5,500,'0'),(1,7,545,'0'),(2,1,65,'0'),(2,5,10,'0'),(2,7,545,'0'),(3,1,371,'0'),(3,5,900,'0'),(3,9,745,'0'),(4,1,504,'0'),(4,5,800,'0'),(6,4,256,'0'),(7,1,5,'0'),(8,3,723,'0'),(9,7,941,'1'),(11,7,559,'0'),(12,1,367,'0'),(12,5,700,'0'),(13,1,335,'0'),(13,5,708,'0'),(14,1,846,'0'),(14,9,8,'0'),(15,1,237,'0'),(16,1,994,'0'),(17,3,542,'0'),(18,3,478,'0'),(19,1,183,'0'),(20,5,400,'0'),(20,7,320,'0'),(21,1,700,'0'),(21,5,456,'0'),(22,1,793,'0'),(23,3,384,'1'),(24,4,619,'0'),(25,4,378,'0'),(26,1,179,'0'),(27,4,846,'0'),(28,1,26,'0'),(29,3,585,'0'),(30,3,489,'0'),(31,1,496,'0'),(32,1,450,'0'),(32,9,587,'0'),(33,1,2,'0'),(34,4,346,'0'),(35,4,207,'0'),(36,1,700,'0'),(37,4,285,'0'),(38,1,949,'0'),(39,4,183,'0'),(40,1,862,'0'),(41,4,800,'0'),(41,5,987,'0'),(41,9,245,'0'),(42,1,486,'0'),(43,5,697,'0'),(44,1,238,'0'),(45,1,845,'0'),(46,5,538,'0'),(47,5,997,'0'),(48,1,488,'0'),(49,1,473,'0'),(50,1,144,'0'),(50,5,876,'0'),(51,1,314,'0'),(52,1,801,'0'),(52,9,36,'0'),(53,1,545,'0'),(54,1,775,'0'),(55,9,1000,'0'),(56,1,710,'0'),(57,1,538,'0'),(58,1,342,'0'),(59,9,878,'0'),(60,1,736,'0'),(60,5,545,'0'),(61,1,981,'0'),(62,1,481,'0'),(62,9,745,'0'),(63,1,413,'0'),(64,9,144,'0'),(65,1,978,'0'),(65,5,6543,'0'),(66,5,805,'0'),(67,1,445,'0'),(68,1,873,'0'),(69,9,601,'0'),(70,1,256,'0'),(71,5,314,'0'),(72,1,768,'0'),(73,1,751,'0'),(74,1,795,'0'),(74,9,654,'0'),(75,1,313,'0'),(75,9,4514,'0'),(76,5,873,'0'),(77,1,934,'0'),(78,2,406,'0'),(79,1,588,'0'),(80,1,771,'0'),(81,1,458,'0'),(82,1,233,'0'),(83,1,525,'0'),(84,1,828,'0'),(85,1,995,'0'),(85,9,541,'0'),(86,1,913,'0'),(87,1,784,'0'),(87,9,547,'0'),(88,1,975,'0'),(89,2,52,'0'),(90,1,1824,'0'),(91,1,812,'0'),(92,1,80,'0'),(93,1,118,'0'),(94,1,630,'0'),(95,1,707,'0'),(96,1,324,'0'),(97,2,932,'0'),(98,2,80,'0'),(99,1,783,'0'),(99,9,587,'0'),(100,1,843,'0'),(101,1,458,'0'),(357,2,98,'0'),(358,1,22,'0'),(359,1,216,'0'),(360,1,353,'0'),(362,1,200,'0'),(362,3,295,'0');
 /*!40000 ALTER TABLE `products_details` ENABLE KEYS */;
 UNLOCK TABLES;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `sales_ins_stock_out_log` AFTER INSERT ON `products_details` FOR EACH ROW begin
-if new.stock = 0 then
-insert into logs
-(user_id, type_id, `description`, `notify`)
-SELECT
-(SELECT
-users.id as id
-FROM
-option_master as opt
-JOIN
-select_master as sel
-ON
-opt.select_id = sel.id
-JOIN
-users
-ON
-users.role_id = opt.id
-WHERE
-sel.key = 'roles'
-AND
-opt.key = 'admin'
-),
-            (SELECT
-opt.id as id
-FROM
-option_master as opt
-JOIN
-select_master as sel
-ON
-opt.select_id = sel.id
-WHERE
-sel.key = 'logType'
-AND
-opt.key = 'stock_out_item'
-),
-            CONCAT_WS("-", new.product_id, new.storage_id),
-            1;
-end if;
-end */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `sales_ins_near_stock_out_log` AFTER INSERT ON `products_details` FOR EACH ROW begin
-if new.stock <= 5 and new.stock > 0 then
-insert into logs
-(user_id, type_id, `description`, `notify`)
-SELECT
-(SELECT
-users.id as id
-FROM
-option_master as opt
-JOIN
-select_master as sel
-ON
-opt.select_id = sel.id
-JOIN
-users
-ON
-users.role_id = opt.id
-WHERE
-sel.key = 'roles'
-AND
-opt.key = 'admin'
-),
-            (SELECT
-opt.id as id
-FROM
-option_master as opt
-JOIN
-select_master as sel
-ON
-opt.select_id = sel.id
-WHERE
-sel.key = 'logType'
-AND
-opt.key = 'near_stock_out'
-),
-            CONCAT_WS("-", new.product_id, new.storage_id),
-            1;
-end if;
-end */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `sales_update_stock_out_log` BEFORE UPDATE ON `products_details` FOR EACH ROW begin
-if new.stock = 0 then
-insert into logs
-(user_id, type_id, `description`, `notify`)
-SELECT
-(SELECT
-users.id as id
-FROM
-option_master as opt
-JOIN
-select_master as sel
-ON
-opt.select_id = sel.id
-JOIN
-users
-ON
-users.role_id = opt.id
-WHERE
-sel.key = 'roles'
-AND
-opt.key = 'admin'
-),
-            (SELECT
-opt.id as id
-FROM
-option_master as opt
-JOIN
-select_master as sel
-ON
-opt.select_id = sel.id
-WHERE
-sel.key = 'logType'
-AND
-opt.key = 'stock_out_item'
-),
-            CONCAT_WS("-", new.product_id, new.storage_id),
-            1;
-end if;
-end */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `sales_update_near_stock_out_log` BEFORE UPDATE ON `products_details` FOR EACH ROW begin
-if new.stock <= 5 and new.stock > 0 then
-insert into logs
-(user_id, type_id, `description`, `notify`)
-SELECT
-(SELECT
-users.id as id
-FROM
-option_master as opt
-JOIN
-select_master as sel
-ON
-opt.select_id = sel.id
-JOIN
-users
-ON
-users.role_id = opt.id
-WHERE
-sel.key = 'roles'
-AND
-opt.key = 'admin'
-),
-            (SELECT
-opt.id as id
-FROM
-option_master as opt
-JOIN
-select_master as sel
-ON
-opt.select_id = sel.id
-WHERE
-sel.key = 'logType'
-AND
-opt.key = 'near_stock_out'
-),
-            CONCAT_WS("-", new.product_id, new.storage_id),
-            1;
-end if;
-end */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Table structure for table `purchase_order`
@@ -457,7 +245,7 @@ CREATE TABLE `purchase_order` (
   `name` varchar(100) NOT NULL,
   `supplier_id` int NOT NULL,
   `storage_id` int NOT NULL,
-  `amount` int DEFAULT '0',
+  `amount` int NOT NULL,
   `payment_status` int NOT NULL,
   `date` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
@@ -514,44 +302,6 @@ LOCK TABLES `purchase_products` WRITE;
 INSERT INTO `purchase_products` VALUES (1,12,17,22,15,0),(2,8,99,88,10,0),(3,16,27,28,9,0),(4,18,47,20,13,0),(5,11,67,82,20,0),(6,13,98,40,15,0),(7,19,61,72,10,0),(8,15,77,93,10,0),(9,4,98,10,10,0),(10,2,14,38,17,0),(11,11,73,76,16,0),(12,20,49,32,20,0),(13,1,14,10,4,0),(14,15,61,71,13,0),(15,19,56,74,14,0),(16,19,12,78,16,0),(17,20,29,45,4,0),(18,12,28,36,8,0),(19,15,62,21,3,0),(20,8,79,2,10,0),(21,8,10,12,18,0),(22,17,68,83,7,0),(23,16,67,72,18,0),(24,11,20,38,20,0),(25,20,55,9,11,0),(26,15,19,78,20,0),(27,6,37,9,4,0),(28,9,90,74,19,0),(29,5,64,14,4,0),(30,10,26,75,12,0),(31,11,9,67,16,0),(32,7,23,21,14,0),(33,9,80,93,1,0),(34,15,79,7,18,0),(35,8,58,63,18,0),(36,2,60,1,3,0),(37,8,52,69,18,0),(38,6,92,56,14,0),(39,18,53,25,10,0),(40,15,36,25,17,0),(41,7,43,33,12,0),(42,18,54,8,16,0),(43,16,21,34,14,0),(44,7,94,72,14,0),(45,16,99,81,15,0),(46,17,7,51,11,0),(47,15,50,2,18,0),(48,14,37,30,7,0),(49,9,16,97,20,0),(50,16,79,74,17,0),(51,20,32,74,18,0),(52,8,33,37,1,0),(53,13,10,1,12,0),(54,14,73,57,8,0),(55,13,61,66,13,0),(56,5,92,46,3,0),(57,20,54,69,1,0),(58,7,99,75,13,0),(59,9,44,87,10,0),(60,8,9,56,13,0),(61,11,67,89,10,0),(62,13,81,79,17,0),(63,7,24,89,12,0),(64,2,69,52,14,0),(65,3,92,25,4,0),(66,12,85,63,8,0),(67,14,95,72,10,0),(68,9,33,89,3,0),(69,12,4,10,1,0),(70,12,32,99,2,0),(71,6,1,44,13,0),(72,11,34,77,14,0),(73,6,48,20,16,0),(74,5,97,97,19,0),(75,8,41,84,19,0),(76,19,22,20,10,0),(77,5,8,30,7,0),(78,1,6,3,3,0),(79,20,77,70,15,0),(80,13,6,31,20,0),(81,3,79,59,3,0),(82,4,1,71,8,0),(83,14,98,22,12,0),(84,2,27,39,5,0),(85,12,87,31,7,0),(86,4,39,41,18,0),(87,9,17,76,17,0),(88,15,22,76,5,0),(89,14,77,79,18,0),(90,12,40,98,8,0),(91,9,66,74,9,0),(92,16,27,46,11,0),(93,5,98,44,18,0),(94,15,11,32,12,0),(95,13,59,51,2,0),(96,3,89,84,9,0),(97,2,85,27,19,0),(98,5,10,76,16,0),(99,19,79,89,16,0),(100,4,2,79,11,0),(101,4,15,73,4,0),(102,6,55,26,18,0),(103,16,3,7,17,0),(104,11,8,81,6,0),(105,14,100,30,20,0),(106,20,62,62,18,0),(107,17,54,44,5,0),(108,20,97,37,4,0),(109,6,52,66,20,0),(110,2,15,83,8,0),(111,18,55,71,15,0),(112,2,3,74,19,0),(113,16,62,18,10,0),(114,5,45,13,19,0),(115,7,28,29,20,0),(116,7,66,57,12,0),(117,16,18,39,19,0),(118,1,27,39,20,0),(119,5,16,46,2,0),(120,5,41,33,18,0),(121,4,96,74,10,0),(122,9,23,95,2,0),(123,17,20,2,9,0),(124,5,84,97,3,0),(125,17,49,73,11,0),(126,9,39,19,15,0),(127,17,30,42,16,0),(128,17,26,90,16,0),(129,15,37,98,2,0),(130,9,21,56,5,0),(131,15,71,77,9,0),(132,3,97,53,13,0),(133,5,8,47,16,0),(134,20,45,27,4,0),(135,10,20,63,11,0),(136,10,5,84,15,0),(137,18,71,30,11,0),(138,6,94,85,3,0),(139,18,87,5,20,0),(140,2,9,77,15,0),(141,5,43,49,2,0),(142,11,56,55,1,0),(143,17,24,33,14,0),(144,6,86,25,14,0),(145,6,1,3,20,0),(146,5,29,6,12,0),(147,5,28,61,12,0),(148,8,99,88,8,0),(149,13,93,21,11,0),(150,1,71,7,1,0),(151,14,81,70,14,0),(152,18,4,65,13,0),(153,19,6,11,6,0),(154,2,30,57,14,0),(155,12,17,11,20,0),(156,4,75,21,9,0),(157,5,79,71,6,0),(158,19,11,23,20,0),(159,13,54,14,11,0),(160,19,75,23,14,0),(161,17,4,79,13,0),(162,3,51,60,7,0),(163,1,40,55,14,0),(164,8,62,100,12,0),(165,16,73,86,16,0),(166,1,12,52,19,0),(167,19,70,97,5,0),(168,11,5,51,16,0),(169,16,6,18,19,0),(170,15,91,30,10,0),(171,12,17,60,11,0),(172,16,48,42,9,0),(173,9,34,92,15,0),(174,13,40,83,4,0),(175,13,99,49,15,0),(176,18,67,26,9,0),(177,20,72,19,7,0),(178,14,91,71,5,0),(179,4,36,32,12,0),(180,6,98,87,190,0),(181,2,8,60,7,0),(182,18,58,86,1,0),(183,9,99,40,6,0),(184,9,73,81,13,0),(185,9,94,58,7,0),(186,11,38,4,14,0),(187,17,74,51,5,0),(188,16,84,7,19,0),(189,19,100,75,17,0),(190,10,36,41,12,0),(191,3,81,51,3,0),(192,17,54,25,4,0),(193,5,78,73,14,0),(194,20,19,11,4,0),(195,19,5,86,10,0),(196,6,73,18,8,0),(197,3,58,50,17,0),(198,18,70,67,19,0),(199,16,58,88,4,0),(200,8,36,56,20,0),(201,3,8,40,16,0),(202,1,4,14,20,0),(203,20,5,16,17,0),(204,15,13,39,16,0),(205,1,15,53,8,0),(206,4,6,20,4,0),(207,2,63,29,11,0),(208,212,7,15000,5,0),(209,213,1,10,60,0),(210,213,5,1000,60,0),(211,213,34,200,10,0),(212,213,20,600,20,0),(213,214,1,100,100,0),(214,215,1,10,200,0),(215,217,1,10,20,0),(216,219,1,20,20,0),(217,220,2,20,20,0),(218,221,3,30,200,0),(219,222,23,20,20,0),(220,223,362,20,200,0),(221,224,1,20,200,0),(222,225,1,20,26,0),(223,225,2,20,26,0);
 /*!40000 ALTER TABLE `purchase_products` ENABLE KEYS */;
 UNLOCK TABLES;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `update_product_stock_while_insert` AFTER INSERT ON `purchase_products` FOR EACH ROW begin
-UPDATE purchase_order SET amount = amount + new.unit_price * new.quantity WHERE id = new.purchase_id;
-end */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `update_product_stock_while_update` AFTER UPDATE ON `purchase_products` FOR EACH ROW begin
-	if new.is_delete = 1 then
-		UPDATE purchase_order SET amount = amount - (old.unit_price * old.quantity) WHERE id = old.purchase_id;
-	else
-		UPDATE purchase_order SET amount = amount + ((new.unit_price * new.quantity) - (old.unit_price * old.quantity)) WHERE id = new.purchase_id;
-	end if;
-end */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Table structure for table `sales_order`
@@ -727,7 +477,7 @@ CREATE TABLE `supplier_master` (
   `zipcode` varchar(10) NOT NULL,
   `city_id` int NOT NULL,
   `state_id` int NOT NULL,
-  `gst` char(15) DEFAULT NULL,
+  `gst` varchar(45) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `is_delete` tinyint NOT NULL DEFAULT '0',

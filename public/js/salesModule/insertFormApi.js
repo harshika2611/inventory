@@ -66,7 +66,11 @@ getcustomer();
 async function generateCombo(result, id) {
   let str;
   result.forEach((data) => {
-    str += `<option value="${data.opt_id}">${data.value}</option>`;
+    if (id != 'productCategory') {
+      str += `<option value="${data.opt_id}">${data.value}</option>`;
+    } else if (data.is_delete == 0) {
+      str += `<option value="${data.opt_id}">${data.value}</option>`;
+    }
   });
   document.getElementById(`${id}`).innerHTML = str;
 }
